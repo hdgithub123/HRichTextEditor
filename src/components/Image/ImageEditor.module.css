@@ -1,0 +1,20 @@
+.cover{
+    display: flex;
+     width: 100%; 
+     height: auto; 
+     border: 1px black solid;
+
+}
+
+
+.image-container{
+    font-family: 'Courier New', Courier, monospace;
+    
+
+}
+
+
+.imgStyle{
+    width:  100%; 
+    height: 100%;
+}

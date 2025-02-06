@@ -1,0 +1,34 @@
+/* File: FontPicker.module.css */
+.fontPicker {
+    position: relative;
+  }
+  
+  .input {
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #351111;
+  }
+  
+  .fontList {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .fontList li {
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .fontList li:hover {
+    background-color: #f0f0f0; /* Màu nền khi di chuột vào */
+  }
+  

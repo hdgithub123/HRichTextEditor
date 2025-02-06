@@ -1,0 +1,246 @@
+@use "sass:string";
+// Import các file SCSS từ các thư mục khác nhau
+// @import '_constant/_scss_Constant.module.scss';
+@use '_constant/_scss_Constant.module.scss' as constants;
+
+.editor-wrapper {
+  width: 768px;
+  border: 1px solid black;
+  background: #fff;
+  padding: 1rem;
+}
+
+.editor-container {
+  width: 100%;
+  border: 1px solid green;
+  padding: 1rem;
+}
+
+.toolbar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 1fr 1fr;
+}
+
+.superFancyBlockquote {
+  color: #999;
+  background: #fff;
+  font-family: "Hoefler Text", Georgia, serif;
+  font-style: italic;
+  border-left: 2px solid #999;
+  padding-left: 10px;
+}
+
+.codeBlock {
+  font-family: fira-code, monospace;
+  font-size: inherit;
+  background: #ffeff0;
+  font-style: italic;
+  word-wrap: normal;
+  word-wrap: break-word;
+  box-decoration-break: slice;
+  padding: 0.3rem 2rem;
+  border-radius: 0.2rem;
+}
+
+.leftAlign {
+  text-align: left !important;
+}
+
+.rightAlign {
+  text-align: right !important;
+}
+
+.centerAlign {
+  text-align: center !important;
+}
+
+.justifyAlign {
+  text-align: justify !important;
+}
+
+
+/* cho listItem */
+.listItem {
+  margin-left: 80px;
+}
+
+
+.depth-0 {
+  margin-left: 20px !important;
+}
+
+.depth-1 {
+  margin-left: 40px !important;
+}
+
+.depth-2 {
+  margin-left: 60px !important;
+}
+
+.depth-3 {
+  margin-left: 80px !important;
+}
+
+.depth-4 {
+  margin-left: 100px !important;
+}
+
+.depth-5 {
+  margin-left: 120px !important;
+}
+
+.depth-6 {
+  margin-left: 140px !important;
+}
+
+.depth-7 {
+  margin-left: 160px !important;
+}
+
+.depth-8 {
+  margin-left: 180px !important;
+}
+
+.depth-9 {
+  margin-left: 200px !important;
+}
+
+.depth-10 {
+  margin-left: 210px !important;
+}
+
+
+
+/* Ordered List Styles */
+.customDecimal {
+  list-style-type: decimal !important;
+}
+
+.customLowerAlpha {
+  list-style-type: lower-alpha !important;
+
+}
+
+.customUpperAlpha {
+  list-style-type: upper-alpha !important;
+}
+
+.customLowerRoman {
+  list-style-type: lower-roman !important;
+}
+
+.customUpperRoman {
+  list-style-type: upper-roman !important;
+}
+
+.customGeorgian {
+  list-style-type: georgian !important;
+}
+
+.customArmenian {
+  list-style-type: armenian !important;
+}
+
+.customCjkIdeographic {
+  list-style-type: cjk-ideographic !important;
+}
+
+.customHiragana {
+  list-style-type: hiragana !important;
+}
+
+.customHiraganaIroha {
+  list-style-type: hiragana-iroha !important;
+}
+
+.customKatakana {
+  list-style-type: katakana !important;
+}
+
+.customKatakanaIroha {
+  list-style-type: katakana-iroha !important;
+}
+
+.customDecimalLeadingZero {
+  list-style-type: decimal-leading-zero !important;
+}
+
+/* Unordered List Styles */
+.customSquare {
+  list-style-type: square !important;
+}
+
+.customCircle {
+  list-style-type: circle !important;
+}
+
+.customDisc {
+  list-style-type: disc !important;
+}
+
+.customNone {
+  list-style-type: none !important;
+}
+
+.customMinus {
+  list-style-type: '- ' !important;
+}
+
+.customStar {
+  list-style-type: '* ' !important;
+}
+
+.customPlus {
+  list-style-type: '+ ' !important;
+}
+
+$fonts: constants.$FONTFAMILY;
+
+// ham thay the ky tu
+
+@function str-replace($string, $search, $replace: '') {
+  $index: string.index($string, $search);
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+  @return $string
+
+}
+// ----------------------------end------------------------
+
+
+@each $font in $fonts {
+  $class-name: str-replace($font, ' ', '-');
+  .font-#{$class-name} {
+    font-family: #{$font} !important;
+  }
+
+}
+
+
+// them font-color
+$colors: constants.$COLORS;
+
+@each $color in $colors {
+  .font-color-#{$color} {
+    color: #{$color};
+  }
+}
+
+// them background-color
+
+@each $color in $colors {
+  .background-color-#{$color} {
+    background-color: #{$color} !important;
+  }
+}
+$font-sizes: constants.$FONTSIZES;
+
+// them font-size
+@each $size in $font-sizes {
+  .font-size-#{$size}pt {
+      font-size: #{$size}pt;
+  }
+}
+

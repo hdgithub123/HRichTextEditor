@@ -1,0 +1,25 @@
+
+.editorContainer {
+  border: 1px solid #ddd;
+  padding: 10px;
+  min-height: 300px;
+  background-color: #f9f9f9;
+}
+
+.editor {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: unset;
+}
+
+
+.editorContainer .editor .public-DraftStyleDefault-ltr {
+    /* Loại bỏ hoặc tùy chỉnh các thuộc tính */
+    text-align: unset; /* Hoặc bạn có thể sử dụng text-align: unset; */
+    margin: 0;
+  }
+
+
+
+  

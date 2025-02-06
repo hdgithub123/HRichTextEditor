@@ -1,0 +1,35 @@
+.fontColorPicker {
+    position: relative;
+  }
+  
+  .colorList {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .colorList li {
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .colorList li:hover {
+    background-color: #f0f0f0; /* Màu nền khi di chuột vào */
+  }
+  
+  .colorSwatch {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+  }

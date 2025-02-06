@@ -1,0 +1,109 @@
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './FontFamilyPicker.module.css';
+
+const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
+  const [query, setQuery] = useState(currentFont ? currentFont : '');
+  const [filteredFonts, setFilteredFonts] = useState(Fonts);
+  const [showFont, setShowFont] = useState(false);
+  const ref = useRef();
+  const [selectedFont, setSelectedFont] = useState(currentFont || ''); // State để lưu trữ font chữ đã chọn
+
+  useOnClickOutside(ref, () => {
+    setShowFont(false);
+  }); // Sử dụng hook
+
+  const handleInputChange = (e) => {
+    setShowFont(true);
+    const value = e.target.value;
+    setQuery(value);
+  };
+
+  useEffect(() => {
+    if (query) {
+      // const newFilteredFonts = fonts.filter(font =>
+      const newFilteredFonts = Fonts.filter(font =>
+        font.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredFonts(newFilteredFonts);
+    } else {
+      setFilteredFonts(Fonts);
+    }
+  }, [query]);
+
+
+  useEffect(() => {
+    // Cập nhật state khi currentFont thay đổi
+    setSelectedFont(currentFont);
+    setQuery(currentFont);
+  }, [currentFont]);
+
+
+  const handleSelectFont = (font) => {
+    onSelectFont(font);
+    setSelectedFont(font);
+    setQuery(font);
+    setShowFont(false);
+  };
+
+  const handleClearQuery = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setQuery(''); // Đặt lại query về chuỗi rỗng
+    setShowFont(true);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // setShowFont(prevShowFont => !prevShowFont);
+    setShowFont(true);
+  };
+
+  return (
+    <div ref={ref} className={styles.fontPicker}  >
+      <input
+        type="text"
+        placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."} // Sửa dòng này
+        value={query}
+        onChange={handleInputChange}
+        className={styles.input}
+        style={{ fontFamily: selectedFont }}
+       
+        onClick={handleClick}
+      />
+      <button onClick={handleClearQuery} className={styles.clearButton}>Clear</button> {/* Nút Clear */}
+      {showFont && (
+        <ul className={styles.fontList} style={{ listStyle: 'none', padding: 0 }}>
+          {filteredFonts.map((font, index) => (
+            <li key={index} onClick={() => handleSelectFont(font)} style={{ cursor: 'pointer', padding: '5px', fontFamily: font }}>
+              {font}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+
+export default FontFamilyPicker;
+
+const useOnClickOutside = (ref, handler) => {
+  useEffect(() => {
+    const listener = event => {
+      // Kiểm tra nếu click bên ngoài ref
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+      handler(event);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
+
+    return () => {
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
+    };
+  }, [ref, handler]);
+};

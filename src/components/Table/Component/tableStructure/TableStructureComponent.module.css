@@ -1,0 +1,23 @@
+/* tableStructure.module.css */
+.firstcellTable {
+    position: relative;
+}
+
+.firstcellTable::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    cursor: col-resize;
+    z-index: 1;
+}
+
+.firstcellTable::after {
+    right: -2.5px; /* Adjust as needed */
+}
+
+
+.firstcellTable:hover::after {
+    background-color: rgba(0, 0, 0, 0.2); /* Change color on hover */
+}

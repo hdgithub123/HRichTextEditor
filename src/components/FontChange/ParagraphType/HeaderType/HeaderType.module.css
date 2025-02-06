@@ -1,0 +1,16 @@
+.headerTypeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  margin-right: 10px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.button {
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}

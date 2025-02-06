@@ -1,0 +1,46 @@
+.fontSizePicker {
+    position: relative;
+  }
+  
+  .input {
+    width: 200px;
+    padding: 5px;
+    border-radius: 20px; /* Bo góc cho ô text */
+    border: 1px solid #ddd;
+  }
+  
+  .fontList {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 200px;
+    max-height: 150px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .fontList li {
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .fontList li:hover {
+    background-color: #f0f0f0; /* Màu nền khi di chuột vào */
+  }
+  
+  .clearButton {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #f44336;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .clearButton:hover {
+    background-color: #d32f2f;
+  }
