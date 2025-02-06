@@ -22,11 +22,6 @@ const extractContentBlocks = (data) => {
   };
 
 
-
-
-
-
-
 const changeTextBlocksMap = ({ blockMap, numberOfUniqueRows, data, newTableBlock, tableKey, tableId }) => {
     let newBlockMap = OrderedMap();
     blockMap.forEach((block) => {
@@ -60,8 +55,6 @@ const changeTextBlocksMap = ({ blockMap, numberOfUniqueRows, data, newTableBlock
     });
     return newBlockMap;
 };
-
-
 
 
 const changeOneTableBlockNotInnumberOfUniqueRows = ({ block, numberOfUniqueRows, data }) => {
