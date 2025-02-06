@@ -6,12 +6,14 @@ const CellComponent = props => {
         block,
         blockProps: { editorRef },
     } = props;
-
+    const text = block.getText();
     if (block.getData().get('cellPosition')) {
         const position = block.getData().get('cellPosition');
         const target = editorRef?.editor.querySelector(`[cell-position='${position}']`);
         if (target) {
-            return createPortal(<EditorBlock {...props} />, target);
+            const content = text.trim() === '' ? '\u00A0' : text; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
+            return createPortal(<EditorBlock {...props} block={block.set('text', content)} />, target);
+            // return createPortal(<EditorBlock {...props} />, target);
         }
         return null;
     }
