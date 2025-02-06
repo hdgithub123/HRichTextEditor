@@ -11,12 +11,17 @@ const changeBlockTableText = ({ editorState, tableData, tableKey }) => {
     const columnBlocks = findTableIdBlocks({ blockMapJS, tableId });
     const uniqueRows = numberOfUniqueRows({ columnBlocks });
     let changeBlockMap = changeTextBlocksMap({ blockMap, numberOfUniqueRows: uniqueRows, data, newTableBlock: columnBlocks, tableKey, tableId });
-    const newContentState = ContentState.createFromBlockArray(changeBlockMap.toArray());
+    const changeBlockMap2 = extractContentBlocks(changeBlockMap.toArray())
+    const newContentState = ContentState.createFromBlockArray(changeBlockMap2);
     const newEditorState = EditorState.createWithContent(newContentState);
-
-
     return newEditorState;
 }
+
+const extractContentBlocks = (data) => {
+    return data.map(([_, contentBlock]) => contentBlock);
+  };
+
+
 
 
 

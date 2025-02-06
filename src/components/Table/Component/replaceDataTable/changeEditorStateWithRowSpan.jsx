@@ -2,7 +2,7 @@ import { EditorState, genKey } from 'draft-js';
 import { numberOfUniqueRows, findTableIdBlocks } from './ultils';
 
 
-const changeEditorStateWithRowSpan = async ({ editorState, tableData, tableKey }) => {
+const changeEditorStateWithRowSpan =  ({ editorState, tableData, tableKey }) => {
     const contentState = editorState.getCurrentContent();
     let blockMap = contentState.getBlockMap();
     const blockMapJS = blockMap.toJS();
