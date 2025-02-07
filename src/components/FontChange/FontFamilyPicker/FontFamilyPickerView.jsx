@@ -1,6 +1,6 @@
 import { RichUtils } from 'draft-js';
 import FontFamilyPicker from './FontFamilyPicker';
-import { _FONTFAMILY } from '../_constant/_constant'
+import { _FONTFAMILY } from '../../_constant/_constant'
 
 const FONTS = _FONTFAMILY
 const FontFamilyPickerView = ({ editorState, setEditorState }) => {

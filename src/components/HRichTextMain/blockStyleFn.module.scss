@@ -1,7 +1,8 @@
 @use "sass:string";
 // Import các file SCSS từ các thư mục khác nhau
 // @import '_constant/_scss_Constant.module.scss';
-@use '_constant/_scss_Constant.module.scss' as constants;
+// @use '_constant/_scss_Constant.module.scss' as constants;
+@use '../_constant/scss_Constant.module' as constants;
 
 .editor-wrapper {
   width: 768px;

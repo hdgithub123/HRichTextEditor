@@ -1,6 +1,6 @@
 import { RichUtils } from 'draft-js';
 import FontColorPicker from './FontColorPicker';
-import { _COLORS } from '../_constant/_constant'
+import { _COLORS } from '../../_constant/_constant'
 
 const COLORS = _COLORS
 const FontColorPickerView = ({ editorState, setEditorState }) => {

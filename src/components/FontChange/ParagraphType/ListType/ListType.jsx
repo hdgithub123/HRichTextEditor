@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './ListType.module.scss';
-import { _FONTFAMILY,_FONTSIZES,_COLORS,} from '../../_constant/_constant';
+import { _FONTFAMILY,_FONTSIZES,_COLORS,} from '../../../../components/_constant/_constant';
 
 
 

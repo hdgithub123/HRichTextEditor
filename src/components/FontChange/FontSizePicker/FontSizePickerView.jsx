@@ -1,6 +1,6 @@
 import { RichUtils } from 'draft-js';
 import FontSizePicker from './FontSizePicker';
-import { _FONTSIZES } from '../_constant/_constant'
+import { _FONTSIZES } from '../../_constant/_constant'
 
 const FONT_SIZES = _FONTSIZES
 const FontSizePickerView = ({ editorState, setEditorState }) => {

@@ -1,6 +1,6 @@
 import { RichUtils } from 'draft-js';
 import FontBackGroundColor from './FontBackGroundColor';
-import { _COLORS } from '../_constant/_constant'
+import { _COLORS } from '../../_constant/_constant'
 
 const COLORS = _COLORS
 const FontBackGroundColorView = ({ editorState, setEditorState }) => {

@@ -6,7 +6,7 @@ import extendedBlockRenderMap from './blockRenderMap';
 
 import editorStyle from './Editor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
-import FontInput from './FontInput';
+import FontInput from '../FontChange/FontInput';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 
 const HEditor = () => {
@@ -19,10 +19,6 @@ const HEditor = () => {
     setEditorState(newState);
   };
 
-
-  // useEffect(() => {
-  //   focusEditor();
-  // }, []);
 
   const focusEditor = () => {
     editor.current.focus();
@@ -40,13 +36,6 @@ const HEditor = () => {
       // Khôi phục trạng thái lựa chọn khi focus lại editor
       setEditorState(EditorState.forceSelection(editorState, lastSelectionState.current));
     }
-  };
-
-
-  const getCurrentFont = () => {
-    const currentStyle = editorState.getCurrentInlineStyle();
-    const fontStyle = Array.from(currentStyle).find(style => style.startsWith('fontFamily.'));
-    return fontStyle ? fontStyle.split('.')[1] : 'Arial'; // Default to Arial if no font is selected
   };
 
 
