@@ -1,16 +1,27 @@
-import React from 'react';
-import styles from './FontBold.module.css';
+import React, { useEffect,useState } from 'react';
+import styles from './FontBold.module.scss';
+import boldIcon from './bold.svg'
 
 
-const FontBold = ({ currentBold, onClick }) => {
+const FontBold = ({ currentStyle, onClick }) => {
+  const [active, setActive] = useState(styles.unactive);
+  
   const handleClick = (e) => {
     e.preventDefault();
     onClick();
   };
 
+  useEffect(() => {
+    if(currentStyle) {
+      setActive(styles.active)
+    } else {
+      setActive(styles.unactive)
+    }
+  }, [currentStyle]);
+
   return (
-    <button className={styles.button} onMouseDown={handleClick} style={{ fontWeight: currentBold ? 'bold' : 'normal' }}>
-      <img src="./bold.svg" alt="Bold" width={100} height={100} />
+    <button className={styles.button} onMouseDown={handleClick}>
+      <img src={boldIcon} alt="Bold" className={`${styles.img} ${active}`}/>
     </button>
   );
 };

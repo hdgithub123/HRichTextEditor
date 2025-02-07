@@ -9,8 +9,8 @@ const CodeBlockType = ({ currentCodeBlockType, onClick }) => {
   };
 
   return (
-    <button className={styles.button} onMouseDown={handleClick} style={{ fontWeight: currentCodeBlockType ? 'italic' : 'normal' }}>
-      <img src="./italic.svg" alt="Italic" width={100} height={100} />
+    <button className={styles.button} onMouseDown={handleClick}>
+      <img src="./italic.svg" alt="Italic"/>
       <span>Code Block</span>
     </button>
   );

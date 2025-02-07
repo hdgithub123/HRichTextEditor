@@ -1,17 +1,27 @@
-import React from 'react';
-import styles from './FontLowercase.module.css';
+import React, { useEffect,useState } from 'react';
+import styles from './FontLowercase.module.scss';
+import icon from './lowercase.svg'
 
 
-const FontLowercase = ({ currenttLowercase, onClick }) => {
+const FontLowercase = ({ currentStyle, onClick }) => {
+  const [active, setActive] = useState(styles.unactive);
+  
   const handleClick = (e) => {
     e.preventDefault();
     onClick();
   };
 
+  useEffect(() => {
+    if(currentStyle) {
+      setActive(styles.active)
+    } else {
+      setActive(styles.unactive)
+    }
+  }, [currentStyle]);
+
   return (
-    <button className={styles.button} onMouseDown={handleClick} style={{ fontWeight: currenttLowercase ? 'italic' : 'normal' }}>
-      <img src="./itlic.svg" alt="Uppercase" width={100} height={100} />
-      <span>Lowercase</span>
+    <button className={styles.button} onMouseDown={handleClick}>
+      <img src={icon} alt="Lowercase" className={`${styles.img} ${active}`}/>
     </button>
   );
 };
