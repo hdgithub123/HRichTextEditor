@@ -1,4 +1,4 @@
-.fontColorPicker {
+.lineHeightPicker {
   position: relative;
   border: 1px solid black;
   border-radius: 5px;
@@ -6,7 +6,7 @@
   justify-content: center;
   height: inherit;
 
-  .containColorPicker {
+  .containHeightPicker {
     display: flex;
     flex-direction: row;
     gap: 1px;
@@ -16,10 +16,13 @@
     padding: 2px;
 
     div {
-      width: 70px;
+      width: 45px;
       height: 100%;
       border-radius: 4px;
       box-sizing: border-box;
+      align-items: center;
+      justify-content: center;
+      display: flex;
     }
 
     button {
@@ -42,7 +45,7 @@
 
 }
 
-.colorList {
+.heights {
   position: absolute;
   top: 60%; /* Đặt .fontList ngay dưới input */
   left: 0;
@@ -50,11 +53,14 @@
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  width: 200px;
+  width: 70px;
   max-height: 150px;
   overflow-y: auto;
-  list-style: none;
   padding: 0;
+  align-items: center;
+  ul{
+    align-items: center;
+  }
   li {
     cursor: pointer;
     padding: 5px;

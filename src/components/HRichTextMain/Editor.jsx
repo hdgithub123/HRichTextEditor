@@ -44,7 +44,8 @@ const HEditor = () => {
     <div
     // onBlur={handleBlur}
     // onFocus={handleFocus}
-      style={{width: '500px', padding: '20px'}}
+      // style={{width: '500px', padding: '20px'}}
+      style={{border: '1px black solid'}}
     >
       <FontInput editorState={editorState} setEditorState={setEditorState}></FontInput>
       <div

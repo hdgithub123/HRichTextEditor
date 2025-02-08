@@ -12,7 +12,7 @@
     text-overflow: ellipsis;
     &:focus {
       outline: none;
-      border: none;  /* Nếu bạn muốn bỏ cả border nếu có */
+      border: none;
     }
   }
 
@@ -40,7 +40,6 @@
     padding: 5px;
     &:hover {
       background-color: #f0f0f0;
-      /* Màu nền khi di chuột vào */
     }
   }
   
@@ -53,6 +52,5 @@
   color: gray;
   &:hover{
     color: black;
-    // background-color: blue;
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { RichUtils } from 'draft-js';
 import CodeBlockTypeControl from '../utilities/CodeBlockTypeControl';
 import getCurrentBlock from '../utilities/getCurrentBlock';
+import changeTypeOfBlock from '../utilities/changeTypeOfBlock'
 import headerIcon from './header.svg'
 import header1Icon from './header1.svg'
 import header2Icon from './header2.svg'
@@ -15,8 +16,7 @@ const Header = ({ editorState, setEditorState }) => {
     const currentBlock = getCurrentBlock({ editorState })
 
     const handleClickTypeOfBlock = (block) => {
-        const newEditorState = RichUtils.toggleBlockType(editorState, block);
-        setEditorState(newEditorState);
+        changeTypeOfBlock({ editorState, setEditorState, block })
     };
 
     return (

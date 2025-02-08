@@ -9,6 +9,8 @@ const blockStyleFn = (contentBlock) => {
     const fontSize = contentBlock.getData().get('fontSize');
     const fontColor = contentBlock.getData().get('fontColor');
     const backgroundColor = contentBlock.getData().get('backgroundColor');
+    const lineHeight = contentBlock.getData().get('lineHeight');
+
 
     let className = '';
 
@@ -22,7 +24,7 @@ const blockStyleFn = (contentBlock) => {
                 if (fontFamily) {
                     const sanitizedFontFamily = fontFamily.replace(/\s+/g, '-');
                     className += ` ${styles[`font-${sanitizedFontFamily}`]}`;
-                  }
+                }
 
                 if (fontSize) {
                     className += ` ${styles[`font-size-${fontSize.replace('pt', '')}pt`]}`;
@@ -47,8 +49,11 @@ const blockStyleFn = (contentBlock) => {
     // let className = '';
 
     switch (type) {
-        case 'blockQuote':
+        case 'blockquote':
             className = styles.superFancyBlockquote;
+            break;
+        case 'code-block':
+            className = styles.codeBlock;
             break;
         default:
             break;
@@ -72,6 +77,14 @@ const blockStyleFn = (contentBlock) => {
                 break;
         }
     }
+
+    if (lineHeight) {
+        const sanitizedLineHeight = String(lineHeight).replace('.', '-');
+        className += ` ${styles[`line-height-${sanitizedLineHeight}`]}`;
+    }
+
+
+
     return className;
 };
 

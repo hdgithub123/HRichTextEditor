@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './ListType.module.scss';
-import { _FONTFAMILY, _FONTSIZES, _COLORS } from '../../../../components/_constant/_constant';
+import { _FONTFAMILY, _FONTSIZES, _COLORS,_NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
+import getCurrentBlock from './getCurrentBlock';
+
 
 const orderedListType2 = [
   { name: 'Decimal', symbol: '1.' },
@@ -60,8 +62,14 @@ const depthOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const fontFamilyOptions = _FONTFAMILY;
 const fontSizeOptions = _FONTSIZES;
 const colorOptions = ['none', ..._COLORS];
+const notChangeBlock = _NOTCHANGEBLOCK
 
 const toggleListItem = ({ editorState, depth, listType, fontFamily, fontSize, fontColor, backgroundColor, blockType }) => {
+  const currentBlock = getCurrentBlock({ editorState });
+  if (notChangeBlock.includes(currentBlock)) {
+    return editorState;
+  }
+  
   const selection = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
   const block = contentState.getBlockForKey(selection.getStartKey());

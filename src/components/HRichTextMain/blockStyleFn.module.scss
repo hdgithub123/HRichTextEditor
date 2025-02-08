@@ -1,47 +1,41 @@
 @use "sass:string";
-// Import các file SCSS từ các thư mục khác nhau
-// @import '_constant/_scss_Constant.module.scss';
-// @use '_constant/_scss_Constant.module.scss' as constants;
+@use 'sass:meta';
 @use '../_constant/scss_Constant.module' as constants;
 
-.editor-wrapper {
-  width: 768px;
-  border: 1px solid black;
-  background: #fff;
-  padding: 1rem;
-}
 
-.editor-container {
-  width: 100%;
-  border: 1px solid green;
-  padding: 1rem;
-}
-
-.toolbar-grid {
-  display: flex;
-  flex-wrap: wrap;
-  flex-basis: 1fr 1fr;
-}
-
-.superFancyBlockquote {
+.codeBlock {
   color: #999;
-  background: #fff;
+  background: #ffeff0;
   font-family: "Hoefler Text", Georgia, serif;
   font-style: italic;
   border-left: 2px solid #999;
   padding-left: 10px;
 }
 
-.codeBlock {
+.superFancyBlockquote {
   font-family: fira-code, monospace;
   font-size: inherit;
   background: #ffeff0;
   font-style: italic;
-  word-wrap: normal;
   word-wrap: break-word;
   box-decoration-break: slice;
   padding: 0.3rem 2rem;
   border-radius: 0.2rem;
+  margin-inline-start: 20px;
+  margin-inline-end: 20px;
+  position: relative;
+  &::before {
+    content: open-quote; /* Thêm dấu ngoặc kép trước nội dung */
+    position: absolute;
+    left: 0.5rem; /* Điều chỉnh vị trí của dấu ngoặc kép */
+  }
+
+  &::after {
+    content: close-quote; /* Thêm dấu ngoặc kép sau nội dung */
+    position: absolute;
+    right: 0.5rem; /* Điều chỉnh vị trí của dấu ngoặc kép */
+    top: calc(100% - 10pt);
+  }
 }
 
 .leftAlign {
@@ -201,6 +195,7 @@ $fonts: constants.$FONTFAMILY;
 // ham thay the ky tu
 
 @function str-replace($string, $search, $replace: '') {
+  $string: if(meta.type-of($string) == 'number', $string + '', $string);
   $index: string.index($string, $search);
   @if $index {
     @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
@@ -208,6 +203,7 @@ $fonts: constants.$FONTFAMILY;
   @return $string
 
 }
+
 // ----------------------------end------------------------
 
 
@@ -245,3 +241,11 @@ $font-sizes: constants.$FONTSIZES;
   }
 }
 
+$lineHeight: constants.$LINEHEIGHT;
+
+@each $height in $lineHeight {
+  $class-name: str-replace($height, '.', '-');
+  .line-height-#{$class-name} {
+    line-height: #{$height} !important;
+  }
+}

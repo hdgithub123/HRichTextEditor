@@ -16,9 +16,8 @@ import Paragraph from './ParagraphType/CodeBlock/Paragraph/Paragraph';
 import Header from './ParagraphType/CodeBlock/Header/Header';
 import Unstyled from './ParagraphType/CodeBlock/Unstyled/Unstyled';
 
-import ListType from './ParagraphType/ListType/ListType';
 import ListTypeView from './ParagraphType/ListType/ListTypeView';
-
+import LineHeightView from './ParagraphType/LineHeight/LineHeightView';
 
 
 const FontInput = ({ editorState, setEditorState }) => {
@@ -45,6 +44,7 @@ const FontInput = ({ editorState, setEditorState }) => {
       <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>
       {/* TextAlign */}
       <TextAlign editorState={editorState} setEditorState={setEditorState} />
+      <LineHeightView editorState={editorState} setEditorState={setEditorState}  ></LineHeightView>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
         <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>
         <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>
@@ -53,6 +53,7 @@ const FontInput = ({ editorState, setEditorState }) => {
       </div>
       <Header editorState={editorState} setEditorState={setEditorState}></Header>
       <ListTypeView editorState={editorState} setEditorState={setEditorState} />
+      
 
     </div>
   );

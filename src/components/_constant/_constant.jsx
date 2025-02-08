@@ -19,8 +19,36 @@ const _FONTSIZES = [
 ];
 
 const _COLORS = [
-     'white', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black'
+    // 'none',
+    'white',
+    'red',
+    'blue',
+    'green',
+    'yellow',
+    'orange',
+    'purple',
+    'pink',
+    'brown',
+    'black'
 ];
+
+const _LINEHEIGHT = [
+    'normal',
+    0.5,
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+]
+
+
+const _NOTCHANGEBLOCK = [
+    'TableBlock',
+    'CellBlock',
+    // 'blockquote',
+]
 
 
 
@@ -28,5 +56,6 @@ export {
     _FONTFAMILY,
     _FONTSIZES,
     _COLORS,
-    
+    _LINEHEIGHT,
+    _NOTCHANGEBLOCK,
 }

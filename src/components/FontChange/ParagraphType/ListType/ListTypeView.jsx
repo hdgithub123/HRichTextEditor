@@ -4,21 +4,30 @@ import getCurrentBlock from './getCurrentBlock';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import styles from './ListTypeView.module.scss';
 import listIcon from './unorderedList.svg'
+import { _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
 
+const notChangeBlock = _NOTCHANGEBLOCK
 
 const ListTypeView = ({ editorState, setEditorState }) => {
   const [active, setActive] = useState(styles.unactive);
   const [show, setShow] = useState(false);
+  const [view, setView] = useState(true);
   const ref = useRef();
   const currentBlock = getCurrentBlock({ editorState });
-  
-    useEffect(() => {
-      if(currentBlock === "unordered-list-item" || currentBlock === "ordered-list-item" ) {
-        setActive(styles.active)
-      } else {
-        setActive(styles.unactive)
-      }
-    }, [currentBlock]);
+
+
+  useEffect(() => {
+    if (notChangeBlock.includes(currentBlock)) {
+      setView(false)
+    } else{
+      setView(true)
+    }
+    if (currentBlock === "unordered-list-item" || currentBlock === "ordered-list-item") {
+      setActive(styles.active)
+    } else {
+      setActive(styles.unactive)
+    }
+  }, [currentBlock]);
 
   useOnClickOutside(ref, () => {
     setShow(false);
@@ -29,9 +38,11 @@ const ListTypeView = ({ editorState, setEditorState }) => {
   };
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
+    <>
+    {view&&(
+      <div ref={ref} style={{ position: 'relative', alignContent: 'center' }}>
       <button className={styles.button} onMouseDown={handleClick}>
-        <img src={listIcon} alt="List" title="List Item" className={`${styles.img} ${active}`}/>
+        <img src={listIcon} alt="List" title="List Item" className={`${styles.img} ${active}`} />
       </button>
       {show && (
         <div className={styles.listTypeContainer}>
@@ -39,7 +50,11 @@ const ListTypeView = ({ editorState, setEditorState }) => {
         </div>
       )}
     </div>
-  );
+    )}
+    
+
+    </>
+      );
 };
 
 export default ListTypeView;

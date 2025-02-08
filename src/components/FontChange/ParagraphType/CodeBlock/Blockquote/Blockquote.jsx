@@ -3,14 +3,15 @@ import { RichUtils } from 'draft-js';
 import CodeBlockTypeControl from '../utilities/CodeBlockTypeControl';
 import getCurrentBlock from '../utilities/getCurrentBlock';
 import ImageIcon from './blockQuote.svg'
+import changeTypeOfBlock from '../utilities/changeTypeOfBlock'
+
 
 const Blockquote = ({ editorState, setEditorState }) =>{
 
   const currentBlock = getCurrentBlock({editorState})
 
   const handleClickTypeOfBlock = (block) => {
-    const newEditorState = RichUtils.toggleBlockType(editorState, block);
-    setEditorState(newEditorState);
+    changeTypeOfBlock({editorState,setEditorState,block})
   };
 
   return (

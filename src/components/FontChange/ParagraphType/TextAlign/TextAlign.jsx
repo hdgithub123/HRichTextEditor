@@ -30,19 +30,6 @@ const TextAlign = ({ editorState, setEditorState }) => {
   const currentBlock = currentContent.getBlockForKey(blockKey);
   // lay ra data textAlign của Block
   const blockTextAlign = currentBlock.getData().get('textAlign');
-  // console.log("blockTextAlign",blockTextAlign)
-
-  // const [thisTextAlign, setThisTextAlign] = useState('');
-
-  // useEffect(() => {
-  //   if(blockTextAlign !== ''|| blockTextAlign) {
-  //     setThisTextAlign(blockTextAlign)
-  //   } else {
-  //     setThisTextAlign('')
-  //   }
-  // }, [blockTextAlign]);
-
-
 
   const handleTextAlign = (alignment) => {
     const newState = toggleTextAlign(editorState, alignment);
@@ -51,18 +38,17 @@ const TextAlign = ({ editorState, setEditorState }) => {
 
   return (
     <div style={{display:'flex', flexDirection:'row'}}>
-      <button className={styles.button} onClick={() => handleTextAlign('left')}>
-        {/* <img src={leftIcon} alt="Left" className={`${styles.img} ${active}`}/> */}
+      <button className={styles.button} title='Align Left' onClick={() => handleTextAlign('left')}>
         <img src={leftIcon} alt="Left" className={`${styles.img} ${blockTextAlign === 'left' ? styles.active : styles.unactive}`} />
       </button>
-      <button className={styles.button} onClick={() => handleTextAlign('center')}>
-        <img src={centerIcon} alt="Left" className={`${styles.img} ${blockTextAlign === 'center' ? styles.active : styles.unactive}`} />
+      <button className={styles.button} title='Align Center' onClick={() => handleTextAlign('center')}>
+        <img src={centerIcon} alt="Center" className={`${styles.img} ${blockTextAlign === 'center' ? styles.active : styles.unactive}`} />
       </button>
-      <button className={styles.button} onClick={() => handleTextAlign('right')}>
-        <img src={rightIcon} alt="Left" className={`${styles.img} ${blockTextAlign === 'right' ? styles.active : styles.unactive}`} />
+      <button className={styles.button} title='Align Right' onClick={() => handleTextAlign('right')}>
+        <img src={rightIcon} alt="Right" className={`${styles.img} ${blockTextAlign === 'right' ? styles.active : styles.unactive}`} />
       </button>
-      <button className={styles.button} onClick={() => handleTextAlign('justify')}>
-        <img src={justifyIcon} alt="Left" className={`${styles.img} ${blockTextAlign === 'justify' ? styles.active : styles.unactive}`} />
+      <button className={styles.button} title='Align Justify' onClick={() => handleTextAlign('justify')}>
+        <img src={justifyIcon} alt="Justify" className={`${styles.img} ${blockTextAlign === 'justify' ? styles.active : styles.unactive}`} />
       </button>
     </div>
   );
