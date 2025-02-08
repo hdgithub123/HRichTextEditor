@@ -1,35 +1,75 @@
-.fontBackGroundColorPicker {
-    position: relative;
+.fontColorPicker {
+  position: relative;
+  border: 1px solid black;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+
+  .containColorPicker {
+    display: flex;
+    flex-direction: row;
+    gap: 1px;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 5px);
+    padding: 2px;
+
+    div {
+      width: 70px;
+      height: 100%;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: white;
+      border-radius: 3px;
+      border: 0px;
+      height: 100%;
+      box-sizing: border-box;
+      color: gray;
+      &:hover{
+        color: black;
+      }
+    }
+    &:hover{
+      border: 2px solid #351111;
+    }
+
   }
-  
-  .colorList {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 200px;
-    max-height: 150px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
-  }
-  
-  .colorList li {
+
+}
+
+.colorList {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  li {
     cursor: pointer;
     padding: 5px;
     display: flex;
     align-items: center;
+    &:hover {
+      background-color: #f0f0f0;
+      /* Màu nền khi di chuột vào */
+    }
   }
-  
-  .colorList li:hover {
-    background-color: #f0f0f0; /* Màu nền khi di chuột vào */
-  }
-  
-  .colorSwatch {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-  }
+
+}
+
+
+.colorSwatch {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}

@@ -28,13 +28,16 @@ const FontBackGroundColor = ({ colors, currentBackGroundColor, onSelectBackGroun
     setShowColors(prevShowColors => !prevShowColors);
   };
 
-  
+
 
   return (
-    <div ref={ref} className={styles.fontBackGroundColorPicker}>
-      <button onClick={handleClick} style={{ backgroundColor: selectedColor }} className={styles.colorButton}>
-        {selectedColor ? selectedColor : 'Select Background Color'}
-      </button>
+    <div ref={ref} className={styles.fontColorPicker} title='Font background'>
+      <div className={styles.containColorPicker} >
+        <div style={{ backgroundColor: selectedColor }}></div>
+        <button onClick={handleClick}>
+          ⯆
+        </button>
+      </div>
       {showColors && (
         <ul className={styles.colorList}>
           {colors.map((color, index) => (

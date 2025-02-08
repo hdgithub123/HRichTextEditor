@@ -65,17 +65,18 @@ const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
     <div ref={ref} className={styles.fontPicker}  >
       <input
         type="text"
-        placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."} // Sửa dòng này
+        placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."}
         value={query}
         onChange={handleInputChange}
         className={styles.input}
         style={{ fontFamily: selectedFont }}
-       
         onClick={handleClick}
       />
-      <button onClick={handleClearQuery} className={styles.clearButton}>Clear</button> {/* Nút Clear */}
+      <button onClick={handleClearQuery} className={styles.clearButton}>
+      ⯆
+      </button>
       {showFont && (
-        <ul className={styles.fontList} style={{ listStyle: 'none', padding: 0 }}>
+        <ul className={styles.fontList}>
           {filteredFonts.map((font, index) => (
             <li key={index} onClick={() => handleSelectFont(font)} style={{ cursor: 'pointer', padding: '5px', fontFamily: font }}>
               {font}

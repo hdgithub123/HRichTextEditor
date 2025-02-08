@@ -1,34 +1,58 @@
 /* File: FontPicker.module.css */
 .fontPicker {
-    position: relative;
-  }
-  
-  .input {
-    width: 200px;
+  position: relative;
+  border: 1px solid #351111;
+  border-radius: 5px;
+  padding: 2px;
+  input {
+    width: 100px;
     padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #351111;
+    border: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    &:focus {
+      outline: none;
+      border: none;  /* Nếu bạn muốn bỏ cả border nếu có */
+    }
   }
-  
-  .fontList {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 200px;
-    max-height: 150px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0;
+
+  &:hover{
+    border: 2px solid #351111;
   }
-  
-  .fontList li {
+}
+
+
+.fontList {
+  position: absolute;
+  top: 60%; /* Đặt .fontList ngay dưới input */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 200px;
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 1px;
+
+  li {
     cursor: pointer;
     padding: 5px;
+    &:hover {
+      background-color: #f0f0f0;
+      /* Màu nền khi di chuột vào */
+    }
   }
   
-  .fontList li:hover {
-    background-color: #f0f0f0; /* Màu nền khi di chuột vào */
+}
+
+
+.clearButton{
+  background: none;
+  border: none;
+  color: gray;
+  &:hover{
+    color: black;
+    // background-color: blue;
   }
-  
+}

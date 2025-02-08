@@ -35,7 +35,7 @@ const FontInput = ({ editorState, setEditorState }) => {
 
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
 
       <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>
       <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>
