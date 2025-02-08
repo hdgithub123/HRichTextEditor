@@ -45,18 +45,13 @@ const FontInput = ({ editorState, setEditorState }) => {
       <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>
       {/* TextAlign */}
       <TextAlign editorState={editorState} setEditorState={setEditorState} />
-      <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>
-      <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>
-      <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>
-      <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
+        <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>
+        <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>
+        <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>
+        <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>
+      </div>
       <Header editorState={editorState} setEditorState={setEditorState}></Header>
-      
-      {/* <CodeBlockType currentCodeBlockType={getCurrentBlockType('code-block')} onClick={() => handleClickTypeOfBlock('code-block')} />
-      <CodeBlockType currentCodeBlockType={getCurrentBlockType('paragraph')} onClick={() => handleClickTypeOfBlock('paragraph')} />
-      <CodeBlockType currentCodeBlockType={getCurrentBlockType('blockquote')} onClick={() => handleClickTypeOfBlock('blockquote')} />
-      <CodeBlockType currentCodeBlockType={getCurrentBlockType('blockQuote')} onClick={() => handleClickTypeOfBlock('blockQuote')} /> */}
-
-      
       <ListTypeView editorState={editorState} setEditorState={setEditorState} />
 
     </div>

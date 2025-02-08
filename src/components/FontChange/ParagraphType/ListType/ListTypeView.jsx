@@ -31,7 +31,7 @@ const ListTypeView = ({ editorState, setEditorState }) => {
   return (
     <div ref={ref} style={{ position: 'relative' }}>
       <button className={styles.button} onMouseDown={handleClick}>
-        <img src={listIcon} alt="List" title="List" className={`${styles.img} ${active}`}/>
+        <img src={listIcon} alt="List" title="List Item" className={`${styles.img} ${active}`}/>
       </button>
       {show && (
         <div className={styles.listTypeContainer}>
