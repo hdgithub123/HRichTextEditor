@@ -21,7 +21,7 @@ const FontLowercase = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={icon} alt="Lowercase" className={`${styles.img} ${active}`}/>
+      <img src={icon} alt="Lowercase" title="Lowercase" className={`${styles.img} ${active}`}/>
     </button>
   );
 };

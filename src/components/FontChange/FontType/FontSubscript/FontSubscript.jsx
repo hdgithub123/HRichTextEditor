@@ -21,7 +21,7 @@ const FontSubscript = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={subscriptIcon} alt="Bold" className={`${styles.img} ${active}`}/>
+      <img src={subscriptIcon} alt="Subscript" title='Subscript' className={`${styles.img} ${active}`}/>
     </button>
   );
 };

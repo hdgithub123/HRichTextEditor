@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './FontFamilyPicker.module.css';
+import styles from './FontFamilyPicker.module.scss';
+import useOnClickOutside from '../../utilities/useOnClickOutside'
+
 
 const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
   const [query, setQuery] = useState(currentFont ? currentFont : '');
@@ -87,23 +89,3 @@ const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
 
 
 export default FontFamilyPicker;
-
-const useOnClickOutside = (ref, handler) => {
-  useEffect(() => {
-    const listener = event => {
-      // Kiểm tra nếu click bên ngoài ref
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      handler(event);
-    };
-
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler]);
-};

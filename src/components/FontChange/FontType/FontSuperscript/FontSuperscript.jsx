@@ -21,7 +21,7 @@ const FontSuperscript = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={superScriptIcon} alt="Bold" className={`${styles.img} ${active}`}/>
+      <img src={superScriptIcon} alt="Superscript" title='Superscript' className={`${styles.img} ${active}`}/>
     </button>
   );
 };

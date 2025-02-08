@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './FontBackGroundColor.module.css';
+import styles from './FontBackGroundColor.module.scss';
+import useOnClickOutside from '../../utilities/useOnClickOutside'
 
 const FontBackGroundColor = ({ colors, currentBackGroundColor, onSelectBackGroundColor }) => {
   const [showColors, setShowColors] = useState(false);
@@ -50,22 +51,3 @@ const FontBackGroundColor = ({ colors, currentBackGroundColor, onSelectBackGroun
 
 export default FontBackGroundColor;
 
-const useOnClickOutside = (ref, handler) => {
-  useEffect(() => {
-    const listener = event => {
-      // Kiểm tra nếu click bên ngoài ref
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      handler(event);
-    };
-
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
-
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
-    };
-  }, [ref, handler]);
-};

@@ -42,7 +42,7 @@ const FontUppercase = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={uppercaseIcon} alt="Bold" className={`${styles.img} ${active}`}/>
+      <img src={uppercaseIcon} alt='Uppercase' title='Uppercase' className={`${styles.img} ${active}`}/>
     </button>
   );
 };

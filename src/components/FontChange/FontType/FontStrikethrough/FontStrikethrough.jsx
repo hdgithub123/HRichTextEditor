@@ -42,7 +42,7 @@ const FontStrikethrough = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={strikethroughIcon} alt="Bold" className={`${styles.img} ${active}`}/>
+      <img src={strikethroughIcon} alt="StrikeThrough" title="StrikeThrough" className={`${styles.img} ${active}`}/>
     </button>
   );
 };

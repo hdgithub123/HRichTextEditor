@@ -22,7 +22,7 @@ const FontUnderline = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={underLineIcon} alt="underLine" className={`${styles.img} ${active}`}/>
+      <img src={underLineIcon} alt='UnderLine' title='UnderLine' className={`${styles.img} ${active}`}/>
     </button>
   );
 };

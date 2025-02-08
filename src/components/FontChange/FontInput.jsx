@@ -6,10 +6,18 @@ import FontBackGroundColorView from './FontBackGroundColor/FontBackGroundColorVi
 import FontType from './FontType/FontType'
 import TextAlign from './ParagraphType/TextAlign/TextAlign';
 
-import CodeBlockType from './ParagraphType/CodeBlockType/CodeBlockType';
 
-import HeaderTypeView from './ParagraphType/HeaderType/HeaderTypeView';
+
+
+import CodeBlockType from './ParagraphType/CodeBlock/CodeBlockType/CodeBlockType';
+import Blockquote from './ParagraphType/CodeBlock/Blockquote/Blockquote';
+import Paragraph from './ParagraphType/CodeBlock/Paragraph/Paragraph';
+
+import Header from './ParagraphType/CodeBlock/Header/Header';
+import Unstyled from './ParagraphType/CodeBlock/Unstyled/Unstyled';
+
 import ListType from './ParagraphType/ListType/ListType';
+import ListTypeView from './ParagraphType/ListType/ListTypeView';
 
 
 
@@ -37,14 +45,19 @@ const FontInput = ({ editorState, setEditorState }) => {
       <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>
       {/* TextAlign */}
       <TextAlign editorState={editorState} setEditorState={setEditorState} />
-
-      <CodeBlockType currentCodeBlockType={getCurrentBlockType('code-block')} onClick={() => handleClickTypeOfBlock('code-block')} />
+      <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>
+      <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>
+      <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>
+      <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>
+      <Header editorState={editorState} setEditorState={setEditorState}></Header>
+      
+      {/* <CodeBlockType currentCodeBlockType={getCurrentBlockType('code-block')} onClick={() => handleClickTypeOfBlock('code-block')} />
       <CodeBlockType currentCodeBlockType={getCurrentBlockType('paragraph')} onClick={() => handleClickTypeOfBlock('paragraph')} />
       <CodeBlockType currentCodeBlockType={getCurrentBlockType('blockquote')} onClick={() => handleClickTypeOfBlock('blockquote')} />
-      <CodeBlockType currentCodeBlockType={getCurrentBlockType('blockQuote')} onClick={() => handleClickTypeOfBlock('blockQuote')} />
+      <CodeBlockType currentCodeBlockType={getCurrentBlockType('blockQuote')} onClick={() => handleClickTypeOfBlock('blockQuote')} /> */}
 
-      <HeaderTypeView editorState={editorState} setEditorState={setEditorState}></HeaderTypeView>      
-      <ListType editorState={editorState} setEditorState={setEditorState} />
+      
+      <ListTypeView editorState={editorState} setEditorState={setEditorState} />
 
     </div>
   );

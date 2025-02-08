@@ -21,7 +21,7 @@ const FontItalic = ({ currentStyle, onClick }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={italicIcon} alt="Italic" className={`${styles.img} ${active}`}/>
+      <img src={italicIcon} alt="Italic" title="Italic" className={`${styles.img} ${active}`}/>
     </button>
   );
 };
