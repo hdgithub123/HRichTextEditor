@@ -5,7 +5,7 @@ import getCurrentBlock from './getCurrentBlock';
 const notChangeBlock = _NOTCHANGEBLOCK
 const changeTypeOfBlock = ({ editorState, setEditorState, block }) => {
   const currentBlock = getCurrentBlock({ editorState });
-  if (notChangeBlock.includes(currentBlock)) {
+  if (notChangeBlock.includes(currentBlock) || !currentBlock) {
     return;
   }
   const newEditorState = RichUtils.toggleBlockType(editorState, block);

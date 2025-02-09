@@ -41,7 +41,13 @@ const HEditor = () => {
     }
   };
 
-
+    const handleReturn = (e, editorState) => {
+        if (RichUtils.getCurrentBlockType(editorState) === 'cellTable') {
+            onChange(RichUtils.insertSoftNewline(editorState));
+            return 'handled';
+        }
+        return 'not-handled';
+    };
 
   return (
     <div
@@ -68,6 +74,7 @@ const HEditor = () => {
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={getBlockRendererFn({editorRef: editor.current, getEditorState:() => editorState, onChange:onChange})}
+            handleReturn={(e, editorState) => handleReturn(e, editorState)}
           // className={editorStyle.editor}
           />
         </div>

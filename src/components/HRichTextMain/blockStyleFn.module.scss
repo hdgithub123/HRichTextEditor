@@ -56,9 +56,6 @@
 
 
 /* cho listItem */
-.listItem {
-  margin-left: 80px;
-}
 
 
 .depth-0 {
@@ -207,6 +204,17 @@ $fonts: constants.$FONTFAMILY;
 // ----------------------------end------------------------
 
 
+$marginLeft: constants.$MARGINLEFT;
+
+@each $margin in $marginLeft {
+  $class-name: str-replace($margin, '.', '-');
+  .margin-left-#{$class-name} {
+    font-family: #{$margin} !important;
+  }
+
+}
+
+
 @each $font in $fonts {
   $class-name: str-replace($font, ' ', '-');
   .font-#{$class-name} {
@@ -236,7 +244,8 @@ $font-sizes: constants.$FONTSIZES;
 
 // them font-size
 @each $size in $font-sizes {
-  .font-size-#{$size}pt {
+  $class-name: str-replace($size, '.', '-');
+  .font-size-#{$class-name}pt {
       font-size: #{$size}pt;
   }
 }

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './ListType.module.scss';
-import { _FONTFAMILY, _FONTSIZES, _COLORS,_NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
+import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
 import getCurrentBlock from './getCurrentBlock';
+import updateBlockStyle from '../../../utilities/updateBlockStyle'
+import updateBlockType from '../../../utilities/updateBlockType'
 
 
 const orderedListType2 = [
@@ -64,79 +66,48 @@ const fontSizeOptions = _FONTSIZES;
 const colorOptions = ['none', ..._COLORS];
 const notChangeBlock = _NOTCHANGEBLOCK
 
-const toggleListItem = ({ editorState, depth, listType, fontFamily, fontSize, fontColor, backgroundColor, blockType }) => {
+const toggleListItem = ({ editorState, blockStyle, blockType }) => {
+  console.log("currentStyle toggle", blockStyle)
   const currentBlock = getCurrentBlock({ editorState });
   if (notChangeBlock.includes(currentBlock)) {
     return editorState;
   }
-  
+
   const selection = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
   const block = contentState.getBlockForKey(selection.getStartKey());
   let temBlockType = '';
 
-  if (blockType === 'ordered-list-item' || blockType === 'unordered-list-item') {
-    temBlockType = blockType;
-  } else {
-    return;
-  }
-
   // Cập nhật blockType của block
-  const newContentStateWithBlockType = Modifier.setBlockType(contentState, selection, temBlockType);
+  const newContentStateWithBlockType = updateBlockType({ editorState, blockType: blockType })
+  const newContentStateWithBlockStyle = updateBlockStyle({ editorState: newContentStateWithBlockType, blockStyle: blockStyle })
 
-  // Cập nhật dữ liệu tùy chỉnh của block với listType và depth
-  const newBlockData = newContentStateWithBlockType.getBlockForKey(block.getKey()).getData().merge({
-    listType,
-    fontFamily,
-    fontSize,
-    fontColor,
-    backgroundColor,
-  });
-
-  const newBlockWithDepth = newContentStateWithBlockType.getBlockForKey(block.getKey()).merge({
-    depth: depth,
-    data: newBlockData,
-  });
-
-  const blockMap = newContentStateWithBlockType.getBlockMap().set(block.getKey(), newBlockWithDepth);
-  const newContentState = newContentStateWithBlockType.merge({
-    blockMap: blockMap,
-  });
-
-  return EditorState.push(editorState, newContentState, 'adjust-depth');
+  return newContentStateWithBlockStyle
 };
 
 const ListType = ({ editorState, setEditorState }) => {
   const selection = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
   const block = contentState.getBlockForKey(selection.getStartKey());
-  const depth = block.getDepth();
-  const listTypeTemp = block.getData().get('listType');
-  const fontFamily = block.getData().get('fontFamily');
-  const fontSize = block.getData().get('fontSize');
-  const fontColor = block.getData().get('fontColor');
-  const backgroundColor = block.getData().get('backgroundColor');
-  const [selectedDepth, setSelectedDepth] = useState('0');
-  const [selectedListType, setSelectedListType] = useState('None');
-  const [selectedFontFamily, setSelectedFontFamily] = useState('Arial');
-  const [selectedFontSize, setSelectedFontSize] = useState('12pt');
-  const [selectedFontColor, setSelectedFontColor] = useState('black');
-  const [selectedBackgroundColor, setSelectedBackgroundColor] = useState('white');
+
+  if (!selection || !contentState || !block) {
+    return
+  }
+  // lấy type của block
+  const blockType = block.getType();
+  const blockStyle = block.getData().get('blockStyle')
+  const [selectedBlockStyle, setSelectedselectedBlockStyle] = useState(undefined);
 
   useEffect(() => {
-    setSelectedDepth(depth);
-    setSelectedListType(listTypeTemp);
-    setSelectedFontFamily(fontFamily);
-    setSelectedFontSize(fontSize);
-    setSelectedFontColor(fontColor);
-    setSelectedBackgroundColor(backgroundColor);
-  }, [depth, listTypeTemp, fontFamily, fontSize, fontColor, backgroundColor]);
+    const blockStyleJS = blockStyle ? blockStyle.toJS() : {};
+    setSelectedselectedBlockStyle(blockStyleJS);
+  }, [blockStyle]);
 
-  const handledOnChange = ({ depth, listType, fontFamily, fontSize, fontColor, backgroundColor, blockListType }) => {
-    if (!blockListType || !listType) {
+  const handledOnChange = ({ blockStyle, blockType }) => {
+    if (!blockType) {
       return;
     } else {
-      const newState = toggleListItem({ editorState, depth, listType, fontFamily, fontSize, fontColor, backgroundColor, blockType: blockListType });
+      const newState = toggleListItem({ editorState, blockStyle, blockType });
       setEditorState(newState);
     }
   };
@@ -146,12 +117,8 @@ const ListType = ({ editorState, setEditorState }) => {
       <ListTypeForm
         orderedListType={orderedListType}
         unorderedListType={unorderedListType}
-        currentDepth={selectedDepth}
-        currentListType={selectedListType}
-        currentFontFamily={selectedFontFamily}
-        currentFontSize={selectedFontSize}
-        currentFontColor={selectedFontColor}
-        currentBackgroundColor={selectedBackgroundColor}
+        currentStyle={selectedBlockStyle}
+        currentBlockType={blockType}
         onChange={handledOnChange}
       ></ListTypeForm>
     </div>
@@ -160,100 +127,141 @@ const ListType = ({ editorState, setEditorState }) => {
 
 export default ListType;
 
-const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, currentListType, currentFontFamily, currentFontSize, currentFontColor, currentBackgroundColor, onChange }) => {
-  const listType = [...orderedListType2, ...unorderedListType2];
-  const [selectedDepth, setSelectedDepth] = useState(0);
-  const [selectedListType, setSelectedListType] = useState('None');
-  const [selectedFontFamily, setSelectedFontFamily] = useState('Arial');
-  const [selectedFontSize, setSelectedFontSize] = useState('12pt');
-  const [selectedFontColor, setSelectedFontColor] = useState('none');
-  const [selectedBackgroundColor, setSelectedBackgroundColor] = useState('none');
 
+const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, currentBlockType, onChange }) => {
+  const listType = [...orderedListType2, ...unorderedListType2];
+  const initialStyle = {
+    marginLeft: "none",
+    listType: "Decimal",
+    fontFamily: "Arial",
+    fontSize: "12pt",
+    fontColor: "none",
+    backgroundColor: "none",
+    ...currentStyle,
+  }
+
+  const isListBlock = () => {
+    if (currentBlockType === 'unordered-list-item' || currentBlockType === 'ordered-list-item') {
+      return true
+    } else {
+      return false
+    }
+  }
+
+
+
+  // let blockType = '';
   const findBlockType = () => {
-    let blockType = 'unordered-list-item';
-    if (orderedListType.includes(selectedListType)) {
+    let blockType = 'ordered-list-item';
+    if (orderedListType.includes(selectedType.listType)) {
       blockType = 'ordered-list-item';
-    } else if (unorderedListType.includes(selectedListType)) {
+    } else if (unorderedListType.includes(selectedType.listType)) {
       blockType = 'unordered-list-item';
     } else {
-      blockType = null;
+      // blockType = currentBlockType;
     }
     return blockType;
   };
 
+  const [selectedType, setSelectedType] = useState(initialStyle);
+  const [selectedIsList, setSelectedIsList] = useState(isListBlock());
+  const [blockType, setBlockType] = useState(findBlockType());
   useEffect(() => {
-    if (!currentDepth) {
-      setSelectedDepth(0);
+    if (selectedIsList === true) {
+      const newblockType = findBlockType();
+      setBlockType(newblockType)
     } else {
-      setSelectedDepth(currentDepth);
+      setBlockType(currentBlockType)
     }
 
-    if (!currentListType) {
-      setSelectedListType('None');
-    } else {
-      setSelectedListType(currentListType);
-    }
+  }, [selectedType, selectedIsList]);
 
-    if (!currentFontFamily) {
-      setSelectedFontFamily('Arial');
-    } else {
-      setSelectedFontFamily(currentFontFamily);
-    }
 
-    if (!currentFontSize) {
-      setSelectedFontSize('12pt');
+  useEffect(() => {
+    if (!currentStyle) {
+      setSelectedType(initialStyle);
     } else {
-      setSelectedFontSize(currentFontSize);
+      setSelectedType(currentStyle);
     }
+  }, [currentStyle]);
 
-    if (!currentFontColor) {
-      setSelectedFontColor('none');
-    } else {
-      setSelectedFontColor(currentFontColor);
-    }
-
-    if (!currentBackgroundColor) {
-      setSelectedBackgroundColor('none');
-    } else {
-      setSelectedBackgroundColor(currentBackgroundColor);
-    }
-  }, [currentDepth, currentListType, currentFontFamily, currentFontSize, currentFontColor, currentBackgroundColor]);
-
-  const blockType = findBlockType();
 
   const handleDepthChange = (e) => {
     if (!blockType) {
       return;
     }
-    setSelectedDepth(Number(e.target.value));
-    onChange({ depth: Number(e.target.value), listType: selectedListType, blockListType: blockType, fontFamily: selectedFontFamily, fontSize: selectedFontSize, fontColor: selectedFontColor, backgroundColor: selectedBackgroundColor });
+    const blockStyle = {
+      ...selectedType,
+      marginLeft: `${Number(e.target.value) * 10}px`
+    }
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
 
   const handleListTypeChange = (e) => {
-    const listType = e.target.value;
-    setSelectedListType(e.target.value);
-    onChange({ depth: selectedDepth, listType: listType, blockListType: blockType, fontFamily: selectedFontFamily, fontSize: selectedFontSize, fontColor: selectedFontColor, backgroundColor: selectedBackgroundColor });
+    if (!blockType) {
+      return;
+    }
+    const blockStyle = {
+      ...selectedType,
+      listType: e.target.value
+    }
+    console.log("blockStyle", blockStyle)
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
 
   const handleFontFamilyChange = (e) => {
-    setSelectedFontFamily(e.target.value);
-    onChange({ depth: selectedDepth, listType: selectedListType, blockListType: blockType, fontFamily: e.target.value, fontSize: selectedFontSize, fontColor: selectedFontColor, backgroundColor: selectedBackgroundColor });
+    if (!blockType) {
+      return;
+    }
+    const blockStyle = {
+      ...selectedType,
+      fontFamily: e.target.value
+    }
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
 
   const handleFontSizeChange = (e) => {
-    setSelectedFontSize(e.target.value);
-    onChange({ depth: selectedDepth, listType: selectedListType, blockListType: blockType, fontFamily: selectedFontFamily, fontSize: e.target.value, fontColor: selectedFontColor, backgroundColor: selectedBackgroundColor });
+    if (!blockType) {
+      return;
+    }
+    const blockStyle = {
+      ...selectedType,
+      fontSize: e.target.value
+    }
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
 
   const handleFontColorChange = (e) => {
-    setSelectedFontColor(e.target.value);
-    onChange({ depth: selectedDepth, listType: selectedListType, blockListType: blockType, fontFamily: selectedFontFamily, fontSize: selectedFontSize, fontColor: e.target.value, backgroundColor: selectedBackgroundColor });
+    if (!blockType) {
+      return;
+    }
+    const blockStyle = {
+      ...selectedType,
+      fontColor: e.target.value
+    }
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
 
   const handleFontBackgroundColorChange = (e) => {
-    setSelectedBackgroundColor(e.target.value);
-    onChange({ depth: selectedDepth, listType: selectedListType, blockListType: blockType, fontFamily: selectedFontFamily, fontSize: selectedFontSize, fontColor: selectedFontColor, backgroundColor: e.target.value });
+    if (!blockType) {
+      return;
+    }
+    const blockStyle = {
+      ...selectedType,
+      backgroundColor: e.target.value
+    }
+    setSelectedType(blockStyle)
+    onChange({ blockStyle, blockType });
   };
+
+  const handleIsListChange = (e) => {
+    setSelectedIsList(e.target.checked)
+  }
 
   return (
     <div className={styles.container}>
@@ -262,7 +270,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
           <tr>
             <td>Level:</td>
             <td>
-              <select id="depthSelect" value={selectedDepth} onChange={handleDepthChange} style={{ borderRadius: '6px' }}>
+              <select id="depthSelect" value={selectedType.marginLeft} onChange={handleDepthChange} style={{ borderRadius: '6px' }}>
                 {depthOptions.map((depth) => (
                   <option key={depth} value={depth}>
                     {depth}
@@ -274,7 +282,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
           <tr>
             <td>Item Type:</td>
             <td>
-              <select id="listTypeSelect" value={selectedListType} onChange={handleListTypeChange} style={{ borderRadius: '6px' }}>
+              <select id="listTypeSelect" value={selectedType.listType} onChange={handleListTypeChange} style={{ borderRadius: '6px' }}>
                 {listType.map((type, index) => (
                   <option key={index} value={type.name}>
                     {type.symbol}
@@ -286,7 +294,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
           <tr>
             <td>Font Family:</td>
             <td>
-              <select id="fontFamilySelect" value={selectedFontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: selectedFontFamily, borderRadius: '6px' }}>
+              <select id="fontFamilySelect" value={selectedType.fontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: selectedType.fontFamily, borderRadius: '6px' }}>
                 {fontFamilyOptions.map((font, index) => (
                   <option key={index} value={font} style={{ fontFamily: font }}>
                     {font}
@@ -298,7 +306,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
           <tr>
             <td>Font Size: </td>
             <td>
-              <select id="fontSizeSelect" value={selectedFontSize} onChange={handleFontSizeChange} style={{ borderRadius: '6px' }}>
+              <select id="fontSizeSelect" value={selectedType.fontSize} onChange={handleFontSizeChange} style={{ borderRadius: '6px' }}>
                 {fontSizeOptions.map((size, index) => (
                   <option key={index} value={size}>
                     {size}
@@ -312,10 +320,10 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
             <td>
               <select
                 id="fontColor"
-                value={selectedFontColor}
+                value={selectedType.fontColor}
                 onChange={handleFontColorChange}
                 style={{
-                  backgroundColor: selectedFontColor !== 'none' ? selectedFontColor : 'transparent',
+                  backgroundColor: selectedType.fontColor !== 'none' ? selectedType.fontColor : 'transparent',
                   borderRadius: '6px',
                 }}
               >
@@ -332,10 +340,10 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
             <td>
               <select
                 id="backgroundColor"
-                value={selectedBackgroundColor}
+                value={selectedType.backgroundColor}
                 onChange={handleFontBackgroundColorChange}
                 style={{
-                  backgroundColor: selectedBackgroundColor !== 'none' ? selectedBackgroundColor : 'transparent',
+                  backgroundColor: selectedType.backgroundColor !== 'none' ? selectedType.backgroundColor : 'transparent',
                   borderRadius: '6px',
                 }}
               >
@@ -347,6 +355,20 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentDepth, curren
               </select>
             </td>
           </tr>
+
+          <tr>
+            <td>List:</td>
+            <td>
+              {/* tạo nút checkbox cho  selectedIsList */}
+              <input
+                type="checkbox"
+                checked={selectedIsList}
+                onChange={handleIsListChange}
+                disabled={selectedIsList}
+              />
+            </td>
+          </tr>
+
         </tbody>
       </table>
     </div>

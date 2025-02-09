@@ -1,5 +1,6 @@
 import React from 'react';
 import { EditorState, Modifier } from 'draft-js';
+import updateBlockStyle from '../../../utilities/updateBlockStyle'
 import styles from './TextAlign.module.scss';
 import leftIcon from './textalignLeft.svg'
 import rightIcon from './textalignRight.svg'
@@ -11,15 +12,9 @@ import justifyIcon from './textalignJustify.svg'
 
 // Hàm cập nhật thuộc tính dữ liệu tùy chỉnh `textAlign` của block
 const toggleTextAlign = (editorState, alignment) => {
-  const selection = editorState.getSelection();
-  const contentState = editorState.getCurrentContent();
-  const block = contentState.getBlockForKey(selection.getStartKey());
-
-  // Cập nhật dữ liệu tùy chỉnh của block
-  const newBlockData = block.getData().set('textAlign', alignment);
-  const newContentState = Modifier.setBlockData(contentState, selection, newBlockData);
-
-  return EditorState.push(editorState, newContentState, 'change-block-data');
+  const blockStyle = {textAlign:alignment}
+  const newContentState = updateBlockStyle({editorState,blockStyle})
+  return newContentState;
 };
 
 // Component TextAlign
@@ -31,7 +26,7 @@ const TextAlign = ({ editorState, setEditorState }) => {
   // lay ra data textAlign của Block
   let blockTextAlign = ''
   try {
-    blockTextAlign = currentBlock.getData().get('textAlign');
+    blockTextAlign = currentBlock.getData().getIn(['blockStyle', 'textAlign']);
   } catch (error) {
     blockTextAlign = ''
   }

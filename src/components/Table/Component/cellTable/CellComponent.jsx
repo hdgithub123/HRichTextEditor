@@ -40,13 +40,14 @@ const CellComponent = props => {
         blockProps: { editorRef },
     } = props;
     const text = block.getText();
+    const blockStyle = block.getData().get('blockStyle');
     if (block.getData().get('cellPosition')) {
         const position = block.getData().get('cellPosition');
         const target = editorRef?.editor.querySelector(`[cell-position='${position}']`);
         if (target) {
             // khoi 1
             const content = text.trim() === '' ? '\u00A0' : text; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
-            return createPortal(<div className='cellTable'>
+            return createPortal(<div style={blockStyle}>
                 <EditorBlock {...props} block={block.set('text', content)} />
             </div>, target);
         }
