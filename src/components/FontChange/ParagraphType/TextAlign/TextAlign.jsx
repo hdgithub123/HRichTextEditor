@@ -29,7 +29,15 @@ const TextAlign = ({ editorState, setEditorState }) => {
   const blockKey = selection.getStartKey();
   const currentBlock = currentContent.getBlockForKey(blockKey);
   // lay ra data textAlign của Block
-  const blockTextAlign = currentBlock.getData().get('textAlign');
+  let blockTextAlign = ''
+  try {
+    blockTextAlign = currentBlock.getData().get('textAlign');
+  } catch (error) {
+    blockTextAlign = ''
+  }
+
+
+
 
   const handleTextAlign = (alignment) => {
     const newState = toggleTextAlign(editorState, alignment);

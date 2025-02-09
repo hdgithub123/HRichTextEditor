@@ -45,8 +45,8 @@ const _LINEHEIGHT = [
 
 
 const _NOTCHANGEBLOCK = [
-    'TableBlock',
-    'CellBlock',
+    'tableStructure',
+    'cellTable',
     // 'blockquote',
 ]
 

@@ -83,6 +83,9 @@ const blockStyleFn = (contentBlock) => {
         className += ` ${styles[`line-height-${sanitizedLineHeight}`]}`;
     }
 
+    if (type === 'cellTable') {
+        return styles.cellTableStyle
+      }
 
 
     return className;

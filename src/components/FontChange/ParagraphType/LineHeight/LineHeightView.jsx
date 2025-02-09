@@ -27,7 +27,14 @@ const LineHeightView = ({ editorState, setEditorState }) => {
     const blockKey = selection.getStartKey();
     const currentBlock = currentContent.getBlockForKey(blockKey);
     // lay ra data textAlign của Block
-    const blockLineHeight = currentBlock.getData().get('lineHeight');
+    let blockLineHeight = 'normal'
+
+    try {
+      blockLineHeight = currentBlock.getData().get('lineHeight');
+    } catch (error) {
+      blockLineHeight = 'normal'
+    }
+
 
     const handleLineHeight = (height) => {
         const newState = toggleLineHeight(editorState, height);

@@ -14,8 +14,13 @@ import FontLowercase from './FontLowercase/FontLowercase';
 const FontType = ({ editorState, setEditorState }) => {
 
     const getCurrentTypeOfStyle = (style) => {
+      try {
         const currentStyle = editorState.getCurrentInlineStyle();
         return currentStyle.has(style);
+      } catch (error) {
+        return false;
+      }
+        
       };
     
       const handleClickTypeOfStyle = (style) => {

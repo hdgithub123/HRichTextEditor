@@ -5,10 +5,17 @@ import { _COLORS } from '../../_constant/_constant'
 const COLORS = _COLORS
 const FontBackGroundColorView = ({ editorState, setEditorState }) => {
     const getCurrentBackGroundColor = () => {
-        const currentStyle = editorState.getCurrentInlineStyle();
+        try {
+            const currentStyle = editorState.getCurrentInlineStyle();
         const bgColorStyles = Array.from(currentStyle).filter(style => style.startsWith('backgroundColor.'));
         const lastBgColorStyle = bgColorStyles.length > 0 ? bgColorStyles[bgColorStyles.length - 1] : null;
         return lastBgColorStyle ? lastBgColorStyle.split('.')[1] : 'white'; // Default to white if no background color is selected
+        } catch (error) {
+            return 'white';
+        }
+
+
+        
     };
 
     const handleSelectBackGroundColor = (color) => {
