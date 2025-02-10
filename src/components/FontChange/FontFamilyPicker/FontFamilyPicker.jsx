@@ -67,6 +67,7 @@ const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
         type="text"
         placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."}
         value={query}
+        title='Font Family'
         onChange={handleInputChange}
         className={styles.input}
         style={{ fontFamily: selectedFont }}

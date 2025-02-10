@@ -31,7 +31,7 @@ const DeleteBlockStyle = ({ editorState, setEditorState }) => {
 
   return (
     <button className={styles.button} onMouseDown={handleClick}>
-      <img src={ImageIcon} alt='Clear Style' title='Clear Style' className={`${styles.img} ${active}`} />
+      <img src={ImageIcon} alt='Clear Block Style' title='Clear Block Style' className={`${styles.img} ${active}`} />
     </button>
 
   );

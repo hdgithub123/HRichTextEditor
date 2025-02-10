@@ -62,6 +62,7 @@ const FontSizePicker = ({ sizes, currentSize, onSelectSize }) => {
         type="text"
         placeholder={selectedSize ? `${selectedSize}pt...` : "Search sizes..."} // Sửa dòng này
         value={query}
+        title='Font size'
         onChange={handleInputChange}
         className={styles.input}
         onClick={handleClick} 

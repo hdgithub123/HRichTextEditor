@@ -10,7 +10,7 @@ import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genK
 import getBlockRendererFn from './getBlockRendererFn';
 import ToolbarsEditor from './ToolbarsEditor';
 
-const HEditor = () => {
+const HRichTextEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const editor = useRef(null);
   const selectionStateRef = useRef(null);
@@ -39,26 +39,30 @@ const HEditor = () => {
     }
   };
 
-    const handleReturn = (e, editorState) => {
-        if (RichUtils.getCurrentBlockType(editorState) === 'cellTable') {
-            onChange(RichUtils.insertSoftNewline(editorState));
-            return 'handled';
-        }
-        return 'not-handled';
-    };
+  const handleReturn = (e, editorState) => {
+    if (RichUtils.getCurrentBlockType(editorState) === 'cellTable') {
+      onChange(RichUtils.insertSoftNewline(editorState));
+      return 'handled';
+    }
+    return 'not-handled';
+  };
 
   return (
     <div
-    // onBlur={handleBlur}
-    // onFocus={handleFocus}
+      // onBlur={handleBlur}
+      // onFocus={handleFocus}
       // style={{width: '500px', padding: '20px'}}
-      style={{border: '1px black solid'}}
+      // style={{ border: '1px black solid' }}
     >
-      <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} onChange={onChange}></ToolbarsEditor>
+      <div style={{ border: '2px black solid' , borderRadius: '5px',padding: '5px'}}>
+        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} onChange={onChange}></ToolbarsEditor>
+      </div>
+
       <div
         onBlur={handleBlur}
         onFocus={handleFocus}
         className={editorStyle.editorContainer}
+        style={{ border: '2px black solid' , borderRadius: '5px', padding: '0px'}}
       >
         <div
           className={removeStyle.editorRemove}
@@ -70,7 +74,7 @@ const HEditor = () => {
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}
-            blockRendererFn={getBlockRendererFn({editorRef: editor.current, getEditorState:() => editorState, onChange:onChange})}
+            blockRendererFn={getBlockRendererFn({ editorRef: editor.current, getEditorState: () => editorState, onChange: onChange })}
             handleReturn={(e, editorState) => handleReturn(e, editorState)}
           // className={editorStyle.editor}
           />
@@ -81,4 +85,4 @@ const HEditor = () => {
   );
 };
 
-export default HEditor;
+export default HRichTextEditor;

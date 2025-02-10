@@ -94,8 +94,8 @@ const ListType = ({ editorState, setEditorState }) => {
   // lấy type của block
   const blockType = block.getType();
   const blockStyle = block.getData().get('blockStyle')
-  const [selectedBlockStyle, setSelectedselectedBlockStyle] = useState(undefined);
-
+  const [selectedBlockStyle, setSelectedBlockStyle] = useState(undefined);
+  
   useEffect(() => {
     let blockStyleJS = {};
     try {
@@ -103,8 +103,10 @@ const ListType = ({ editorState, setEditorState }) => {
     } catch (error) {
       blockStyleJS = blockStyle;
     }
-    setSelectedselectedBlockStyle(blockStyleJS);
+    setSelectedBlockStyle(blockStyleJS);
   }, [blockStyle]);
+
+
 
   const handledOnChange = ({ blockStyle, blockType }) => {
     if (!blockType) {
@@ -152,19 +154,6 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
   }
 
 
-  // let blockType = '';
-  const findBlockType = () => {
-    let blockType = 'ordered-list-item';
-    if (orderedListType.includes(selectedType.listType)) {
-      blockType = 'ordered-list-item';
-    } else if (unorderedListType.includes(selectedType.listType)) {
-      blockType = 'unordered-list-item';
-    } else {
-      // blockType = currentBlockType;
-    }
-    return blockType;
-  };
-
 const checkAcvticeBlock = () => {
   if (notChangeBlock.includes(currentBlockType)) {
    return false;
@@ -173,25 +162,26 @@ const checkAcvticeBlock = () => {
   }
 }
 
-  
 
 
+const findBlockType = (listType) => {
+  let blockType = 'unordered-list-item';
+  if (orderedListType.includes(listType)) {
+    blockType = 'ordered-list-item';
+  } 
+  else if (unorderedListType.includes(listType)) {
+    blockType = 'unordered-list-item';
+  } else {
+    // blockType = currentBlockType;
+  }
+
+  return blockType;
+};
 
   const [selectedType, setSelectedType] = useState(initialStyle);
   const [selectedIsList, setSelectedIsList] = useState(isListBlock());
-  const [blockType, setBlockType] = useState(findBlockType());
+  const [blockType, setBlockType] = useState(findBlockType(initialStyle.listType));
   const [selectedListType, setSelectedListType] = useState(initialStyle.listType);
-
-  useEffect(() => {
-    if (selectedIsList === true) {
-      const newblockType = findBlockType();
-      setBlockType(newblockType)
-    } else {
-      setBlockType(currentBlockType)
-    }
-
-  }, [selectedType, selectedIsList]);
-
 
   useEffect(() => {
     if (!currentStyle) {
@@ -202,6 +192,11 @@ const checkAcvticeBlock = () => {
       setSelectedListType(currentStyle.listType);
     }
   }, [currentStyle]);
+
+
+  useEffect(() => {
+    setBlockType
+  }, [findBlockType()]);
 
 
   const handleMarginLeftChange = (e) => {
@@ -224,10 +219,10 @@ const checkAcvticeBlock = () => {
       ...selectedType,
       listType: e.target.value
     }
+    const blockType2 = findBlockType(e.target.value);
+    onChange({ blockStyle, blockType: blockType2 });
     setSelectedType(blockStyle)
-    console.log("selectedListType", selectedListType)
-    // setSelectedListType(e.target.value)
-    onChange({ blockStyle, blockType });
+  
   };
 
   const handleFontFamilyChange = (e) => {
@@ -316,7 +311,7 @@ const checkAcvticeBlock = () => {
           <tr>
             <td>Item Type:</td>
             <td>
-              <select id="listTypeSelect" value={selectedListType} disabled={checkAcvticeBlock()? !checkAcvticeBlock(): true} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
+              <select id="listTypeSelect" value={selectedListType} disabled={selectedIsList && checkAcvticeBlock()? !checkAcvticeBlock():true} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
                 {listType.map((type, index) => (
                   <option key={index} value={type.name} disabled={!selectedIsList}>
                     {type.symbol}
