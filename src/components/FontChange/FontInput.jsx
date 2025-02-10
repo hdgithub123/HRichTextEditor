@@ -16,7 +16,7 @@ import Paragraph from './ParagraphType/CodeBlock/Paragraph/Paragraph';
 import Header from './ParagraphType/CodeBlock/Header/Header';
 import Unstyled from './ParagraphType/CodeBlock/Unstyled/Unstyled';
 
-import ListTypeView from './ParagraphType/ListType/ListTypeView';
+import BlockStyleView from './ParagraphType/BlockStyle/BlockStyleView';
 import LineHeightView from './ParagraphType/LineHeight/LineHeightView';
 import DeleteBlockStyle from './ParagraphType/DeleteBlockStyle/DeleteBlockStyle';
 
@@ -51,9 +51,12 @@ const FontInput = ({ editorState, setEditorState }) => {
         <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>
         <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>
       </div>
-      <Header editorState={editorState} setEditorState={setEditorState}></Header>
-      <ListTypeView editorState={editorState} setEditorState={setEditorState} />
-      <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
+        <Header editorState={editorState} setEditorState={setEditorState}></Header>
+        <BlockStyleView editorState={editorState} setEditorState={setEditorState} />
+        <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
+      </div>
+
 
     </div>
   );

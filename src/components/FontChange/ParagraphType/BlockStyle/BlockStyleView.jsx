@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import ListType from "./ListType";
+import BlockStyle from "./BlockStyle";
 import getCurrentBlock from './getCurrentBlock';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
-import styles from './ListTypeView.module.scss';
+import styles from './BlockStyleView.module.scss';
 import listIcon from './styleBlock.svg'
-import { _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
+import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
 
 const notChangeBlock = _NOTCHANGEBLOCK
 
-const ListTypeView = ({ editorState, setEditorState }) => {
+const BlockStyleView = ({ editorState, setEditorState }) => {
   const [active, setActive] = useState(styles.unactive);
   const [show, setShow] = useState(false);
   const [view, setView] = useState(true);
@@ -52,7 +52,7 @@ const ListTypeView = ({ editorState, setEditorState }) => {
       </button>
       {show && (
         <div className={styles.listTypeContainer}>
-          <ListType editorState={editorState} setEditorState={setEditorState} />
+          <BlockStyle editorState={editorState} setEditorState={setEditorState} />
         </div>
       )}
     </div>
@@ -63,4 +63,4 @@ const ListTypeView = ({ editorState, setEditorState }) => {
       );
 };
 
-export default ListTypeView;
+export default BlockStyleView;

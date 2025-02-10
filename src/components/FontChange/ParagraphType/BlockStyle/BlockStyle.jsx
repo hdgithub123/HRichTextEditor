@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
-import styles from './ListType.module.scss';
-import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK,_MARGINS } from '../../../../components/_constant/_constant';
+import styles from './BlockStyle.module.scss';
+import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK,_MARGINS } from '../../../_constant/_constant';
 import getCurrentBlock from './getCurrentBlock';
 import updateBlockStyle from '../../../utilities/updateBlockStyle'
 import updateBlockType from '../../../utilities/updateBlockType'
@@ -83,7 +83,7 @@ const toggleListItem = ({ editorState, blockStyle, blockType }) => {
   return newContentStateWithBlockStyle
 };
 
-const ListType = ({ editorState, setEditorState }) => {
+const BlockStyle = ({ editorState, setEditorState }) => {
   const selection = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
   const block = contentState.getBlockForKey(selection.getStartKey());
@@ -119,21 +119,21 @@ const ListType = ({ editorState, setEditorState }) => {
 
   return (
     <div>
-      <ListTypeForm
+      <BlockStyleForm
         orderedListType={orderedListType}
         unorderedListType={unorderedListType}
         currentStyle={selectedBlockStyle}
         currentBlockType={blockType}
         onChange={handledOnChange}
-      ></ListTypeForm>
+      ></BlockStyleForm>
     </div>
   );
 };
 
-export default ListType;
+export default BlockStyle;
 
 
-const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, currentBlockType, onChange }) => {
+const BlockStyleForm = ({ orderedListType, unorderedListType, currentStyle, currentBlockType, onChange }) => {
   const listType = [...orderedListType2, ...unorderedListType2];
   const initialStyle = {
     marginLeft: "none",
