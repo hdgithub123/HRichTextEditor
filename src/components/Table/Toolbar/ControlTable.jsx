@@ -53,7 +53,7 @@ const ControlTable = ({ editorState, onChange }) => {
     return (
         <div ref={ref} className={styles.tableContainer}>
             <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
-                <img src={imageIcon} alt="Table Edit" title="Table Edit" className={`${styles.img} ${active}`} />
+                <img src={imageIcon} alt="Edit Table" title="Edit Table" className={`${styles.img} ${active}`} />
             </button>
             {show && <div className={styles.controlTable}>
                 <button onClick={() => getMergecell({ editorState: editorState, onChange })}>
