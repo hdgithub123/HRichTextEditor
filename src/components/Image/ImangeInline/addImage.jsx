@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 
 
-const addImageInline = ({editorState, imageInfo}) => {
+const addImageInline = ({editorState,setEditorState, imageInfo}) => {
   const { url, width, height, unit, styleImage } = imageInfo;
   const contentState = editorState.getCurrentContent();
   const contentStateWithEntity = contentState.createEntity(
@@ -45,7 +45,7 @@ const addImageInline = ({editorState, imageInfo}) => {
     'insert-characters'
   );
 
-  return newEditorState;
+  setEditorState(newEditorState) ;
 };
 
 export default addImageInline;

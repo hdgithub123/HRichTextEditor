@@ -6,49 +6,85 @@ import addImage from './addImage';
 import updateImageInline from './updateImageInline';
 
 
+const newEditorState = ({editorState,onImageSizeChange}) => {
+
+    // const onImageSizeChange = (imageinfo) => {
+    //     // setEntityImage(imageinfo.entityKey);
+    //     // setSizeImage(imageinfo.size);
+
+    //     const {height, width, unit} = imageinfo.size;
+    //     const forcedEditorState = updateImageInline(imageinfo.entityKey, { height: height, width: width, unit: unit }, editorState);
+    //     // handleChange(forcedEditorState);
+    //     return forcedEditorState;
+    // }
+
+    const decorator = createDecorator({editorState, onImageSizeChange});
+    const newEditorState = EditorState.set(editorState, { decorator });
+
+
+    return newEditorState;
+
+    
+}
+
 
 const ImangeInlineEditor = () => {
     const [entityImage, setEntityImage] = useState(null)
     const [sizeImage, setSizeImage] = useState(null)
 
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
-    useEffect(() => {
-        const decorator = createDecorator({editorState, onImageSizeChange});
-        const newEditorState = EditorState.set(editorState, { decorator });
-        setEditorState(newEditorState);
-    }, []);
 
-    const handleChange = (newEditorState) => {
-        setEditorState(newEditorState);
-    };
+     const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    
+  
 
-    const onImageSizeChange = (imageinfo) => {
+     const onImageSizeChange = (imageinfo) => {
         setEntityImage(imageinfo.entityKey);
         setSizeImage(imageinfo.size);
-        console.log(imageinfo);
     }
+
+    const editor2 = newEditorState({editorState,onImageSizeChange});
+
+    useEffect(() => {
+        setEditorState(editor2);
+    }, []);
+
+
+    // useEffect(() => {
+    //     const decorator = createDecorator({editorState, onImageSizeChange});
+    //     const newEditorState = EditorState.set(editorState, { decorator });
+    //     setEditorState(newEditorState);
+    // }, []);
+
+    // const handleChange = (newEditorState) => {
+    //     setEditorState(newEditorState);
+    // };
+
+
 
 
     useEffect(() => {
         if (entityImage && sizeImage) {
             const {height, width, unit} = sizeImage;
             const forcedEditorState = updateImageInline(entityImage, { height: height, width: width, unit: unit }, editorState);
-            handleChange(forcedEditorState);
+            // handleChange(forcedEditorState);
+            setEditorState(forcedEditorState);
           } else {
             console.error('No entityImage set');
           }
     }, [entityImage, sizeImage])
 
+    
+
     const handleAddFixImage = () => {
         const url = 'https://24hstore.vn/upload_images/images/Hinh-nen-meo/hinh-nen-meo-cute-dep-ngau-1.jpg';
-        const newEditorState = addImage({editorState, imageInfo: {url, width: '100', height: '100', unit: 'mm', styleImage:{objectFit:'contain'}}});
-        setEditorState(newEditorState);
+        addImage({editorState,setEditorState, imageInfo: {url, width: '100', height: '100', unit: 'mm', styleImage:{objectFit:'contain'}}});
+        // setEditorState(newEditorState);
     }
 
     const handleAddNoneFixImage = () => {
         const url = 'https://24hstore.vn/upload_images/images/Hinh-nen-meo/hinh-nen-meo-cute-dep-ngau-1.jpg';
-        const newEditorState = addImage({editorState, imageInfo:{url, width: '100', height: '100', unit: 'px', styleImage:{objectFit:'fill'}}});
-        setEditorState(newEditorState);
+        addImage({editorState,setEditorState, imageInfo:{url, width: '100', height: '100', unit: 'px', styleImage:{objectFit:'fill'}}});
+        // setEditorState(newEditorState);
     }
 
     const handleUpdateImage = () => {
@@ -62,7 +98,7 @@ const ImangeInlineEditor = () => {
     }
 
     return <div>
-        <Editor editorState={editorState} onChange={handleChange} />;
+        <Editor editorState={editorState} onChange={setEditorState} />;
          {/* viết component để in sert 1 ảnh vào editor */}
          <button onClick={handleAddFixImage}>Add fix Image</button>
          <button onClick={handleAddNoneFixImage}>Add NonFix Image</button>

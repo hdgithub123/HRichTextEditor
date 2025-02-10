@@ -1,18 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { EditorState } from 'draft-js';
 
-import { set } from 'lodash';
 import styles from './ImageBlockComponent.module.css'
-import pxToUnit from './pxToUnit';
-const dataImage = {
-    url: 'https://via.placeholder.com/150',
-    width: 150,
-    height: 150,
-    unit: 'px',
-    styleImage: {
-        objectFit: 'contain',
-    },
-}
+import pxToUnit from './function/pxToUnit';
+
 
 const ImageBlockComponent = props => {
     const image = useRef(null);
@@ -49,11 +40,6 @@ const ImageBlockComponent = props => {
     setThisStyleImage(styleImage);
   }, [url, width, height, unit,styleImage]);
 
-  console.log('url', url);
-    console.log('width', width);
-    console.log('height', height);
-    console.log('unit', unit);
-    console.log('styleImage', styleImage);
 
     const updateBlockData = useCallback(
         (newData = {}, data = block.getData()) => {

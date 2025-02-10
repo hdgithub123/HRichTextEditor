@@ -1,6 +1,6 @@
 import TableStructureComponent from '../Table/Component/tableStructure/TableStructureComponent';
 import CellComponent from '../Table/Component/cellTable/CellComponent';
-
+import ImageBlockComponent from '../Image/ImageBlock/ImageBlockComponent';
 
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
     const type = block.getType();
@@ -24,6 +24,16 @@ const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable })
                 },
             };
 
+        case 'IMAGE_BLOCK':
+            return {
+                component: ImageBlockComponent,
+                editable: false,
+                props: {
+                    editorRef,
+                    getEditorState,
+                    onChange,
+                },
+            };
         case 'unstyled':
         case 'paragraph':
         case 'header-one':
