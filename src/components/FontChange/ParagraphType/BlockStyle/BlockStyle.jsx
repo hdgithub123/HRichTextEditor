@@ -140,7 +140,7 @@ const BlockStyleForm = ({ orderedListType, unorderedListType, currentStyle, curr
     listType: "None",
     fontFamily: "Arial",
     fontSize: "12pt",
-    fontColor: "none",
+    color: "none",
     backgroundColor: "none",
     ...currentStyle,
   }
@@ -255,7 +255,7 @@ const findBlockType = (listType) => {
     }
     const blockStyle = {
       ...selectedType,
-      fontColor: e.target.value
+      color: e.target.value
     }
     setSelectedType(blockStyle)
     onChange({ blockStyle, blockType });
@@ -349,10 +349,10 @@ const findBlockType = (listType) => {
             <td>
               <select
                 id="fontColor"
-                value={selectedType.fontColor}
+                value={selectedType.color}
                 onChange={handleFontColorChange}
                 style={{
-                  backgroundColor: selectedType.fontColor !== 'none' ? selectedType.fontColor : 'transparent',
+                  backgroundColor: selectedType.color !== 'none' ? selectedType.color : 'transparent',
                   borderRadius: '3px',
                 }}
               >

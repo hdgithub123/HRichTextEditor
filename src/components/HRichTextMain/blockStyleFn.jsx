@@ -17,7 +17,7 @@ const blockStyleFn = (contentBlock) => {
     const listType = contentBlock.getData().getIn(['blockStyle', 'listType']);
     const fontFamily = contentBlock.getData().getIn(['blockStyle', 'fontFamily']);
     const fontSize = contentBlock.getData().getIn(['blockStyle', 'fontSize']);
-    const fontColor = contentBlock.getData().getIn(['blockStyle', 'fontColor']);
+    const fontColor = contentBlock.getData().getIn(['blockStyle', 'color']);
     const backgroundColor = contentBlock.getData().getIn(['blockStyle', 'backgroundColor']);
     const lineHeight = contentBlock.getData().getIn(['blockStyle', 'lineHeight']);
 
