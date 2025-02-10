@@ -70,19 +70,14 @@ const colorOptions = ['none', ..._COLORS];
 const notChangeBlock = _NOTCHANGEBLOCK
 
 const toggleListItem = ({ editorState, blockStyle, blockType }) => {
-  console.log("currentStyle toggle", blockStyle)
+  let temBlockType = {};
   const currentBlock = getCurrentBlock({ editorState });
   if (notChangeBlock.includes(currentBlock)) {
-    return editorState;
+    temBlockType = currentBlock;
+  } else {
+    temBlockType = blockType;
   }
-
-  const selection = editorState.getSelection();
-  const contentState = editorState.getCurrentContent();
-  const block = contentState.getBlockForKey(selection.getStartKey());
-  let temBlockType = '';
-
-  // Cập nhật blockType của block
-  const newContentStateWithBlockType = updateBlockType({ editorState, blockType: blockType })
+  const newContentStateWithBlockType = updateBlockType({ editorState, blockType: temBlockType })
   const newContentStateWithBlockStyle = updateBlockStyle({ editorState: newContentStateWithBlockType, blockStyle: blockStyle })
 
   return newContentStateWithBlockStyle
@@ -102,7 +97,12 @@ const ListType = ({ editorState, setEditorState }) => {
   const [selectedBlockStyle, setSelectedselectedBlockStyle] = useState(undefined);
 
   useEffect(() => {
-    const blockStyleJS = blockStyle ? blockStyle.toJS() : {};
+    let blockStyleJS = {};
+    try {
+      blockStyleJS = blockStyle ? blockStyle.toJS() : {};
+    } catch (error) {
+      blockStyleJS = blockStyle;
+    }
     setSelectedselectedBlockStyle(blockStyleJS);
   }, [blockStyle]);
 
@@ -151,21 +151,6 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
     }
   }
 
-  // const findListTypeSymbol = (currentStyle) => {
-  //   try {
-  //     if (currentStyle.listType) {
-  //       // tìm kiếm tại listType với name = currentStyle.listType và trả về symbol
-  //       const foundType = listType.find(type => type.name === currentStyle.listType)
-  //       console.log("foundType.symbol", foundType.symbol)
-  //       return foundType.symbol
-  //     } else {
-  //       return 'none'
-  //     }
-  //   } catch (error) {
-  //     return 'none'
-  //   }
-  // }
-
 
   // let blockType = '';
   const findBlockType = () => {
@@ -180,6 +165,16 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
     return blockType;
   };
 
+const checkAcvticeBlock = () => {
+  if (notChangeBlock.includes(currentBlockType)) {
+   return false;
+  } else {
+    return true;
+  }
+}
+
+  
+
 
 
   const [selectedType, setSelectedType] = useState(initialStyle);
@@ -187,7 +182,6 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
   const [blockType, setBlockType] = useState(findBlockType());
   const [selectedListType, setSelectedListType] = useState(initialStyle.listType);
 
-  console.log("initialStyle", initialStyle)
   useEffect(() => {
     if (selectedIsList === true) {
       const newblockType = findBlockType();
@@ -322,9 +316,9 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           <tr>
             <td>Item Type:</td>
             <td>
-              <select id="listTypeSelect" value={selectedListType} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
+              <select id="listTypeSelect" value={selectedListType} disabled={checkAcvticeBlock()? !checkAcvticeBlock(): true} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
                 {listType.map((type, index) => (
-                  <option key={index} value={type.name}>
+                  <option key={index} value={type.name} disabled={!selectedIsList}>
                     {type.symbol}
                   </option>
                 ))}
@@ -399,16 +393,14 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           <tr>
             <td>List Type:</td>
             <td>
-              {/* tạo nút checkbox cho  selectedIsList */}
               <input
                 type="checkbox"
                 checked={selectedIsList}
                 onChange={handleIsListChange}
-                disabled={selectedIsList}
+                disabled={selectedIsList? selectedIsList: !checkAcvticeBlock()}
               />
             </td>
           </tr>
-
         </tbody>
       </table>
     </div>

@@ -6,11 +6,9 @@ import extendedBlockRenderMap from './blockRenderMap';
 
 import editorStyle from './Editor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
-import FontInput from '../FontChange/FontInput';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import getBlockRendererFn from './getBlockRendererFn';
-import TableToolbar from '../Table/Toolbar/TableToolbar';
-
+import ToolbarsEditor from './ToolbarsEditor';
 
 const HEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -56,8 +54,7 @@ const HEditor = () => {
       // style={{width: '500px', padding: '20px'}}
       style={{border: '1px black solid'}}
     >
-      <FontInput editorState={editorState} setEditorState={setEditorState}></FontInput>
-      <TableToolbar editorState = {editorState} onChange={onChange}></TableToolbar>
+      <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} onChange={onChange}></ToolbarsEditor>
       <div
         onBlur={handleBlur}
         onFocus={handleFocus}

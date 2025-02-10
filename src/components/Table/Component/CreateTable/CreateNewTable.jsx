@@ -1,12 +1,20 @@
+import React, { useEffect, useState, useRef } from 'react';
 import { genKey } from "draft-js";
 import insertTableStructure from '../tableStructure/insertTableStructure';
 import insertCells from '../cellTable/insertCells';
 import { tableStyleDefault, cellStyleDefault } from './stylesTableDefault';
 import TableGrid from "./TableGrid";
+import styles from './CreateNewTable.module.scss';
+import imageIcon from './table.svg'
+import useOnClickOutside from '../../../utilities/useOnClickOutside';
+import getCurrentBlock from '../../../utilities/getCurrentBlock';
+import { _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
+
+const notChangeBlock = _NOTCHANGEBLOCK
 
 
 
-const CreateTable = async ({editorState, onChange, size, tablestyle , cellStyle, tableAlign})=>{
+const CreateTable = async ({ editorState, onChange, size, tablestyle, cellStyle, tableAlign }) => {
     const tableKey = genKey();
     const { cols, rows } = size;
 
@@ -30,29 +38,64 @@ const CreateTable = async ({editorState, onChange, size, tablestyle , cellStyle,
     }
 
     const dataTableStructure = {
-        tablestyle: tablestyle? tablestyle : tableStyleDefault,
-        cellStyle: cellStyle? cellStyle:  cellStyleDefault,
+        tablestyle: tablestyle ? tablestyle : tableStyleDefault,
+        cellStyle: cellStyle ? cellStyle : cellStyleDefault,
         tableShape: tableShape,
-        tableAlign: tableAlign? tableAlign : 'center',
+        tableAlign: tableAlign ? tableAlign : 'center',
         tableColumnWidth: {},
     };
-   
-    let newEditorState = await insertTableStructure(editorState,tableKey, dataTableStructure);
+
+    let newEditorState = await insertTableStructure(editorState, tableKey, dataTableStructure);
     if (!newEditorState) return editorState;
-    newEditorState =  await insertCells(newEditorState, cellsData);
+    newEditorState = await insertCells(newEditorState, cellsData);
     onChange(newEditorState);
 }
 
 
-const CreateNewTable = ({editorState, onChange, tablestyle , cellStyle, tableAlign}) => {
+const CreateNewTable = ({ editorState, onChange, tablestyle, cellStyle, tableAlign }) => {
+    const [active, setActive] = useState(styles.unactive);
+    const [show, setShow] = useState(false);
+    const [disabled, setDisabled] = useState(false);
+    const ref = useRef();
+    const currentBlock = getCurrentBlock({ editorState });
+
+    useEffect(() => {
+        if (currentBlock === "tableStructure" || currentBlock === "cellTable") {
+            setActive(styles.unactive)
+            setDisabled(true)
+        } else {
+            setActive(styles.active)
+            setDisabled(false)
+        }
+    }, [currentBlock]);
+
+
+
     const handleCellClick = (size) => {
-        CreateTable({editorState, onChange, size, tablestyle , cellStyle, tableAlign});
+        CreateTable({ editorState, onChange, size, tablestyle, cellStyle, tableAlign });
     }
-        return (
-            <div>
-                 <TableGrid handleSubmit={handleCellClick} maxGridSize={10} />
-            </div>
-        )
+
+    useOnClickOutside(ref, () => {
+        setShow(false);
+    });
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        setShow(true);
+    };
+
+
+    return (
+        <div ref={ref} className={styles.tableContainer}>
+            <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
+                <img src={imageIcon} alt="Create Table" title="Create Table" className={`${styles.img} ${active}`} />
+            </button>
+            {show && <div className={styles.tableGrid}>
+                <TableGrid handleSubmit={handleCellClick} maxGridSize={10} />
+            </div>}
+        </div>
+
+    )
 }
 
 

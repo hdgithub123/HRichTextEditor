@@ -3,7 +3,7 @@ import ListType from "./ListType";
 import getCurrentBlock from './getCurrentBlock';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import styles from './ListTypeView.module.scss';
-import listIcon from './unorderedList.svg'
+import listIcon from './styleBlock.svg'
 import { _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
 
 const notChangeBlock = _NOTCHANGEBLOCK
@@ -17,16 +17,22 @@ const ListTypeView = ({ editorState, setEditorState }) => {
 
 
   useEffect(() => {
-    if (notChangeBlock.includes(currentBlock)) {
-      setView(false)
-    } else{
-      setView(true)
-    }
-    if (currentBlock === "unordered-list-item" || currentBlock === "ordered-list-item") {
+    // if (notChangeBlock.includes(currentBlock)) {
+    //   setView(false)
+    // } else{
+    //   setView(true)
+    // }
+    // if (currentBlock === "unordered-list-item" || currentBlock === "ordered-list-item") {
+    //   setActive(styles.active)
+    // } else {
+    //   setActive(styles.unactive)
+    // }
+    if (currentBlock) {
       setActive(styles.active)
     } else {
       setActive(styles.unactive)
     }
+
   }, [currentBlock]);
 
   useOnClickOutside(ref, () => {
@@ -42,7 +48,7 @@ const ListTypeView = ({ editorState, setEditorState }) => {
     {view&&(
       <div ref={ref} style={{ position: 'relative', alignContent: 'center' }}>
       <button className={styles.button} onMouseDown={handleClick}>
-        <img src={listIcon} alt="List" title="List Item" className={`${styles.img} ${active}`} />
+        <img src={listIcon} alt="Style Block" title="Style Block" className={`${styles.img} ${active}`} />
       </button>
       {show && (
         <div className={styles.listTypeContainer}>

@@ -1,6 +1,6 @@
 import { RichUtils } from 'draft-js';
 import { _NOTCHANGEBLOCK } from '../../../../_constant/_constant';
-import getCurrentBlock from './getCurrentBlock';
+import getCurrentBlock from '../../../../utilities/getCurrentBlock';
 
 const notChangeBlock = _NOTCHANGEBLOCK
 const changeTypeOfBlock = ({ editorState, setEditorState, block }) => {
