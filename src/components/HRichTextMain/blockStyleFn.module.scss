@@ -209,7 +209,7 @@ $marginLeft: constants.$MARGINLEFT;
 @each $margin in $marginLeft {
   $class-name: str-replace($margin, '.', '-');
   .margin-left-#{$class-name} {
-    font-family: #{$margin} !important;
+    margin-left: #{$margin} !important;
   }
 
 }

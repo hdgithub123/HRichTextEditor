@@ -18,7 +18,7 @@ import Unstyled from './ParagraphType/CodeBlock/Unstyled/Unstyled';
 
 import ListTypeView from './ParagraphType/ListType/ListTypeView';
 import LineHeightView from './ParagraphType/LineHeight/LineHeightView';
-
+import DeleteBlockStyle from './ParagraphType/DeleteBlockStyle/DeleteBlockStyle';
 
 const FontInput = ({ editorState, setEditorState }) => {
 
@@ -53,7 +53,7 @@ const FontInput = ({ editorState, setEditorState }) => {
       </div>
       <Header editorState={editorState} setEditorState={setEditorState}></Header>
       <ListTypeView editorState={editorState} setEditorState={setEditorState} />
-      
+      <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
 
     </div>
   );

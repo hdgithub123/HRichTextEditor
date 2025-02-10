@@ -44,6 +44,42 @@ const _LINEHEIGHT = [
 ]
 
 
+const _MARGINS = [
+    '0px',
+    '10px',
+    '20px',
+    '30px',
+    '40px',
+    '50px',
+    '60px',
+    '70px',
+    '80px',
+    '90px',
+    '100px',
+    '110px',
+    '120px',
+    '130px',
+    '140px',
+    '150px',
+    '160px',
+    '170px',
+    '180px',
+    '190px',
+    '200px',
+    '210px',
+    '220px',
+    '230px',
+    '240px',
+    '250px',
+    '260px',
+    '270px',
+    '280px',
+    '290px',
+    '300px',
+
+]
+
+
 const _NOTCHANGEBLOCK = [
     'tableStructure',
     'cellTable',
@@ -58,4 +94,5 @@ export {
     _COLORS,
     _LINEHEIGHT,
     _NOTCHANGEBLOCK,
+    _MARGINS,
 }

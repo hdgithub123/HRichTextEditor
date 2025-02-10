@@ -24,44 +24,75 @@ const blockStyleFn = (contentBlock) => {
 
     let className = '';
 
-    switch (type) {
-        case 'unordered-list-item':
-        case 'ordered-list-item':
-            className = styles[`depth-${depth}`]; // Sửa lại cú pháp để gán đúng giá trị từ styles
-            if (listType) {
-                className += ` ${styles[`custom${listType.charAt(0).toUpperCase() + listType.slice(1)}`]}`;
+    // switch (type) {
+    //     case 'unordered-list-item':
+    //     case 'ordered-list-item':
+    //         className = styles[`depth-${depth}`]; // Sửa lại cú pháp để gán đúng giá trị từ styles
+    //         if (listType) {
+    //             className += ` ${styles[`custom${listType.charAt(0).toUpperCase() + listType.slice(1)}`]}`;
 
-                if (marginLeft) {
-                    const sanitizedMarginLeft = String(marginLeft).replace('.', '-');
-                    className += ` ${styles[`margin-left-${sanitizedMarginLeft}`]}`;
-                }
+    //             if (marginLeft) {
+    //                 const sanitizedMarginLeft = String(marginLeft).replace('.', '-');
+    //                 className += ` ${styles[`margin-left-${sanitizedMarginLeft}`]}`;
+    //             }
 
-                if (fontFamily) {
-                    const sanitizedFontFamily = fontFamily.replace(/\s+/g, '-');
-                    className += ` ${styles[`font-${sanitizedFontFamily}`]}`;
-                }
+    //             if (fontFamily) {
+    //                 const sanitizedFontFamily = fontFamily.replace(/\s+/g, '-');
+    //                 className += ` ${styles[`font-${sanitizedFontFamily}`]}`;
+    //             }
 
-                if (fontSize) {
-                    const sanitizedFontSize = String(fontSize).replace('.', '-');
-                    className += ` ${styles[`font-size-${sanitizedFontSize.replace('pt', '')}pt`]}`;
-                }
+    //             if (fontSize) {
+    //                 const sanitizedFontSize = String(fontSize).replace('.', '-');
+    //                 className += ` ${styles[`font-size-${sanitizedFontSize.replace('pt', '')}pt`]}`;
+    //             }
 
-                if (fontColor) {
-                    className += ` ${styles[`font-color-${fontColor}`]}`;
-                }
+    //             if (fontColor) {
+    //                 className += ` ${styles[`font-color-${fontColor}`]}`;
+    //             }
 
-                if (backgroundColor) {
-                    className += ` ${styles[`background-color-${backgroundColor}`]}`;
-                }
-            }
-            break;
-        default:
-            break;
+    //             if (backgroundColor) {
+    //                 className += ` ${styles[`background-color-${backgroundColor}`]}`;
+    //             }
+    //         }
+    //         break;
+    //     default:
+    //         break;
+    // }
+
+    if (listType) {
+        className += ` ${styles[`custom${listType.charAt(0).toUpperCase() + listType.slice(1)}`]}`;
     }
+
+
+    if (marginLeft) {
+        const sanitizedMarginLeft = String(marginLeft).replace('.', '-');
+        className += ` ${styles[`margin-left-${sanitizedMarginLeft}`]}`;
+    }
+
+    if (fontFamily) {
+        const sanitizedFontFamily = fontFamily.replace(/\s+/g, '-');
+        className += ` ${styles[`font-${sanitizedFontFamily}`]}`;
+    }
+
+    if (fontSize) {
+        const sanitizedFontSize = String(fontSize).replace('.', '-');
+        className += ` ${styles[`font-size-${sanitizedFontSize.replace('pt', '')}pt`]}`;
+    }
+
+    if (fontColor) {
+        className += ` ${styles[`font-color-${fontColor}`]}`;
+    }
+
+    if (backgroundColor) {
+        className += ` ${styles[`background-color-${backgroundColor}`]}`;
+    }
+
+
+
 
     // const type = contentBlock.getType();
     // const textAlign = contentBlock.getData().get('textAlign');
-    const textAlign =contentBlock.getData().getIn(['blockStyle', 'textAlign']);
+    const textAlign = contentBlock.getData().getIn(['blockStyle', 'textAlign']);
 
     // let className = '';
 

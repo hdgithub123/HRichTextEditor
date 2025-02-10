@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './ListType.module.scss';
-import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK } from '../../../../components/_constant/_constant';
+import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK,_MARGINS } from '../../../../components/_constant/_constant';
 import getCurrentBlock from './getCurrentBlock';
 import updateBlockStyle from '../../../utilities/updateBlockStyle'
 import updateBlockType from '../../../utilities/updateBlockType'
@@ -61,6 +61,9 @@ const unorderedListType = [
 
 const depthOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+
+
+const marginOptions = _MARGINS;
 const fontFamilyOptions = _FONTFAMILY;
 const fontSizeOptions = _FONTSIZES;
 const colorOptions = ['none', ..._COLORS];
@@ -132,7 +135,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
   const listType = [...orderedListType2, ...unorderedListType2];
   const initialStyle = {
     marginLeft: "none",
-    listType: "Decimal",
+    listType: "None",
     fontFamily: "Arial",
     fontSize: "12pt",
     fontColor: "none",
@@ -148,6 +151,20 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
     }
   }
 
+  // const findListTypeSymbol = (currentStyle) => {
+  //   try {
+  //     if (currentStyle.listType) {
+  //       // tìm kiếm tại listType với name = currentStyle.listType và trả về symbol
+  //       const foundType = listType.find(type => type.name === currentStyle.listType)
+  //       console.log("foundType.symbol", foundType.symbol)
+  //       return foundType.symbol
+  //     } else {
+  //       return 'none'
+  //     }
+  //   } catch (error) {
+  //     return 'none'
+  //   }
+  // }
 
 
   // let blockType = '';
@@ -163,9 +180,14 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
     return blockType;
   };
 
+
+
   const [selectedType, setSelectedType] = useState(initialStyle);
   const [selectedIsList, setSelectedIsList] = useState(isListBlock());
   const [blockType, setBlockType] = useState(findBlockType());
+  const [selectedListType, setSelectedListType] = useState(initialStyle.listType);
+
+  console.log("initialStyle", initialStyle)
   useEffect(() => {
     if (selectedIsList === true) {
       const newblockType = findBlockType();
@@ -180,19 +202,21 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
   useEffect(() => {
     if (!currentStyle) {
       setSelectedType(initialStyle);
+      setSelectedListType('None');
     } else {
       setSelectedType(currentStyle);
+      setSelectedListType(currentStyle.listType);
     }
   }, [currentStyle]);
 
 
-  const handleDepthChange = (e) => {
+  const handleMarginLeftChange = (e) => {
     if (!blockType) {
       return;
     }
     const blockStyle = {
       ...selectedType,
-      marginLeft: `${Number(e.target.value) * 10}px`
+      marginLeft: e.target.value //Number(e.target.value)
     }
     setSelectedType(blockStyle)
     onChange({ blockStyle, blockType });
@@ -206,8 +230,9 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
       ...selectedType,
       listType: e.target.value
     }
-    console.log("blockStyle", blockStyle)
     setSelectedType(blockStyle)
+    console.log("selectedListType", selectedListType)
+    // setSelectedListType(e.target.value)
     onChange({ blockStyle, blockType });
   };
 
@@ -260,6 +285,21 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
   };
 
   const handleIsListChange = (e) => {
+    if (!blockType) {
+      return;
+    }
+
+    
+    if (e.target.checked) {
+      const blockStyle = {
+        ...selectedType,
+      }
+      const blockType = findBlockType();
+      setSelectedType(blockStyle)
+      onChange({ blockStyle, blockType });
+    } else {
+    
+    }
     setSelectedIsList(e.target.checked)
   }
 
@@ -268,12 +308,12 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
       <table border="1">
         <tbody>
           <tr>
-            <td>Level:</td>
+            <td>Margin Left:</td>
             <td>
-              <select id="depthSelect" value={selectedType.marginLeft} onChange={handleDepthChange} style={{ borderRadius: '6px' }}>
-                {depthOptions.map((depth) => (
-                  <option key={depth} value={depth}>
-                    {depth}
+              <select id="marginLeftSelect" value={selectedType.marginLeft} onChange={handleMarginLeftChange} style={{ borderRadius: '3px' }}>
+                {marginOptions.map((margin,index) => (
+                  <option key={index} value={margin}>
+                    {margin}
                   </option>
                 ))}
               </select>
@@ -282,7 +322,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           <tr>
             <td>Item Type:</td>
             <td>
-              <select id="listTypeSelect" value={selectedType.listType} onChange={handleListTypeChange} style={{ borderRadius: '6px' }}>
+              <select id="listTypeSelect" value={selectedListType} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
                 {listType.map((type, index) => (
                   <option key={index} value={type.name}>
                     {type.symbol}
@@ -294,7 +334,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           <tr>
             <td>Font Family:</td>
             <td>
-              <select id="fontFamilySelect" value={selectedType.fontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: selectedType.fontFamily, borderRadius: '6px' }}>
+              <select id="fontFamilySelect" value={selectedType.fontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: selectedType.fontFamily, borderRadius: '3px' }}>
                 {fontFamilyOptions.map((font, index) => (
                   <option key={index} value={font} style={{ fontFamily: font }}>
                     {font}
@@ -306,7 +346,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           <tr>
             <td>Font Size: </td>
             <td>
-              <select id="fontSizeSelect" value={selectedType.fontSize} onChange={handleFontSizeChange} style={{ borderRadius: '6px' }}>
+              <select id="fontSizeSelect" value={selectedType.fontSize} onChange={handleFontSizeChange} style={{ borderRadius: '3px' }}>
                 {fontSizeOptions.map((size, index) => (
                   <option key={index} value={size}>
                     {size}
@@ -324,7 +364,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
                 onChange={handleFontColorChange}
                 style={{
                   backgroundColor: selectedType.fontColor !== 'none' ? selectedType.fontColor : 'transparent',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                 }}
               >
                 {colorOptions.map((color, index) => (
@@ -344,7 +384,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
                 onChange={handleFontBackgroundColorChange}
                 style={{
                   backgroundColor: selectedType.backgroundColor !== 'none' ? selectedType.backgroundColor : 'transparent',
-                  borderRadius: '6px',
+                  borderRadius: '3px',
                 }}
               >
                 {colorOptions.map((color, index) => (
@@ -357,7 +397,7 @@ const ListTypeForm = ({ orderedListType, unorderedListType, currentStyle, curren
           </tr>
 
           <tr>
-            <td>List:</td>
+            <td>List Type:</td>
             <td>
               {/* tạo nút checkbox cho  selectedIsList */}
               <input
