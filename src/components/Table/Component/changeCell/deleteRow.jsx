@@ -30,6 +30,23 @@ const deleteRow = ({editorState, onChange}) => {
         } 
     }
 
+    if (tableShape.length === 1) {
+        // Nếu chỉ còn 1 hàng thì xóa luôn table
+        let newBlockMap = blockMap.delete(tableBlock.getKey());
+        let newContentState = contentState.set('blockMap', newBlockMap);
+        // xóa luôn các block có data.tableKey === tableKey
+        blockMap.forEach((block) => {
+            if (block.getData().get('tableKey') === tableKey) {
+                newBlockMap = newBlockMap.delete(block.getKey());
+            }
+        });
+        newContentState = newContentState.set('blockMap', newBlockMap);
+        let newEditorState = EditorState.push(editorState, newContentState, 'change-block-data');
+        onChange(newEditorState);
+        return;
+    }
+
+
     // Xóa hàng trong tableShape
     tableShape.splice(row, 1);
 

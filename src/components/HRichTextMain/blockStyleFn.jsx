@@ -20,6 +20,8 @@ const blockStyleFn = (contentBlock) => {
     const fontColor = contentBlock.getData().getIn(['blockStyle', 'color']);
     const backgroundColor = contentBlock.getData().getIn(['blockStyle', 'backgroundColor']);
     const lineHeight = contentBlock.getData().getIn(['blockStyle', 'lineHeight']);
+    const textAlign = contentBlock.getData().getIn(['blockStyle', 'textAlign']);
+    const verticalAlign = contentBlock.getData().getIn(['blockStyle', 'verticalAlign']);
 
 
     let className = '';
@@ -92,7 +94,7 @@ const blockStyleFn = (contentBlock) => {
 
     // const type = contentBlock.getType();
     // const textAlign = contentBlock.getData().get('textAlign');
-    const textAlign = contentBlock.getData().getIn(['blockStyle', 'textAlign']);
+
 
     // let className = '';
 
@@ -120,6 +122,24 @@ const blockStyleFn = (contentBlock) => {
                 break;
             case 'justify':
                 className += ` ${styles.justifyAlign}`;
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    if (verticalAlign) {
+        console.log("verticalAlign", verticalAlign)
+        switch (verticalAlign) {
+            case 'top':
+                className += ` ${styles.verticalAlignTop}`;
+                break;
+            case 'middle':
+                className += ` ${styles.verticalAlignMiddle}`;
+                break;
+            case 'bottom':
+                className += ` ${styles.verticalAlignBottom}`;
                 break;
             default:
                 break;

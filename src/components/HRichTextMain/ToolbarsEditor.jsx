@@ -8,8 +8,9 @@ const ToolbarsEditor = ({ editorState, setEditorState, onChange }) => {
         <div style={{display: 'flex', flexDirection: 'column'}}>
             <FontInput editorState={editorState} setEditorState={setEditorState}></FontInput>
             <TableToolbar editorState = {editorState} onChange={onChange}></TableToolbar>
+            <h1>Image Block</h1>
             <ImageBlockToolBar editorState={editorState} setEditorState={setEditorState}></ImageBlockToolBar>
-            <h1>Imge Inine</h1>
+            <h1>Image Inine</h1>
             <ImageInlineToolBar editorState={editorState} setEditorState={setEditorState}></ImageInlineToolBar>
         </div>
     );

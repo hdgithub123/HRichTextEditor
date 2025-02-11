@@ -5,7 +5,7 @@ import FontColorPickerView from './FontColorPicker/FontColorPickerView';
 import FontBackGroundColorView from './FontBackGroundColor/FontBackGroundColorView';
 import FontType from './FontType/FontType'
 import TextAlign from './ParagraphType/TextAlign/TextAlign';
-
+import VerticalAlign from './ParagraphType/VerticalAlign/VerticalAlign';
 
 
 
@@ -44,6 +44,9 @@ const FontInput = ({ editorState, setEditorState }) => {
       <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>
       {/* TextAlign */}
       <TextAlign editorState={editorState} setEditorState={setEditorState} />
+      {/* VerticalAlign chua cho vao table duoc
+      <VerticalAlign editorState={editorState} setEditorState={setEditorState} /> */}
+
       <LineHeightView editorState={editorState} setEditorState={setEditorState}  ></LineHeightView>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2px' }}>
         <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>

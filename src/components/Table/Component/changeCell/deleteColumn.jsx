@@ -31,6 +31,24 @@ const deleteColumn = ({editorState, onChange}) => {
         } 
     }
 
+    if (tableShape[0].length === 1) {
+        // Nếu chỉ còn 1 cột thì xóa luôn table
+        let newBlockMap = blockMap.delete(tableBlock.getKey());
+        let newContentState = contentState.set('blockMap', newBlockMap);
+
+        blockMap.forEach((block) => {
+            if (block.getData().get('tableKey') === tableKey) {
+                newBlockMap = newBlockMap.delete(block.getKey());
+            }
+        });
+        newContentState = newContentState.set('blockMap', newBlockMap);
+        let newEditorState = EditorState.push(editorState, newContentState, 'change-block-data');
+        onChange(newEditorState);
+
+        return;
+    }
+
+
         // Xóa cột trong tableShape
     for (let row = 0; row < tableShape.length; row++) {
         tableShape[row].splice(col, 1);

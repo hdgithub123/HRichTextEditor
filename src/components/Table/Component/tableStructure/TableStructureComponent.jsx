@@ -70,8 +70,8 @@ const TableStructureComponent = props => {
                                 return (
                                     <td
                                         key={j}
-                                        style={{ ...cellStyle, width: tableColumnWidth[j]? tableColumnWidth[j] : '100px'}}
-                                         className={style.firstcellTable }
+                                        style={{ ...cellStyle,  ...(cell.indivualStyle || {}) , width: tableColumnWidth[j]? tableColumnWidth[j] : '100px'}}
+                                        className={style.firstcellTable }
                                         colSpan={cell.columnspan || 1}
                                         rowSpan={cell.rowspan || 1}
                                         cell-position={`${block.getKey()}-${i}-${j}`}

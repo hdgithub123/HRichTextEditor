@@ -1,25 +1,56 @@
 import React, { useCallback, useRef, useState, useEffect } from 'react';
-import { Editor, EditorState, AtomicBlockUtils, convertToRaw, ContentState, ContentBlock ,genKey} from 'draft-js';
+import { Editor, EditorState, AtomicBlockUtils, convertToRaw, ContentState, ContentBlock, genKey, SelectionState } from 'draft-js';
 import { Map } from 'immutable';
 
+const insertImage = ({ editorState, setEditorState, dataImage }) => {
+  const contentState = editorState.getCurrentContent();
+  const selectionState = editorState.getSelection();
 
-const insertImage = ({editorState,setEditorState,dataImage}) => {
-    const newTableBlock = new ContentBlock({
-      key: genKey(),
-      type: 'IMAGE_BLOCK',
-      text: ' ',
-      data: Map(dataImage)
-    });
+  // Tạo block unstyled trước block image
+  const beforeBlock = new ContentBlock({
+    key: genKey(),
+    type: 'unstyled',
+    text: '',
+    data: Map(),
+  });
 
-    // tạo 1 block mới chèn vào editorState với data là dataImage
-    const newContentState = editorState.getCurrentContent().merge({
-      blockMap: editorState.getCurrentContent().getBlockMap().set(newTableBlock.getKey(), newTableBlock),
-      selectionAfter: editorState.getSelection()
-    });
+  // Tạo block image
+  const imageBlock = new ContentBlock({
+    key: genKey(),
+    type: 'IMAGE_BLOCK',
+    text: ' ',
+    data: Map(dataImage),
+  });
 
-  setEditorState(EditorState.push(editorState, newContentState, 'insert-fragment'));
+  // Tạo block unstyled sau block image
+  const afterBlock = new ContentBlock({
+    key: genKey(),
+    type: 'unstyled',
+    text: '',
+    data: Map(),
+  });
 
+  // Lấy block map hiện tại và thêm các block mới
+  const blockMap = contentState.getBlockMap();
+  const newBlockMap = blockMap
+    .set(beforeBlock.getKey(), beforeBlock)
+    .set(imageBlock.getKey(), imageBlock)
+    .set(afterBlock.getKey(), afterBlock);
+
+  // Tạo contentState mới với block map đã cập nhật
+  const newContentState = contentState.merge({
+    blockMap: newBlockMap,
+    selectionAfter: selectionState,
+  });
+
+  // Cập nhật selection để đặt con trỏ sau block image
+  const newSelection = SelectionState.createEmpty(afterBlock.getKey());
+
+  // Tạo editorState mới với contentState và selection đã cập nhật
+  const newEditorState = EditorState.push(editorState, newContentState, 'insert-fragment');
+  const finalEditorState = EditorState.forceSelection(newEditorState, newSelection);
+
+  setEditorState(finalEditorState);
 };
-
 
 export default insertImage;

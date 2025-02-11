@@ -47,7 +47,7 @@ const CellComponent = props => {
         if (target) {
             // khoi 1
             const content = text.trim() === '' ? '\u00A0' : text; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
-            return createPortal(<div style={blockStyle}>
+            return createPortal(<div style={{...blockStyle}}>
                 <EditorBlock {...props} block={block.set('text', content)} />
             </div>, target);
         }
