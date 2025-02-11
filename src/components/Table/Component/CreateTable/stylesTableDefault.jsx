@@ -12,4 +12,9 @@ const cellStyleDefault = {
     
 }
 
-export { tableStyleDefault, cellStyleDefault };
+const blockStyleDefault = {
+    display: 'flex',
+    justifyContent: 'center',
+}
+
+export { tableStyleDefault, cellStyleDefault,blockStyleDefault };

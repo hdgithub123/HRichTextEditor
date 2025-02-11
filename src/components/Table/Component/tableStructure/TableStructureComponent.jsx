@@ -14,7 +14,8 @@ const TableStructureComponent = props => {
     const data = block.getData().toJS(); // Convert Immutable.Map to JavaScript object
     const tableStyle = data.tablestyle;
     const cellStyle = data.cellStyle;
-    const tableAlign = data.tableAlign;
+    // const tableAlign = data.tableAlign;
+    const blockStyle = data.blockStyle;
     const tableShape = data.tableShape;
     if (!tableShape) {
         return null;
@@ -56,9 +57,9 @@ const TableStructureComponent = props => {
         document.addEventListener('mouseup', onMouseUp);
       };
 
-
     return (
-        <div ref={container} style={{justifyContent: tableAlign,  display: 'flex' }}>
+        // <div ref={container} style={{justifyContent: tableAlign,  display: 'flex' }}>
+        <div ref={container} style={blockStyle}>
             <table key={block.getKey()} style={tableStyle} id={block.getKey()}>
                 <tbody>
                     {tableShape.map((row, i) => (

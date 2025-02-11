@@ -20,7 +20,7 @@ const ImageBlockComponent = props => {
     const height = data.get('height');
     const unit = data.get('unit');
     const styleImage = data.get('styleImage');
-
+    const blockStyle = data.get('blockStyle');
 
     const [imgUrl, setImgUrl] = useState(url);
     const [imgWidth, setImgWidth] = useState(width);
@@ -32,30 +32,30 @@ const ImageBlockComponent = props => {
     const imgRef = useRef(null);
     const [ratioPxPerUnit, setRatioPxPerUnit] = useState(null);
 
-  useEffect(() => {
-    setImgUrl(url);
-    setImgWidth(width);
-    setImgHeight(height);
-    setImgUnit(unit);
-    setThisStyleImage(styleImage);
-  }, [url, width, height, unit,styleImage]);
+    useEffect(() => {
+        setImgUrl(url);
+        setImgWidth(width);
+        setImgHeight(height);
+        setImgUnit(unit);
+        setThisStyleImage(styleImage);
+    }, [url, width, height, unit, styleImage]);
 
 
     const updateBlockData = useCallback(
         (newData = {}, data = block.getData()) => {
-          data = data.merge(newData);
-          const newBlock = block.set('data', data);
-          let blockMap = getEditorState().getCurrentContent().getBlockMap();
-          blockMap = blockMap.set(block.getKey(), newBlock);
-          const newContent = getEditorState().getCurrentContent().set('blockMap', blockMap);
-          const selection = getEditorState().getSelection();
-          let editorState = EditorState.push(getEditorState(), newContent, 'change-block-data');
-          editorState = EditorState.forceSelection(editorState, selection);
-          onChange(editorState);
+            data = data.merge(newData);
+            const newBlock = block.set('data', data);
+            let blockMap = getEditorState().getCurrentContent().getBlockMap();
+            blockMap = blockMap.set(block.getKey(), newBlock);
+            const newContent = getEditorState().getCurrentContent().set('blockMap', blockMap);
+            const selection = getEditorState().getSelection();
+            let editorState = EditorState.push(getEditorState(), newContent, 'change-block-data');
+            editorState = EditorState.forceSelection(editorState, selection);
+            onChange(editorState);
         },
         [block, getEditorState, onChange]
-      );
-    
+    );
+
 
     useEffect(() => {
         if (unit === 'px') {
@@ -109,28 +109,30 @@ const ImageBlockComponent = props => {
 
 
     return (
-        <div
-            ref={imgRef}
-            className={styles.container}
-            style={{
-                width: `${imgWidth}${imgUnit}` || 'auto',
-                height: `${imgHeight}${imgUnit}` || 'auto',
-            }}
-            onMouseDown={handleOnMouseDown}
-            // onDoubleClick={handleOnDoubleClick}
-        >
-            <img
-                src={imgUrl}
-                className={styles.image}
+        <div style={blockStyle}>
+            <div
+                ref={imgRef}
+                className={styles.container}
                 style={{
-                    ...thisStyleImage,
-                    width: '100%',
-                    height: '100%',
-
+                    width: `${imgWidth}${imgUnit}` || 'auto',
+                    height: `${imgHeight}${imgUnit}` || 'auto',
                 }}
-                alt="Embedded"
-            />
+                onMouseDown={handleOnMouseDown}
+            // onDoubleClick={handleOnDoubleClick}
+            >
+                <img
+                    src={imgUrl}
+                    className={styles.image}
+                    style={{
+                        ...thisStyleImage,
+                        width: '100%',
+                        height: '100%',
+                    }}
+                    alt="Embedded"
+                />
+            </div>
         </div>
+
     );
 };
 

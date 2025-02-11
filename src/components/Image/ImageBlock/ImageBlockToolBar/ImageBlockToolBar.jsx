@@ -8,6 +8,14 @@ const dataImage = {
     styleImage: {
       objectFit: 'contain',
     },
+    blockStyle: {
+      display: 'flex',
+      justifyContent: 'left',
+      alignItems: 'center',
+      border: '1px solid #ccc',
+      backgroundColor: 'red',
+      borderRadius: '5px',
+    }
   }
   
   const dataImage2 = {
@@ -18,7 +26,24 @@ const dataImage = {
     styleImage: {
       objectFit: 'fill',
     },
+    blockStyle: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+    }
   }
+
+
+const blockStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+  };
 
 const ImageBlockToolBar = ({editorState,setEditorState}) =>{
     

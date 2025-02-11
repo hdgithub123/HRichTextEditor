@@ -1,10 +1,10 @@
-import CreateNewTable from '../Component/CreateTable/CreateNewTable';
+import CreateTableView from '../Component/CreateTable/CreateTableView';
 import ControlTable from './ControlTable';
 
 const TableToolbar = ({editorState, onChange}) => {
     return (
         <div style={{display: 'flex', flexDirection: 'row'}}>
-            <CreateNewTable editorState={editorState} onChange={onChange}/>
+            <CreateTableView editorState={editorState} onChange={onChange}/>
             <ControlTable editorState={editorState} onChange={onChange} />
         </div>
     )   

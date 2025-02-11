@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { genKey } from "draft-js";
 import insertTableStructure from '../tableStructure/insertTableStructure';
 import insertCells from '../cellTable/insertCells';
-import { tableStyleDefault, cellStyleDefault } from './stylesTableDefault';
+import { tableStyleDefault, cellStyleDefault,blockStyleDefault } from './stylesTableDefault';
 import TableGrid from "./TableGrid";
 import styles from './CreateNewTable.module.scss';
 import imageIcon from './table.svg'
@@ -10,7 +10,7 @@ import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import getCurrentBlock from '../../../utilities/getCurrentBlock';
 
 
-const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, tableAlign ='center' }) => {
+const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, blockStyle =blockStyleDefault }) => {
     const tableKey = genKey();
     const { cols, rows } = size;
 
@@ -37,7 +37,7 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyl
         tablestyle: tablestyle ? tablestyle : {},
         cellStyle: cellStyle ? cellStyle : {},
         tableShape: tableShape,
-        tableAlign: tableAlign ? tableAlign : 'center',
+        blockStyle: blockStyle ? blockStyle : {},
         tableColumnWidth: {},
     };
 
@@ -48,7 +48,7 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyl
 }
 
 
-const CreateNewTable = ({ editorState, onChange, tablestyle, cellStyle, tableAlign }) => {
+const CreateTableView = ({ editorState, onChange, tablestyle, cellStyle, blockStyle }) => {
     const [active, setActive] = useState(styles.unactive);
     const [show, setShow] = useState(false);
     const [disabled, setDisabled] = useState(false);
@@ -68,7 +68,7 @@ const CreateNewTable = ({ editorState, onChange, tablestyle, cellStyle, tableAli
 
 
     const handleCellClick = (size) => {
-        CreateTable({ editorState, onChange, size, tablestyle, cellStyle, tableAlign });
+        CreateTable({ editorState, onChange, size, tablestyle, cellStyle, blockStyle });
     }
 
     useOnClickOutside(ref, () => {
@@ -95,4 +95,4 @@ const CreateNewTable = ({ editorState, onChange, tablestyle, cellStyle, tableAli
 }
 
 
-export default CreateNewTable;
+export default CreateTableView;

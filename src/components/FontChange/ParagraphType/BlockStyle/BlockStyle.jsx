@@ -165,6 +165,11 @@ const checkAcvticeBlock = () => {
 
 
 const findBlockType = (listType) => {
+
+  if(selectedIsList === false){
+    return currentBlockType;
+  }
+
   let blockType = 'unordered-list-item';
   if (orderedListType.includes(listType)) {
     blockType = 'ordered-list-item';
@@ -195,8 +200,8 @@ const findBlockType = (listType) => {
 
 
   useEffect(() => {
-    setBlockType
-  }, [findBlockType()]);
+    setBlockType(findBlockType())
+  }, [findBlockType(),selectedIsList]);
 
 
   const handleMarginLeftChange = (e) => {
