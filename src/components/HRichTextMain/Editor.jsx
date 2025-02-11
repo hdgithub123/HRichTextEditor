@@ -9,11 +9,34 @@ import removeStyle from './removeStyleDefault.module.css';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import getBlockRendererFn from './getBlockRendererFn';
 import ToolbarsEditor from './ToolbarsEditor';
+import decorateEditorState from './decorateEditorState';
+import updateImageInline from '../Image/ImangeInline/function/updateImageInline';
+
+
 
 const HRichTextEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editor = useRef(null);
-  const selectionStateRef = useRef(null);
+
+  useEffect(() => {
+    const newEditorState = decorateEditorState({ editorState, functionList });
+    setEditorState(newEditorState);
+  }, []);
+
+  const functionList = {
+    onImagePropertiesChange: (imageinfo) => {
+      setInfoImageInline(imageinfo);
+    },
+  };
+
+
+  useEffect(() => {
+    if (infoImageInline.entityKey && infoImageInline.properties) {
+      updateImageInline({ entityKey: infoImageInline.entityKey, imageInfo: infoImageInline.properties, editorState, setEditorState });
+    }
+  }, [infoImageInline])
+
 
 
   const onChange = (newState) => {
@@ -21,9 +44,9 @@ const HRichTextEditor = () => {
   };
 
 
-  const focusEditor = () => {
-    editor.current.focus();
-  };
+  // const focusEditor = () => {
+  //   editor.current.focus();
+  // };
 
   const lastSelectionState = useRef(null);
 
@@ -49,12 +72,12 @@ const HRichTextEditor = () => {
 
   return (
     <div
-      // onBlur={handleBlur}
-      // onFocus={handleFocus}
-      // style={{width: '500px', padding: '20px'}}
-      // style={{ border: '1px black solid' }}
+    // onBlur={handleBlur}
+    // onFocus={handleFocus}
+    // style={{width: '500px', padding: '20px'}}
+    // style={{ border: '1px black solid' }}
     >
-      <div style={{ border: '2px black solid' , borderRadius: '5px',padding: '5px'}}>
+      <div style={{ border: '2px black solid', borderRadius: '5px', padding: '5px' }}>
         <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} onChange={onChange}></ToolbarsEditor>
       </div>
 
@@ -62,7 +85,7 @@ const HRichTextEditor = () => {
         onBlur={handleBlur}
         onFocus={handleFocus}
         className={editorStyle.editorContainer}
-        style={{ border: '2px black solid' , borderRadius: '5px', padding: '0px'}}
+        style={{ border: '2px black solid', borderRadius: '5px', padding: '0px' }}
       >
         <div
           className={removeStyle.editorRemove}

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { EditorState } from 'draft-js';
 
 import styles from './ImageBlockComponent.module.css'
-import pxToUnit from './function/pxToUnit';
+import pxToUnit from '../function/pxToUnit';
 
 
 const ImageBlockComponent = props => {

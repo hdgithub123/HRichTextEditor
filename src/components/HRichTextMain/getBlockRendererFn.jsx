@@ -1,6 +1,6 @@
 import TableStructureComponent from '../Table/Component/tableStructure/TableStructureComponent';
 import CellComponent from '../Table/Component/cellTable/CellComponent';
-import ImageBlockComponent from '../Image/ImageBlock/ImageBlockComponent';
+import ImageBlockComponent from '../Image/ImageBlock/Component/ImageBlockComponent';
 
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
     const type = block.getType();

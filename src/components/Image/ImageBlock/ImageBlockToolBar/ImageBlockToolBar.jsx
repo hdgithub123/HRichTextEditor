@@ -20,7 +20,7 @@ const dataImage = {
     },
   }
 
-const ImageToolBar = ({editorState,setEditorState}) =>{
+const ImageBlockToolBar = ({editorState,setEditorState}) =>{
     
 
     return (
@@ -31,4 +31,4 @@ const ImageToolBar = ({editorState,setEditorState}) =>{
     );
 }
 
-export default ImageToolBar;
+export default ImageBlockToolBar;

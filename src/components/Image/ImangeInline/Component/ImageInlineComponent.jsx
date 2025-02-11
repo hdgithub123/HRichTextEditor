@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { EditorState } from 'draft-js';
-import  pxToUnit  from './pxToUnit';
+import  pxToUnit  from '../function/pxToUnit';
 import styles from './ImageInlineComponent.module.css';
 
 const ImageComponentInline = (props) => {
