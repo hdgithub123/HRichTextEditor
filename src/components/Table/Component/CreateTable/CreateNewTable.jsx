@@ -10,7 +10,7 @@ import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import getCurrentBlock from '../../../utilities/getCurrentBlock';
 
 
-const CreateTable = async ({ editorState, onChange, size, tablestyle, cellStyle, tableAlign }) => {
+const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, tableAlign ='center' }) => {
     const tableKey = genKey();
     const { cols, rows } = size;
 
@@ -34,8 +34,8 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle, cellStyle,
     }
 
     const dataTableStructure = {
-        tablestyle: tablestyle ? tablestyle : tableStyleDefault,
-        cellStyle: cellStyle ? cellStyle : cellStyleDefault,
+        tablestyle: tablestyle ? tablestyle : {},
+        cellStyle: cellStyle ? cellStyle : {},
         tableShape: tableShape,
         tableAlign: tableAlign ? tableAlign : 'center',
         tableColumnWidth: {},
