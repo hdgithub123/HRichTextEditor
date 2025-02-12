@@ -1,5 +1,5 @@
 
-const handleUpload = (file, callback, maxSize = 5 * 1024 * 1024) => { // maxSize mặc định là 5MB
+const handleUpload = (file, callback, maxSize = 1 * 1024 * 1024) => { // maxSize mặc định là 5MB
     // Kiểm tra loại tệp trước khi đọc
     if (file instanceof Blob) {
         // Kiểm tra kích thước file

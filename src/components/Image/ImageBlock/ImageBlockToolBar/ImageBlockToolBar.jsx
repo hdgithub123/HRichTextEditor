@@ -93,7 +93,6 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
       blockStyle: {
         ...defaultBlockStyle,
         justifyContent,
-        border: '1px solid #ccc',
       },
     };
 
@@ -113,9 +112,6 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
       blockStyle: {
         ...defaultBlockStyle,
         justifyContent,
-        // alignItems: 'center',
-        border: '1px solid #ccc',
-        // borderRadius: '5px',
       },
     };
     insertImage({ editorState, setEditorState, dataImage });
