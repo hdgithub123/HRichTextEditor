@@ -35,7 +35,6 @@ const HRichTextEditor = () => {
     if (infoImageInline.entityKey && infoImageInline.properties) {
       updateImageInline({ entityKey: infoImageInline.entityKey, imageInfo: infoImageInline.properties, editorState, setEditorState });
     }
-    console.log("infoImageInline",infoImageInline)
   }, [infoImageInline])
 
 

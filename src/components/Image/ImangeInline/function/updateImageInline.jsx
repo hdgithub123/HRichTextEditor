@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Editor, EditorState, CompositeDecorator, convertToRaw } from 'draft-js';
+import getCurrentBlock from '../../../utilities/getCurrentBlock'
+
+const updateImageInline = ({ entityKey, imageInfo, editorState, setEditorState }) => {
+    const currentBlockType = getCurrentBlock({ editorState })
+
+    if (!currentBlockType || currentBlockType === "IMAGE_INLINE") {
+        return
+    }
 
 
-// const updateImageInline = ({entityKey, imageInfo, editorState, setEditorState}) => {
-    const updateImageInline = ({entityKey, imageInfo, editorState, setEditorState}) => {
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.mergeEntityData(entityKey, {
         ...imageInfo,

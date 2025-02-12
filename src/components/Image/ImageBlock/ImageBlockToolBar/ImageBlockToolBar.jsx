@@ -198,7 +198,7 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
   return (
     <div ref={ref} className={style.container}>
      {view && <button className={style.buttonclick} onClick={handleClick}>
-        <img src={imageIcon} alt="Image" className={`${style.img} ${style.active}`} />
+        <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
       </button>}
       {show && <div className={style.option}>
         <table>

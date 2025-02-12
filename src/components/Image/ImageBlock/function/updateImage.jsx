@@ -7,21 +7,11 @@ const updateImage = ({ editorState, setEditorState, dataImage }) => {
     const selectionState = editorState.getSelection();
     const blockKey = selectionState.getStartKey();
     const currentBlock = contentState.getBlockForKey(blockKey);
+    const blockType = currentBlock.type
 
-    // const dataImage = {
-    //   url,
-    //   width: parseInt(width, 10),
-    //   height: parseInt(height, 10),
-    //   unit,
-    //   styleImage: {
-    //     objectFit,
-    //   },
-    //   blockStyle: {
-    //     ...defaultBlockStyle,
-    //     justifyContent,
-    //     border: '1px solid #ccc',
-    //   },
-    // };
+    if(!blockType || blockType === "IMAGE_BLOCK"){
+          return
+    }
 
     const newBlock = currentBlock.merge({
       data: currentBlock.getData().merge(dataImage),

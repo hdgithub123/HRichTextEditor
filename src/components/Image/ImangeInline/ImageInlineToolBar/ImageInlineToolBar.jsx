@@ -10,26 +10,12 @@ import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'
 import uploadIcon from './upload.svg'
-import imageIcon from './image.svg'
+import imageIcon from './imageInline.svg'
 import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
 
 
-const notChangeBlock = _NOTCHANGEBLOCK
-const defaultImageInfo = {
-    styleImage: { objectFit: 'contain' }
-}
 const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) => {
 
-
-    // if (infoImageInline){
-    //     return null
-    // }
-    //   const [view, setView] = useState(true);
-    //   const [url,width,height,unit, styleImage] = infoImageInline
-    //   const [objectFit] = styleImage
-
-    //updateImageInline({ entityKey: infoImageInline.entityKey, imageInfo: infoImageInline.properties, editorState, setEditorState });
-    console.log("infoImageInline",infoImageInline)
     const infoImage = infoImageInline.properties
     // const entityKey = infoImageInline.entityKey
     const ref = useRef();
@@ -45,20 +31,6 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
     
     const [aspectRatio, setAspectRatio] = useState(null); // Thêm state để lưu tỷ lệ gốc của ảnh
     const [keepRatio, setKeepRatio] = useState(true); // Thêm state để lưu tỷ lệ gốc của ảnh
-
-
-    //   const currentBlocktype = getCurrentBlock({ editorState });
-
-    //   useEffect(() => {
-
-    //     if (notChangeBlock.includes(currentBlocktype)) {
-    //       setView(false)
-    //     } else {
-    //       setView(true)
-    //     }
-    //   }, [currentBlocktype]);
-
-
 
         useEffect(() => {
 
@@ -101,7 +73,6 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
 
         
         updateImageInline({ entityKey, imageInfo: dataImage, editorState, setEditorState });
-        // updateImageInline = ({ entityKey, imageInfo: dataImage, editorState, setEditorState })
     };
 
 
@@ -196,7 +167,7 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
     return (
         <div ref={ref} className={style.container}>
             <button className={style.buttonclick} onClick={handleClick}>
-                <img src={imageIcon} alt="Image" className={`${style.img} ${style.active}`} />
+                <img src={imageIcon} alt="Image" title='Image Inline' className={`${style.img} ${style.active}`} />
             </button>
             {show && <div className={style.option}>
                 <table>
@@ -258,16 +229,6 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
                                 </label>
                             </td>
                         </tr>
-                        {/* <tr>
-                            <td>Justify:</td>
-                            <td>
-                                <select value={justifyContent} onChange={handleJustifyContentChange}>
-                                    <option value="left">Left</option>
-                                    <option value="center">Center</option>
-                                    <option value="right">Right</option>
-                                </select>
-                            </td>
-                        </tr> */}
                     </tbody>
                 </table>
                 <div className={style.buttonFunction}>
