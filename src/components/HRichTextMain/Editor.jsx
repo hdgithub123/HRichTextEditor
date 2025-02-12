@@ -35,6 +35,7 @@ const HRichTextEditor = () => {
     if (infoImageInline.entityKey && infoImageInline.properties) {
       updateImageInline({ entityKey: infoImageInline.entityKey, imageInfo: infoImageInline.properties, editorState, setEditorState });
     }
+    console.log("infoImageInline",infoImageInline)
   }, [infoImageInline])
 
 
@@ -70,6 +71,9 @@ const HRichTextEditor = () => {
     return 'not-handled';
   };
   
+  const variable = {
+    infoImageInline:infoImageInline,
+  }
 
   return (
     <div
@@ -79,7 +83,7 @@ const HRichTextEditor = () => {
     // style={{ border: '1px black solid' }}
     >
       <div style={{ border: '2px black solid', borderRadius: '5px', padding: '5px' }}>
-        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} onChange={onChange}></ToolbarsEditor>
+        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange}></ToolbarsEditor>
       </div>
 
       <div

@@ -5,7 +5,7 @@ import updateImage from '../function/updateImage';
 import style from './ImageBlockToolBar.module.scss';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import getCurrentBlock from '../../../utilities/getCurrentBlock';
-import handleUpload from './handleUpload'
+import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'
 import uploadIcon from './upload.svg'
@@ -26,10 +26,19 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
   const blockKey = selectionState.getStartKey();
   const currentBlock = contentState.getBlockForKey(blockKey);
   let dataImage ={}
+  // try {
+  //    dataImage = currentBlock.getData().toJS();
+  // } catch (error) {
+  //    dataImage = currentBlock.getData();
+  // }
+
+
   try {
-     dataImage = currentBlock.getData().toJS();
+    if (currentBlock && currentBlock.getData) {
+      dataImage = currentBlock.getData().toJS ? currentBlock.getData().toJS() : currentBlock.getData();
+    }
   } catch (error) {
-     dataImage = currentBlock.getData();
+    console.error('Error getting data from current block:', error);
   }
 
   const ref = useRef();

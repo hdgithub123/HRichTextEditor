@@ -7,7 +7,7 @@ const imageInlineDecorator = ({editorState,onImagePropertiesChange}) =>{
  const newDecorator = {
     strategy: findImageEntities,
     component: (props) => (
-      <ImageInlineComponent {...props} editorState={editorState} onImagePropertiesChange={onImagePropertiesChange} />
+      <ImageInlineComponent {...props} editorState={editorState} onImageSizeChange={onImagePropertiesChange} />
     ),
   }
 

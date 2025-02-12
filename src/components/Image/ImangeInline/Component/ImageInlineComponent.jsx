@@ -20,7 +20,8 @@ const ImageComponentInline = (props) => {
     setImgWidth(width);
     setImgHeight(height);
     setImgUnit(unit);
-  }, [url, width, height, unit]);
+    setThisStyleImage(styleImage)
+  }, [url, width, height, unit,styleImage]);
 
   //lấy chiều dài, cao của imgRef thì làm thế nào?
   useEffect(() => {
@@ -41,11 +42,12 @@ const ImageComponentInline = (props) => {
       width: imgWidth,
       height: imgHeight,
       unit: imgUnit,
+      styleImage: thisStyleImage,
     }
 
     if (onImageSizeChange) {
       const imageinfo = {
-        size: blockInfo,
+        properties: blockInfo,
         entityKey: entityKey
       }
       onImageSizeChange(imageinfo);
@@ -82,11 +84,12 @@ const ImageComponentInline = (props) => {
         width: newWidth ? newWidth * ratioPxPerUnit : startWidth * ratioPxPerUnit,
         height: newHeight ? newHeight * ratioPxPerUnit : startHeight * ratioPxPerUnit,
         unit: unit,
+        styleImage: thisStyleImage,
       };
 
       if (onImageSizeChange) {
         const imageinfo = {
-          size: blockInfo,
+          properties: blockInfo,
           entityKey: entityKey
         };
         onImageSizeChange(imageinfo);
