@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { EditorState } from 'draft-js';
+import { EditorState,SelectionState } from 'draft-js';
 
 import styles from './ImageBlockComponent.module.css'
 import pxToUnit from '../function/pxToUnit';
@@ -107,6 +107,11 @@ const ImageBlockComponent = props => {
         document.addEventListener('mouseup', onMouseUp);
     };
 
+    const handleOnDoubleClick = () => {
+        const selection = SelectionState.createEmpty(block.getKey());
+        const newEditorState = EditorState.forceSelection(getEditorState(), selection);
+        onChange(newEditorState);
+      };
 
     return (
         <div style={blockStyle}>
@@ -129,6 +134,7 @@ const ImageBlockComponent = props => {
                         height: '100%',
                     }}
                     alt="Embedded"
+                    onDoubleClick={handleOnDoubleClick}
                 />
             </div>
         </div>

@@ -45,22 +45,20 @@ const BlockStyleView = ({ editorState, setEditorState }) => {
 
   return (
     <>
-    {view&&(
-      <div ref={ref} style={{ position: 'relative', alignContent: 'center' }}>
-      <button className={styles.button} onMouseDown={handleClick}>
-        <img src={listIcon} alt="Style Block" title="Style Block" className={`${styles.img} ${active}`} />
-      </button>
-      {show && (
-        <div className={styles.listTypeContainer}>
-          <BlockStyle editorState={editorState} setEditorState={setEditorState} />
+      {view && (
+        <div ref={ref} style={{ position: 'relative', alignContent: 'center' }}>
+          <button className={styles.button} onMouseDown={handleClick}>
+            <img src={listIcon} alt="Style Block" title="Style Block" className={`${styles.img} ${active}`} />
+          </button>
+          {show && (
+            <div className={styles.listTypeContainer}>
+              <BlockStyle editorState={editorState} setEditorState={setEditorState} />
+            </div>
+          )}
         </div>
       )}
-    </div>
-    )}
-    
-
     </>
-      );
+  );
 };
 
 export default BlockStyleView;
