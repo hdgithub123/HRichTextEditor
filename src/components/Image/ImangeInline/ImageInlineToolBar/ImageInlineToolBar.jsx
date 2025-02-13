@@ -167,7 +167,7 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
     return (
         <div ref={ref} className={style.container}>
             <button className={style.buttonclick} onClick={handleClick}>
-                <img src={imageIcon} alt="Image" title='Image Inline' className={`${style.img} ${style.active}`} />
+                <img src={imageIcon} alt="Image" title='Image Text Inline' className={`${style.img} ${style.active}`} />
             </button>
             {show && <div className={style.option}>
                 <table>
