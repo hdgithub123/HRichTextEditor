@@ -1,23 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
 import getMergecell from '../Component/Changecell/getMergecell';
 import getUnMergecell from '../Component/Changecell/getUnMergecell';
-import deleteColumn from '../Component/Changecell/deleteColumn';
-import deleteRow from '../Component/Changecell/deleteRow';
+import deleteColumn from '../Component/changeCell/deleteColumn';
+import deleteRow from '../Component/changeCell/deleteRow';
 import insertLeftColumn from '../Component/Changecell/insertLeftColumn';
 import insertRightColumn from '../Component/Changecell/insertRightColumn';
 import insertBeforeRow from '../Component/Changecell/insertBeforeRow';
 import insertAfterRow from '../Component/Changecell/insertAfterRow';
 import styles from './ControlTable.module.scss';
-import imageIcon from './tableEdit.svg'
-import mergeCellsIcon from './mergeCells.svg'
-import unmergeCellsIcon from './unmergeCells.svg'
-import deleteColumnIcon from './deleteColumn.svg'
-import deleteRowIcon from './deleteRow.svg'
-import insertLeftColumnIcon from './insertLeftColumn.svg'
-import insertRightColumnIcon from './insertRightColumn.svg'
-import insertBeforeRowIcon from './insertRowBefore.svg'
-import insertAfterRowIcon from './insertRowAfter.svg'
-import getCurrentBlock from '../../utilities/getCurrentBlock';
+import imageIcon from './tableEdit.svg';
+import mergeCellsIcon from './mergeCells.svg';
+import unmergeCellsIcon from './unmergeCells.svg';
+import deleteColumnIcon from './deleteColumn.svg';
+import deleteRowIcon from './deleteRow.svg';
+import insertLeftColumnIcon from './insertLeftColumn.svg';
+import insertRightColumnIcon from './insertRightColumn.svg';
+import insertBeforeRowIcon from './insertRowBefore.svg';
+import insertAfterRowIcon from './insertRowAfter.svg';
+import getCurrentBlockType from '../../utilities/getCurrentBlockType';
 
 
 import useOnClickOutside from '../../utilities/useOnClickOutside';
@@ -38,7 +38,7 @@ const ControlTable = ({ editorState, onChange }) => {
         setShow(true);
     };
 
-    const currentBlock = getCurrentBlock({ editorState });
+    const currentBlock = getCurrentBlockType({ editorState });
 
     useEffect(() => {
         if (currentBlock === "tableStructure" || currentBlock === "cellTable") {

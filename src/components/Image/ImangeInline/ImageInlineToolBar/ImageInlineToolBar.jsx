@@ -5,7 +5,7 @@ import addImageInline from '../function/addImageInline'
 import updateImageInline from '../function/updateImageInline';
 import style from './ImageInlineToolBar.module.scss';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
-import getCurrentBlock from '../../../utilities/getCurrentBlock';
+import getCurrentBlock from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'

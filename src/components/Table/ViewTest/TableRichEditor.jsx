@@ -16,7 +16,7 @@ import insertCell from '../Component/cellTable/insertCell';
 
 
 
-import TableToolbar from '../Toolbar/TableToolbar';
+import TableToolbar from '../TableToolBar/TableToolbar';
 import replaceDataTable from '../Component/replaceDataTable/replaceDataTable';
 import replaceDataTables from '../Component/replaceDataTable/replaceDataTables';
 

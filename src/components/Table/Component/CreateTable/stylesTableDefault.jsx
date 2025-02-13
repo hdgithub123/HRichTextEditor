@@ -1,16 +1,38 @@
 const tableStyleDefault = {
-    border: '1px solid blue',
+    borderTopWidth: '1px',
+    borderTopStyle: 'solid',
+    borderTopColor: 'black',
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'black',
+    borderRightWidth: '1px',
+    borderRightStyle: 'solid',
+    borderRightColor: 'black',
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'black',
     borderCollapse: 'collapse',
     // padding: '2px'
-}
+};
+
 const cellStyleDefault = {
-    border: '1px solid black',
+    borderTopWidth: '1px',
+    borderTopStyle: 'solid',
+    borderTopColor: 'black',
+    borderLeftWidth: '1px',
+    borderLeftStyle: 'solid',
+    borderLeftColor: 'black',
+    borderRightWidth: '1px',
+    borderRightStyle: 'solid',
+    borderRightColor: 'black',
+    borderBottomWidth: '1px',
+    borderBottomStyle: 'solid',
+    borderBottomColor: 'black',
     padding: '6px',
     textAlign: 'center',
     wordWrap: 'break-word',
     whiteSpace: 'normal',
-    
-}
+};
 
 const blockStyleDefault = {
     display: 'flex',

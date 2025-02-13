@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Editor, EditorState, CompositeDecorator, convertToRaw } from 'draft-js';
-import getCurrentBlock from '../../../utilities/getCurrentBlock'
+import getCurrentBlock from '../../../utilities/getCurrentBlockType'
 
 const updateImageInline = ({ entityKey, imageInfo, editorState, setEditorState }) => {
     const currentBlockType = getCurrentBlock({ editorState })

@@ -1,10 +1,10 @@
 import { RichUtils } from 'draft-js';
 import { _NOTCHANGEBLOCK } from '../../../../_constant/_constant';
-import getCurrentBlock from '../../../../utilities/getCurrentBlock';
+import getCurrentBlockType from '../../../../utilities/getCurrentBlockType';
 
 const notChangeBlock = _NOTCHANGEBLOCK
 const changeTypeOfBlock = ({ editorState, setEditorState, block }) => {
-  const currentBlock = getCurrentBlock({ editorState });
+  const currentBlock = getCurrentBlockType({ editorState });
   if (notChangeBlock.includes(currentBlock) || !currentBlock) {
     return;
   }

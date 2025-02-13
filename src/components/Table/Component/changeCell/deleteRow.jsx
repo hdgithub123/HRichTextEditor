@@ -26,6 +26,7 @@ const deleteRow = ({editorState, onChange}) => {
     for (let col = 0; col < tableShape[row].length; col++) {
         if (!('rowspan' in tableShape[row][col]) || tableShape[row][col].rowspan > 1) {
             console.log("Can't delete row because have merge cell");
+            alert("Can't delete row because have merge cell");
             return editorState;
         } 
     }

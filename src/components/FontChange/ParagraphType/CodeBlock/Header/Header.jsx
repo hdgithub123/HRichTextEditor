@@ -1,7 +1,7 @@
 import React from 'react';
 import { RichUtils } from 'draft-js';
 import CodeBlockTypeControl from '../utilities/CodeBlockTypeControl';
-import getCurrentBlock from '../../../../utilities/getCurrentBlock';
+import getCurrentBlock from '../../../../utilities/getCurrentBlockType';
 import changeTypeOfBlock from '../utilities/changeTypeOfBlock'
 import headerIcon from './header.svg'
 import header1Icon from './header1.svg'

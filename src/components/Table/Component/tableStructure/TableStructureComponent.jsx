@@ -71,7 +71,7 @@ const TableStructureComponent = props => {
                                 return (
                                     <td
                                         key={j}
-                                        style={{ ...cellStyle,  ...(cell.indivualStyle || {}) , width: tableColumnWidth[j]? tableColumnWidth[j] : '100px'}}
+                                        style={{ ...cellStyle,  ...(cell.individualStyle || {}) , width: tableColumnWidth[j]? tableColumnWidth[j] : '100px'}}
                                         className={style.firstcellTable }
                                         colSpan={cell.columnspan || 1}
                                         rowSpan={cell.rowspan || 1}

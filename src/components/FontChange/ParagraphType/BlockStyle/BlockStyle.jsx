@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './BlockStyle.module.scss';
 import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK,_MARGINS } from '../../../_constant/_constant';
-import getCurrentBlock from './getCurrentBlock';
+import getCurrentBlockType from './getCurrentBlock';
 import updateBlockStyle from '../../../utilities/updateBlockStyle'
 import updateBlockType from '../../../utilities/updateBlockType'
 
@@ -71,7 +71,7 @@ const notChangeBlock = _NOTCHANGEBLOCK
 
 const toggleListItem = ({ editorState, blockStyle, blockType }) => {
   let temBlockType = {};
-  const currentBlock = getCurrentBlock({ editorState });
+  const currentBlock = getCurrentBlockType({ editorState });
   if (notChangeBlock.includes(currentBlock)) {
     temBlockType = currentBlock;
   } else {

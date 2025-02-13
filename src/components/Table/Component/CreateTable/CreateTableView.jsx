@@ -7,7 +7,7 @@ import TableGrid from "./TableGrid";
 import styles from './CreateNewTable.module.scss';
 import imageIcon from './table.svg'
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
-import getCurrentBlock from '../../../utilities/getCurrentBlock';
+import getCurrentBlock from '../../../utilities/getCurrentBlockType';
 
 
 const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, blockStyle =blockStyleDefault }) => {
@@ -20,7 +20,7 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyl
     for (let i = 0; i < rows; i++) {
         const row = [];
         for (let j = 0; j < cols; j++) {
-            const cell = { columnspan: 1, rowspan: 1 , indivualStyle: {}}; // cell data
+            const cell = { columnspan: 1, rowspan: 1 , individualStyle: {}}; // cell data
             row.push(cell);
 
             const cellData = {

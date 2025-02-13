@@ -4,7 +4,7 @@ import insertImage from '../function/insertImage';
 import updateImage from '../function/updateImage';
 import style from './ImageBlockToolBar.module.scss';
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
-import getCurrentBlock from '../../../utilities/getCurrentBlock';
+import getCurrentBlockType from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'
@@ -54,7 +54,7 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
   const [keepRatio, setKeepRatio] = useState(true); // Thêm state để lưu tỷ lệ gốc của ảnh
 
 
-  const currentBlocktype = getCurrentBlock({ editorState });
+  const currentBlocktype = getCurrentBlockType({ editorState });
 
 
 

@@ -1,4 +1,4 @@
-const getCurrentBlock = ({editorState}) => {
+const getCurrentBlockType = ({editorState}) => {
     const contentState = editorState.getCurrentContent();
     const selectionState = editorState.getSelection();
     const blockKey = selectionState.getStartKey();
@@ -10,4 +10,4 @@ const getCurrentBlock = ({editorState}) => {
     }
   };
 
-export default getCurrentBlock;
+export default getCurrentBlockType;
