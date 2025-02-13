@@ -186,6 +186,7 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
         };
         img.src = url; // Load ảnh từ URL
       } else {
+        alert("Upload failed! The file is invalid.")
         console.error('Upload failed');
       }
     });

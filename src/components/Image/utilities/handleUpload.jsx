@@ -17,6 +17,7 @@ const handleUpload = (file, callback, maxSize = 1 * 1024 * 1024) => { // maxSize
         };
         reader.readAsDataURL(file);
     } else {
+        alert("The file is invalid.")
         callback(false, null); // Tệp không hợp lệ
     }
 };

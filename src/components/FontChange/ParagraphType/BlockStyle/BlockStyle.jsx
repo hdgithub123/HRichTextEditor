@@ -299,7 +299,7 @@ const findBlockType = (listType) => {
 
   return (
     <div className={styles.container}>
-      <table border="1">
+      <table>
         <tbody>
           <tr>
             <td>Margin Left:</td>
@@ -359,10 +359,11 @@ const findBlockType = (listType) => {
                 style={{
                   backgroundColor: selectedType.color !== 'none' ? selectedType.color : 'transparent',
                   borderRadius: '3px',
+                  color: selectedType.color === 'black' ? 'white' : 'black'
                 }}
               >
                 {colorOptions.map((color, index) => (
-                  <option key={index} value={color} className={styles.colorSwatch} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'inherit' }}>
+                  <option key={index} value={color} className={styles.colorSwatch} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'black' }}>
                     {color}
                   </option>
                 ))}
@@ -379,6 +380,7 @@ const findBlockType = (listType) => {
                 style={{
                   backgroundColor: selectedType.backgroundColor !== 'none' ? selectedType.backgroundColor : 'transparent',
                   borderRadius: '3px',
+                  color: selectedType.backgroundColor === 'black' ? 'white' : 'black'
                 }}
               >
                 {colorOptions.map((color, index) => (

@@ -50,9 +50,6 @@ const ChangeCellsStyleView = ({ editorState, setEditorState }) => {
         </button>
         {show && <div className={styles.controlTable}>
             <ChangeCellsStyle onChange={handleStyleChange}></ChangeCellsStyle>
-            {/* <button onClick={() => getMergecell({ editorState: editorState, onChange })}>
-                <img src={mergeCellsIcon} alt="Merge Cells" title="Merge Cells" className={`${styles.img} ${active}`} />
-            </button> */}
         </div>}
     </div>
 
