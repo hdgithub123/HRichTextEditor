@@ -1,17 +1,14 @@
 import FontInput from '../FontChange/FontInput';
 import TableToolbar from '../Table/TableToolBar/TableToolbar';
-import ImageBlockToolBar from '../Image/ImageBlock/ImageBlockToolBar/ImageBlockToolBar';
-import ImageInlineToolBar from '../Image/ImangeInline/ImageInlineToolBar/ImageInlineToolBar';
+import ImageToolBar from '../Image/ImageToolBar/ImageToolBar'
+
 
 const ToolbarsEditor = ({ editorState, setEditorState,variable, onChange }) => {
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
             <FontInput editorState={editorState} setEditorState={setEditorState}></FontInput>
             <TableToolbar editorState = {editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
-            <h1>Image Block</h1>
-            <ImageBlockToolBar editorState={editorState} setEditorState={setEditorState}></ImageBlockToolBar>
-            <h1>Image Inine</h1>
-            <ImageInlineToolBar editorState={editorState} setEditorState={setEditorState} infoImageInline={variable.infoImageInline}></ImageInlineToolBar>
+            <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
         </div>
     );
 }

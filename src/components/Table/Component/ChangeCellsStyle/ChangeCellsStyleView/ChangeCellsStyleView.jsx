@@ -46,7 +46,7 @@ const ChangeCellsStyleView = ({ editorState, setEditorState }) => {
 
     return <div ref={ref} className={styles.tableContainer}>
         <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
-            <img src={imageIcon} alt="Edit Border" title="Edit Border" className={`${styles.img} ${active}`} />
+            <img src={imageIcon} alt="Edit Table Border " title="Edit Table Border" className={`${styles.img} ${active}`} />
         </button>
         {show && <div className={styles.controlTable}>
             <ChangeCellsStyle onChange={handleStyleChange}></ChangeCellsStyle>

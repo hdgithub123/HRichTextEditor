@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 const ChangeCellsStyle = ({ onChange }) => {
     const [positions, setPositions] = useState([]);
-    const [color, setColor] = useState('red');
+    const [color, setColor] = useState('black');
     const [style, setStyle] = useState('solid');
-    const [width, setWidth] = useState('2px');
+    const [width, setWidth] = useState('1pt');
 
     const handleOnClick = () => {
         const boxStyle = {};
@@ -113,20 +113,23 @@ const ChangeCellsStyle = ({ onChange }) => {
                         <option value="outset">Outset</option>
                         <option value="none">None</option>
                         <option value="hidden">Hidden</option>
-
-
                     </select>
                 </label>
             </div>
             <div>
                 <label>
                     Độ dày:
-                    <input
-                        type="text"
-                        value={width}
-                        onChange={(e) => setWidth(e.target.value)}
-                        placeholder="e.g., 2px"
-                    />
+                    <select value={width} onChange={(e) => setWidth(e.target.value)}>
+                        <option value="0.25pt">0.25 pt</option>
+                        <option value="0.5pt">0.5 pt</option>
+                        <option value="0.75pt">0.75 pt</option>
+                        <option value="1pt">1 pt</option>
+                        <option value="1.5pt">1.5 pt</option>
+                        <option value="2.25pt">2.25 pt</option>
+                        <option value="3pt">3 pt</option>
+                        <option value="4.5pt">4.5 pt</option>
+                        <option value="6pt">6 pt</option>
+                    </select>
                 </label>
             </div>
             <button onClick={handleOnClick}>Apply Style</button>
