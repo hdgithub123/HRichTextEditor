@@ -6,12 +6,8 @@ import imageIcon from './borderAll.svg';
 import getCurrentBlockType from '../../../../utilities/getCurrentBlockType';
 import ChangeCellsStyle from '../ChangeCellsStyle/ChangeCellsStyle';
 
-const style = {
-    
-}
 
-
-const ChangeCellsStyleView = ({ editorState, setEditorState }) => {
+const ChangeCellsStyleView = ({ editorState, onChange }) => {
     const [active, setActive] = useState(styles.active);
     const [show, setShow] = useState(false);
     const ref = useRef();
@@ -40,7 +36,7 @@ const ChangeCellsStyleView = ({ editorState, setEditorState }) => {
 
     
     const handleStyleChange = (e) =>{
-        changeSelectionCellsStyle({editorState,setEditorState, newStyle:e})
+       changeSelectionCellsStyle({editorState,onChange, newStyle:e})
     }
 
 
