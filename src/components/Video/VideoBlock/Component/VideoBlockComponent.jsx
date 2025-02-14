@@ -5,8 +5,6 @@ import styles from './VideoBlockComponent.module.css'
 import pxToUnit from '../function/pxToUnit';
 
 const VideoBlockComponent = props => {
-    const image = useRef(null);
-    const container = useRef(null);
     const {
         block,
         contentState,
