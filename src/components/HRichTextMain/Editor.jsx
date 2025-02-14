@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect,useCallback } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import customStyleMap from './customStyleMap';
 import blockStyleFn from './blockStyleFn';
@@ -39,9 +39,11 @@ const HRichTextEditor = () => {
 
 
 
-  const onChange = (newState) => {
-    setEditorState(newState);
-  };
+  const onChange = useCallback((newEditorState) => {
+    if (editorState !== newEditorState) {
+      setEditorState(newEditorState);
+    }
+  }, [editorState]);
 
 
   // const focusEditor = () => {

@@ -13,14 +13,15 @@ const changeCellsStyle = ({ editorState, cellsPosition, newStyle}) => {
         }
     }
 
-    if (!tableBlock) return editorState;
+    if (!tableBlock){
+        return editorState;
+    } 
 
     // Lấy tableShape từ data của tableBlock
     let tableShape = tableBlock.getData().get('tableShape');
     if (!tableShape){
         return editorState
     }
-
 
     // Thay đổi thông tin individualStyle trong đúng vị trí của data.tableShape
     cellsPosition.cellsPosition.forEach(({ row, column }) => {
@@ -30,12 +31,10 @@ const changeCellsStyle = ({ editorState, cellsPosition, newStyle}) => {
 
     // Cập nhật tableBlock với tableShape mới
     const newTableBlock = tableBlock.set('data', tableBlock.getData().set('tableShape', tableShape));
-
     // Cập nhật editorState với tableBlock mới
     let newBlockMap = blockMap.set(newTableBlock.getKey(), newTableBlock);
     let newContentState = contentState.set('blockMap', newBlockMap);
     let newEditorState = EditorState.push(editorState, newContentState, 'change-block-data');
-
     return newEditorState;
 };
 

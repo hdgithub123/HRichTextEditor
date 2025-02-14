@@ -1,10 +1,11 @@
 import { Editor, EditorState, CompositeDecorator, Modifier } from 'draft-js';
 import imageInlineDecorator from '../Image/ImangeInline/decorator/createDecorator';
-
+import linkifyCreateDecorator from '../Linkify/decorator/linkifyCreateDecorator'
 
 const createDecorator = ({ editorState, functionList }) => {
   return new CompositeDecorator([
     imageInlineDecorator({ editorState, onImagePropertiesChange: functionList.onImagePropertiesChange }),
+    linkifyCreateDecorator(),
   ]);
 };
 

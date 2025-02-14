@@ -1,0 +1,7 @@
+.link {
+    pointer-events:all; /* Đảm bảo rằng liên kết có thể nhận sự kiện chuột */
+    z-index: 6666; /* Đảm bảo rằng liên kết hiển thị trên các phần tử khác */
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
