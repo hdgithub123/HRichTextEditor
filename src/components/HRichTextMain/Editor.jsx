@@ -100,6 +100,7 @@ const HRichTextEditor = () => {
             ref={editor}
             editorState={editorState}
             onChange={onChange}
+            // readOnly ={true}
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}

@@ -20,7 +20,7 @@ const UndoRedoToolBar = ({editorState, setEditorState}) => {
   };
 
   return (
-    <div className={style.container} style={{ padding: '20px', fontFamily: 'Arial' }}>
+    <div className={style.container}>
       <div>
         <button onClick={handleUndo} disabled={!editorState.getUndoStack().size}>
           Undo

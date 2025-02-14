@@ -1,0 +1,21 @@
+.container {
+    position: relative;
+    display: inline-block;
+    margin: 2px;
+    padding: 5px;
+}
+
+/* .image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+} */
+
+.container:hover{
+    border: 2px dashed gray;
+    resize:both;
+    overflow: hidden;
+} 
+
+

@@ -4,6 +4,7 @@ import ImageToolBar from '../Image/ImageToolBar/ImageToolBar'
 import LinkifyToolBar from  '../Linkify/ToolBar/LinkifyToolBar'
 import EmojiToolBar from '../Emoji/ToolBar/EmojiToolBar'
 import UndoRedoToolBar from '../UndoRedoToolBar/UndoRedoToolBar'
+import VideoBlockToolBar from '../Video/VideoBlock/VideoBlockToolBar/VideoBlockToolBar'
 
 const ToolbarsEditor = ({ editorState, setEditorState,variable, onChange }) => {
     return (
@@ -14,6 +15,7 @@ const ToolbarsEditor = ({ editorState, setEditorState,variable, onChange }) => {
             <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
             <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
             <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>
+            <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
         </div>
     );
 }

@@ -1,6 +1,8 @@
 import TableStructureComponent from '../Table/Component/tableStructure/TableStructureComponent';
 import CellComponent from '../Table/Component/cellTable/CellComponent';
 import ImageBlockComponent from '../Image/ImageBlock/Component/ImageBlockComponent';
+import VideoBlockComponent from '../Video/VideoBlock/Component/VideoBlockComponent'
+
 
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
     const type = block.getType();
@@ -27,6 +29,16 @@ const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable })
         case 'IMAGE_BLOCK':
             return {
                 component: ImageBlockComponent,
+                editable: false,
+                props: {
+                    editorRef,
+                    getEditorState,
+                    onChange,
+                },
+            };
+        case 'VIDEO_BLOCK':
+            return {
+                component: VideoBlockComponent,
                 editable: false,
                 props: {
                     editorRef,
