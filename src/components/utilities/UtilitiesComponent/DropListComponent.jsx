@@ -51,9 +51,11 @@ const DropListComponent = ({ ParentComponent, ChildComponent }) => {
             }
         }
     };
-    
+
+
+
     useEffect(() => {
-        const handleResizeOrLoad = () => adjustChildPosition(childRef,parentRef);
+        const handleResizeOrLoad = () => adjustChildPosition();
 
         window.addEventListener('resize', handleResizeOrLoad);
         window.addEventListener('load', handleResizeOrLoad);
@@ -77,10 +79,10 @@ const DropListComponent = ({ ParentComponent, ChildComponent }) => {
 
 
     return (
-        <div className={style.parent} ref={parentRef}>
+        <div style ={{position:'relative' }} ref={parentRef}>
             <ParentComponent onClick={handleParentClick} />
             {childShow && (
-                <div className={style.child} ref={childRef}>
+                <div style ={{position:'absolute' }} ref={childRef}>
                     <ChildComponent />
                 </div>
             )}
@@ -114,58 +116,42 @@ const useOnClickOutside = (ref, handler) => {
     }, [ref, handler]);
 };
 
-
-
-
-// const adjustChildPosition = (childRef) => {
-//     if (childRef.current) {
+//     if (childRef.current && parentRef.current) {
 //         const childRect = childRef.current.getBoundingClientRect();
-
-//         // Kiểm tra nếu phần tử con vượt ra khỏi phía dưới màn hình
-//         childRef.current.style.top = (childRect.bottom > window.innerHeight) ? '0' : '100%';
-
-//         // Kiểm tra nếu phần tử con vượt ra khỏi phía bên phải hoặc bên trái màn hình
-//         if (childRect.right > window.innerWidth) {
-//             childRef.current.style.left = 'auto';
-//             childRef.current.style.right = '0';
-//         } else if (childRect.left < 0) {
-//             childRef.current.style.left = '100%';
-//             childRef.current.style.right = 'auto';
-//         } else {
-//             childRef.current.style.left = '0';
-//             childRef.current.style.right = 'auto';
-//         }
-//     }
-// }
-
-
-// const adjustChildPosition = (childRef) => {
-//     if (childRef.current) {
-//         const childRect = childRef.current.getBoundingClientRect();
+//         const parentRect = parentRef.current.getBoundingClientRect();
 //         const windowHeight = window.innerHeight;
 //         const windowWidth = window.innerWidth;
 
-//         // Kiểm tra và điều chỉnh vị trí của phần tử con
+//         // Đặt lại vị trí mặc định
+//         childRef.current.style.top = '100%';
+//         childRef.current.style.bottom = 'auto';
+
+//         // Kiểm tra nếu bị tràn xuống dưới
 //         if (childRect.bottom > windowHeight) {
 //             childRef.current.style.top = 'auto';
-//             childRef.current.style.bottom = '100%';
-//         } else {
+//             childRef.current.style.bottom = `${parentRect.height}px`; // Đẩy lên trên parent
+//         }
+
+//         // Kiểm tra nếu bị tràn lên trên
+//         if (childRect.top < 0) {
 //             childRef.current.style.top = '100%';
 //             childRef.current.style.bottom = 'auto';
 //         }
 
+//         // Đặt lại vị trí ngang
+//         childRef.current.style.left = '0';
+//         childRef.current.style.right = 'auto';
+
+//         // Kiểm tra nếu bị tràn ra khỏi màn hình bên phải
 //         if (childRect.right > windowWidth) {
 //             childRef.current.style.left = 'auto';
 //             childRef.current.style.right = '0';
-//         } else if (childRect.left < 0) {
-//             childRef.current.style.left = '100%';
-//             childRef.current.style.right = 'auto';
-//         } else {
+//         }
+
+//         // Kiểm tra nếu bị tràn ra khỏi màn hình bên trái
+//         if (childRect.left < 0) {
 //             childRef.current.style.left = '0';
 //             childRef.current.style.right = 'auto';
 //         }
 //     }
 // };
-
-
-
