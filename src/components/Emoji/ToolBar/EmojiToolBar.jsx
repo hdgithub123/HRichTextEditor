@@ -3,7 +3,7 @@ import emojiList from '../emojiList'
 import insertEmoji from '../insertEmoji'
 import styles from './EmojiToolBar.module.scss';
 import imageIcon from './smile.svg'
-import useOnClickOutside from '../../utilities/useOnClickOutside'
+import { useOnClickOutside,  } from '../../utilities'
 
 const EmojiToolBar = ({ editorState, setEditorState }) => {
     const [show, setShow] = useState(false);

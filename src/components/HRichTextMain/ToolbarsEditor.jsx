@@ -37,11 +37,7 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => 
             {/* VerticalAlign chua cho vao table duoc
             <VerticalAlign editorState={editorState} setEditorState={setEditorState} /> */}
 
-            <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
-            <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
-            <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
-            <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
-            <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
+
 
 
             <LineHeightView editorState={editorState} setEditorState={setEditorState}  ></LineHeightView>
@@ -52,6 +48,15 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => 
             <Header editorState={editorState} setEditorState={setEditorState}></Header>
             <BlockStyleView editorState={editorState} setEditorState={setEditorState} />
             <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
+
+
+            <div>
+                <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
+                <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
+                <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
+                <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
+                <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
+            </div>
 
         </div>
     );
