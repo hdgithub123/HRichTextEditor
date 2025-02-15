@@ -89,7 +89,7 @@ const VideoBlockComponent = props => {
         };
 
         const onMouseUp = (e) => {
-            // Ngăn chặn sự kiện chuột trên video
+            // Khôi phục sự kiện chuột trên video
             videoRef.current.style.pointerEvents = 'auto';
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);

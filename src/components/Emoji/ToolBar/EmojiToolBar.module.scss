@@ -1,0 +1,66 @@
+.container {
+    position: relative;
+    // border: 1px solid #351111;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    // width: 20px;
+    // height: 20px;
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5px;
+        display: flex;
+        align-items: center;
+
+        .img {
+            width: 20px;
+            height: 20px;
+            border: 0.5px black solid;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .active {
+            background: white;
+        }
+
+        .unactive {
+            background: white;
+            opacity: 30%;
+        }
+
+    }
+
+    .controlTable {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 200px;
+        height: 200px;
+        max-height: 550px;
+        overflow-y: auto;
+        padding: 5px;
+        // display: flex;
+        // flex-direction: column;
+        gap: 10px;
+
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+
+    &:hover {
+        // border: 1px solid #351111;
+    }
+}

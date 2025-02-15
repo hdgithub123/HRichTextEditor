@@ -4,10 +4,12 @@ import {
   EditorState,
   RichUtils
 } from 'draft-js';
+import undoIcon from './undo.svg';
+import redoIcon from './redo.svg'
 import style from './UndoRedoToolBar.module.scss'
 
 
-const UndoRedoToolBar = ({editorState, setEditorState}) => {
+const UndoRedoToolBar = ({ editorState, setEditorState }) => {
 
   // Hàm Undo
   const handleUndo = () => {
@@ -21,14 +23,12 @@ const UndoRedoToolBar = ({editorState, setEditorState}) => {
 
   return (
     <div className={style.container}>
-      <div>
         <button onClick={handleUndo} disabled={!editorState.getUndoStack().size}>
-          Undo
+          <img src={undoIcon} alt="Undo" title="Undo" className={`${style.img} ${style.active}`} />
         </button>
         <button onClick={handleRedo} disabled={!editorState.getRedoStack().size}>
-          Redo
+          <img src={redoIcon} alt="Redo" title="Redo" className={`${style.img} ${style.active}`} />
         </button>
-      </div>
     </div>
   );
 };

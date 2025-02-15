@@ -1,0 +1,11 @@
+.parent {
+    position: relative;
+}
+
+.child {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: lightblue;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi mượt */
+}

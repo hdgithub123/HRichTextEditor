@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import style from './LinkifyToolBar.module.scss'
+import useOnClickOutside from '../../utilities/useOnClickOutside';
 import addLink from "../function/addLink";
 import removeLink from '../function/removeLink'
+import linkIcon from './link.svg';
+import unlinkIcon from './unlink.svg'
+import linkAddIcon from './linkAdd.svg'
+
 import { EditorState, RichUtils } from 'draft-js';
 
 const LinkifyToolBar = ({ editorState, setEditorState }) => {
+    const [active, setActive] = useState(style.active);
+    const [show, setShow] = useState(false);
+    const insertRef = useRef();
+    const [disabled, setDisabled] = useState(false);
     const [url, setUrl] = useState('');
-    const [placeHolder, setplaceHolder] = useState('Enter link');
 
-    // useEffect(() => {
-    //     const selection = editorState.getSelection();
-    //     if (!selection.isCollapsed()) {
-    //         const contentState = editorState.getCurrentContent();
-    //         const startKey = selection.getStartKey();
-    //         const startOffset = selection.getStartOffset();
-    //         const blockWithLinkAtBeginning = contentState.getBlockForKey(startKey);
-    //         const linkKey = blockWithLinkAtBeginning.getEntityAt(startOffset);
+    useOnClickOutside(insertRef, () => {
+        setShow(false);
+    });
 
-    //         if (linkKey) {
-    //             const linkInstance = contentState.getEntity(linkKey);
-    //             const { url } = linkInstance.getData();
-    //             setplaceHolder(url);
-    //         } else {
-    //             setplaceHolder('');
-    //         }
-    //     }
-    // }, [editorState]);
+    const handleClick = (e) => {
+        e.preventDefault();
+        setShow(true);
+    };
 
-    const handleOnClick = () => {
+
+
+    const handleInsertClick = () => {
         addLink({ url, editorState, setEditorState });
         setUrl('')
     };
@@ -41,16 +42,29 @@ const LinkifyToolBar = ({ editorState, setEditorState }) => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <input
-                type="text"
-                value={url}
-                onChange={handleInputChange}
-                placeholder={'Enter link'}
-                style={{ marginRight: '10px' }}
-            />
-            <button onClick={handleOnClick}>Add Link</button>
-            <button onClick={handleRemoveLink}>Remove Link</button>
+        <div className={style.container}>
+            <div ref={insertRef} className={style.insertLinkContainer}>
+                <button onClick={handleClick}>
+                    <img src={linkIcon} alt="Link" title="Link" className={`${style.img} ${style.active}`} />
+                </button>
+
+                {show && <div className={style.insertLink}>
+
+                    <input
+                        type="text"
+                        value={url}
+                        onChange={handleInputChange}
+                        placeholder={'Insert link'}
+                    />
+                    <button onClick={handleInsertClick}>
+                        <img src={linkAddIcon} alt="Add Link" title="Add Link" className={`${style.img} ${style.active}`} />
+                    </button>
+                </div>}
+
+            </div>
+            <button className={style.buttonremoveLink} onClick={handleRemoveLink}>
+                <img src={unlinkIcon} alt="RemoveLink" title="RemoveLink" className={`${style.img} ${style.active}`} />
+            </button>
         </div>
     );
 };
