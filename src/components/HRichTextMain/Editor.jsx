@@ -83,7 +83,7 @@ const HRichTextEditor = () => {
     // style={{width: '500px', padding: '20px'}}
     // style={{ border: '1px black solid' }}
     >
-      <div style={{ border: '2px black solid', borderRadius: '5px', padding: '5px' }}>
+      <div style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
         <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange}></ToolbarsEditor>
       </div>
 
