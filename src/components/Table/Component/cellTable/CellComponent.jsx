@@ -1,59 +1,32 @@
-import {  EditorBlock } from 'draft-js';
+import React, { useRef, useEffect } from 'react';
+import { EditorBlock } from 'draft-js';
 import { createPortal } from 'react-dom';
-
-// const CellComponent = props => {
-//     const {
-//         block,
-//         blockProps: { editorRef },
-//     } = props;
-//     const text = block.getText();
-//     if (block.getData().get('cellPosition')) {
-//         const position = block.getData().get('cellPosition');
-//         const target = editorRef?.editor.querySelector(`[cell-position='${position}']`);
-//         if (target) {
-//             // khoi 1
-//             const content = text.trim() === '' ? '\u00A0' : text; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
-//             return createPortal(<EditorBlock {...props} block={block.set('text', content)} />, target);
-            
-//             // khoi 2
-//             // const content = text.trim()
-//             // if (content === '') {
-//             //     const contentTemp = '\u00A0'; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
-//             //     return createPortal(<EditorBlock {...props} block={block.set('text', contentTemp)} />, target);
-//             // } else {
-//             //     return createPortal(<EditorBlock {...props} />, target);
-//             // }
-            
-//             // khoi 3
-//             // return createPortal(<EditorBlock {...props} />, target);
-//         }
-//         return null;
-//     }
-//     return null;
-// }
-
-
 
 const CellComponent = props => {
     const {
         block,
         blockProps: { editorRef },
     } = props;
-    const text = block.getText();
-    const blockStyle = block.getData().get('blockStyle');
-    if (block.getData().get('cellPosition')) {
-        const position = block.getData().get('cellPosition');
-        const target = editorRef?.editor.querySelector(`[cell-position='${position}']`);
-        if (target) {
-            // khoi 1
-            const content = text.trim() === '' ? '\u00A0' : text; // '\u00A0' là ký tự khoảng trắng không ngắt (non-breaking space)
-            return createPortal(<div style={{...blockStyle}}>
-                <EditorBlock {...props} block={block.set('text', content)} />
-            </div>, target);
+    
+    const blockData = block.getData();
+    const text = block.getText().trim() === '' ? '\u00A0' : block.getText();
+    const blockStyle = blockData.get('blockStyle');
+
+    const targetRef = useRef(null);
+    
+    useEffect(() => {
+        if (blockData.get('cellPosition')) {
+            const position = blockData.get('cellPosition');
+            targetRef.current = editorRef?.editor.querySelector(`[cell-position='${position}']`);
         }
-        return null;
-    }
-    return null;
-}
+    }, [editorRef, blockData]);
+
+    return targetRef.current ? createPortal(
+        <div style={{ ...blockStyle }}>
+            <EditorBlock {...props} block={block.set('text', text)} />
+        </div>,
+        targetRef.current
+    ) : null;
+};
 
 export default CellComponent;
