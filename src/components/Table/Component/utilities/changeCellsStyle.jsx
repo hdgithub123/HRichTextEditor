@@ -23,17 +23,26 @@ const changeCellsStyle = ({ editorState, cellsPosition, newStyle}) => {
         return editorState
     }
 
-    // Thay đổi thông tin individualStyle trong đúng vị trí của data.tableShape
-    cellsPosition.cellsPosition.forEach(({ row, column }) => {
-        const cell = tableShape[row][column];
-        cell.individualStyle = { ...cell.individualStyle, ...newStyle };
-    });
+    // // Thay đổi thông tin individualStyle trong đúng vị trí của data.tableShape
+    let newTableShape = tableShape.map((row, rowIndex) =>
+        row.map((cell, colIndex) => {
+            const isTargetCell = cellsPosition.cellsPosition.some(
+                ({ row, column }) => row === rowIndex && column === colIndex
+            );
+            return isTargetCell
+                ? { ...cell, individualStyle: { ...cell.individualStyle, ...newStyle } }
+                : cell;
+        })
+    );
+
+
 
     // Cập nhật tableBlock với tableShape mới
-    const newTableBlock = tableBlock.set('data', tableBlock.getData().set('tableShape', tableShape));
+    const newTableBlock = tableBlock.set('data', tableBlock.getData().set('tableShape', newTableShape));
     // Cập nhật editorState với tableBlock mới
     let newBlockMap = blockMap.set(newTableBlock.getKey(), newTableBlock);
     let newContentState = contentState.set('blockMap', newBlockMap);
+    //let newContentState = contentState.set('blockMap', newBlockMap).set('selectionBefore', contentState.getSelectionBefore()).set('selectionAfter', contentState.getSelectionAfter());
     let newEditorState = EditorState.push(editorState, newContentState, 'change-block-data');
     return newEditorState;
 };
