@@ -1,0 +1,6 @@
+.container{
+    // style={{ display: 'flex', flexWrap: 'wrap' }}
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

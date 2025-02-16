@@ -4,7 +4,7 @@ import customStyleMap from './customStyleMap';
 import blockStyleFn from './blockStyleFn';
 import extendedBlockRenderMap from './blockRenderMap';
 
-import editorStyle from './Editor.module.css';
+import style from './HRichTextEditor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import getBlockRendererFn from './getBlockRendererFn';
@@ -83,14 +83,14 @@ const HRichTextEditor = () => {
     // style={{width: '500px', padding: '20px'}}
     // style={{ border: '1px black solid' }}
     >
-      <div style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
+      <div className={style.toolBar}  style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
         <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange}></ToolbarsEditor>
       </div>
 
       <div
         onBlur={handleBlur}
         onFocus={handleFocus}
-        className={editorStyle.editorContainer}
+        className={style.editorContainer}
         style={{ border: '2px black solid', borderRadius: '5px', padding: '0px' }}
       >
         <div

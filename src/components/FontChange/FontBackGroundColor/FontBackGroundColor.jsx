@@ -38,8 +38,8 @@ const FontBackGroundColor = ({ colors, currentBackGroundColor, onSelectBackGroun
           ⯆
         </button>
       </div>
-      {showColors && (
-        <ul className={styles.colorList}>
+      {showColors && (<div className={styles.colorList}>
+        <ul>
           {colors.map((color, index) => (
             <li key={index} onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectColor(color); }}>
               <div className={styles.colorSwatch} style={{ backgroundColor: color }}></div>
@@ -47,6 +47,7 @@ const FontBackGroundColor = ({ colors, currentBackGroundColor, onSelectBackGroun
             </li>
           ))}
         </ul>
+      </div>
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-.container{
+.container {
   // padding: 20px;
   // width: auto;
   // display: flex;
@@ -11,17 +11,15 @@
   border-radius: 5px;
   padding: 2px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   width: auto;
+  gap: 5px;
+
+
 
 
   button {
-    // margin-right: 5px;
-    // padding: 5px 10px;
-    // font-size: 14px;
-    // cursor: pointer;
-
-
     background: none;
     border: none;
     cursor: pointer;
@@ -29,8 +27,14 @@
     display: flex;
     align-items: center;
 
+    width: 25px;
+    height: 25px;
 
-    img{
+    &:hover {
+      transform: scale(1.2);
+    }
+
+    img {
       width: 20px;
       height: 20px;
       border: 0.5px black solid;
@@ -38,7 +42,7 @@
       padding: 2px;
     }
   }
-  
+
   button:disabled {
     opacity: 0.5;
     cursor: not-allowed;

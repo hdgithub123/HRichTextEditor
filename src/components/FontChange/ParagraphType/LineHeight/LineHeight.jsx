@@ -44,14 +44,15 @@ const LineHeight = ({ heights, curentHeight, onSelectHeight }) => {
         </button>
       </div>
 
-      {showHeights && (
-        <ul className={styles.heights}>
+      {showHeights && ( <div className={styles.heights}>
+        <ul >
           {heights.map((height, index) => (
             <li key={index} onMouseDown={(e) => handleDetailClick(e, height)}>
               {height}
             </li>
           ))}
         </ul>
+      </div>
       )}
     </div>
   );

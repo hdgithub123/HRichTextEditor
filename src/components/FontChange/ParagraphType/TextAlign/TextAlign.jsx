@@ -40,7 +40,7 @@ const TextAlign = ({ editorState, setEditorState }) => {
   };
 
   return (
-    <div style={{display:'flex', flexDirection:'row'}}>
+    <div className={styles.container}>
       <button className={styles.button} title='Align Left' onClick={() => handleTextAlign('left')}>
         <img src={leftIcon} alt="Left" className={`${styles.img} ${blockTextAlign === 'left' ? styles.active : styles.unactive}`} />
       </button>

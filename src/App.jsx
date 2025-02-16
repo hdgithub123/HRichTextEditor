@@ -1,5 +1,5 @@
 import './App.css'
-import HRichTextEditor from '../src/components/HRichTextMain/Editor'
+import HRichTextEditor from '../src/components/HRichTextMain/HRichTextEditor'
 import React, { useState } from 'react';
 import TableRichEditorNew from '../src/components/Table/ViewTest/TableRichEditor'
 

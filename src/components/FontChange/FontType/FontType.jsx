@@ -32,7 +32,7 @@ const FontType = ({ editorState, setEditorState }) => {
 
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', flexDirection:'row' , gap:'5px'}}>
             <FontBold currentStyle={getCurrentTypeOfStyle('BOLD')} onClick={() => handleClickTypeOfStyle('BOLD')} />
             <FontItalic currentStyle={getCurrentTypeOfStyle('ITALIC')} onClick={() => handleClickTypeOfStyle('ITALIC')} />
             <FontUnderline currentStyle={getCurrentTypeOfStyle('UNDERLINE')} onClick={() => handleClickTypeOfStyle('UNDERLINE')} />

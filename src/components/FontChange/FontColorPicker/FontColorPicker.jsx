@@ -44,8 +44,8 @@ const FontColorPicker = ({ colors, currentColor, onSelectColor }) => {
         </button>
       </div>
 
-      {showColors && (
-        <ul className={styles.colorList}>
+      {showColors && (<div className={styles.colorList}> 
+        <ul>
           {colors.map((color, index) => (
             // <li key={index} onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectColor(color); }}>
             <li key={index} onMouseDown={(e) => handleDetailClick(e, color)}>
@@ -54,6 +54,7 @@ const FontColorPicker = ({ colors, currentColor, onSelectColor }) => {
             </li>
           ))}
         </ul>
+        </div>
       )}
     </div>
   );

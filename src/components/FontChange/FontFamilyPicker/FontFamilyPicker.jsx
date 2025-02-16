@@ -3,7 +3,7 @@ import styles from './FontFamilyPicker.module.scss';
 import useOnClickOutside from '../../utilities/useOnClickOutside'
 
 
-const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
+const FontFamilyPicker = ({ Fonts, currentFont, onSelectFont }) => {
   const [query, setQuery] = useState(currentFont ? currentFont : '');
   const [filteredFonts, setFilteredFonts] = useState(Fonts);
   const [showFont, setShowFont] = useState(false);
@@ -63,27 +63,31 @@ const FontFamilyPicker = ({Fonts, currentFont, onSelectFont }) => {
 
   return (
     <div ref={ref} className={styles.fontPicker}  >
-      <input
-        type="text"
-        placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."}
-        value={query}
-        title='Font Family'
-        onChange={handleInputChange}
-        className={styles.input}
-        style={{ fontFamily: selectedFont }}
-        onClick={handleClick}
-      />
-      <button onClick={handleClearQuery} className={styles.clearButton}>
-      ⯆
-      </button>
-      {showFont && (
-        <ul className={styles.fontList}>
+      <div className={styles.input}>
+        <input
+          type="text"
+          placeholder={selectedFont ? `${selectedFont}...` : "Search fonts..."}
+          value={query}
+          title='Font Family'
+          onChange={handleInputChange}
+          className={styles.input}
+          style={{ fontFamily: selectedFont }}
+          onClick={handleClick}
+        />
+        <button onClick={handleClearQuery}>
+          ⯆
+        </button>
+      </div>
+
+      {showFont && (<div className={styles.fontList}>
+        <ul>
           {filteredFonts.map((font, index) => (
             <li key={index} onClick={() => handleSelectFont(font)} style={{ cursor: 'pointer', padding: '5px', fontFamily: font }}>
               {font}
             </li>
           ))}
         </ul>
+      </div>
       )}
     </div>
   );

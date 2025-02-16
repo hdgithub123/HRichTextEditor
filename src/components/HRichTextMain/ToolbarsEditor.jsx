@@ -1,3 +1,4 @@
+import style from './ToolbarsEditor.module.scss'
 import TableToolbar from '../Table/TableToolBar/TableToolbar';
 import ImageToolBar from '../Image/ImageToolBar/ImageToolBar'
 import LinkifyToolBar from '../Linkify/ToolBar/LinkifyToolBar'
@@ -24,7 +25,7 @@ import {
 
 const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '3px' }}>
+        <div className={style.container}>
             <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>
             <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>
             <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>
@@ -50,14 +51,13 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => 
             <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
 
 
-            <div>
+       
                 <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
                 <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
                 <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
                 <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
                 <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
-            </div>
-
+        
         </div>
     );
 }

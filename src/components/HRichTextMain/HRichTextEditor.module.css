@@ -1,4 +1,3 @@
-
 .editorContainer {
   border: 1px solid #ddd;
   padding: 10px;
@@ -15,12 +14,15 @@
 }
 
 
-.editorContainer .editor .public-DraftStyleDefault-ltr {
-    /* Loại bỏ hoặc tùy chỉnh các thuộc tính */
-    text-align: unset; /* Hoặc bạn có thể sử dụng text-align: unset; */
-    margin: 0;
-  }
 
 
 
-  
+.toolBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  vertical-align: middle;
+
+
+}

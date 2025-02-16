@@ -50,7 +50,7 @@ const BlockStyleView = ({ editorState, setEditorState }) => {
   return (
     <>
       {view && (
-        <div ref={ref} style={{ position: 'relative', alignContent: 'center' }}>
+        <div ref={ref} className={styles.container}>
           <button className={styles.button} onMouseDown={handleClick}>
             <img src={listIcon} alt="Style Block" title="Style Block" className={`${styles.img} ${active}`} />
           </button>

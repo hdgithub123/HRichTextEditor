@@ -10,6 +10,7 @@ import header3Icon from './header3.svg'
 import header4Icon from './header4.svg'
 import header5Icon from './header5.svg'
 import header6Icon from './header6.svg'
+import style from './Header.module.scss'
 
 const Header = ({ editorState, setEditorState }) => {
 
@@ -20,7 +21,7 @@ const Header = ({ editorState, setEditorState }) => {
     };
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div  className ={style.container}>
             <CodeBlockTypeControl currentCodeBlock={currentBlock} ImageIcon={header1Icon} altImage={"header-one"} onClick={() => handleClickTypeOfBlock('header-one')}></CodeBlockTypeControl>
             <CodeBlockTypeControl currentCodeBlock={currentBlock} ImageIcon={header2Icon} altImage={"header-two"} onClick={() => handleClickTypeOfBlock('header-two')}></CodeBlockTypeControl>
             <CodeBlockTypeControl currentCodeBlock={currentBlock} ImageIcon={header3Icon} altImage={"header-three"} onClick={() => handleClickTypeOfBlock('header-three')}></CodeBlockTypeControl>

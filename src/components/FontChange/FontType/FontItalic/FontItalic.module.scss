@@ -5,6 +5,9 @@
   padding: 0.5px;
   display: flex;
   align-items: center;
+  width: 25px;
+  height: 25px;
+
   .img {
     width: 20px;
     height: 20px;
@@ -12,13 +15,17 @@
     border-radius: 4px;
     padding: 2px;
   }
-}
 
-.active {
-  background: white;
-}
+  .active {
+    background: white;
+  }
 
-.unactive {
-  background: white;
-  opacity: 30%;
+  .unactive {
+    background: white;
+    opacity: 30%;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }

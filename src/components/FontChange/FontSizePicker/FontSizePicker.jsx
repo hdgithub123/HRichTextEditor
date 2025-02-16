@@ -58,24 +58,27 @@ const FontSizePicker = ({ sizes, currentSize, onSelectSize }) => {
 
   return (
     <div ref={ref} className={styles.fontPicker}>
-      <input
-        type="text"
-        placeholder={selectedSize ? `${selectedSize}pt...` : "Search sizes..."} // Sửa dòng này
-        value={query}
-        title='Font size'
-        onChange={handleInputChange}
-        className={styles.input}
-        onClick={handleClick} 
-      />
-      <button onMouseDown={handleClearQuery} className={styles.clearButton}>⯆</button> {/* Nút Clear */}
-      {showSize && (
-        <ul className={styles.fontList}>
+      <div className={styles.input}>
+        <input
+          type="text"
+          placeholder={selectedSize ? `${selectedSize}pt...` : "Search sizes..."} // Sửa dòng này
+          value={query}
+          title='Font size'
+          onChange={handleInputChange}
+          className={styles.input}
+          onClick={handleClick}
+        />
+        <button onMouseDown={handleClearQuery}>⯆</button>
+      </div>
+      {showSize && (<div className={styles.fontList}>
+        <ul>
           {filteredSizes.map((size, index) => (
             <li key={index} onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectSize(size); }} style={{ cursor: 'pointer', padding: '5px' }}>
               {size}pt
             </li>
           ))}
         </ul>
+      </div>
       )}
     </div>
   );

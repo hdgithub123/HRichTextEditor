@@ -22,13 +22,15 @@
     }
 
     td {
-      // background-color: blue;
-      // color: white;
       padding: 5px;
       text-align: left;
       border: 2px solid black;
       font-size: 16px;
       font-weight: bold;
+      &:first-child {
+        background-color: #f0f0f0;
+        font-weight: bold;
+    }
     }
   }
 }

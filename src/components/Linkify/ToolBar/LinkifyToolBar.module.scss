@@ -1,17 +1,18 @@
 .container{
     display: flex;
     flex-direction: row;
-    width: auto;
+    gap: 5px;
   
     .insertLinkContainer{
         position: relative;
         // border: 1px solid #351111;
         border-radius: 5px;
-        // padding: 2px;
-        display: inline-block;
-        // flex-direction: row;
+        padding: 2px;
+        display: flex;
+        width: 25px;
+        height: 25px;
         align-items: center;
-        width: auto;
+        justify-content: center;
       
         button {
             background: none;
@@ -26,6 +27,9 @@
                 border: 0.5px black solid;
                 border-radius: 4px;
                 padding: 2px;
+            }
+            &:hover {
+                transform: scale(1.2);
             }
         }
         
@@ -81,6 +85,8 @@
             border-radius: 4px;
             padding: 2px;
         }
-
+        &:hover {
+            transform: scale(1.2);
+        }
     }
   }

@@ -28,7 +28,7 @@ const EmojiToolBar = ({ editorState, setEditorState }) => {
     return (
         <div ref={ref} className={styles.container}>
             <button onMouseDown={handleClick}>
-                <img src={imageIcon} alt="Edit Table" title="Edit Table" className={`${styles.img} ${styles.active}`} />
+                <img src={imageIcon} alt="Emoji" title="Emoji" className={`${styles.img} ${styles.active}`} />
             </button>
             {show &&<div ref={emojiListref} className={styles.controlTable}>
                 {emojiList.map((emoji, index) => (

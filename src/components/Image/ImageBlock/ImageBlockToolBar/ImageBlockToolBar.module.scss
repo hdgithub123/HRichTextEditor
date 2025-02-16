@@ -1,10 +1,14 @@
 /* File: ImageBlockToolBar.module.scss */
 .container {
     position: relative;
-    display: inline-block;
-    /* Sử dụng inline-block để container vừa với nội dung */
-    width: max-content;
-
+   // border: 1px solid #351111;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
     button {
         // background:none;
         border: none;
@@ -31,6 +35,9 @@
         .unactive {
             background: white;
             opacity: 30%;
+        }
+        &:hover{
+            transform: scale(1.2);
         }
     }
 

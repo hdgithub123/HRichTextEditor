@@ -13,10 +13,6 @@ const FontColorPickerView = ({ editorState, setEditorState }) => {
         } catch (error) {
             return 'black'
         }
-
-
-
-        
     };
 
     const handleSelectColor = (color) => {
