@@ -3,7 +3,7 @@ import { EditorState } from 'draft-js';
 import insertImage from '../function/insertImage';
 import updateImage from '../function/updateImage';
 import style from './ImageBlockToolBar.module.scss';
-import useOnClickOutside from '../../../utilities/useOnClickOutside';
+import { useOnClickOutside,useAutoAdjustAbsolutePosition } from '../../../utilities';
 import getCurrentBlockType from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
@@ -42,6 +42,7 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
   }
 
   const ref = useRef();
+  const tableRef = useRef();
   const [show, setShow] = useState(false);
 
   const [url, setUrl] = useState(dataImage.url || '');
@@ -192,12 +193,15 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
     });
   };
 
+  useAutoAdjustAbsolutePosition(tableRef,show)
+
+
   return (
     <div ref={ref} className={style.container}>
      {view && <button className={style.buttonclick} onClick={handleClick}>
         <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
       </button>}
-      {show && <div className={style.option}>
+      {show && <div ref={tableRef} className={style.option}>
         <table>
           <tbody>
             <tr>

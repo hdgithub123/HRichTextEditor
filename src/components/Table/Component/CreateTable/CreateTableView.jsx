@@ -8,7 +8,7 @@ import styles from './CreateNewTable.module.scss';
 import imageIcon from './table.svg'
 import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import getCurrentBlock from '../../../utilities/getCurrentBlockType';
-
+import { useAutoAdjustAbsolutePosition } from '../../../utilities';
 
 const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, blockStyle =blockStyleDefault }) => {
     const tableKey = genKey();
@@ -48,11 +48,14 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyl
 }
 
 
+
 const CreateTableView = ({ editorState, onChange, tablestyle, cellStyle, blockStyle }) => {
     const [active, setActive] = useState(styles.unactive);
     const [show, setShow] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const ref = useRef();
+    const TableGridref = useRef();
+    
     const currentBlock = getCurrentBlock({ editorState });
 
     useEffect(() => {
@@ -80,13 +83,13 @@ const CreateTableView = ({ editorState, onChange, tablestyle, cellStyle, blockSt
         setShow(true);
     };
 
-
+    useAutoAdjustAbsolutePosition(TableGridref,show)
     return (
         <div ref={ref} className={styles.tableContainer}>
             <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
                 <img src={imageIcon} alt="Create Table" title="Create Table" className={`${styles.img} ${active}`} />
             </button>
-            {show && <div className={styles.tableGrid}>
+            {show && <div ref={TableGridref} className={styles.tableGrid}>
                 <TableGrid handleSubmit={handleCellClick} maxGridSize={10} />
             </div>}
         </div>

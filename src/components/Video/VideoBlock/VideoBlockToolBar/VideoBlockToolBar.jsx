@@ -3,7 +3,7 @@ import { EditorState } from 'draft-js';
 import insertVideo from '../function/insertVideo';
 import updateVideo from '../function/updateVideo';
 import style from './VideoBlockToolBar.module.scss';
-import useOnClickOutside from '../../../utilities/useOnClickOutside';
+import {useAutoAdjustAbsolutePosition,useOnClickOutside} from '../../../utilities';
 import getCurrentBlockType from '../../../utilities/getCurrentBlockType';
 import insertIcon from './videoInsert.svg'
 import ResetIcon from './erase.svg'
@@ -20,6 +20,8 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
 
   const [view, setView] = useState(true);
   const ref = useRef();
+  const tableRef = useRef();
+  
   const [show, setShow] = useState(false);
 
   const [url, setUrl] = useState('');
@@ -125,12 +127,13 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
       setJustifyContent('center');
   }
 
+  useAutoAdjustAbsolutePosition(tableRef,show)
   return (
     <div ref={ref} className={style.container}>
      {view && <button className={style.buttonclick} onClick={handleClick}>
         <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
       </button>}
-      {show && <div className={style.option}>
+      {show && <div ref={tableRef} className={style.option}>
         <table>
           <tbody>
             <tr>

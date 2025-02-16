@@ -3,11 +3,13 @@ import emojiList from '../emojiList'
 import insertEmoji from '../insertEmoji'
 import styles from './EmojiToolBar.module.scss';
 import imageIcon from './smile.svg'
-import { useOnClickOutside,  } from '../../utilities'
+import { useOnClickOutside,useAutoAdjustAbsolutePosition  } from '../../utilities'
+
 
 const EmojiToolBar = ({ editorState, setEditorState }) => {
     const [show, setShow] = useState(false);
     const ref = useRef();
+    const emojiListref = useRef();
 
     const handleonClick = (emoji) => {
         insertEmoji({ emoji, editorState, setEditorState })
@@ -21,14 +23,14 @@ const EmojiToolBar = ({ editorState, setEditorState }) => {
         e.preventDefault();
         setShow(true);
     };
-
+    useAutoAdjustAbsolutePosition(emojiListref, show);
 
     return (
         <div ref={ref} className={styles.container}>
             <button onMouseDown={handleClick}>
                 <img src={imageIcon} alt="Edit Table" title="Edit Table" className={`${styles.img} ${styles.active}`} />
             </button>
-            {show &&<div className={styles.controlTable}>
+            {show &&<div ref={emojiListref} className={styles.controlTable}>
                 {emojiList.map((emoji, index) => (
                     <button
                         key={index}

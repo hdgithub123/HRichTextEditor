@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import BlockStyle from "./BlockStyle";
 import getCurrentBlock from './getCurrentBlock';
-import useOnClickOutside from '../../../utilities/useOnClickOutside';
+import {useAutoAdjustAbsolutePosition,useOnClickOutside}  from '../../../utilities';
 import styles from './BlockStyleView.module.scss';
 import listIcon from './styleBlock.svg'
 import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
@@ -13,6 +13,8 @@ const BlockStyleView = ({ editorState, setEditorState }) => {
   const [show, setShow] = useState(false);
   const [view, setView] = useState(true);
   const ref = useRef();
+  const blockStyleRef = useRef();
+  
   const currentBlock = getCurrentBlock({ editorState });
 
 
@@ -43,6 +45,8 @@ const BlockStyleView = ({ editorState, setEditorState }) => {
     setShow(!show);
   };
 
+
+  useAutoAdjustAbsolutePosition(blockStyleRef,show)
   return (
     <>
       {view && (
@@ -51,7 +55,7 @@ const BlockStyleView = ({ editorState, setEditorState }) => {
             <img src={listIcon} alt="Style Block" title="Style Block" className={`${styles.img} ${active}`} />
           </button>
           {show && (
-            <div className={styles.listTypeContainer}>
+            <div ref={blockStyleRef} className={styles.listTypeContainer}>
               <BlockStyle editorState={editorState} setEditorState={setEditorState} />
             </div>
           )}

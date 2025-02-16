@@ -4,7 +4,7 @@ import { EditorState } from 'draft-js';
 import addImageInline from '../function/addImageInline'
 import updateImageInline from '../function/updateImageInline';
 import style from './ImageInlineToolBar.module.scss';
-import useOnClickOutside from '../../../utilities/useOnClickOutside';
+import { useOnClickOutside,useAutoAdjustAbsolutePosition } from '../../../utilities';
 import getCurrentBlock from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
@@ -19,6 +19,8 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
     const infoImage = infoImageInline.properties
     // const entityKey = infoImageInline.entityKey
     const ref = useRef();
+    const tableRef = useRef();
+    
     const [show, setShow] = useState(false);
 
    
@@ -164,12 +166,15 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
         });
     };
 
+    
+    useAutoAdjustAbsolutePosition(tableRef,show)
+
     return (
         <div ref={ref} className={style.container}>
             <button className={style.buttonclick} onClick={handleClick}>
                 <img src={imageIcon} alt="Image" title='Image Text Inline' className={`${style.img} ${style.active}`} />
             </button>
-            {show && <div className={style.option}>
+            {show && <div ref={tableRef} className={style.option}>
                 <table>
                     <tbody>
                         <tr>

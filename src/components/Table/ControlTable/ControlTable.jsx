@@ -20,13 +20,15 @@ import insertAfterRowIcon from './insertRowAfter.svg';
 import getCurrentBlockType from '../../utilities/getCurrentBlockType';
 
 
-import useOnClickOutside from '../../utilities/useOnClickOutside';
+import {useAutoAdjustAbsolutePosition, useOnClickOutside}  from '../../utilities';
 
 
 const ControlTable = ({ editorState, onChange }) => {
     const [active, setActive] = useState(styles.active);
     const [show, setShow] = useState(false);
     const ref = useRef();
+    const buttonListRef = useRef();
+    
     const [disabled, setDisabled] = useState(false);
 
     useOnClickOutside(ref, () => {
@@ -50,12 +52,15 @@ const ControlTable = ({ editorState, onChange }) => {
         }
     }, [currentBlock]);
 
+    useAutoAdjustAbsolutePosition(buttonListRef,show)
+
+
     return (
         <div ref={ref} className={styles.tableContainer}>
             <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
                 <img src={imageIcon} alt="Edit Table" title="Edit Table" className={`${styles.img} ${active}`} />
             </button>
-            {show && <div className={styles.controlTable}>
+            {show && <div ref={buttonListRef} className={styles.controlTable}>
                 <button onClick={() => getMergecell({ editorState: editorState, onChange })}>
                     <img src={mergeCellsIcon} alt="Merge Cells" title="Merge Cells" className={`${styles.img} ${active}`} />
                 </button>

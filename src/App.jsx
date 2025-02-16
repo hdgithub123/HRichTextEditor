@@ -2,16 +2,79 @@ import './App.css'
 import HRichTextEditor from '../src/components/HRichTextMain/Editor'
 import React, { useState } from 'react';
 import TableRichEditorNew from '../src/components/Table/ViewTest/TableRichEditor'
-import Vidu from '../src/components/utilities/UtilitiesComponent/Vidu'
+
 function App() {
   const [theme, setTheme] = useState('light');
   return (
     <>
         <div>hello</div>
+        <div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+        </div>
         <HRichTextEditor></HRichTextEditor>
         <TableRichEditorNew></TableRichEditorNew>
-        <div style={{display: 'flex', justifyContent:"right"}}>
-          <Vidu></Vidu>
+        <div>
           <br></br>
           <br></br>
           <br></br>

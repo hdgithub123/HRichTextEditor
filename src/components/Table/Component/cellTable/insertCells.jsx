@@ -1,42 +1,43 @@
-import {EditorState, SelectionState, ContentBlock, genKey } from 'draft-js';
+import { EditorState, SelectionState, ContentBlock, genKey } from 'draft-js';
 import { Map } from 'immutable';
 
-
 const insertCells = (editorState, cellsData) => {
-    let contentState = editorState.getCurrentContent();
-    let blockMap = contentState.getBlockMap();
-    if (!Array.isArray(cellsData)) {
+    if (!Array.isArray(cellsData) || cellsData.length === 0) {
         console.error('Invalid cellsData:', cellsData);
         return editorState;
     }
-    cellsData.forEach(cellData => {
-        const { tableKey, cellPosition, text } = cellData;
-        if (!tableKey || !cellPosition || text === undefined) {
-            console.error('Invalid cellData:', cellData);
-            return;
-        }
 
-        // Tạo một khối mới
-        const newBlock = new ContentBlock({
-            key: genKey(),
-            type: 'cellTable',
-            text: text,
-            data: Map({ tableKey, cellPosition }),
-        });
+    let contentState = editorState.getCurrentContent();
+    let blockMap = contentState.getBlockMap();
 
-        // Thêm khối mới vào cuối blockMap
-        blockMap = blockMap.set(newBlock.getKey(), newBlock);
+    // Sử dụng withMutations để tối ưu hiệu suất khi thay đổi nhiều phần tử
+    const updatedBlockMap = blockMap.withMutations(map => {
+        const newBlocks = cellsData.map(({ tableKey, cellPosition, text }) => {
+            if (!tableKey || !cellPosition || text === undefined) {
+                console.error('Invalid cellData');
+                return null;
+            }
+            return new ContentBlock({
+                key: genKey(),
+                type: 'cellTable',
+                text,
+                data: Map({ tableKey, cellPosition }),
+            });
+        }).filter(Boolean);
+
+        // Thêm tất cả các cell vào blockMap một lần
+        newBlocks.forEach(block => map.set(block.getKey(), block));
     });
 
-    // Tạo contentState mới với blockMap mới
+    // Lấy key của block cuối cùng để cập nhật selection
+    const lastBlockKey = updatedBlockMap.keySeq().last();
     contentState = contentState.merge({
-        blockMap: blockMap,
-        selectionAfter: SelectionState.createEmpty(blockMap.last().getKey())
+        blockMap: updatedBlockMap,
+        selectionAfter: lastBlockKey ? SelectionState.createEmpty(lastBlockKey) : contentState.getSelectionAfter(),
     });
 
-    // Tạo editorState mới với contentState mới
-    const newEditorState = EditorState.push(editorState, contentState, 'insert-fragment');
-    return newEditorState;
+    // Chỉ gọi EditorState.push một lần duy nhất để tránh nhiều lần render
+    return EditorState.push(editorState, contentState, 'insert-fragment');
 };
 
-export default insertCells; 
+export default insertCells;

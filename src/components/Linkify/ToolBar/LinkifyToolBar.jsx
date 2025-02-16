@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import style from './LinkifyToolBar.module.scss'
-import useOnClickOutside from '../../utilities/useOnClickOutside';
+import { useOnClickOutside,useAutoAdjustAbsolutePosition } from '../../utilities';
 import addLink from "../function/addLink";
 import removeLink from '../function/removeLink'
 import linkIcon from './link.svg';
 import unlinkIcon from './unlink.svg'
 import linkAddIcon from './linkAdd.svg'
+
+
 
 import { EditorState, RichUtils } from 'draft-js';
 
@@ -13,6 +15,7 @@ const LinkifyToolBar = ({ editorState, setEditorState }) => {
     const [active, setActive] = useState(style.active);
     const [show, setShow] = useState(false);
     const insertRef = useRef();
+    const inputRef = useRef();
     const [disabled, setDisabled] = useState(false);
     const [url, setUrl] = useState('');
 
@@ -41,6 +44,9 @@ const LinkifyToolBar = ({ editorState, setEditorState }) => {
         setUrl(e.target.value);
     };
 
+
+    useAutoAdjustAbsolutePosition(inputRef,show)
+
     return (
         <div className={style.container}>
             <div ref={insertRef} className={style.insertLinkContainer}>
@@ -48,7 +54,7 @@ const LinkifyToolBar = ({ editorState, setEditorState }) => {
                     <img src={linkIcon} alt="Link" title="Link" className={`${style.img} ${style.active}`} />
                 </button>
 
-                {show && <div className={style.insertLink}>
+                {show && <div ref={inputRef} className={style.insertLink}>
 
                     <input
                         type="text"
