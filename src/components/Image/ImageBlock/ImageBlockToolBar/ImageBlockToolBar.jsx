@@ -3,7 +3,7 @@ import { EditorState } from 'draft-js';
 import insertImage from '../function/insertImage';
 import updateImage from '../function/updateImage';
 import style from './ImageBlockToolBar.module.scss';
-import { useOnClickOutside,useAutoAdjustAbsolutePosition } from '../../../utilities';
+import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../../utilities';
 import getCurrentBlockType from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
@@ -20,12 +20,12 @@ const defaultBlockStyle = {
 }
 const ImageBlockToolBar = ({ editorState, setEditorState }) => {
 
-  const [view, setView] = useState(true);
+  const [disable, setDisable] = useState(false);
   const contentState = editorState.getCurrentContent();
   const selectionState = editorState.getSelection();
   const blockKey = selectionState.getStartKey();
   const currentBlock = contentState.getBlockForKey(blockKey);
-  let dataImage ={}
+  let dataImage = {}
   // try {
   //    dataImage = currentBlock.getData().toJS();
   // } catch (error) {
@@ -57,14 +57,12 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
 
   const currentBlocktype = getCurrentBlockType({ editorState });
 
-
-
   useEffect(() => {
 
     if (notChangeBlock.includes(currentBlocktype)) {
-      setView(false)
+      setDisable(true)
     } else {
-      setView(true)
+      setDisable(false)
     }
   }, [currentBlocktype]);
 
@@ -193,14 +191,14 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
     });
   };
 
-  useAutoAdjustAbsolutePosition(tableRef,show)
+  useAutoAdjustAbsolutePosition(tableRef, show)
 
 
   return (
     <div ref={ref} className={style.container}>
-     {view && <button className={style.buttonclick} onClick={handleClick}>
-        <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
-      </button>}
+      <button disabled={disable} className={style.buttonclick} onClick={handleClick}>
+        <img src={imageIcon} alt="Image" title='Image Block' className={`${style.img} ${style.active}`} />
+      </button>
       {show && <div ref={tableRef} className={style.option}>
         <table>
           <tbody>

@@ -1,7 +1,7 @@
 /* File: ImageBlockToolBar.module.scss */
 .container {
     position: relative;
-   // border: 1px solid #351111;
+    // border: 1px solid #351111;
     border-radius: 5px;
     padding: 2px;
     display: flex;
@@ -37,8 +37,14 @@
             background: white;
             opacity: 30%;
         }
-        &:hover{
+
+        &:hover {
             transform: scale(1.2);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     }
 

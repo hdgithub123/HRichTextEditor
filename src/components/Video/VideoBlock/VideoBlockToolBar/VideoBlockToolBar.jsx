@@ -18,7 +18,7 @@ const defaultBlockStyle = {
 }
 const VideoBlockToolBar = ({ editorState, setEditorState }) => {
 
-  const [view, setView] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const ref = useRef();
   const tableRef = useRef();
   
@@ -41,9 +41,9 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
   useEffect(() => {
 
     if (notChangeBlock.includes(currentBlocktype)) {
-      setView(false)
+      setDisabled(true)
     } else {
-      setView(true)
+      setDisabled(false)
     }
   }, [currentBlocktype]);
 
@@ -130,9 +130,9 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
   useAutoAdjustAbsolutePosition(tableRef,show)
   return (
     <div ref={ref} className={style.container}>
-     {view && <button className={style.buttonclick} onClick={handleClick}>
+      <button disabled={disabled} className={style.buttonclick} onClick={handleClick}>
         <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
-      </button>}
+      </button>
       {show && <div ref={tableRef} className={style.option}>
         <table>
           <tbody>
