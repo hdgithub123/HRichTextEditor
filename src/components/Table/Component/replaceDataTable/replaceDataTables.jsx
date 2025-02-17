@@ -1,17 +1,18 @@
 import { findTableIdBlocks } from './ultils';
 import replaceDataTable from './replaceDataTable';
+import {convertFromRaw } from 'draft-js';
 
-
-const replaceDataTables =  ({ editorState, tableData }) => {
-    const blockMapJS = editorState.getCurrentContent().getBlockMap().toJS();
+const replaceDataTables =  ({ contentStateObjectJS, tableData }) => {
+    const contentState = convertFromRaw(contentStateObjectJS);
+    const blockMapJS = contentState.getBlockMap().toJS();
     const allBlock =findTableIdBlocks({ blockMapJS: blockMapJS, tableId: tableData.tableId });
     // Lấy ra tất cả tableKey của các block nếu trùng nhau thì loại đi
     const tableKeys = [...new Set(allBlock.map(block => block.data.tableKey))];
-    let newEditorState = editorState;
+    let newContentState = contentState;
     for (const tableKey of tableKeys) {
-        newEditorState =  replaceDataTable({ editorState: newEditorState, tableData, tableKey });
+        newContentState =  replaceDataTable({ contentState:newContentState, tableData, tableKey });
     }
-    return newEditorState;
+    return newContentState;
 
 }
 

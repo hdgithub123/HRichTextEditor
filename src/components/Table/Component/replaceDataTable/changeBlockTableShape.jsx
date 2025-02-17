@@ -1,16 +1,16 @@
 import { EditorState } from 'draft-js';
+import { convertFromRaw,convertToRaw } from 'draft-js';
 import { numberOfUniqueRows, findTableIdBlocks } from './ultils';
 import { Map } from 'immutable';
 
 //xong  thay doi Table Shape-------------------------------------
-const changeBlockTableShape =  ({ editorState, tableData, tableKey }) => {
-    const contentState = editorState.getCurrentContent();
+const changeBlockTableShape =  ({contentState, tableData, tableKey }) => {
     const blockMap = contentState.getBlockMap();
     const blockMapJS = blockMap.toJS();
     const newTableShape = chageTableShape({ blockMapJS, tableData, tableKey });
-    const newEditorState = replaceBlockTableShape({ editorState, blockKey: tableKey, newTableShape });
+    const newContentState = replaceBlockTableShape({ contentState, blockKey: tableKey, newTableShape });
 
-    return newEditorState;
+    return newContentState;
 }
 
 
@@ -46,8 +46,8 @@ const copyTableShape = ({ tableShape, numberOfUniqueRows, numberRowcopy }) => {
     return newTableShape;
 };
 
-const replaceBlockTableShape = ({ editorState, blockKey, newTableShape }) => {
-    const contentState = editorState.getCurrentContent();
+const replaceBlockTableShape = ({ contentState, blockKey, newTableShape }) => {
+    // const contentState = editorState.getCurrentContent();
     const blockMap = contentState.getBlockMap();
 
     const block = blockMap.get(blockKey);
@@ -70,17 +70,18 @@ const replaceBlockTableShape = ({ editorState, blockKey, newTableShape }) => {
             blockMap: newBlockMap
         });
 
-        // Tạo EditorState mới từ ContentState đã cập nhật
-        const newEditorState = EditorState.push(
-            editorState,
-            newContentState,
-            'change-block-data' // lý do thay đổi
-        );
+        // // Tạo EditorState mới từ ContentState đã cập nhật
+        // const newEditorState = EditorState.push(
+        //     editorState,
+        //     newContentState,
+        //     'change-block-data' // lý do thay đổi
+        // );
 
-        return newEditorState;
+        // return newEditorState;
+        return newContentState
     }
 
-    return editorState; // Trả về trạng thái cũ nếu không tìm thấy block
+    return contentState; // Trả về trạng thái cũ nếu không tìm thấy block
 };
 
 

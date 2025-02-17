@@ -3,8 +3,8 @@ import { numberOfUniqueRows, findTableIdBlocks } from './ultils';
 import { OrderedMap,List } from 'immutable';
 
 
-const changeBlockTableText = ({ editorState, tableData, tableKey }) => {
-    const contentState = editorState.getCurrentContent();
+const changeBlockTableText = ({ contentState, tableData, tableKey }) => {
+    // const contentState = editorState.getCurrentContent();
     const blockMap = contentState.getBlockMap();
     const blockMapJS = blockMap.toJS();
     const { data, tableId } = tableData;
@@ -13,8 +13,8 @@ const changeBlockTableText = ({ editorState, tableData, tableKey }) => {
     let changeBlockMap = changeTextBlocksMap({ blockMap, numberOfUniqueRows: uniqueRows, data, newTableBlock: columnBlocks, tableKey, tableId });
     const changeBlockMap2 = extractContentBlocks(changeBlockMap.toArray())
     const newContentState = ContentState.createFromBlockArray(changeBlockMap2);
-    const newEditorState = EditorState.createWithContent(newContentState);
-    return newEditorState;
+    // const newEditorState = EditorState.createWithContent(newContentState);
+    return newContentState;
 }
 
 const extractContentBlocks = (data) => {

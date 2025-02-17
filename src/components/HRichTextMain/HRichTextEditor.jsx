@@ -17,7 +17,7 @@ import updateImageInline from '../Image/ImangeInline/function/updateImageInline'
 const HRichTextEditor = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
-  const editor = useRef(null);
+  const editorRef = useRef(null);
 
   useEffect(() => {
     const newEditorState = decorateEditorState({ editorState, functionList });
@@ -46,9 +46,6 @@ const HRichTextEditor = () => {
   }, [editorState]);
 
 
-  // const focusEditor = () => {
-  //   editor.current.focus();
-  // };
 
   const lastSelectionState = useRef(null);
 
@@ -64,6 +61,10 @@ const HRichTextEditor = () => {
     }
   };
 
+
+
+
+
   const handleReturn = (e, editorState) => {
     if (RichUtils.getCurrentBlockType(editorState) === 'cellTable') {
       onChange(RichUtils.insertSoftNewline(editorState));
@@ -77,12 +78,7 @@ const HRichTextEditor = () => {
   }
 
   return (
-    <div
-    // onBlur={handleBlur}
-    // onFocus={handleFocus}
-    // style={{width: '500px', padding: '20px'}}
-    // style={{ border: '1px black solid' }}
-    >
+    <div>
       <div className={style.toolBar}  style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
         <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange}></ToolbarsEditor>
       </div>
@@ -97,16 +93,15 @@ const HRichTextEditor = () => {
           className={removeStyle.editorRemove}
         >
           <Editor
-            ref={editor}
+            ref={editorRef}
             editorState={editorState}
             onChange={onChange}
             // readOnly ={true}
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}
-            blockRendererFn={getBlockRendererFn({ editorRef: editor.current, getEditorState: () => editorState, onChange: onChange })}
+            blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange })}
             handleReturn={(e, editorState) => handleReturn(e, editorState)}
-          // className={editorStyle.editor}
           />
         </div>
       </div>

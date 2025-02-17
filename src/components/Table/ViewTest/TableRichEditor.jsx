@@ -84,9 +84,9 @@ const TableRichEditorNew = () => {
         setEditorState(newEditor);
     }
 
-    const handleReplaceDataTables = async () => {
-        const newEditor = await replaceDataTables({editorState, tableData});
-        const newEditor2 = await replaceDataTables({editorState: newEditor, tableData: tableData2});
+    const handleReplaceDataTables =  () => {
+        const newContentState = replaceDataTables({contentStateObjectJS:contentExample, tableData});
+        const newEditor2 = EditorState.createWithContent(newContentState);
         setEditorState(newEditor2);
     }
 
