@@ -27,11 +27,17 @@ const dynamicTable = {
 
 
 import insertText from "../function/insertText"
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import imageIcon from './tablePoint.svg';
+import applyIcon from './insertText.svg';
+
+import style from './DynamicTable.module.scss'
+import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
 
 const DynamicTable = ({ editorState, setEditorState }) => {
-    const [selectedKey, setSelectedKey] = useState(Object.keys(dynamicTable)[0]);
-
+    const [show, setShow] = useState(false);
+    const ref = useRef();
+    const buttonListRef = useRef();
     const handleInsertText = (text) => {
         if (!text || text === '') {
 
@@ -49,8 +55,24 @@ const DynamicTable = ({ editorState, setEditorState }) => {
         setEditorState(newEditorState);
     };
 
-    return (
-        <DynamicDropdown dynamicTable={dynamicTable} onInsert={handleTextChange} ></DynamicDropdown>
+    const handleClick = () => {
+        setShow(true)
+    }
+    useOnClickOutside(ref, () => {
+        setShow(false);
+    });
+    useAutoAdjustAbsolutePosition(buttonListRef, show)
+
+    return (<div ref={ref} className={style.tableContainer}>
+        <button className={style.button} onMouseDown={handleClick}>
+            <img src={imageIcon} alt="Table PlaceHolder" title="Table PlaceHolder" className={`${style.img} ${style.active}`} />
+        </button>
+        {show && <div ref={buttonListRef} className={style.controlTable}>
+            <DynamicDropdown dynamicTable={dynamicTable} onInsert={handleTextChange} ></DynamicDropdown>
+        </div>}
+
+    </div>
+
     );
 };
 
@@ -82,40 +104,55 @@ const DynamicDropdown = ({ dynamicTable, onInsert }) => {
     };
 
     return (
-        <div style={{ padding: "20px", fontFamily: "Arial" }}>
-            {/* Dropdown chọn key */}
-            <label>Choose a table key: </label>
-            <select value={selectedKey} onChange={handleKeyChange}>
-                <option value="">-- Select Key --</option>
-                {Object.keys(dynamicTable).map((key) => (
-                    <option key={key} value={key}>
-                        {key}
-                    </option>
-                ))}
-            </select>
+        <div className={style.DynamicDropdownContainer}>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Table ID </td>
+                        <td>
+                            <select value={selectedKey} onChange={handleKeyChange}>
+                                <option value="">-- Select Key --</option>
+                                {Object.keys(dynamicTable).map((key) => (
+                                    <option key={key} value={key}>
+                                        {key}
+                                    </option>
+                                ))}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Field:</td>
+                        <td>
+                            {selectedKey ? <div style={{ background: 'white' }}>
+                                <select value={selectedField} onChange={handleFieldChange}>
+                                    <option value="">-- Select Field --</option>
+                                    {dynamicTable[selectedKey].map((field) => (
+                                        <option key={field} value={field}>
+                                            {field}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div> : <div>
 
-            {/* Dropdown chọn field (hiện khi đã chọn key) */}
-            {selectedKey && (
-                <>
-                    <label style={{ marginLeft: "20px" }}>Choose a field: </label>
-                    <select value={selectedField} onChange={handleFieldChange}>
-                        <option value="">-- Select Field --</option>
-                        {dynamicTable[selectedKey].map((field) => (
-                            <option key={field} value={field}>
-                                {field}
-                            </option>
-                        ))}
-                    </select>
-                </>
-            )}
+                                <select>
+                                    <option value="">-- Select Field --</option>
+                                </select>
 
+                            </div>}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             {/* Nút Insert */}
-            <button onClick={handleInsertClick} style={{ marginLeft: "20px" }}>
-                Insert
-            </button>
-        </div>}
-    </div>
 
+
+            <div className={style.applyButton}>
+                <button title='Apply' onClick={handleInsertClick}>
+                    <img src={applyIcon} alt="Apply" className={`${style.img} ${style.active}`} />
+                    <span>Insert</span>
+                </button>
+            </div>
+        </div>
     );
 };
 
