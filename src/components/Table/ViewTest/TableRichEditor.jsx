@@ -61,8 +61,10 @@ const TableRichEditorNew = () => {
     };
 
     const insertOneCell = (editorState) => {
-        let newEditorState = insertCell(editorState, cellData1)
-        setEditorState(newEditorState);
+        // let newEditorState = insertCell(editorState, cellData1)
+        // setEditorState(newEditorState);
+        moveSelectionToStart();
+        // console.log("aaaa")
     }
 
     const insertMoreCell = (editorState) => {
@@ -84,11 +86,33 @@ const TableRichEditorNew = () => {
         setEditorState(newEditor);
     }
 
-    const handleReplaceDataTables =  () => {
-        const newContentState = replaceDataTables({contentStateObjectJS:contentExample, tableData});
+    // quan trong da update de khong bi delay
+    const handleReplaceDataTables = async () => {
+        const newContentState = replaceDataTables({ contentStateObjectJS: contentExample, tableData });
         const newEditor2 = EditorState.createWithContent(newContentState);
         setEditorState(newEditor2);
-    }
+        await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
+        if (editorRef.current) {
+            editorRef.current.focus();
+        }
+    };
+
+
+    const moveSelectionToStart = (editorState) => {
+        const firstBlockKey = editorState.getCurrentContent().getFirstBlock().getKey();
+        const newSelection = SelectionState.createEmpty(firstBlockKey);
+        const newEditorState = EditorState.forceSelection(editorState, newSelection);
+        // setEditorState(newEditorState);
+        // focusEditor();
+        return newEditorState
+    };
+
+
+    const focusEditor = () => {
+        if (editorRef.current) {
+            editorRef.current.focus();
+        }
+    };
 
     const insertExampleTable = () => {
         const contentState = convertFromRaw(contentExample);
