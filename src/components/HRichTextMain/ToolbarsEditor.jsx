@@ -23,6 +23,9 @@ import {
     DeleteBlockStyle,
 } from '../FontChange'
 
+import {DynamicText,DynamicTable} from '../DynamicInsert'
+
+
 const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => {
     return (
         <div className={style.container}>
@@ -57,7 +60,8 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => 
                 <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
                 <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
                 <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
-        
+                <DynamicText editorState={editorState} setEditorState={setEditorState}></DynamicText>
+                <DynamicTable editorState={editorState} setEditorState={setEditorState}></DynamicTable>
         </div>
     );
 }
