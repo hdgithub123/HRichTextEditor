@@ -113,7 +113,9 @@ const DynamicDropdown = ({ dynamicTable, onInsert }) => {
             <button onClick={handleInsertClick} style={{ marginLeft: "20px" }}>
                 Insert
             </button>
-        </div>
+        </div>}
+    </div>
+
     );
 };
 
