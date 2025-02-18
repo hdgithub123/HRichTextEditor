@@ -51,10 +51,6 @@ const DynamicTable = ({ editorState, setEditorState,dynamicTables }) => {
       };
 
     const dynamicTablesChange = transformTablesChange(dynamicTables)
-
-    console.log("contentStateObjectJS",contentStateObjectJS)
-console.log("contentStateObjectJS",dynamicTablesChange)
-
     const transformObject = (obj) => {
         return Object.keys(obj).reduce((acc, key) => {
           const keysArray = obj[key].flatMap(innerObj => Object.keys(innerObj));
