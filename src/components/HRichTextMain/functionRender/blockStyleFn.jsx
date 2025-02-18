@@ -3,27 +3,17 @@ import styles from './blockStyleFn.module.scss';
 
 const blockStyleFn = (contentBlock) => {
     const type = contentBlock.getType();
-    const depth = contentBlock.getDepth();
-
-    // const marginLeft = contentBlock.getData().get('marginLeft');
-    // const listType = contentBlock.getData().get('listType');
-    // const fontFamily = contentBlock.getData().get('fontFamily');
-    // const fontSize = contentBlock.getData().get('fontSize');
-    // const fontColor = contentBlock.getData().get('fontColor');
-    // const backgroundColor = contentBlock.getData().get('backgroundColor');
-    // const lineHeight = contentBlock.getData().get('lineHeight');
-
-    const marginLeft = contentBlock.getData().getIn(['blockStyle', 'marginLeft']);
-    const listType = contentBlock.getData().getIn(['blockStyle', 'listType']);
-    const fontFamily = contentBlock.getData().getIn(['blockStyle', 'fontFamily']);
-    const fontSize = contentBlock.getData().getIn(['blockStyle', 'fontSize']);
-    const fontColor = contentBlock.getData().getIn(['blockStyle', 'color']);
-    const backgroundColor = contentBlock.getData().getIn(['blockStyle', 'backgroundColor']);
-    const lineHeight = contentBlock.getData().getIn(['blockStyle', 'lineHeight']);
-    const textAlign = contentBlock.getData().getIn(['blockStyle', 'textAlign']);
-    const verticalAlign = contentBlock.getData().getIn(['blockStyle', 'verticalAlign']);
-
-
+    const contentBlockToJSBlockStyle = contentBlock.toJS().data.blockStyle
+    const marginLeft = contentBlockToJSBlockStyle?.marginLeft || undefined
+    const listType = contentBlockToJSBlockStyle?.listType || undefined
+    const fontFamily = contentBlockToJSBlockStyle?.fontFamily || undefined
+    const fontSize = contentBlockToJSBlockStyle?.fontSize || undefined
+    const fontColor = contentBlockToJSBlockStyle?.color || undefined
+    const backgroundColor = contentBlockToJSBlockStyle?.backgroundColor || undefined
+    const lineHeight = contentBlockToJSBlockStyle?.lineHeight || undefined
+    const textAlign = contentBlockToJSBlockStyle?.textAlign || undefined
+    const verticalAlign = contentBlockToJSBlockStyle?.verticalAlign || undefined
+    
     let className = '';
 
     // switch (type) {
