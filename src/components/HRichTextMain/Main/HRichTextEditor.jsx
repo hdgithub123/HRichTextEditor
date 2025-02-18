@@ -65,7 +65,7 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
   // }, []);
 
 
-  const [count, setCount] = useState(0);
+  const [view, setView] = useState(true);
 
   useEffect(() => {
     const updateState = async () => {
@@ -92,8 +92,8 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
   
     updateState();
     updateState();
-    setCount(1)
-  }, [count]); // Thêm dependencies nếu có thể thay đổi
+    setView(false)
+  }, [view]); // Thêm dependencies nếu có thể thay đổi
   
 
 
