@@ -34,30 +34,30 @@ import applyIcon from './insertText.svg';
 import style from './DynamicTable.module.scss'
 import { useOnClickOutside, useAutoAdjustAbsolutePosition, getCurrentBlockType } from '../../utilities';
 import replaceDatasTables from '../../Table/Component/replaceDataTable/replaceDatasTables'
-import { convertToRaw,EditorState  } from "draft-js";
+import { convertToRaw, EditorState } from "draft-js";
 
 
-const DynamicTable = ({ editorState, setEditorState,dynamicTables }) => {
+const DynamicTable = ({ editorState, setEditorState, dynamicTables }) => {
     const contentState = editorState.getCurrentContent();
-    const contentStateObjectJS = convertToRaw (contentState)
+    const contentStateObjectJS = convertToRaw(contentState)
 
     const transformTablesChange = (obj) => {
         return Object.keys(obj).map(key => {
-          return {
-            tableId: key,
-            data: obj[key]
-          };
+            return {
+                tableId: key,
+                data: obj[key]
+            };
         });
-      };
+    };
 
     const dynamicTablesChange = transformTablesChange(dynamicTables)
     const transformObject = (obj) => {
         return Object.keys(obj).reduce((acc, key) => {
-          const keysArray = obj[key].flatMap(innerObj => Object.keys(innerObj));
-          acc[key] = [...new Set(keysArray)];
-          return acc;
+            const keysArray = obj[key].flatMap(innerObj => Object.keys(innerObj));
+            acc[key] = [...new Set(keysArray)];
+            return acc;
         }, {});
-      };
+    };
 
     const dynamicTable = transformObject(dynamicTables)
     const [show, setShow] = useState(false);
@@ -93,22 +93,21 @@ const DynamicTable = ({ editorState, setEditorState,dynamicTables }) => {
     });
     useAutoAdjustAbsolutePosition(buttonListRef, show)
 
-const clickTam = ()=>{
-    const content= replaceDatasTables({contentStateObjectJS, dataTables:dynamicTablesChange})
-    console.log("content222JS",convertToRaw (content))
-     const newEditor2 = EditorState.createWithContent(content);
-    setEditorState(newEditor2);
-}
+    const clickTam = () => {
+        const content = replaceDatasTables({ contentStateObjectJS, dataTables: dynamicTablesChange })
+        const newEditor2 = EditorState.createWithContent(content);
+        setEditorState(newEditor2);
+    }
 
 
-    return (<div ref={ref}  className={style.tableContainer}>
-        <button  disabled={disable} className={style.button} onMouseDown={handleClick}>
+    return (<div ref={ref} className={style.tableContainer}>
+        <button disabled={disable} className={style.button} onMouseDown={handleClick}>
             <img src={imageIcon} alt="Table PlaceHolder" title="Table PlaceHolder" className={`${style.img} ${style.active}`} />
         </button>
         {show && <div ref={buttonListRef} className={style.controlTable}>
             <DynamicDropdown dynamicTable={dynamicTable} onInsert={handleTextChange} ></DynamicDropdown>
         </div>}
-        <button onClick={clickTam} style={{width: '100px', height: '50px'}}> chay </button>
+        <button onClick={clickTam} style={{ width: '100px', height: '50px' }}> chay </button>
     </div>
 
     );

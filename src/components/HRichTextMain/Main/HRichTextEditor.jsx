@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect,useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import style from './HRichTextEditor.module.css';
@@ -12,10 +12,14 @@ import getBlockRendererFn from '../functionRender/getBlockRendererFn';
 import decorateEditorState from '../functionRender/decorateEditorState';
 import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
 
-import {exampleDataTable, exampleData} from '../../_constant/exampleData'
+import { exampleDataTable, exampleData } from '../../_constant/exampleData'
+import {contentStateObjectExample,contentStateObjectExampleSimple} from '../../_constant/exampleData'
 
 
-const HRichTextEditor = ({dynamicTables =  exampleDataTable, dynamicTexts = exampleData}) => {
+
+
+const HRichTextEditor = ({ contentStateObject=contentStateObjectExample, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
+  // const newContentState =contentStateObject? convertFromRaw(contentStateObject): null
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
@@ -48,6 +52,26 @@ const HRichTextEditor = ({dynamicTables =  exampleDataTable, dynamicTexts = exam
 
 
 
+
+  useEffect(() => {
+    const newContentState = convertFromRaw(contentStateObject)
+    setEditorState(EditorState.createWithContent(newContentState))
+  }, []);
+
+
+  //   const handleReplaceDataTables = async () => {
+  //     const newContentState = replaceDatasTables({ contentStateObjectJS: contentExample,dataTables: tableData });
+  //     const newEditor2 = EditorState.createWithContent(newContentState);
+  //     setEditorState(newEditor2);
+  //     await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
+  //     if (editorRef.current) {
+  //         editorRef.current.focus();
+  //     }
+  // };
+
+
+
+
   const lastSelectionState = useRef(null);
 
   const handleBlur = () => {
@@ -73,15 +97,15 @@ const HRichTextEditor = ({dynamicTables =  exampleDataTable, dynamicTexts = exam
     }
     return 'not-handled';
   };
-  
+
   const variable = {
-    infoImageInline:infoImageInline,
+    infoImageInline: infoImageInline,
   }
 
   return (
     <div>
-      <div className={style.toolBar}  style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
-        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange} data ={{dynamicTables, dynamicTexts}}></ToolbarsEditor>
+      <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
+        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange} data={{ dynamicTables, dynamicTexts }}></ToolbarsEditor>
       </div>
 
       <div
@@ -100,6 +124,7 @@ const HRichTextEditor = ({dynamicTables =  exampleDataTable, dynamicTexts = exam
             // readOnly ={true}
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
+            // blockStyleFn={contentBlock => blockStyleFn(contentBlock)}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange })}
             handleReturn={(e, editorState) => handleReturn(e, editorState)}
