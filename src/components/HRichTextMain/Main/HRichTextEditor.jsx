@@ -13,19 +13,23 @@ import decorateEditorState from '../functionRender/decorateEditorState';
 import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
 
 import { exampleDataTable, exampleData } from '../../_constant/exampleData'
-import {contentStateObjectExample,contentStateObjectExampleSimple} from '../../_constant/exampleData'
+import { contentStateObjectExample, contentStateObjectExampleSimple } from '../../_constant/exampleData'
 
 
 
 
-const HRichTextEditor = ({ contentStateObject=contentStateObjectExample, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
+const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
   // const newContentState =contentStateObject? convertFromRaw(contentStateObject): null
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
 
   useEffect(() => {
-    const newEditorState = decorateEditorState({ editorState, functionList });
+
+    const newContentState = convertFromRaw(contentStateObject)
+    let newEditorState = EditorState.createWithContent(newContentState)
+    // newEditorState = decorateEditorState({ editorState, functionList });
+    newEditorState = decorateEditorState({ editorState:newEditorState, functionList });
     setEditorState(newEditorState);
   }, []);
 
@@ -53,10 +57,10 @@ const HRichTextEditor = ({ contentStateObject=contentStateObjectExample, dynamic
 
 
 
-  useEffect(() => {
-    const newContentState = convertFromRaw(contentStateObject)
-    setEditorState(EditorState.createWithContent(newContentState))
-  }, []);
+  // useEffect(() => {
+  //   const newContentState = convertFromRaw(contentStateObject)
+  //   setEditorState(EditorState.createWithContent(newContentState))
+  // }, []);
 
 
   //   const handleReplaceDataTables = async () => {
