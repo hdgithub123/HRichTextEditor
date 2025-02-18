@@ -23,21 +23,103 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
-
-  useEffect(() => {
-
-    const newContentState = convertFromRaw(contentStateObject)
-    let newEditorState = EditorState.createWithContent(newContentState)
-    // newEditorState = decorateEditorState({ editorState, functionList });
-    newEditorState = decorateEditorState({ editorState:newEditorState, functionList });
-    setEditorState(newEditorState);
-  }, []);
-
   const functionList = {
     onImagePropertiesChange: (imageinfo) => {
       setInfoImageInline(imageinfo);
     },
   };
+  
+  // useEffect(() => {
+
+  //   // if(contentStateObject){
+  //   //   const newContentState = convertFromRaw(contentStateObject)
+  //   //   let newEditorState = EditorState.createWithContent(newContentState)
+  //   //   newEditorState = decorateEditorState({ editorState:newEditorState, functionList });
+  //   //   setEditorState(newEditorState);
+  //   // } else {
+  //   //   const newEditorState = decorateEditorState({ editorState, functionList });
+  //   //   setEditorState(newEditorState);
+  //   // }
+
+
+  //   const updateState = async () => {
+  //     if (contentStateObject) {
+  //       const newContentState = convertFromRaw(contentStateObject)
+  //       let newEditorState = EditorState.createWithContent(newContentState)
+  //       newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
+  //       setEditorState(newEditorState);
+  //     } else {
+  //       const newEditorState = decorateEditorState({ editorState, functionList });
+  //       setEditorState(newEditorState);
+  //     }
+  
+  //     await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
+  //     if (editorRef.current) {
+  //       editorRef.current.focus();
+  //     console.log("editorState",editorState)
+  //     }
+  //   }
+
+  //   updateState();
+
+  // }, []);
+
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const updateState = async () => {
+      let newEditorState;
+  
+      if (contentStateObject) {
+        const newContentState = convertFromRaw(contentStateObject);
+        newEditorState = EditorState.createWithContent(newContentState);
+      } else {
+        newEditorState = editorState;
+      }
+  
+      newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
+      setEditorState(newEditorState);
+  
+      // Đợi state cập nhật xong rồi mới focus
+      setTimeout(() => {
+        if (editorRef.current) {
+          editorRef.current.focus();
+          console.log("editorState", newEditorState);
+        }
+      }, 0);
+    };
+  
+    updateState();
+    updateState();
+    setCount(1)
+  }, [count]); // Thêm dependencies nếu có thể thay đổi
+  
+
+
+
+
+
+  // const updateState = async () => {
+  //   if (contentStateObject) {
+  //     const newContentState = convertFromRaw(contentStateObject)
+  //     let newEditorState = EditorState.createWithContent(newContentState)
+  //     newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
+  //     setEditorState(newEditorState);
+  //   } else {
+  //     const newEditorState = decorateEditorState({ editorState, functionList });
+  //     setEditorState(newEditorState);
+  //   }
+
+  //   await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
+  //   if (editorRef.current) {
+  //     editorRef.current.focus();
+  //   }
+  // }
+
+
+
+
 
 
   useEffect(() => {
