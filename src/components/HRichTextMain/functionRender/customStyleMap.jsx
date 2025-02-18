@@ -1,5 +1,5 @@
 import { DefaultDraftInlineStyle } from 'draft-js';
-import { _FONTFAMILY, _FONTSIZES, _COLORS } from '../_constant/_constant';
+import { _FONTFAMILY, _FONTSIZES, _COLORS } from '../../_constant/_constant';
 
 export const COLORS = _COLORS? _COLORS:[
   'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white'

@@ -18,7 +18,8 @@ import insertCell from '../Component/cellTable/insertCell';
 
 import TableToolbar from '../TableToolBar/TableToolbar';
 import replaceDataTable from '../Component/replaceDataTable/replaceDataTable';
-import replaceDataTables from '../Component/replaceDataTable/replaceDataTables';
+import replaceDatasTable from '../Component/replaceDataTable/replaceDatasTable';
+import replaceDatasTables from '../Component/replaceDataTable/replaceDatasTables';
 
 
 
@@ -88,7 +89,7 @@ const TableRichEditorNew = () => {
 
     // quan trong da update de khong bi delay
     const handleReplaceDataTables = async () => {
-        const newContentState = replaceDataTables({ contentStateObjectJS: contentExample, tableData });
+        const newContentState = replaceDatasTables({ contentStateObjectJS: contentExample,dataTables: tableData });
         const newEditor2 = EditorState.createWithContent(newContentState);
         setEditorState(newEditor2);
         await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus

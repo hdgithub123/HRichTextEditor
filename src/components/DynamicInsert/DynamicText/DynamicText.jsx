@@ -1,35 +1,16 @@
-const dynamicText = [
-    'idText1',
-    'idText2',
-    'idText3',
-    'idText4',
-    'idText5',
-    'idText6',
-    'idText7',
-    'idText8',
-    'idText9',
-    'idText10',
-    'idText11',
-    'idText12',
-    'idText13',
-    'idText14',
-    'idText15',
-    'idText16',
-    'idText17',
-    'idText18',
-    'idText19',
-    'idText20',
-]
 import React, { useEffect, useState, useRef } from 'react';
 import insertText from "../function/insertText"
 import imageIcon from './textPoint.svg';
 import insertIcon from './insertText.svg'
 import style from './DynamicText.module.scss'
 import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
+import changeDynmaticText from '../function/changeDynmaticText'
 
-
-
-const DynamicText = ({ editorState, setEditorState }) => {
+const DynamicText = ({ editorState, setEditorState, dynamicTexts }) => {
+    if(!dynamicTexts){
+        setEditorState(editorState)
+    }
+    const dynamicText = Object.keys(dynamicTexts);
     const [show, setShow] = useState(false);
     const ref = useRef();
     const buttonListRef = useRef();
@@ -58,7 +39,9 @@ const DynamicText = ({ editorState, setEditorState }) => {
                         <img src={insertIcon} alt="Apply" className={`${style.img} ${style.active}`} />
                         <span>{`{{${text}}}`}</span>
                     </button>
-                ))}</div>
+                ))}
+                <button onClick={()=> setEditorState(changeDynmaticText({editorState, dataDynamicText:dynamicTexts}))}> chay thu</button>
+            </div>
             }
         </div>
     );

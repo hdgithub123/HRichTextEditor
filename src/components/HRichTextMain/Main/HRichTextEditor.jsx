@@ -1,20 +1,21 @@
 import React, { useState, useRef, useEffect,useCallback } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
-import customStyleMap from './customStyleMap';
-import blockStyleFn from './blockStyleFn';
-import extendedBlockRenderMap from './blockRenderMap';
-
+import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import style from './HRichTextEditor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
-import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
-import getBlockRendererFn from './getBlockRendererFn';
-import ToolbarsEditor from './ToolbarsEditor';
-import decorateEditorState from './decorateEditorState';
-import updateImageInline from '../Image/ImangeInline/function/updateImageInline';
+
+import ToolbarsEditor from '../ToolBars/ToolbarsEditor';
+import customStyleMap from '../functionRender/customStyleMap';
+import blockStyleFn from '../functionRender/blockStyleFn';
+import extendedBlockRenderMap from '../functionRender/blockRenderMap';
+import getBlockRendererFn from '../functionRender/getBlockRendererFn';
+import decorateEditorState from '../functionRender/decorateEditorState';
+import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
+
+import {exampleDataTable, exampleData} from '../../_constant/exampleData'
 
 
-
-const HRichTextEditor = () => {
+const HRichTextEditor = ({dynamicTables =  exampleDataTable, dynamicTexts = exampleData}) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
@@ -80,7 +81,7 @@ const HRichTextEditor = () => {
   return (
     <div>
       <div className={style.toolBar}  style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex:'20' }}>
-        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange}></ToolbarsEditor>
+        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange} data ={{dynamicTables, dynamicTexts}}></ToolbarsEditor>
       </div>
 
       <div

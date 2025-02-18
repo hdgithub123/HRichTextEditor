@@ -979,7 +979,7 @@ const contentExample2 = {
 }
 
 
-const tableData1 = {
+const tableData1 = [{
     tableId: 'ID',
     data: [
         { name: 'John', age: '12a', address: 'New York' },
@@ -994,7 +994,7 @@ const tableData1 = {
         // { name: 'Hank', age: 19, address: 'Toronto' }
     ]
 
-}
+}]
 
 const tableData2 = {
     tableId: 'ID2',

@@ -1,10 +1,10 @@
 import style from './ToolbarsEditor.module.scss'
-import TableToolbar from '../Table/TableToolBar/TableToolbar';
-import ImageToolBar from '../Image/ImageToolBar/ImageToolBar'
-import LinkifyToolBar from '../Linkify/ToolBar/LinkifyToolBar'
-import EmojiToolBar from '../Emoji/ToolBar/EmojiToolBar'
-import UndoRedoToolBar from '../UndoRedoToolBar/UndoRedoToolBar'
-import VideoBlockToolBar from '../Video/VideoBlock/VideoBlockToolBar/VideoBlockToolBar'
+import TableToolbar from '../../Table/TableToolBar/TableToolbar';
+import ImageToolBar from '../../Image/ImageToolBar/ImageToolBar'
+import LinkifyToolBar from '../../Linkify/ToolBar/LinkifyToolBar'
+import EmojiToolBar from '../../Emoji/ToolBar/EmojiToolBar'
+import UndoRedoToolBar from '../../UndoRedoToolBar/UndoRedoToolBar'
+import VideoBlockToolBar from '../../Video/VideoBlock/VideoBlockToolBar/VideoBlockToolBar'
 import {
     FontFamilyPickerView,
     FontSizePickerView,
@@ -21,12 +21,12 @@ import {
     BlockStyleView,
     LineHeightView,
     DeleteBlockStyle,
-} from '../FontChange'
+} from '../../FontChange'
 
-import {DynamicText,DynamicTable} from '../DynamicInsert'
+import {DynamicText,DynamicTable} from '../../DynamicInsert'
 
 
-const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => {
+const ToolbarsEditor = ({ editorState, setEditorState, variable,data, onChange }) => {
     return (
         <div className={style.container}>
             <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>
@@ -60,8 +60,9 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable, onChange }) => 
                 <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
                 <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
                 <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
-                <DynamicText editorState={editorState} setEditorState={setEditorState}></DynamicText>
-                <DynamicTable editorState={editorState} setEditorState={setEditorState}></DynamicTable>
+                
+                <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>
+                <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>
         </div>
     );
 }

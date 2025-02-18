@@ -38,6 +38,11 @@
         &:hover {
             transform: scale(1.2);
         }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     }
 
     .controlTable {
@@ -57,7 +62,7 @@
         align-items: center;
         justify-content: center;
         gap: 3px;
-        
+
     }
 
 
@@ -68,12 +73,13 @@
 
 
 
-.DynamicDropdownContainer{
+.DynamicDropdownContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: white;
+
     table {
         border-collapse: collapse;
         border-radius: 3px;
@@ -175,9 +181,9 @@
         gap: 10px;
         width: 100%;
 
-      
 
-        button{
+
+        button {
             // transform: none;
             // display: flex;
             // flex-direction: row;
@@ -193,6 +199,7 @@
             border-radius: 4px;
             gap: 5px;
             width: 100%;
+
             .img {
                 width: 20px;
                 height: 20px;
@@ -200,16 +207,16 @@
                 padding: 2px;
                 border: none;
             }
-    
+
             .active {
                 background: white;
             }
-    
+
             .unactive {
                 background: white;
                 opacity: 30%;
             }
-    
+
             span {
                 display: flex;
                 justify-content: center;

@@ -1,7 +1,7 @@
-import TableStructureComponent from '../Table/Component/tableStructure/TableStructureComponent';
-import CellComponent from '../Table/Component/cellTable/CellComponent';
-import ImageBlockComponent from '../Image/ImageBlock/Component/ImageBlockComponent';
-import VideoBlockComponent from '../Video/VideoBlock/Component/VideoBlockComponent'
+import TableStructureComponent from '../../Table/Component/tableStructure/TableStructureComponent';
+import CellComponent from '../../Table/Component/cellTable/CellComponent';
+import ImageBlockComponent from '../../Image/ImageBlock/Component/ImageBlockComponent';
+import VideoBlockComponent from '../../Video/VideoBlock/Component/VideoBlockComponent'
 
 
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
