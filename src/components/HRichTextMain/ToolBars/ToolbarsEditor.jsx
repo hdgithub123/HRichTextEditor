@@ -22,14 +22,14 @@ import {
     LineHeightView,
     DeleteBlockStyle,
 } from '../../FontChange'
-import CreateEmptyEditor from '../../CreateDocument/CreateEmptyEditor/CreateEmptyEditor'
-import CreateExampleEditor from '../../CreateDocument/ExampleEditor/CreateExampleEditor'
+import CreateEmptyEditor from '../../Document/CreateEmptyEditor/CreateEmptyEditor'
+import CreateExampleEditor from '../../Document/ExampleEditor/CreateExampleEditor'
 
 
 import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
 import RawContentView from '../../RawContentView/RawContentView'
-import DownloadDocument from '../../DownloadDocument/DownloadDocument'
-
+import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
+import OpenDocument from '../../Document/OpenDocument/OpenDocument'
 
 const ToolbarsEditor = ({
     editorState,
@@ -51,6 +51,7 @@ const ToolbarsEditor = ({
     return (
         <div className={style.container}>
             {allnonedisplay && <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>}
+            {allnonedisplay &&<OpenDocument setEditorState={setEditorState} functionList={functionList}></OpenDocument>}
             {allnonedisplay && <CreateEmptyEditor setEditorState={setEditorState}></CreateEmptyEditor>}
             {allnonedisplay && <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>}
 
@@ -64,8 +65,9 @@ const ToolbarsEditor = ({
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
             ></InsertDynamic>}
+            {allnonedisplay && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>
-            {rawContentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
+            
 
             {allnonedisplay && <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>}
             {allnonedisplay && <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>}
@@ -94,7 +96,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
-
+            
         </div>
     );
 }

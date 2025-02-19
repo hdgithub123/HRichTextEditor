@@ -12,7 +12,8 @@ const DownloadDocument = ({editorState,setEditorState}) => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'Document.txt';
+        // a.download = 'Document.txt';
+        a.download = 'Document.HEditor';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
