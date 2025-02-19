@@ -127,6 +127,7 @@ const VideoBlockComponent = props => {
                     src={videoUrl} controls autoPlay loop muted
                     width='100%'
                     height='100%'
+                    style={{ border: 'none',pointerEvents:'auto' }}
                 >
                     Trình duyệt của bạn không hỗ trợ thẻ video.
                 </video>}
@@ -136,7 +137,7 @@ const VideoBlockComponent = props => {
                     height='100%'
                     src={videoUrl}
                     title="Embedded Video"
-                    style={{ ...thisStyleVideo, border: 'none' }}
+                    style={{ ...thisStyleVideo, border: 'none',pointerEvents:'auto' }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                 ></iframe>}

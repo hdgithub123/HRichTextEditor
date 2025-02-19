@@ -40,7 +40,6 @@ const DynamicText = ({ editorState, setEditorState, dynamicTexts }) => {
                         <span>{`{{${text}}}`}</span>
                     </button>
                 ))}
-                <button onClick={()=> setEditorState(changeDynmaticText({editorState, dataDynamicText:dynamicTexts}))}> chay thu</button>
             </div>
             }
         </div>

@@ -22,14 +22,45 @@ import {
     LineHeightView,
     DeleteBlockStyle,
 } from '../../FontChange'
+import CreateEmptyEditor from '../../CreateDocument/CreateEmptyEditor/CreateEmptyEditor'
+import CreateExampleEditor from '../../CreateDocument/ExampleEditor/CreateExampleEditor'
 
-import {DynamicText,DynamicTable} from '../../DynamicInsert'
+
+import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
+import RawContentView from '../../RawContentView/RawContentView'
+import ContentPreview from '../../ContentPreview/ContentPreview'
 
 
-const ToolbarsEditor = ({ editorState, setEditorState, variable,data, onChange }) => {
+const ToolbarsEditor = ({
+    editorState,
+    setEditorState,
+    editorStatePreview,
+    setEditorStatePreview,
+    contentView,
+    setContentView,
+    variable,
+    data,
+    functionList,
+    listRef,
+    onChange
+}) => {
     return (
         <div className={style.container}>
             <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>
+            <CreateEmptyEditor setEditorState={setEditorState}></CreateEmptyEditor>
+            <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>
+
+            <InsertDynamic
+                editorState={editorState}
+                setEditorState={setEditorStatePreview}
+                contentView={contentView}
+                setContentView={setContentView}
+                dynamicTexts={data.dynamicTexts}
+                dynamicTables={data.dynamicTables}
+                editorRef={listRef.editorPrevewRef}
+                functionList={functionList}
+            ></InsertDynamic>
+
             <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>
             <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>
             <FontColorPickerView editorState={editorState} setEditorState={setEditorState} ></FontColorPickerView>
@@ -54,15 +85,17 @@ const ToolbarsEditor = ({ editorState, setEditorState, variable,data, onChange }
             <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
 
 
-       
-                <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
-                <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
-                <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
-                <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
-                <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
-                
-                <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>
-                <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>
+
+            <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
+            <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
+            <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
+            <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
+            <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
+
+            <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>
+            <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>
+            <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>
+            {/* <ContentPreview contentView={contentView} setContentView={setContentView}></ContentPreview> */}
         </div>
     );
 }

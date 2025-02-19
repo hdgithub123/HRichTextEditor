@@ -13,113 +13,56 @@ import decorateEditorState from '../functionRender/decorateEditorState';
 import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
 
 import { exampleDataTable, exampleData } from '../../_constant/exampleData'
-import { contentStateObjectExample, contentStateObjectExampleSimple } from '../../_constant/exampleData'
 
 
 
-
-const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
-  // const newContentState =contentStateObject? convertFromRaw(contentStateObject): null
+const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
+  const editorPrevewRef = useRef(null);
+
+
   const functionList = {
     onImagePropertiesChange: (imageinfo) => {
       setInfoImageInline(imageinfo);
     },
   };
-  
-  // useEffect(() => {
-
-  //   // if(contentStateObject){
-  //   //   const newContentState = convertFromRaw(contentStateObject)
-  //   //   let newEditorState = EditorState.createWithContent(newContentState)
-  //   //   newEditorState = decorateEditorState({ editorState:newEditorState, functionList });
-  //   //   setEditorState(newEditorState);
-  //   // } else {
-  //   //   const newEditorState = decorateEditorState({ editorState, functionList });
-  //   //   setEditorState(newEditorState);
-  //   // }
 
 
-  //   const updateState = async () => {
-  //     if (contentStateObject) {
-  //       const newContentState = convertFromRaw(contentStateObject)
-  //       let newEditorState = EditorState.createWithContent(newContentState)
-  //       newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
-  //       setEditorState(newEditorState);
-  //     } else {
-  //       const newEditorState = decorateEditorState({ editorState, functionList });
-  //       setEditorState(newEditorState);
-  //     }
-  
-  //     await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
-  //     if (editorRef.current) {
-  //       editorRef.current.focus();
-  //     console.log("editorState",editorState)
-  //     }
-  //   }
+  const listRef = {
+    editorRef: editorRef,
+    editorPrevewRef: editorPrevewRef
+  }
 
-  //   updateState();
-
-  // }, []);
-
-
-  const [view, setView] = useState(true);
+  const [firstview, setFirstView] = useState(true);
 
   useEffect(() => {
     const updateState = async () => {
       let newEditorState;
-  
+
       if (contentStateObject) {
         const newContentState = convertFromRaw(contentStateObject);
         newEditorState = EditorState.createWithContent(newContentState);
       } else {
         newEditorState = editorState;
       }
-  
+
       newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
       setEditorState(newEditorState);
-  
+
       // Đợi state cập nhật xong rồi mới focus
       setTimeout(() => {
         if (editorRef.current) {
           editorRef.current.focus();
-          console.log("editorState", newEditorState);
         }
       }, 0);
     };
-  
+
     updateState();
-    updateState();
-    setView(false)
-  }, [view]); // Thêm dependencies nếu có thể thay đổi
-  
-
-
-
-
-
-  // const updateState = async () => {
-  //   if (contentStateObject) {
-  //     const newContentState = convertFromRaw(contentStateObject)
-  //     let newEditorState = EditorState.createWithContent(newContentState)
-  //     newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
-  //     setEditorState(newEditorState);
-  //   } else {
-  //     const newEditorState = decorateEditorState({ editorState, functionList });
-  //     setEditorState(newEditorState);
-  //   }
-
-  //   await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
-  //   if (editorRef.current) {
-  //     editorRef.current.focus();
-  //   }
-  // }
-
-
-
-
+    setFirstView(false)
+  }, [firstview]); // Thêm dependencies nếu có thể thay đổi
 
 
   useEffect(() => {
@@ -137,25 +80,11 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
   }, [editorState]);
 
 
-
-
-  // useEffect(() => {
-  //   const newContentState = convertFromRaw(contentStateObject)
-  //   setEditorState(EditorState.createWithContent(newContentState))
-  // }, []);
-
-
-  //   const handleReplaceDataTables = async () => {
-  //     const newContentState = replaceDatasTables({ contentStateObjectJS: contentExample,dataTables: tableData });
-  //     const newEditor2 = EditorState.createWithContent(newContentState);
-  //     setEditorState(newEditor2);
-  //     await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus
-  //     if (editorRef.current) {
-  //         editorRef.current.focus();
-  //     }
-  // };
-
-
+  const onChangePreview = useCallback((newEditorState) => {
+    if (editorStatePreview !== newEditorState) {
+      setEditorStatePreview(newEditorState);
+    }
+  }, [editorStatePreview]);
 
 
   const lastSelectionState = useRef(null);
@@ -188,17 +117,42 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
     infoImageInline: infoImageInline,
   }
 
+
+const initContentView = {
+  rawContentView: false,
+  previewContent: false,
+
+}
+
+  const [contentView, setContentView] = useState(initContentView);
+
+
   return (
     <div>
       <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
-        <ToolbarsEditor editorState={editorState} setEditorState={setEditorState} variable={variable} onChange={onChange} data={{ dynamicTables, dynamicTexts }}></ToolbarsEditor>
+        <ToolbarsEditor
+          editorState={editorState}
+          setEditorState={setEditorState}
+          
+          editorStatePreview={editorStatePreview}
+          setEditorStatePreview ={setEditorStatePreview}
+
+          contentView={contentView}
+          setContentView={setContentView}
+
+          variable={variable} 
+          onChange={onChange}
+          data={{ dynamicTables, dynamicTexts }}
+          functionList={functionList}
+          listRef={listRef}>
+        </ToolbarsEditor>
       </div>
 
       <div
         onBlur={handleBlur}
         onFocus={handleFocus}
         className={style.editorContainer}
-        style={{ border: '2px black solid', borderRadius: '5px', padding: '0px' }}
+        style={{ border: '2px black solid', borderRadius: '5px', padding: '0px', display: contentView.rawContentView ? 'none' : contentView.previewContent?'none':'block' }}
       >
         <div
           className={removeStyle.editorRemove}
@@ -207,17 +161,42 @@ const HRichTextEditor = ({ contentStateObject = contentStateObjectExample, dynam
             ref={editorRef}
             editorState={editorState}
             onChange={onChange}
-            // readOnly ={true}
+            readOnly ={false}
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
-            // blockStyleFn={contentBlock => blockStyleFn(contentBlock)}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange })}
             handleReturn={(e, editorState) => handleReturn(e, editorState)}
           />
         </div>
       </div>
-      <pre>{JSON.stringify(convertToRaw(editorState.getCurrentContent()), null, 2)}</pre>
+
+      <div  
+      className={style.preview} 
+      readOnly= {true}
+      // style={{ border: '2px black solid', borderRadius: '5px', padding: '0px', display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
+      style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
+      >
+        <div style={{ width: '100%',border: '2px black solid', borderRadius: '5px', background: 'gray', justifyContent: 'center', textAlign:'center'}}> This Preview</div>
+        <div
+          className={removeStyle.editorRemove}
+        >
+          <Editor
+            ref={editorPrevewRef}
+            editorState={editorStatePreview}
+            onChange={onChangePreview}
+            readOnly ={true}
+            customStyleMap={customStyleMap}
+            blockStyleFn={blockStyleFn}
+            blockRenderMap={extendedBlockRenderMap}
+            blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview })}
+            handleReturn={(e, editorState) => handleReturn(e, editorState)}
+          />
+        </div>
+      </div>
+      {contentView.rawContentView && <div>
+        <pre>{JSON.stringify(convertToRaw(editorState.getCurrentContent()), null, 2)}</pre>
+      </div>}
     </div>
   );
 };

@@ -26,3 +26,14 @@
 
 
 }
+
+
+.preview{
+  user-select: auto;
+  pointer-events: none;
+  caret-color: transparent;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0px;
+
+}
