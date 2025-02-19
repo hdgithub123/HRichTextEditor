@@ -29,11 +29,10 @@
 
 
 .preview{
-  user-select: auto;
-  pointer-events: none;
+  user-select:all;
+  pointer-events:none;
   caret-color: transparent;
-  border: 2px solid black;
+  border: 2px solid black;    
   border-radius: 5px;
-  padding: 0px;
-
+  padding: 0px; 
 }

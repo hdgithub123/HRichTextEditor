@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback,useLayoutEffect } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 import style from './HRichTextEditor.module.css';
@@ -14,6 +14,8 @@ import updateImageInline from '../../Image/ImangeInline/function/updateImageInli
 
 import { exampleDataTable, exampleData } from '../../_constant/exampleData'
 import {deleteTableEmpty} from '../../Table/replaceDatasTables/index'
+import replaceDatasTables from '../../Table/replaceDatasTables/index'
+import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
 
 
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData , onEditorChange, viewOnly = false }) => {
@@ -37,26 +39,51 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }
 
   const [firstview, setFirstView] = useState(true);
+  const [showPreView, setShowPreView] = useState(false);
+
+  const transformTablesChange = (obj) => {
+    return Object.keys(obj).map(key => {
+        return {
+            tableId: key,
+            data: obj[key]
+        };
+    });
+};
+
+const dynamicTablesChange = transformTablesChange(dynamicTables)
 
   useEffect(() => {
     const updateState = async () => {
       let newEditorState;
-
+      let newEditorStatePreview;
       if (contentStateObject) {
         const newContentState = convertFromRaw(contentStateObject);
         newEditorState = EditorState.createWithContent(newContentState);
+
+
+        const newContentStatePreview = replaceDatasTables({ contentStateObjectJS:contentStateObject, dataTables: dynamicTablesChange })
+        newEditorStatePreview = EditorState.createWithContent(newContentStatePreview);
+        newEditorStatePreview = decorateEditorState({ editorState: newEditorStatePreview, functionList:functionList });
+        newEditorStatePreview = changeDynmaticText({editorState: newEditorStatePreview, dataDynamicText:dynamicTexts})
+
+
       } else {
         newEditorState = editorState;
+        newEditorStatePreview = editorState;
       }
 
       newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
       setEditorState(newEditorState);
-
+      setEditorStatePreview(newEditorStatePreview)
       // Đợi state cập nhật xong rồi mới focus
       setTimeout(() => {
-        if (editorRef.current) {
+        if (editorRef.current && !viewOnly) {
           editorRef.current.focus();
         }
+        if (editorPrevewRef.current && viewOnly) {
+          editorPrevewRef.current.focus();
+        }
+        setShowPreView(true)
       }, 0);
     };
 
@@ -196,7 +223,7 @@ const initContentView = {
             ref={editorPrevewRef}
             editorState={editorStatePreview}
             onChange={onChangePreview}
-            readOnly ={true}
+            readOnly ={showPreView}
             placeholder="Empty document..."
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}

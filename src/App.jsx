@@ -1,7 +1,7 @@
 import './App.css'
 import HRichTextEditor from '../src/components/HRichTextMain/Main/HRichTextEditor'
 import React, { useState } from 'react';
-import handleUpload from './components/Image/utilities/handleUpload';
+import {contentStateObjectExample} from './components/_constant/exampleData'
 
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
         <div>hello</div>
-        <HRichTextEditor onEditorChange={handleChange} viewOnly={true} ></HRichTextEditor>
+        <HRichTextEditor contentStateObject={contentStateObjectExample} onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
         {/* <TableRichEditorNew></TableRichEditorNew> */}
     </>
   )

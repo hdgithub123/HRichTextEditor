@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { EditorState,SelectionState } from 'draft-js';
 
-import styles from './ImageBlockComponent.module.css'
+import styles from './ImageBlockComponent.module.scss'
 import pxToUnit from '../function/pxToUnit';
 
 
