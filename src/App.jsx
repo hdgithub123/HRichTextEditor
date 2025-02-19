@@ -12,7 +12,7 @@ function App() {
   return (
     <>
         <div>hello</div>
-        <HRichTextEditor contentStateObject={contentStateObjectExample} onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
+        <HRichTextEditor contentStateObject={contentStateObjectExample} onEditorChange={handleChange} viewOnly={true} ></HRichTextEditor>
         {/* <TableRichEditorNew></TableRichEditorNew> */}
     </>
   )

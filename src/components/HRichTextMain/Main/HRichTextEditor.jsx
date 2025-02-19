@@ -39,7 +39,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }
 
   const [firstview, setFirstView] = useState(true);
-  const [showPreView, setShowPreView] = useState(false);
 
   const transformTablesChange = (obj) => {
     return Object.keys(obj).map(key => {
@@ -83,7 +82,7 @@ const dynamicTablesChange = transformTablesChange(dynamicTables)
         if (editorPrevewRef.current && viewOnly) {
           editorPrevewRef.current.focus();
         }
-        setShowPreView(true)
+        
       }, 0);
     };
 
@@ -211,7 +210,7 @@ const initContentView = {
 
       <div  
       className={style.preview} 
-      readOnly= {true}
+      // readOnly= {true}
       style={{display: viewOnly?'block':contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
       // style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
       >
@@ -223,7 +222,7 @@ const initContentView = {
             ref={editorPrevewRef}
             editorState={editorStatePreview}
             onChange={onChangePreview}
-            readOnly ={showPreView}
+            readOnly ={!firstview}
             placeholder="Empty document..."
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
