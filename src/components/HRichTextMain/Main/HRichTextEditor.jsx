@@ -162,6 +162,7 @@ const initContentView = {
             editorState={editorState}
             onChange={onChange}
             readOnly ={false}
+            placeholder="Write something interesting here..."
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}
@@ -174,7 +175,6 @@ const initContentView = {
       <div  
       className={style.preview} 
       readOnly= {true}
-      // style={{ border: '2px black solid', borderRadius: '5px', padding: '0px', display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
       style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
       >
         <div style={{ width: '100%',border: '2px black solid', borderRadius: '5px', background: 'gray', justifyContent: 'center', textAlign:'center'}}> This Preview</div>
@@ -186,6 +186,7 @@ const initContentView = {
             editorState={editorStatePreview}
             onChange={onChangePreview}
             readOnly ={true}
+            placeholder="Empty document..."
             customStyleMap={customStyleMap}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}

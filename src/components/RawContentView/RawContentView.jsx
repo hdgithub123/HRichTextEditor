@@ -15,7 +15,7 @@ const RawContentView = ({contentView,setContentView}) => {
         return (
             <div className={style.container}>
                 <button className={style.button} onMouseDown={handleClick}>
-                    <img src={imageIcon} alt="View Raw Content" title="View Raw Content" className={`${style.img} ${style.active}`} />
+                    <img src={imageIcon} alt="View Raw Document" title="View Raw Document" className={`${style.img} ${style.active}`} />
                 </button>
             </div>
         );

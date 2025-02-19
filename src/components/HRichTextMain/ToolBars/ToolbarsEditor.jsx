@@ -28,7 +28,7 @@ import CreateExampleEditor from '../../CreateDocument/ExampleEditor/CreateExampl
 
 import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
 import RawContentView from '../../RawContentView/RawContentView'
-import ContentPreview from '../../ContentPreview/ContentPreview'
+import DownloadDocument from '../../DownloadDocument/DownloadDocument'
 
 
 const ToolbarsEditor = ({
@@ -44,13 +44,17 @@ const ToolbarsEditor = ({
     listRef,
     onChange
 }) => {
+
+    const { previewContent, rawContentView } = contentView
+    const allnonedisplay = !previewContent && !rawContentView
+
     return (
         <div className={style.container}>
-            <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>
-            <CreateEmptyEditor setEditorState={setEditorState}></CreateEmptyEditor>
-            <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>
+            {allnonedisplay && <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>}
+            {allnonedisplay && <CreateEmptyEditor setEditorState={setEditorState}></CreateEmptyEditor>}
+            {allnonedisplay && <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>}
 
-            <InsertDynamic
+            {!rawContentView && <InsertDynamic
                 editorState={editorState}
                 setEditorState={setEditorStatePreview}
                 contentView={contentView}
@@ -59,43 +63,38 @@ const ToolbarsEditor = ({
                 dynamicTables={data.dynamicTables}
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
-            ></InsertDynamic>
-
-            <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>
-            <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>
-            <FontColorPickerView editorState={editorState} setEditorState={setEditorState} ></FontColorPickerView>
-            <FontBackGroundColorView editorState={editorState} setEditorState={setEditorState} ></FontBackGroundColorView>
-            {/* Bold, Italic, Underline, StrikeThought, Supercrip, Subscript */}
-            <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>
-            {/* TextAlign */}
-            <TextAlign editorState={editorState} setEditorState={setEditorState} />
-            {/* VerticalAlign chua cho vao table duoc
-            <VerticalAlign editorState={editorState} setEditorState={setEditorState} /> */}
-
-
-
-
-            <LineHeightView editorState={editorState} setEditorState={setEditorState}  ></LineHeightView>
-            <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>
-            <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>
-            <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>
-            <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>
-            <Header editorState={editorState} setEditorState={setEditorState}></Header>
-            <BlockStyleView editorState={editorState} setEditorState={setEditorState} />
-            <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />
-
-
-
-            <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>
-            <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>
-            <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>
-            <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>
-            <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>
-
-            <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>
-            <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>
+            ></InsertDynamic>}
             <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>
-            {/* <ContentPreview contentView={contentView} setContentView={setContentView}></ContentPreview> */}
+            {rawContentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
+
+            {allnonedisplay && <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>}
+            {allnonedisplay && <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>}
+            {allnonedisplay && <FontColorPickerView editorState={editorState} setEditorState={setEditorState} ></FontColorPickerView>}
+            {allnonedisplay && <FontBackGroundColorView editorState={editorState} setEditorState={setEditorState} ></FontBackGroundColorView>}
+            {/* Bold, Italic, Underline, StrikeThought, Supercrip, Subscript */}
+            {allnonedisplay && <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>}
+            {/* TextAlign */}
+            {allnonedisplay && <TextAlign editorState={editorState} setEditorState={setEditorState} />}
+            {/* VerticalAlign chua cho vao table duoc
+            {allnonedisplay && <VerticalAlign editorState={editorState} setEditorState={setEditorState} />} */}
+
+            {allnonedisplay && <LineHeightView editorState={editorState} setEditorState={setEditorState}  ></LineHeightView>}
+            {allnonedisplay && <Unstyled editorState={editorState} setEditorState={setEditorState}></Unstyled>}
+            {allnonedisplay && <CodeBlockType editorState={editorState} setEditorState={setEditorState}></CodeBlockType>}
+            {allnonedisplay && <Blockquote editorState={editorState} setEditorState={setEditorState}></Blockquote>}
+            {allnonedisplay && <Paragraph editorState={editorState} setEditorState={setEditorState}></Paragraph>}
+            {allnonedisplay && <Header editorState={editorState} setEditorState={setEditorState}></Header>}
+            {allnonedisplay && <BlockStyleView editorState={editorState} setEditorState={setEditorState} />}
+            {allnonedisplay && <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />}
+
+            {allnonedisplay && <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>}
+            {allnonedisplay && <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>}
+            {allnonedisplay && <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>}
+            {allnonedisplay && <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>}
+            {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
+            {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
+            {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
+
         </div>
     );
 }
