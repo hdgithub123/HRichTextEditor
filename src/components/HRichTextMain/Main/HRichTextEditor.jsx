@@ -13,10 +13,10 @@ import decorateEditorState from '../functionRender/decorateEditorState';
 import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
 
 import { exampleDataTable, exampleData } from '../../_constant/exampleData'
+import {deleteTableEmpty} from '../../Table/replaceDatasTables/index'
 
 
-
-const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData }) => {
+const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData , onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
@@ -72,11 +72,21 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }, [infoImageInline])
 
 
+  useEffect(() => {
+    if(editorState){
+      const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({editorState}).getCurrentContent()), null, 2)
+      onEditorChange({contentJSON:contentJSON})  
+    }
+    
+  }, [editorState])
+
+
 
   const onChange = useCallback((newEditorState) => {
     if (editorState !== newEditorState) {
       setEditorState(newEditorState);
     }
+    
   }, [editorState]);
 
 
@@ -129,7 +139,7 @@ const initContentView = {
 
   return (
     <div>
-      <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
+    { !viewOnly && <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
         <ToolbarsEditor
           editorState={editorState}
           setEditorState={setEditorState}
@@ -146,9 +156,9 @@ const initContentView = {
           functionList={functionList}
           listRef={listRef}>
         </ToolbarsEditor>
-      </div>
+      </div>}
 
-      <div
+     {!viewOnly && <div
         onBlur={handleBlur}
         onFocus={handleFocus}
         className={style.editorContainer}
@@ -170,12 +180,13 @@ const initContentView = {
             handleReturn={(e, editorState) => handleReturn(e, editorState)}
           />
         </div>
-      </div>
+      </div>}
 
       <div  
       className={style.preview} 
       readOnly= {true}
-      style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
+      style={{display: viewOnly?'block':contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
+      // style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
       >
         <div style={{ width: '100%',border: '2px black solid', borderRadius: '5px', background: 'gray', justifyContent: 'center', textAlign:'center'}}> This Preview</div>
         <div
@@ -196,7 +207,7 @@ const initContentView = {
         </div>
       </div>
       {contentView.rawContentView && <div>
-        <pre>{JSON.stringify(convertToRaw(editorState.getCurrentContent()), null, 2)}</pre>
+        <pre>{JSON.stringify(convertToRaw(deleteTableEmpty({editorState}).getCurrentContent()), null, 2)}</pre>
       </div>}
     </div>
   );
