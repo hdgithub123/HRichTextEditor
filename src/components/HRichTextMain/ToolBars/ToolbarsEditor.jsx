@@ -57,7 +57,7 @@ const ToolbarsEditor = ({
             {allnonedisplay &&<OpenDocument setEditorState={setEditorState} functionList={functionList}></OpenDocument>}
             {allnonedisplay && <CreateEmptyEditor editorState={editorState} setEditorState={setEditorState}></CreateEmptyEditor>}
             {allnonedisplay && <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>}
-
+            
             {!rawContentView && <InsertDynamic
                 editorState={editorState}
                 setEditorState={setEditorStatePreview}
@@ -68,6 +68,8 @@ const ToolbarsEditor = ({
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
             ></InsertDynamic>}
+
+            {allnonedisplay &&<MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
             {allnonedisplay && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>
             
@@ -99,7 +101,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
-            <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>
+           
         </div>
     );
 }

@@ -102,6 +102,18 @@ const defaultEditorStyle = {
 }
 
 
+const _UNIT = [
+'px',
+'pt',
+'mm',
+'cm',
+'rem',
+'em',
+]
+    
+
+
+
 export {
     _FONTFAMILY,
     _FONTSIZES,
@@ -109,5 +121,6 @@ export {
     _LINEHEIGHT,
     _NOTCHANGEBLOCK,
     _MARGINS,
+    _UNIT,
     defaultEditorStyle,
 }

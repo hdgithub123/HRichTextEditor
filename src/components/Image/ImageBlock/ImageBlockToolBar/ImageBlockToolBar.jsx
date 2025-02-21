@@ -10,9 +10,9 @@ import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'
 import uploadIcon from './upload.svg'
 import imageIcon from './image.svg'
-import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
+import { _NOTCHANGEBLOCK, _UNIT } from '../../../_constant/_constant';
 
-
+const units = _UNIT
 const notChangeBlock = _NOTCHANGEBLOCK
 const defaultBlockStyle = {
   display: 'flex',
@@ -218,9 +218,15 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
               <td>Unit:</td>
               <td>
                 <select value={unit} onChange={handleUnitChange}>
-                  <option value="px">px</option>
+                   {/* lặp qua các units để viết các option */}
+                   {units.map((unit) => (
+                      <option key={unit} value={unit}>
+                        {unit}
+                      </option>
+                    ))}
+                  {/* <option value="px">px</option>
                   <option value="mm">mm</option>
-                  <option value="cm">cm</option>
+                  <option value="cm">cm</option> */}
                 </select>
               </td>
             </tr>
@@ -281,13 +287,11 @@ const ImageBlockToolBar = ({ editorState, setEditorState }) => {
             <span>Update</span>
           </button>
         </div>
-        {/* <button onClick={()=>{ console.log("Da upload")}}>Upload BLOCK Image</button> */}
         <label className={style.uploadButton}>
           <img src={uploadIcon} alt="Update" className={`${style.img} ${style.active}`} />
           <span>Upload Image</span>
           <input type="file" onChange={handleFileChange} style={{ display: 'none' }} />
         </label>
-        {/* <input type="file" onChange={handleFileChange} ></input> */}
       </div>}
     </div>
   );

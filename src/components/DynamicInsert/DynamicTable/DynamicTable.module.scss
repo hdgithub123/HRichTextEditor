@@ -161,28 +161,12 @@
 
 
     .applyButton {
-        // display: flex;
-        // flex-direction: row;
-        // padding: 2px;
-        // border: 1px solid black;
-        // border-radius: 5px;
-        // cursor: pointer;
-        // margin-top: 10px;
-        // background-color: #f0f0f0;
-        // text-align: center;
-        // align-items: center;
-        // justify-content: center;
-        // width: 100%;
-        // background: none;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         margin-top: 10px;
         gap: 10px;
         width: 100%;
-
-
-
         button {
             // transform: none;
             // display: flex;

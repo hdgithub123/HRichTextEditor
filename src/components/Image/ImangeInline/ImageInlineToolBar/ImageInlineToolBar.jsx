@@ -4,37 +4,37 @@ import { EditorState } from 'draft-js';
 import addImageInline from '../function/addImageInline'
 import updateImageInline from '../function/updateImageInline';
 import style from './ImageInlineToolBar.module.scss';
-import { useOnClickOutside,useAutoAdjustAbsolutePosition } from '../../../utilities';
+import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../../utilities';
 import getCurrentBlock from '../../../utilities/getCurrentBlockType';
 import handleUpload from '../../utilities/handleUpload'
 import insertIcon from './insertImage.svg'
 import updateIcon from './update.svg'
 import uploadIcon from './upload.svg'
 import imageIcon from './imageInline.svg'
-import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
+import { _NOTCHANGEBLOCK,_UNIT, } from '../../../_constant/_constant';
 
-
+const units = _UNIT
 const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) => {
 
     const infoImage = infoImageInline.properties
     // const entityKey = infoImageInline.entityKey
     const ref = useRef();
     const tableRef = useRef();
-    
+
     const [show, setShow] = useState(false);
 
-   
+
     const [entityKey, setEntityKey] = useState(null);
     const [url, setUrl] = useState('');
     const [width, setWidth] = useState('');
     const [height, setHeight] = useState();
     const [unit, setUnit] = useState('px');
     const [objectFit, setObjectFit] = useState('fill');
-    
+
     const [aspectRatio, setAspectRatio] = useState(null); // Thêm state để lưu tỷ lệ gốc của ảnh
     const [keepRatio, setKeepRatio] = useState(true); // Thêm state để lưu tỷ lệ gốc của ảnh
 
-        useEffect(() => {
+    useEffect(() => {
 
         if (infoImage) {
             setEntityKey(infoImageInline.entityKey)
@@ -44,9 +44,9 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
             setUnit(infoImage.unit)
             setObjectFit(infoImage.styleImage.objectFit || null)
         } else {
-          
+
         }
-      }, [infoImage]);
+    }, [infoImage]);
 
 
     useEffect(() => {
@@ -63,17 +63,17 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
 
     const handleUpdateImage = () => {
         const dataImage = {
-                url,
-                width: parseInt(width, 10),
-                height: parseInt(height, 10),
-                unit,
-                styleImage: {
-                    objectFit,
-                },
+            url,
+            width: parseInt(width, 10),
+            height: parseInt(height, 10),
+            unit,
+            styleImage: {
+                objectFit,
+            },
 
         };
 
-        
+
         updateImageInline({ entityKey, imageInfo: dataImage, editorState, setEditorState });
     };
 
@@ -166,8 +166,8 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
         });
     };
 
-    
-    useAutoAdjustAbsolutePosition(tableRef,show)
+
+    useAutoAdjustAbsolutePosition(tableRef, show)
 
     return (
         <div ref={ref} className={style.container}>
@@ -193,9 +193,14 @@ const ImageInlineToolBar = ({ editorState, setEditorState, infoImageInline }) =>
                             <td>Unit:</td>
                             <td>
                                 <select value={unit} onChange={handleUnitChange}>
-                                    <option value="px">px</option>
+                                    {units.map((unit) => (
+                                        <option key={unit} value={unit}>
+                                            {unit}
+                                        </option>
+                                    ))}
+                                    {/* <option value="px">px</option>
                                     <option value="mm">mm</option>
-                                    <option value="cm">cm</option>
+                                    <option value="cm">cm</option> */}
                                 </select>
                             </td>
                         </tr>

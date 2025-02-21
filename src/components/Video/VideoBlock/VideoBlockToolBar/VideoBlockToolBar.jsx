@@ -3,14 +3,14 @@ import { EditorState } from 'draft-js';
 import insertVideo from '../function/insertVideo';
 import updateVideo from '../function/updateVideo';
 import style from './VideoBlockToolBar.module.scss';
-import {useAutoAdjustAbsolutePosition,useOnClickOutside} from '../../../utilities';
+import { useAutoAdjustAbsolutePosition, useOnClickOutside } from '../../../utilities';
 import getCurrentBlockType from '../../../utilities/getCurrentBlockType';
 import insertIcon from './videoInsert.svg'
 import ResetIcon from './erase.svg'
 import imageIcon from './videoAdd.svg'
-import { _NOTCHANGEBLOCK } from '../../../_constant/_constant';
+import { _NOTCHANGEBLOCK,_UNIT } from '../../../_constant/_constant';
 
-
+const units = _UNIT
 const notChangeBlock = _NOTCHANGEBLOCK
 const defaultBlockStyle = {
   display: 'flex',
@@ -21,16 +21,16 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
   const [disabled, setDisabled] = useState(false);
   const ref = useRef();
   const tableRef = useRef();
-  
+
   const [show, setShow] = useState(false);
 
   const [url, setUrl] = useState('');
-  const [width, setWidth] = useState( '800');
+  const [width, setWidth] = useState('800');
   const [height, setHeight] = useState('450');
   const [unit, setUnit] = useState('px');
-  const [videoTag,SetVieoTag] = useState('iframe');
+  const [videoTag, SetVieoTag] = useState('iframe');
   const [justifyContent, setJustifyContent] = useState('center');
-  const [aspectRatio, setAspectRatio] = useState(800/450); // Thêm state để lưu tỷ lệ gốc của ảnh
+  const [aspectRatio, setAspectRatio] = useState(800 / 450); // Thêm state để lưu tỷ lệ gốc của ảnh
   const [keepRatio, setKeepRatio] = useState(true); // Thêm state để lưu tỷ lệ gốc của ảnh
 
 
@@ -112,26 +112,26 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
 
   const handleKeepRatioChange = (e) => {
     setKeepRatio(e.target.checked);
-    if (e.target.checked){
-      setAspectRatio(width/height)
+    if (e.target.checked) {
+      setAspectRatio(width / height)
     }
   };
 
 
-  const handleReset = () =>{
+  const handleReset = () => {
     setUrl('');
-      setWidth('800');
-      setHeight('450');
-      setUnit('px');
-      SetVieoTag('iframe')
-      setJustifyContent('center');
+    setWidth('800');
+    setHeight('450');
+    setUnit('px');
+    SetVieoTag('iframe')
+    setJustifyContent('center');
   }
 
-  useAutoAdjustAbsolutePosition(tableRef,show)
+  useAutoAdjustAbsolutePosition(tableRef, show)
   return (
     <div ref={ref} className={style.container}>
       <button disabled={disabled} className={style.buttonclick} onClick={handleClick}>
-        <img src={imageIcon} alt="Image"  title='Image Block' className={`${style.img} ${style.active}`} />
+        <img src={imageIcon} alt="Image" title='Image Block' className={`${style.img} ${style.active}`} />
       </button>
       {show && <div ref={tableRef} className={style.option}>
         <table>
@@ -152,9 +152,14 @@ const VideoBlockToolBar = ({ editorState, setEditorState }) => {
               <td>Unit:</td>
               <td>
                 <select value={unit} onChange={handleUnitChange}>
-                  <option value="px">px</option>
+                  {units.map((unit) => (
+                    <option key={unit} value={unit}>
+                      {unit}
+                    </option>
+                  ))}
+                  {/* <option value="px">px</option>
                   <option value="mm">mm</option>
-                  <option value="cm">cm</option>
+                  <option value="cm">cm</option> */}
                 </select>
               </td>
             </tr>

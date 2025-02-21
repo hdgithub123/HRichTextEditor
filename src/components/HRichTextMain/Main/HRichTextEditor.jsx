@@ -215,14 +215,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
             />
           </div>
         </div>}
-
+        <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none',}}>Preview</div>
         <div
           className={style.editorPreview}
           // readOnly= {true}
-          style={{ ...mainBlockStyle, background: 'white', display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
-        // style={{display: contentView.rawContentView ? 'none' :contentView.previewContent? 'block' : 'none' }}
+          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
         >
-          <div style={{ width: '100%', border: '2px black solid', borderRadius: '5px', background: 'gray', justifyContent: 'center', textAlign: 'center' }}> This Preview</div>
           <div
             className={removeStyle.editorRemove}
           >
