@@ -30,12 +30,15 @@ import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
 import RawContentView from '../../RawContentView/RawContentView'
 import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
 import OpenDocument from '../../Document/OpenDocument/OpenDocument'
+import MainBlock from '../../MainBlockStyle/MainBlock'
+
 
 const ToolbarsEditor = ({
     editorState,
     setEditorState,
     editorStatePreview,
     setEditorStatePreview,
+    // setMainBlockStyle,
     contentView,
     setContentView,
     variable,
@@ -52,7 +55,7 @@ const ToolbarsEditor = ({
         <div className={style.container}>
             {allnonedisplay && <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>}
             {allnonedisplay &&<OpenDocument setEditorState={setEditorState} functionList={functionList}></OpenDocument>}
-            {allnonedisplay && <CreateEmptyEditor setEditorState={setEditorState}></CreateEmptyEditor>}
+            {allnonedisplay && <CreateEmptyEditor editorState={editorState} setEditorState={setEditorState}></CreateEmptyEditor>}
             {allnonedisplay && <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>}
 
             {!rawContentView && <InsertDynamic
@@ -96,7 +99,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
-            
+            <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>
         </div>
     );
 }

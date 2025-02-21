@@ -29,21 +29,22 @@ const deleteTableEmpty = ({ editorState }) => {
         .toArray();
 
     // Lưu lại danh sách các cellTableKey
-    const cellTableKey = [];
+    const cellTableKeySet = new Set();
 
     // Đi qua tất cả các blocks lần thứ hai
     const newBlockMap = blockMap.filter(block => {
         if (block.getType() === 'cellTable') {
             const tableKey = block.getData().get('tableKey');
             if (arraytableStructureKey.includes(tableKey)) {
-                cellTableKey.push(block.getKey());
+                // cellTableKey.push(block.getKey());
+                cellTableKeySet.add(tableKey);
                 return true;
             }
             return false;
         }
         return true;
     });
-
+    const cellTableKey = Array.from(cellTableKeySet);
     // Lặp qua các arraytableStructureKey xem có thuộc một trong số cellTableKey không
     const finalBlockMap = newBlockMap.filter(block => {
         if (block.getType() === 'tableStructure') {

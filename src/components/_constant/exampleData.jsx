@@ -53,6 +53,28 @@ const contentStateObjectExample = {
             }
         },
         {
+            "key": "mainBlock",
+            "text": "",
+            "type": "MAIN_BLOCK",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [],
+            "data": {
+                "blockStyle": {
+                    "width": "500px",
+                    "height": "auto",
+                    "marginLeft": "0px",
+                    "marginTop": "0px",
+                    "marginRight": "0px",
+                    "marginBottom": "0px",
+                    "paddingLeft": "0px",
+                    "paddingTop": "0px",
+                    "paddingRight": "0px",
+                    "paddingBottom": "0px"
+                }
+            }
+        },
+        {
             "key": "d7rtn",
             "text": "",
             "type": "unstyled",
@@ -632,169 +654,167 @@ const contentStateObjectExample = {
     }
 }
 
-
-
 const contentStateObjectExampleSimple = {
     "blocks": [
-      {
-        "key": "86q8r",
-        "text": "                        ",
-        "type": "unstyled",
-        "depth": 0,
-        "inlineStyleRanges": [],
-        "entityRanges": [
-          {
-            "offset": 1,
-            "length": 1,
-            "key": 0
-          },
-          {
-            "offset": 4,
-            "length": 1,
-            "key": 1
-          },
-          {
-            "offset": 7,
-            "length": 1,
-            "key": 2
-          },
-          {
-            "offset": 10,
-            "length": 1,
-            "key": 3
-          },
-          {
-            "offset": 13,
-            "length": 1,
-            "key": 4
-          },
-          {
-            "offset": 16,
-            "length": 1,
-            "key": 5
-          },
-          {
-            "offset": 19,
-            "length": 1,
-            "key": 6
-          },
-          {
-            "offset": 22,
-            "length": 1,
-            "key": 7
-          }
-        ],
-        "data": {}
-      }
+        {
+            "key": "86q8r",
+            "text": "                        ",
+            "type": "unstyled",
+            "depth": 0,
+            "inlineStyleRanges": [],
+            "entityRanges": [
+                {
+                    "offset": 1,
+                    "length": 1,
+                    "key": 0
+                },
+                {
+                    "offset": 4,
+                    "length": 1,
+                    "key": 1
+                },
+                {
+                    "offset": 7,
+                    "length": 1,
+                    "key": 2
+                },
+                {
+                    "offset": 10,
+                    "length": 1,
+                    "key": 3
+                },
+                {
+                    "offset": 13,
+                    "length": 1,
+                    "key": 4
+                },
+                {
+                    "offset": 16,
+                    "length": 1,
+                    "key": 5
+                },
+                {
+                    "offset": 19,
+                    "length": 1,
+                    "key": 6
+                },
+                {
+                    "offset": 22,
+                    "length": 1,
+                    "key": 7
+                }
+            ],
+            "data": {}
+        }
     ],
     "entityMap": {
-      "0": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
+        "0": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "1": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "2": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "3": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "4": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "5": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 149,
+                "height": 104,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                },
+                "objectFit": "fill"
+            }
+        },
+        "6": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
+        },
+        "7": {
+            "type": "IMAGE_INLINE",
+            "mutability": "MUTABLE",
+            "data": {
+                "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
+                "width": 70,
+                "height": 43,
+                "unit": "px",
+                "styleImage": {
+                    "objectFit": "fill"
+                }
+            }
         }
-      },
-      "1": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      },
-      "2": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      },
-      "3": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      },
-      "4": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      },
-      "5": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 149,
-          "height": 104,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          },
-          "objectFit": "fill"
-        }
-      },
-      "6": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      },
-      "7": {
-        "type": "IMAGE_INLINE",
-        "mutability": "MUTABLE",
-        "data": {
-          "url": "http://thanninhd.pgdchauthanh.edu.vn/upload/59127/fck/files/TreVi%E1%BB%87tNam.jpg",
-          "width": 70,
-          "height": 43,
-          "unit": "px",
-          "styleImage": {
-            "objectFit": "fill"
-          }
-        }
-      }
     }
-  }
+}
 
 
 

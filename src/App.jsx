@@ -7,13 +7,12 @@ import {contentStateObjectExample} from './components/_constant/exampleData'
 function App() {
   const [theme, setTheme] = useState('light');
   const handleChange = (editor) =>{
-    console.log("editor", editor.contentJSON);    
+    // console.log("editor", editor.contentJSON);    
   }
   return (
     <>
         <div>hello</div>
-        <HRichTextEditor contentStateObject={contentStateObjectExample} onEditorChange={handleChange} viewOnly={true} ></HRichTextEditor>
-        {/* <TableRichEditorNew></TableRichEditorNew> */}
+        <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
     </>
   )
 }

@@ -45,6 +45,7 @@ const _LINEHEIGHT = [
 
 
 const _MARGINS = [
+    '-100px',
     '0px',
     '10px',
     '20px',
@@ -87,6 +88,19 @@ const _NOTCHANGEBLOCK = [
 ]
 
 
+const defaultEditorStyle = {
+    width: '500px',
+    height: 'auto',
+    marginLeft: '0px',
+    marginTop: '0px',
+    marginRight: '0px',
+    marginBottom: '0px',
+    paddingLeft: '0px', 
+    paddingTop: '0px',  
+    paddingRight: '0px',
+    paddingBottom: '0px',
+}
+
 
 export {
     _FONTFAMILY,
@@ -95,4 +109,5 @@ export {
     _LINEHEIGHT,
     _NOTCHANGEBLOCK,
     _MARGINS,
+    defaultEditorStyle,
 }
