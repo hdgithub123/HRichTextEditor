@@ -22,7 +22,7 @@ const CellComponent = props => {
     }, [editorRef, blockData]);
 
     return targetRef.current ? createPortal(
-        <div style={{ ...blockStyle }}>
+        <div tagType="resize" style={{ ...blockStyle }}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </div>,
         targetRef.current

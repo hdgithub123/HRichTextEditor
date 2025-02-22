@@ -3,7 +3,7 @@ import CellComponent from '../../Table/Component/cellTable/CellComponent';
 import ImageBlockComponent from '../../Image/ImageBlock/Component/ImageBlockComponent';
 import VideoBlockComponent from '../../Video/VideoBlock/Component/VideoBlockComponent'
 import HeaderBlockComponent from '../../HeaderBlock/Component/HeaderBlockComponent'
-
+import FooterBlockComponent from '../../FooterBlock/Component/FooterBlockComponent'
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
     const type = block.getType();
     switch (type) {
@@ -49,7 +49,17 @@ const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable })
         case 'HEADER_BLOCK':
             return {
                 component: HeaderBlockComponent,
-                editable: true,
+                editable: isEditable !== undefined ? isEditable : true,
+                props: {
+                    editorRef,
+                    getEditorState,
+                    onChange,
+                },
+            };
+        case 'FOOTER_BLOCK':
+            return {
+                component: FooterBlockComponent,
+                editable: isEditable !== undefined ? isEditable : true,
                 props: {
                     editorRef,
                     getEditorState,

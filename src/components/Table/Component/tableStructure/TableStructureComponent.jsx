@@ -59,7 +59,7 @@ const TableStructureComponent = props => {
 
     return (
         // <div ref={container} style={{justifyContent: tableAlign,  display: 'flex' }}>
-        <div ref={container} style={blockStyle}>
+        <div tagType="resize" ref={container} style={blockStyle}>
             <table key={block.getKey()} style={tableStyle} id={block.getKey()}>
                 <tbody>
                     {tableShape.map((row, i) => (

@@ -114,7 +114,7 @@ const ImageBlockComponent = props => {
       };
 
     return (
-        <div style={blockStyle}>
+        <div tagType="resize" style={blockStyle}>
             <div
                 ref={imgRef}
                 className={styles.container}

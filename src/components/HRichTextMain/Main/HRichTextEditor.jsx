@@ -210,7 +210,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               customStyleMap={customStyleMap}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
-              blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange })}
+              blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange,isEditable : true })}
               handleReturn={(e, editorState) => handleReturn(e, editorState)}
             />
           </div>
@@ -228,12 +228,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               ref={editorPrevewRef}
               editorState={editorStatePreview}
               onChange={onChangePreview}
-              readOnly={!firstview}
+              readOnly={true}
               placeholder="Empty document..."
               customStyleMap={customStyleMap}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
-              blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview })}
+              blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable : false })}
               handleReturn={(e, editorState) => handleReturn(e, editorState)}
             />
           </div>

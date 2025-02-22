@@ -32,6 +32,8 @@ import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
 import OpenDocument from '../../Document/OpenDocument/OpenDocument'
 import MainBlock from '../../MainBlockStyle/MainBlock'
 import HeaderBlockToolBar from '../../HeaderBlock/ToolBar/HeaderBlockToolBar'
+import FooterBlockToolBar from '../../FooterBlock/ToolBar/FooterBlockToolBar'
+
 
 const ToolbarsEditor = ({
     editorState,
@@ -102,6 +104,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
            <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>
+            <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>
         </div>
     );
 }

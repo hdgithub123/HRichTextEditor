@@ -102,6 +102,7 @@ const ImageComponentInline = (props) => {
 
   return (
     <div
+    tagType="resize"
       ref={imgRef}
       className={styles.container }
       style={{

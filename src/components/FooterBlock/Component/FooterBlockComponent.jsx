@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import { EditorBlock } from 'draft-js';
 import { createPortal } from 'react-dom';
-import style from './HeaderBlockComponent.module.scss'
+import style from './FooterBlockComponent.module.scss'
 
 
-const HeaderBlockComponent = props => {
+const FooterBlockComponent = props => {
     const {
         block,
         blockProps: { editorRef },
@@ -14,10 +14,10 @@ const HeaderBlockComponent = props => {
     const blockStyle = blockData.get('blockStyle');
 
     return (
-        <header className={style.headerContainer} style={{...blockStyle,  position:'absolute',top:'0%',left:'0%', zIndex:2 }}>
+        <footer title='Insert Footer' className={style.headerContainer} style={{...blockStyle,  position:'absolute',bottom:'0%',left:'0%', zIndex:2 }}>
             <EditorBlock {...props} block={block.set('text', text)} />
-        </header>
+        </footer>
     )
 };
 
-export default HeaderBlockComponent;
+export default FooterBlockComponent;
