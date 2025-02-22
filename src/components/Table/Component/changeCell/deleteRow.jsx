@@ -20,6 +20,20 @@ const deleteRow = ({editorState, onChange}) => {
 
     if (!tableBlock) return editorState;
 
+    const maxHeaderRow = tableBlock.getData().get('maxHeaderRow');
+    // nếu selectedRow có row = maxHeaderRow -1 thì kiểm tra xem tại row = maxHeaderRow 
+    // nếu toàn bộ các hàng row = maxHeaderRow mà có rowspan >1 thì trả ra editorState
+    if (row === maxHeaderRow - 1) {
+        const tableShape = tableBlock.getData().get('tableShape');
+        const headerRow = tableShape[maxHeaderRow];
+        const hasMergedCells = headerRow.some(cell => cell.rowspan > 1);
+       
+        if (hasMergedCells) {
+            console.log("Cannot delete row because the next header row has merged cells.");
+            return editorState;
+        }
+    }
+
     // Lấy tableShape từ data của tableBlock
     let tableShape = tableBlock.getData().get('tableShape');
     // Kiểm tra nếu có ô nào bị rowspan > 1 thì bỏ qua

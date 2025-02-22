@@ -21,3 +21,15 @@
 .firstcellTable:hover::after {
     background-color: rgba(0, 0, 0, 0.2); /* Change color on hover */
 }
+
+thead{
+
+    &:hover{
+        border: 3px solid black;
+    }
+    th{
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: normal;
+    }
+}
+

@@ -69,6 +69,13 @@ const getMergeEditorState = (editorState) => {
         col: endPoint.endCol - startPoint.startCol + 1,
     }
 
+    // lấy maxHeaderRow tại data.maxHeaderRow của tableBlock nếu startRow và endRow cùng > hoặc =< thì thực hiện . không thì trả ra editorState
+    const maxHeaderRow = tableBlock.getData().get('maxHeaderRow');
+    // Nếu startRow và endRow cùng lớn hơn hoặc bằng maxHeaderRow thì thực hiện, không thì trả ra editorState
+    if (startPoint.startRow <= maxHeaderRow-1 && endPoint.endRow > maxHeaderRow-1) {
+        return editorState;
+    }
+
     let tableShape = tableBlock.getData().get('tableShape');
     // muon merge cell thi phai co columnspan va rowspan deu = 1
 

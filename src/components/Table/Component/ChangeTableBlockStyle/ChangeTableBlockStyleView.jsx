@@ -2,6 +2,8 @@ import updateBlockStyleFromBlockKey from '../../../utilities/updateBlockStyleFro
 import React, { useEffect, useState, useRef } from 'react';
 import { useAutoAdjustAbsolutePosition, useOnClickOutside, getCurrentBlockType } from '../../../utilities';
 import styles from './ChangeTableBlockStyleView.module.scss';
+import changeTableBlockStyle from '../utilities/changeTableBlockStyle'
+import changeTablemaxHeadernumber from '../utilities/changeTablemaxHeadernumber'
 import tableSettingIcon from './tableSetting.svg';
 import tableCenterIcon from './tableCenter.svg';
 import tableMoveLeftIcon from './tableMoveLeft.svg';
@@ -11,6 +13,7 @@ import { EditorState, Modifier } from 'draft-js';
 const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
     const [active, setActive] = useState(styles.active);
     const [show, setShow] = useState(false);
+    const [maxRow, setMaxRow] = useState(0);
     const ref = useRef();
     const buttonListRef = useRef();
 
@@ -44,6 +47,11 @@ const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
         onChange(newEditorState);
     };
 
+    const handleMaxRowtClick = () => {
+        const newEditorState2 =   changeTablemaxHeadernumber({editorState, newMaxHeaderRow:maxRow})
+        onChange(newEditorState2);
+    }
+
     return (
         <div ref={ref} className={styles.container}>
             <button className={styles.button} disabled={disabled} onMouseDown={handleClick}>
@@ -51,37 +59,34 @@ const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
             </button>
             {show && (
                 <div ref={buttonListRef} className={styles.controlTable}>
-                    <button onClick={() => handleBlockStyleChange({ justifyContent: 'left' })}>
-                        <img src={tableMoveLeftIcon} alt="Table Align Left" title="Table Align Left" className={`${styles.img} ${active}`} />
-                    </button>
-                    <button onClick={() => handleBlockStyleChange({ justifyContent: 'center' })}>
-                        <img src={tableCenterIcon} alt="Table Align Center" title="Table Align Center" className={`${styles.img} ${active}`} />
-                    </button>
-                    <button onClick={() => handleBlockStyleChange({ justifyContent: 'right' })}>
-                        <img src={tableMoveRightIcon} alt="Table Align Right" title="Table Align Right" className={`${styles.img} ${active}`} />
-                    </button>
+                    <div className={styles.buttonAlign} >
+                        <button onClick={() => handleBlockStyleChange({ justifyContent: 'left' })}>
+                            <img src={tableMoveLeftIcon} alt="Table Align Left" title="Table Align Left" className={`${styles.img} ${active}`} />
+                        </button>
+                        <button onClick={() => handleBlockStyleChange({ justifyContent: 'center' })}>
+                            <img src={tableCenterIcon} alt="Table Align Center" title="Table Align Center" className={`${styles.img} ${active}`} />
+                        </button>
+                        <button onClick={() => handleBlockStyleChange({ justifyContent: 'right' })}>
+                            <img src={tableMoveRightIcon} alt="Table Align Right" title="Table Align Right" className={`${styles.img} ${active}`} />
+                        </button>
+                    </div>
+                    <div className={styles.maxRowInsert}>
+                        <input
+                            type="number"
+                            value={maxRow}
+                            onChange={(e) => { setMaxRow(e.target.value) }}
+                        />
+                        <button onClick={handleMaxRowtClick}>
+                            <img src={tableMoveRightIcon} alt="Add Link" title="Add Link" className={`${styles.img} ${styles.active}`} />
+                        </button>
+                    </div>
+
                 </div>
+
+
             )}
         </div>
     );
 };
 
 export default ChangeTableBlockStyleView;
-
-
-const changeTableBlockStyle = ({ editorState, blockStyle }) => {
-    // Lấy selection
-    const selectionState = editorState.getSelection();
-
-    // Kiểm tra xem có phải là cellTable không, nếu không trả về editorState
-    const currentContent = editorState.getCurrentContent();
-    const blockKey = selectionState.getStartKey();
-    const block = currentContent.getBlockForKey(blockKey);
-
-    if (block.getType() !== 'cellTable') {
-        return editorState;
-    }
-   const tableKey = block.getData().get('tableKey');
-   const newEditorState = updateBlockStyleFromBlockKey ({editorState, blockKey:tableKey, blockStyle })
-   return newEditorState;
-};

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
-import {  EditorState, } from 'draft-js';
+import { EditorState, } from 'draft-js';
 
-import style from './TableStructureComponent.module.css';
+import style from './TableStructureComponent.module.scss';
 
 const TableStructureComponent = props => {
     const table = useRef(null);
@@ -10,11 +10,12 @@ const TableStructureComponent = props => {
         block,
         contentState,
         blockProps: { editorRef, getEditorState, onChange },
-    } = props;   
+    } = props;
     const data = block.getData().toJS(); // Convert Immutable.Map to JavaScript object
     const tableStyle = data.tablestyle;
     const cellStyle = data.cellStyle;
     // const tableAlign = data.tableAlign;
+    const maxHeaderRow = data.maxHeaderRow ? data.maxHeaderRow : '0';
     const blockStyle = data.blockStyle;
     const tableShape = data.tableShape;
     if (!tableShape) {
@@ -24,46 +25,76 @@ const TableStructureComponent = props => {
 
     const updateBlockData = useCallback(
         (newData = {}, data = block.getData()) => {
-          data = data.merge(newData);
-          const newBlock = block.set('data', data);
-          let blockMap = getEditorState().getCurrentContent().getBlockMap();
-          blockMap = blockMap.set(block.getKey(), newBlock);
-          const newContent = getEditorState().getCurrentContent().set('blockMap', blockMap);
-          const selection = getEditorState().getSelection();
-          let editorState = EditorState.push(getEditorState(), newContent, 'change-block-data');
-          editorState = EditorState.forceSelection(editorState, selection);
-          onChange(editorState);
+            data = data.merge(newData);
+            const newBlock = block.set('data', data);
+            let blockMap = getEditorState().getCurrentContent().getBlockMap();
+            blockMap = blockMap.set(block.getKey(), newBlock);
+            const newContent = getEditorState().getCurrentContent().set('blockMap', blockMap);
+            const selection = getEditorState().getSelection();
+            let editorState = EditorState.push(getEditorState(), newContent, 'change-block-data');
+            editorState = EditorState.forceSelection(editorState, selection);
+            onChange(editorState);
         },
         [block, getEditorState, onChange]
-      );
+    );
 
 
     const handleResize = (e, colIndex) => {
         const startX = e.clientX;
-        const startWidth = container.current.querySelectorAll('td')[colIndex].offsetWidth;
-    
+        // const startWidth = container.current.querySelectorAll('td')[colIndex].offsetWidth;
+        const startWidth = container.current.querySelectorAll('th')[colIndex].offsetWidth;
+
         const onMouseMove = (e) => {
             const newWidth = startWidth + (e.clientX - startX);
             const newTableColumnWidth = { ...tableColumnWidth, [colIndex]: `${newWidth}px` };
             updateBlockData({ tableColumnWidth: newTableColumnWidth });
         };
-    
+
         const onMouseUp = () => {
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
         };
-    
+
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-      };
+    };
+
+    // Tách các hàng header và các hàng body dựa trên maxHeaderRow
+    const headerRows = tableShape.slice(0, maxHeaderRow);
+    const bodyRows = tableShape.slice(maxHeaderRow);
+    const length = headerRows.length
 
     return (
         // <div ref={container} style={{justifyContent: tableAlign,  display: 'flex' }}>
         <div data-tagtype="resizeBlock" ref={container} style={blockStyle}>
             <table key={block.getKey()} style={tableStyle} id={block.getKey()}>
-                <tbody>
-                    {tableShape.map((row, i) => (
+                <thead title='Table Header'>
+                    {headerRows.map((row, i) => (
                         <tr key={i}>
+                            {row.map((cell, j) => {
+                                if (Object.keys(cell).length === 0) {
+                                    return null; // Do not render empty cells
+                                }
+                                return (
+                                    <th
+                                        key={j}
+                                        style={{ ...cellStyle, ...(cell.individualStyle || {}), width: tableColumnWidth[j] ? tableColumnWidth[j] : '100px' }}
+                                        className={style.firstcellTable}
+                                        colSpan={cell.columnspan || 1}
+                                        rowSpan={cell.rowspan || 1}
+                                        cell-position={`${block.getKey()}-${i}-${j}`}
+                                        onMouseDown={(e) => handleResize(e, j)}
+                                    >
+                                    </th>
+                                );
+                            })}
+                        </tr>
+                    ))}
+                </thead>
+
+                <tbody>
+                    {bodyRows.map((row, i) => (
+                        <tr key={i + maxHeaderRow}>
                             {row.map((cell, j) => {
                                 if (Object.keys(cell).length === 0) {
                                     return null; // Do not render empty cells
@@ -71,11 +102,11 @@ const TableStructureComponent = props => {
                                 return (
                                     <td
                                         key={j}
-                                        style={{ ...cellStyle,  ...(cell.individualStyle || {}) , width: tableColumnWidth[j]? tableColumnWidth[j] : '100px'}}
-                                        className={style.firstcellTable }
+                                        style={{ ...cellStyle, ...(cell.individualStyle || {}), width: tableColumnWidth[j] ? tableColumnWidth[j] : '100px' }}
+                                        className={style.firstcellTable}
                                         colSpan={cell.columnspan || 1}
                                         rowSpan={cell.rowspan || 1}
-                                        cell-position={`${block.getKey()}-${i}-${j}`}
+                                        cell-position={`${block.getKey()}-${i+length}-${j}`}
                                         onMouseDown={(e) => handleResize(e, j)}
                                     >
                                     </td>
@@ -84,6 +115,9 @@ const TableStructureComponent = props => {
                         </tr>
                     ))}
                 </tbody>
+
+
+
             </table>
         </div>
     );

@@ -10,7 +10,7 @@ import useOnClickOutside from '../../../utilities/useOnClickOutside';
 import getCurrentBlock from '../../../utilities/getCurrentBlockType';
 import { useAutoAdjustAbsolutePosition } from '../../../utilities';
 
-const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, blockStyle =blockStyleDefault }) => {
+const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyleDefault, cellStyle =cellStyleDefault, blockStyle =blockStyleDefault, maxHeaderRow =0 }) => {
     const tableKey = genKey();
     const { cols, rows } = size;
 
@@ -36,6 +36,7 @@ const CreateTable = async ({ editorState, onChange, size, tablestyle = tableStyl
     const dataTableStructure = {
         tablestyle: tablestyle ? tablestyle : {},
         cellStyle: cellStyle ? cellStyle : {},
+        maxHeaderRow:maxHeaderRow?maxHeaderRow:'1',
         tableShape: tableShape,
         blockStyle: blockStyle ? blockStyle : {},
         tableColumnWidth: {},
@@ -71,7 +72,7 @@ const CreateTableView = ({ editorState, onChange, tablestyle, cellStyle, blockSt
 
 
     const handleCellClick = (size) => {
-        CreateTable({ editorState, onChange, size, tablestyle, cellStyle, blockStyle });
+        CreateTable({ editorState, onChange, size, tablestyle, cellStyle, blockStyle,maxHeaderRow: 1 });
     }
 
     useOnClickOutside(ref, () => {

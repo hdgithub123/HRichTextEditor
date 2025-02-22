@@ -54,49 +54,97 @@
         overflow-y: none;
         padding: 1px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap: 5px;
 
-        button {
-            background: white;
+        .buttonAlign{
+            display: flex;
+            flex-direction: row;
+            button {
+                background: white;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+    
+                .img {
+                    width: 20px;
+                    height: 20px;
+                    border: 0.5px black solid;
+                    border-radius: 4px;
+                    // padding: 2px;
+                }
+    
+                .active {
+                    background: white;
+                }
+    
+                .unactive {
+                    background: white;
+                    opacity: 30%;
+                }
+    
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }  
+
+        .maxRowInsert{
+            // position:absolute;
+            // top: 100%;
+            // left: 0;
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: center;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-
-            .img {
-                width: 20px;
-                height: 20px;
+            width: auto;
+            background: white;
+            z-index: 100;
+            button {
+                background: white;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+    
+                .img {
+                    width: 20px;
+                    height: 20px;
+                    border: 0.5px black solid;
+                    border-radius: 4px;
+                    // padding: 2px;
+                }
+    
+                .active {
+                    background: white;
+                }
+    
+                .unactive {
+                    background: white;
+                    opacity: 30%;
+                }
+    
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+            input{
                 border: 0.5px black solid;
                 border-radius: 4px;
-                // padding: 2px;
+                padding: 2px;
+                width: 100%;
             }
-
-            .active {
-                background: white;
-            }
-
-            .unactive {
-                background: white;
-                opacity: 30%;
-            }
-
-            &:hover {
-                transform: scale(1.2);
-            }
+            
+    
         }
-
-
-        // &:hover {
-        //     transform: scale(1.2);
-        // }
-
     }
-
-
+  
     &:hover {
         // border: 1px solid #351111;
     }
