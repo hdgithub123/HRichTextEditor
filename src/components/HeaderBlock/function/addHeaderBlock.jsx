@@ -14,7 +14,7 @@ const addHeaderBlock = ({editorState}) => {
   const newBlock = new ContentBlock({
     key: 'headerBlock',
     type: 'HEADER_BLOCK',
-    text: '123 ',
+    text: ' ',
     data: Map({ styleBlock: { background: 'black'} }),
   });
 

@@ -148,7 +148,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
   const handleReturn = (e, editorState) => {
-    if (RichUtils.getCurrentBlockType(editorState) === 'cellTable') {
+    if (RichUtils.getCurrentBlockType(editorState) === 'cellTable' || RichUtils.getCurrentBlockType(editorState) === 'HEADER_BLOCK') {
       onChange(RichUtils.insertSoftNewline(editorState));
       return 'handled';
     }
