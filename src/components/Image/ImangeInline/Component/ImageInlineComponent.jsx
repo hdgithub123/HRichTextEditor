@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { EditorState } from 'draft-js';
-import  pxToUnit  from '../function/pxToUnit';
+import pxToUnit from '../function/pxToUnit';
 import styles from './ImageInlineComponent.module.css';
 
 const ImageComponentInline = (props) => {
@@ -11,7 +11,7 @@ const ImageComponentInline = (props) => {
   const [imgHeight, setImgHeight] = useState(height);
   const [imgUnit, setImgUnit] = useState(unit);
   const [thisStyleImage, setThisStyleImage] = useState(styleImage);
- 
+
   const imgRef = useRef(null);
   const [ratioPxPerUnit, setRatioPxPerUnit] = useState(null);
 
@@ -21,7 +21,7 @@ const ImageComponentInline = (props) => {
     setImgHeight(height);
     setImgUnit(unit);
     setThisStyleImage(styleImage)
-  }, [url, width, height, unit,styleImage]);
+  }, [url, width, height, unit, styleImage]);
 
   //lấy chiều dài, cao của imgRef thì làm thế nào?
   useEffect(() => {
@@ -58,7 +58,7 @@ const ImageComponentInline = (props) => {
     // Chỉ xử lý sự kiện onMouseDown khi nhấn vào border
     if (e.target !== imgRef.current) return;
 
-   
+
     const startX = e.clientX;
     const startY = e.clientY;
     const startWidth = imgRef.current.offsetWidth;
@@ -75,7 +75,7 @@ const ImageComponentInline = (props) => {
     };
 
     const onMouseUp = (e) => {
-    
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       const blockInfo = {
@@ -102,9 +102,9 @@ const ImageComponentInline = (props) => {
 
   return (
     <div
-    tagType="resize"
+      data-tagtype="resizeBlock"
       ref={imgRef}
-      className={styles.container }
+      className={styles.container}
       style={{
         width: `${imgWidth}${imgUnit}` || 'auto',
         height: `${imgHeight}${imgUnit}` || 'auto',

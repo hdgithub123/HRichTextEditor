@@ -112,7 +112,7 @@ const VideoBlockComponent = props => {
 
 
     return (
-        <div tagType="resize" style={blockStyle}>
+        <div data-tagtype="resizeBlock" style={blockStyle}>
             <div
                 ref={videoRef}
                 className={styles.container}

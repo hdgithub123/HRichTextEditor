@@ -64,7 +64,7 @@
       box-sizing: border-box;
       flex-shrink: 0;
       overflow-y: auto;
-      [tagType="resize"] {
+      [data-tagtype="resizeBlock"] {
         pointer-events: none
       }
     }
