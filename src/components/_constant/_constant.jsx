@@ -87,30 +87,54 @@ const _NOTCHANGEBLOCK = [
     // 'blockquote',
 ]
 
+const _ALLBOCK = [
+    'tableStructure',
+    'cellTable',
+    'MAIN_BLOCK',
+    'VIDEO_BLOCK',
+    'IMAGE_BLOCK',
+    'unstyled',
+    'ordered-list-item',
+    'unordered-list-item',
+    'paragraph',
+    'blockquote',
+    'header-one',
+    'header-two',
+    'header-three',
+    'header-four',
+    'header-five',
+    'header-six',
+
+]
+
+const _ALLENTITYMAP = [
+    'IMAGE_INLINE',
+    'LINK',
+]
 
 const defaultEditorStyle = {
-    width: '500px',
+    width: '210mm',
     height: 'auto',
-    marginLeft: '0px',
-    marginTop: '0px',
-    marginRight: '0px',
-    marginBottom: '0px',
-    paddingLeft: '0px', 
-    paddingTop: '0px',  
-    paddingRight: '0px',
-    paddingBottom: '0px',
+    marginLeft: '0mm',
+    marginTop: '0mm',
+    marginRight: '0mm',
+    marginBottom: '0mm',
+    paddingLeft: '30mm',
+    paddingTop: '20mm',
+    paddingRight: '15mm',
+    paddingBottom: '20mm',
 }
 
 
 const _UNIT = [
-'px',
-'pt',
-'mm',
-'cm',
-'rem',
-'em',
+    'mm',
+    'px',
+    'pt',
+    'cm',
+    'rem',
+    'em',
 ]
-    
+
 
 
 

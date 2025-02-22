@@ -14,7 +14,7 @@
 }
 
 .editorRemove :global(.DraftEditor-editorContainer) {
-  position: relative;
+  /* position: relative; */
   z-index: 1;
 }
 

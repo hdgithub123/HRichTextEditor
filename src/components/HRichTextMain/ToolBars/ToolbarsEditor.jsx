@@ -31,7 +31,7 @@ import RawContentView from '../../RawContentView/RawContentView'
 import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
 import OpenDocument from '../../Document/OpenDocument/OpenDocument'
 import MainBlock from '../../MainBlockStyle/MainBlock'
-
+import HeaderBlockToolBar from '../../HeaderBlock/ToolBar/HeaderBlockToolBar'
 
 const ToolbarsEditor = ({
     editorState,
@@ -101,7 +101,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
-           
+           <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>
         </div>
     );
 }
