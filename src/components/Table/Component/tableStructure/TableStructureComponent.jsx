@@ -66,8 +66,8 @@ const TableStructureComponent = props => {
     };
 
     // Tách các hàng header và các hàng body dựa trên maxHeaderRow
-    const headerRows = tableShape.slice(0, maxHeaderRow);
-    const bodyRows = tableShape.slice(maxHeaderRow);
+    const headerRows = tableShape.slice(0, Number(maxHeaderRow));
+    const bodyRows = tableShape.slice(Number(maxHeaderRow));
     const length = headerRows.length
 
     return (
@@ -98,7 +98,7 @@ const TableStructureComponent = props => {
                     ))}
                 </thead>
 
-                <tbody>
+                <tbody title='Table body'>
                     {bodyRows.map((row, i) => (
                         <tr key={i + length}>
                             {row.map((cell, j) => {

@@ -1,35 +1,29 @@
 import { EditorState, ContentBlock, genKey, Modifier, SelectionState } from 'draft-js';
 import { Map } from 'immutable';
 
-const addFooterBlock = ({editorState}) => {
-  const contentState = editorState.getCurrentContent();
-    // kiểm tra nếu đã tồn tại block có key là headerBlock thì trả về editorState
-    const blockMap = contentState.getBlockMap();
-    const headerBlockExists = blockMap.some(block => block.getKey() === 'headerBlock');
-    if (headerBlockExists) {
-        return editorState;
-    }
 
-  // Tạo một block mới với key là 'headerBlock', type là 'HEADER_BLOCK', text là ' ', và data là {styleBlock: {}}
+const addFooterBlock = ({editorState, styleBlock = {}}) => {
+  const contentState = editorState.getCurrentContent();
+  const blockMap = contentState.getBlockMap();
+  const headerBlockExists = blockMap.some(block => block.getKey() === 'footerBlock');
+  if (headerBlockExists) {
+    return editorState;
+  }
+  // Tạo block mới với key, type, text, và data
   const newBlock = new ContentBlock({
     key: 'footerBlock',
     type: 'FOOTER_BLOCK',
     text: ' ',
-    data: Map({ styleBlock: { background: 'black'} }),
+    data: Map({ styleBlock: styleBlock }),
   });
 
-  // Lấy block đầu tiên hiện tại
-  const firstBlockKey = contentState.getFirstBlock().getKey();
+  // Lấy blockMap hiện tại và thêm block mới vào
 
-  // Tạo một blockMap mới bằng cách chèn block mới vào đầu
-//   const blockMap = contentState.getBlockMap();
-  const newBlockMap = blockMap
-    .toOrderedMap()
-    .set(newBlock.getKey(), newBlock)
-    .sort((a, b) => (a === newBlock ? -1 : b === newBlock ? 1 : blockMap.keySeq().indexOf(a.getKey()) - blockMap.keySeq().indexOf(b.getKey())));
+  const newBlockMap = blockMap.set(newBlock.getKey(), newBlock);
 
-  // Tạo một selection state mới để chèn block vào đầu
-  const selectionState = SelectionState.createEmpty(newBlock.getKey());
+  // Tạo selection state mới để chèn block vào vị trí mong muốn (ở đây là cuối cùng)
+  const lastBlockKey = contentState.getLastBlock().getKey();
+  const selectionState = SelectionState.createEmpty(lastBlockKey);
 
   // Tạo contentState mới với blockMap mới
   const newContentState = contentState.merge({
