@@ -2,7 +2,7 @@ import { EditorState, ContentBlock, genKey } from 'draft-js';
 import { Map } from 'immutable';
 import getSelectedRow from './getSelectedRow';
 
-const insertAfterRow = ({editorState, onChange}) => {
+const insertAfterRow = ({ editorState, onChange }) => {
     const selectedRow = getSelectedRow(editorState);
     if (!selectedRow) return editorState;
 
@@ -21,6 +21,9 @@ const insertAfterRow = ({editorState, onChange}) => {
 
     if (!tableBlock) return editorState;
 
+
+
+
     // Lấy tableShape từ data của tableBlock
     let tableShape = tableBlock.getData().get('tableShape');
 
@@ -35,13 +38,24 @@ const insertAfterRow = ({editorState, onChange}) => {
             }
         }
     }
+    // lấy maxHeaderRow trong data.maxHeaderRow
+    // kiểm tra xem row của selectedRow hiện tại có <= maxHeaderRow không. nếu có thì gán data.maxHeaderRow = maxHeaderRow+ 1 
+    // Lấy maxHeaderRow trong data.maxHeaderRow
+    const maxHeaderRow = tableBlock.getData().get('maxHeaderRow');
+
+    // Kiểm tra xem row của selectedRow hiện tại có <= maxHeaderRow không. nếu có thì gán data.maxHeaderRow = maxHeaderRow + 1
+    let newMaxHeaderRow = maxHeaderRow;
+    if (row <= maxHeaderRow-1) {
+        newMaxHeaderRow = Number(maxHeaderRow) + 1;
+    }
+
 
     // Chèn hàng mới vào phía sau của hàng được chọn
     const newRow = tableShape[row].map(() => ({ columnspan: 1, rowspan: 1 }));
     tableShape.splice(row + 1, 0, newRow);
 
-    // Cập nhật tableBlock với tableShape mới
-    const newTableBlock = tableBlock.set('data', tableBlock.getData().set('tableShape', tableShape));
+    const newTableBlockData = tableBlock.getData().set('tableShape', tableShape).set('maxHeaderRow', newMaxHeaderRow);
+    const newTableBlock = tableBlock.set('data', newTableBlockData);
 
     // Cập nhật editorState với tableBlock mới
     let newBlockMap = blockMap.set(newTableBlock.getKey(), newTableBlock);

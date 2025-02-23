@@ -2,15 +2,14 @@ import updateBlockStyleFromBlockKey from '../../../utilities/updateBlockStyleFro
 import React, { useEffect, useState, useRef } from 'react';
 import { useAutoAdjustAbsolutePosition, useOnClickOutside, getCurrentBlockType } from '../../../utilities';
 import styles from './ChangeTableBlockStyleView.module.scss';
-import changeTableBlockStyle from '../utilities/changeTableBlockStyle'
-import changeTablemaxHeadernumber from '../utilities/changeTablemaxHeadernumber'
+import changeTableBlockStyle from '../utilities/changeTableBlockStyle';
 import tableSettingIcon from './tableSetting.svg';
 import tableCenterIcon from './tableCenter.svg';
 import tableMoveLeftIcon from './tableMoveLeft.svg';
 import tableMoveRightIcon from './tableMoveRight.svg';
 import { EditorState, Modifier } from 'draft-js';
 
-const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
+const ChangeTableBlockStyleView = ({ editorState, onChange, listRef }) => {
     const [active, setActive] = useState(styles.active);
     const [show, setShow] = useState(false);
     const [maxRow, setMaxRow] = useState(0);
@@ -47,10 +46,6 @@ const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
         onChange(newEditorState);
     };
 
-    const handleMaxRowtClick = () => {
-        const newEditorState2 =   changeTablemaxHeadernumber({editorState, newMaxHeaderRow:maxRow})
-        onChange(newEditorState2);
-    }
 
     return (
         <div ref={ref} className={styles.container}>
@@ -70,23 +65,11 @@ const ChangeTableBlockStyleView = ({ editorState, onChange, blockStyle }) => {
                             <img src={tableMoveRightIcon} alt="Table Align Right" title="Table Align Right" className={`${styles.img} ${active}`} />
                         </button>
                     </div>
-                    <div className={styles.maxRowInsert}>
-                        <input
-                            type="number"
-                            value={maxRow}
-                            onChange={(e) => { setMaxRow(e.target.value) }}
-                        />
-                        <button onClick={handleMaxRowtClick}>
-                            <img src={tableMoveRightIcon} alt="Add Link" title="Add Link" className={`${styles.img} ${styles.active}`} />
-                        </button>
-                    </div>
-
                 </div>
-
-
             )}
         </div>
     );
 };
 
 export default ChangeTableBlockStyleView;
+

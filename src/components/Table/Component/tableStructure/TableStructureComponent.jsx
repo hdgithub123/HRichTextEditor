@@ -41,8 +41,14 @@ const TableStructureComponent = props => {
 
     const handleResize = (e, colIndex) => {
         const startX = e.clientX;
-        // const startWidth = container.current.querySelectorAll('td')[colIndex].offsetWidth;
-        const startWidth = container.current.querySelectorAll('th')[colIndex].offsetWidth;
+        let startWidth;
+        try {
+             startWidth = container.current.querySelectorAll('th')[colIndex].offsetWidth;
+        } catch{
+            
+             startWidth = container.current.querySelectorAll('td')[colIndex].offsetWidth;
+        }
+        
 
         const onMouseMove = (e) => {
             const newWidth = startWidth + (e.clientX - startX);
@@ -94,7 +100,7 @@ const TableStructureComponent = props => {
 
                 <tbody>
                     {bodyRows.map((row, i) => (
-                        <tr key={i + maxHeaderRow}>
+                        <tr key={i + length}>
                             {row.map((cell, j) => {
                                 if (Object.keys(cell).length === 0) {
                                     return null; // Do not render empty cells

@@ -96,7 +96,7 @@ const ToolbarsEditor = ({
             {allnonedisplay && <BlockStyleView editorState={editorState} setEditorState={setEditorState} />}
             {allnonedisplay && <DeleteBlockStyle editorState={editorState} setEditorState={setEditorState} />}
 
-            {allnonedisplay && <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange}></TableToolbar>}
+            {allnonedisplay && <TableToolbar editorState={editorState} setEditorState={setEditorState} onChange={onChange} listRef={listRef}></TableToolbar>}
             {allnonedisplay && <ImageToolBar editorState={editorState} setEditorState={setEditorState} variable={variable}></ImageToolBar>}
             {allnonedisplay && <LinkifyToolBar editorState={editorState} setEditorState={setEditorState}></LinkifyToolBar>}
             {allnonedisplay && <EmojiToolBar editorState={editorState} setEditorState={setEditorState}></EmojiToolBar>}

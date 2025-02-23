@@ -1,3 +1,5 @@
+import updateBlockStyleFromBlockKey from '../../../utilities/updateBlockStyleFromBlockKey'
+
 const changeTableBlockStyle = ({ editorState, blockStyle }) => {
     // Lấy selection
     const selectionState = editorState.getSelection();

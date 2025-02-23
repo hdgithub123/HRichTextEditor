@@ -40,7 +40,7 @@
     }
 
 
-    .tableGrid {
+    .dropdown {
         position: absolute;
         top: 100%;
         left: 0;
@@ -51,6 +51,28 @@
         // width: 200px;
         max-height: 550px;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .tableGrid{
+
+        }
+        .maxHeaderRow{
+            display: flex;
+            flex-direction: row;
+            justify-content: left;
+            align-items: left;
+            gap: 5px;
+            span{
+                // width: 100%;
+            }
+            input{
+                width: 30px;
+            }
+        }
+
     }
 
 

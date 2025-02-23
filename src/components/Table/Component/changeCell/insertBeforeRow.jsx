@@ -2,7 +2,7 @@ import { EditorState, ContentBlock, genKey } from 'draft-js';
 import { Map } from 'immutable';
 import getSelectedRow from './getSelectedRow';
 
-const insertBeforeRow = ({editorState, onChange}) => {
+const insertBeforeRow = ({ editorState, onChange }) => {
     const selectedRow = getSelectedRow(editorState);
     if (!selectedRow) return editorState;
 
@@ -19,6 +19,8 @@ const insertBeforeRow = ({editorState, onChange}) => {
         }
     }
 
+
+
     if (!tableBlock) return editorState;
 
     // Lấy tableShape từ data của tableBlock
@@ -28,20 +30,34 @@ const insertBeforeRow = ({editorState, onChange}) => {
     for (let col = 0; col < tableShape[row].length; col++) {
         if (!('rowspan' in tableShape[row][col]) || tableShape[row][col].rowspan > 1) {
             if (row !== 0) {
-                if (!('rowspan' in tableShape[row-1][col]) || tableShape[row-1][col].rowspan > 1) {
+                if (!('rowspan' in tableShape[row - 1][col]) || tableShape[row - 1][col].rowspan > 1) {
                     console.log("Can't insert row because previous have merge cell");
                     return editorState;
-                } 
+                }
             }
         }
     }
+
+    // Lấy maxHeaderRow trong data.maxHeaderRow
+    const maxHeaderRow = tableBlock.getData().get('maxHeaderRow');
+
+    // Kiểm tra xem row của selectedRow hiện tại có <= maxHeaderRow không. nếu có thì gán data.maxHeaderRow = maxHeaderRow + 1
+    let newMaxHeaderRow = maxHeaderRow;
+    if (row <= maxHeaderRow - 1) {
+        newMaxHeaderRow = Number(maxHeaderRow) + 1;
+    }
+
+
 
     // Chèn hàng mới vào phía trước của hàng được chọn
     const newRow = tableShape[row].map(() => ({ columnspan: 1, rowspan: 1 }));
     tableShape.splice(row, 0, newRow);
 
-    // Cập nhật tableBlock với tableShape mới
-    const newTableBlock = tableBlock.set('data', tableBlock.getData().set('tableShape', tableShape));
+
+    // Cập nhật tableBlock với tableShape mới và maxHeaderRow mới
+    const newTableBlockData = tableBlock.getData().set('tableShape', tableShape).set('maxHeaderRow', newMaxHeaderRow);
+    const newTableBlock = tableBlock.set('data', newTableBlockData);
+
 
     // Cập nhật editorState với tableBlock mới
     let newBlockMap = blockMap.set(newTableBlock.getKey(), newTableBlock);

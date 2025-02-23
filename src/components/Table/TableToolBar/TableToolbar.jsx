@@ -4,13 +4,13 @@ import ChangeCellsStyleView from '../Component/ChangeCellsStyle/ChangeCellsStyle
 import ChangeTableBlockStyleView from '../Component/ChangeTableBlockStyle/ChangeTableBlockStyleView'
 import style from './TableToolbar.module.scss'
 
-const TableToolbar = ({editorState, onChange}) => {
+const TableToolbar = ({editorState, onChange,listRef}) => {
     return (
         <div className={style.container}>
             <CreateTableView editorState={editorState} onChange={onChange}/>
             <ControlTable editorState={editorState} onChange={onChange} />
             <ChangeCellsStyleView editorState={editorState} onChange={onChange}/>
-            <ChangeTableBlockStyleView editorState={editorState} onChange={onChange}></ChangeTableBlockStyleView>
+            <ChangeTableBlockStyleView editorState={editorState} onChange={onChange} listRef={listRef}></ChangeTableBlockStyleView>
         </div>
     )   
 }
