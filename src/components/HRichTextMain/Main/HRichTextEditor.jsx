@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
+
 import style from './HRichTextEditor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
 
+
+import Print from '../../Print/Print'
 import ToolbarsEditor from '../ToolBars/ToolbarsEditor';
 import customStyleMap from '../functionRender/customStyleMap';
 import blockStyleFn from '../functionRender/blockStyleFn';
@@ -29,6 +32,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const editorRef = useRef(null);
   const editorPrevewRef = useRef(null);
 
+  const divEditorRef = useRef(null);
+  const divEditorPrevewRef = useRef(null);
 
   const functionList = {
     onImagePropertiesChange: (imageinfo) => {
@@ -167,10 +172,29 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }
 
   const [contentView, setContentView] = useState(initContentView);
+  const [isPrint, setIsPrint] = useState(false);
+
+
+  const handlePrint = () => {
+    setIsPrint(true)
+  }
+
+
+  const handleisPrinted = (e) => {
+    setIsPrint(false)
+  }
+
+
+
+
+
+
+
 
 
   return (
     <div className={style.allContainer}>
+      <button onClick={handlePrint}>Print or Save as PDF</button>
       {!viewOnly && <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
         <ToolbarsEditor
           editorState={editorState}
@@ -199,6 +223,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           style={{ ...mainBlockStyle, display: contentView.rawContentView ? 'none' : contentView.previewContent ? 'none' : 'block' }}
         >
           <div
+            ref={divEditorRef}
             className={removeStyle.editorRemove}
           >
             <Editor
@@ -210,34 +235,35 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               customStyleMap={customStyleMap}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
-              blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange,isEditable : true })}
+              blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange, isEditable: true })}
               handleReturn={(e, editorState) => handleReturn(e, editorState)}
             />
           </div>
         </div>}
-        <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none',}}>Preview</div>
-        <div
-          className={style.editorPreview}
-          // readOnly= {true}
-          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
-        >
+        <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none', }}>Preview</div>
           <div
-            className={removeStyle.editorRemove}
+            ref={divEditorPrevewRef}
+            className={style.editorPreview}
+            // readOnly= {true}
+            style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
           >
-            <Editor
-              ref={editorPrevewRef}
-              editorState={editorStatePreview}
-              onChange={onChangePreview}
-              readOnly={true}
-              placeholder="Empty document..."
-              customStyleMap={customStyleMap}
-              blockStyleFn={blockStyleFn}
-              blockRenderMap={extendedBlockRenderMap}
-              blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable : false })}
-              handleReturn={(e, editorState) => handleReturn(e, editorState)}
-            />
+            <div
+              className={removeStyle.editorRemove}
+            >
+              <Editor
+                ref={editorPrevewRef}
+                editorState={editorStatePreview}
+                onChange={onChangePreview}
+                readOnly={true}
+                placeholder="Empty document..."
+                customStyleMap={customStyleMap}
+                blockStyleFn={blockStyleFn}
+                blockRenderMap={extendedBlockRenderMap}
+                blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable: false })}
+                handleReturn={(e, editorState) => handleReturn(e, editorState)}
+              />
+            </div>
           </div>
-        </div>
         {contentView.rawContentView && <div className={style.rawContentView} style={{ ...mainBlockStyle }}>
           <pre>{JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)}</pre>
         </div>}

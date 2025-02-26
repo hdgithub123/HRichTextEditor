@@ -1,0 +1,48 @@
+.pageNumbers{
+  display: none;
+}
+
+
+
+@media print {
+
+    @page {
+      padding: 0;
+    }
+  
+  
+    .container {
+      footer {
+        position: fixed;
+        bottom: 0;
+        // display: none;
+        
+      }
+      header {
+        position: fixed;
+        top: 0;
+      }
+  
+    
+      thead {
+        display: table-header-group;
+        /* Đảm bảo <thead> lặp lại trên mỗi trang */
+      }
+    
+      tfoot {
+        display: table-footer-group;
+      }
+    
+      tbody {
+        display: table-row-group;
+      }
+    
+      tr {
+        page-break-inside: avoid;
+        /* Tránh ngắt trang giữa các hàng */
+      }
+      .pageNumbers{
+        display: block;
+      }
+    }
+  }
