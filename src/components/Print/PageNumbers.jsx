@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useState, useEffect,useLayoutEffect } from 'react';
 import pxToUnit from './pxToUnit';
 const PageNumbers = ({
   contentRef,
@@ -15,7 +15,9 @@ const PageNumbers = ({
 
     requestAnimationFrame(() => {
       const convertedHeight = pageHeight / pxToUnit(1, unit)
-      const totalPages = Math.ceil(contentRef.current.scrollHeight / convertedHeight);
+      const rowHeights = [...contentRef.current.querySelectorAll("tr")].map(row => row.offsetHeight);
+      const totalHeight = rowHeights.reduce((sum, h) => sum + h, 0);
+      const totalPages = Math.ceil(totalHeight / convertedHeight);
 
       const validPositions = ["top-left", "top-right", "bottom-left", "bottom-right"];
 

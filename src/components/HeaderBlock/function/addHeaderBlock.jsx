@@ -1,7 +1,7 @@
 import { EditorState, ContentBlock, genKey, Modifier, SelectionState } from 'draft-js';
 import { Map } from 'immutable';
 
-const addHeaderBlock = ({editorState, styleBlock = {}}) => {
+const addHeaderBlock = ({editorState, blockStyle = {}}) => {
   const contentState = editorState.getCurrentContent();
   const blockMap = contentState.getBlockMap();
   const headerBlockExists = blockMap.some(block => block.getKey() === 'headerBlock');
@@ -13,7 +13,7 @@ const addHeaderBlock = ({editorState, styleBlock = {}}) => {
     key: 'headerBlock',
     type: 'HEADER_BLOCK',
     text: ' ',
-    data: Map({ styleBlock: styleBlock }),
+    data: Map({ blockStyle: blockStyle }),
   });
 
   // Lấy blockMap hiện tại và thêm block mới vào

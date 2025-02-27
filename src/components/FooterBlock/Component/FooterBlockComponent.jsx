@@ -14,7 +14,7 @@ const FooterBlockComponent = props => {
     const blockStyle = blockData.get('blockStyle');
 
     return (
-        <footer title='Insert Footer' className={style.headerContainer} style={{...blockStyle,  position:'absolute',bottom:'0%',left:'0%', zIndex:2 }}>
+        <footer title='Insert Footer' className={style.footerContainer} style={{...blockStyle }}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </footer>
     )

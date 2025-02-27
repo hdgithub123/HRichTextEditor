@@ -5,7 +5,7 @@ import updateBlockStyle from "./updateBlockStyle";
 import updateBlockType from "./updateBlockType";
 import updateBlockStyleFromBlockKey from "./updateBlockStyleFromBlockKey";
 import useAutoAdjustAbsolutePosition from "./hook/useAutoAdjustChildPosition"
-
+import pxToUnit from './pxToUnit'
 
 export {
     useOnClickOutside,
@@ -15,4 +15,5 @@ export {
     updateBlockType,
     useAutoAdjustAbsolutePosition,
     updateBlockStyleFromBlockKey,
+    pxToUnit,
 }

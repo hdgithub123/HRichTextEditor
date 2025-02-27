@@ -4,9 +4,14 @@
 //     left: 0;
 // }
 
+// ,  position:'absolute',top:'0%',left:'0%', zIndex:2
+
 
 .headerContainer{
-    background: red;
+    position: absolute;
+    top:0%;
+    left:0%;
+    z-index: 2;
     // margin-left: 30mm;
     width: 100%;
     overflow: hidden; /* Ẩn phần văn bản vượt quá chiều cao */

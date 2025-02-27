@@ -2,7 +2,7 @@ import { EditorState, ContentBlock, genKey, Modifier, SelectionState } from 'dra
 import { Map } from 'immutable';
 
 
-const addFooterBlock = ({editorState, styleBlock = {}}) => {
+const addFooterBlock = ({editorState, blockStyle = {}}) => {
   const contentState = editorState.getCurrentContent();
   const blockMap = contentState.getBlockMap();
   const headerBlockExists = blockMap.some(block => block.getKey() === 'footerBlock');
@@ -14,7 +14,7 @@ const addFooterBlock = ({editorState, styleBlock = {}}) => {
     key: 'footerBlock',
     type: 'FOOTER_BLOCK',
     text: ' ',
-    data: Map({ styleBlock: styleBlock }),
+    data: Map({ blockStyle: blockStyle }),
   });
 
   // Lấy blockMap hiện tại và thêm block mới vào

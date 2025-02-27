@@ -74,9 +74,11 @@ export default ComponentPrintHeaderAndFooter
 
 
 const wrapWithParentClasses = (element) => {
+    console.log("element",element)
     if (!element) return '';
 
     let parent = element.parentElement;
+    console.log("parent",parent)
     let classList = [];
 
     while (parent) {
@@ -85,6 +87,8 @@ const wrapWithParentClasses = (element) => {
         }
         parent = parent.parentElement; // Tiếp tục đi lên cha của phần tử hiện tại
     }
+
+console.log("classList",classList)
 
     // Gộp class vào thẻ gốc
     const newElement = element.cloneNode(true);

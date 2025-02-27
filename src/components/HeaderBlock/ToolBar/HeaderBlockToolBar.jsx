@@ -6,8 +6,13 @@ import addHeaderBlock from '../function/addHeaderBlock';
 import styles from './HeaderBlockToolBar.module.scss';
 
 const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
+
+    const style = {
+        height: '20mm',
+        background: 'red',
+    }
     const handleAddHeaderBlock = () => {
-        const newEditorState = addHeaderBlock({editorState});
+        const newEditorState = addHeaderBlock({editorState, blockStyle :style });
         setEditorState(newEditorState);
     };
 

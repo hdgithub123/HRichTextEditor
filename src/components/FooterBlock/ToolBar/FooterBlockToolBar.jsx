@@ -6,8 +6,14 @@ import addFooterBlock from '../function/addFooterBlock';
 import styles from './FooterBlockToolBar.module.scss';
 
 const FooterBlockToolBar = ({ editorState, setEditorState }) => {
+   
+    const style = {
+        height: '20mm',
+        background: 'red',
+    }
+   
     const handleAddFooterBlock = () => {
-        const newEditorState = addFooterBlock({ editorState });
+        const newEditorState = addFooterBlock({ editorState, blockStyle :style  });
         setEditorState(newEditorState);
     };
 

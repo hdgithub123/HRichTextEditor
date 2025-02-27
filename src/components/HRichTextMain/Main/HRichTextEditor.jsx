@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useLayoutEffect } from
 import { Editor, EditorState, RichUtils } from 'draft-js';
 import { Modifier, EditorBlock, SelectionState, ContentBlock, ContentState, genKey, convertToRaw, convertFromRaw } from 'draft-js';
 
+
 import style from './HRichTextEditor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
 
@@ -22,7 +23,12 @@ import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
 
 import { defaultEditorStyle } from '../../_constant/_constant'
 import getMainblockStyle from '../../MainBlockStyle/getMainblockStyle'
+import getHeaderBlockStyle from '../../HeaderBlock/function/getFooterBlockStyle'
+import getFooterBlockStyle from '../../FooterBlock/function/getHeaderBlockStyle'
 import addAndUpdtaeMainBlockStyle from '../../MainBlockStyle/addAndUpdateMainBlockStyle'
+import { pxToUnit } from '../../utilities'
+
+
 
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -108,9 +114,40 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }, [infoImageInline])
 
 
+  const getPxStyle = ({ blockStyle, child }) => {
+    let styleValue = 0;
+
+    if (blockStyle && blockStyle[child]) {
+      const padding = blockStyle[child];
+      const matches = padding.match(/(\d+)(\D+)/);
+      if (matches) {
+        console.log("pxToUnit(1, matches[2])", pxToUnit(1, matches[2]))
+        styleValue = matches[1] / pxToUnit(1, matches[2]);
+      }
+    }
+
+    return styleValue;
+  }
+
+
+
   useEffect(() => {
     if (editorState) {
-      const newMainBlockStyle = getMainblockStyle({ editorState })
+      const mainBlockStyle = getMainblockStyle({ editorState })
+      const headerHeight = getHeaderBlockStyle({ editorState })
+      const footerHeight = getFooterBlockStyle({ editorState })
+      const pxHeaderHeight = getPxStyle({ blockStyle: headerHeight, child: 'height' })
+      const pxFooterHeight = getPxStyle({ blockStyle: footerHeight, child: 'height' })
+      const pxPaddingTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingTop' })
+      const pxBottomTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingBottom' })
+
+      const newMainBlockStyle = {
+        ...mainBlockStyle,
+        paddingTop: `${pxPaddingTopMainBlock + pxHeaderHeight}px`,
+        paddingBottom: `${pxBottomTopMainBlock + pxFooterHeight}px`,
+      };
+
+
       setMainBlockStyle(newMainBlockStyle)
       const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)
       onEditorChange({ contentJSON: contentJSON })
@@ -241,6 +278,17 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           </div>
         </div>}
         <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none', }}>Preview</div>
+
+        <Print
+          width='210mm'
+          isPrint={isPrint}
+          pageHeight={297}
+          unit="mm"
+          positionPageNumber='top-right'
+          formatPageNumber=" Trang {page} / {total}"
+          stylePageNumber={{ zIndex: '10000' }}
+          isPrinted={handleisPrinted}
+        >
           <div
             ref={divEditorPrevewRef}
             className={style.editorPreview}
@@ -264,6 +312,10 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               />
             </div>
           </div>
+        </Print>
+
+
+
         {contentView.rawContentView && <div className={style.rawContentView} style={{ ...mainBlockStyle }}>
           <pre>{JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)}</pre>
         </div>}

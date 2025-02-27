@@ -2,7 +2,7 @@ import './App.css'
 import HRichTextEditor from '../src/components/HRichTextMain/Main/HRichTextEditor'
 import React, { useState } from 'react';
 import {contentStateObjectExample} from './components/_constant/exampleData'
-
+import ContentPrintExaple from  './components/Print/ExamplePrint/ContentEx'
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -12,7 +12,8 @@ function App() {
   return (
     <>
         <div>hello</div>
-        <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
+        {/* <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor> */}
+        <ContentPrintExaple></ContentPrintExaple>
     </>
   )
 }

@@ -5,13 +5,15 @@
 // }
 
 
-.headerContainer{
-    background: red;
+.footerContainer{
+    position: absolute;
+    bottom:0%;
+    left:0%;
+    z-index: 2;
     // margin-left: 30mm;
     width: 100%;
     overflow: hidden; /* Ẩn phần văn bản vượt quá chiều cao */
     white-space: nowrap;
-    height: 50px;
     &:hover{
         border: 1px solid black;
     }
