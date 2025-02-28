@@ -26,23 +26,42 @@ function pxToUnit(px, unit) {
   
   export default pxToUnit;
 
+
+
   function getDPI() {
+    let dpi = 96; // Mặc định 96 nếu không lấy được giá trị hợp lệ
     let div = document.createElement("div");
     div.style.height = "1in";
     div.style.width = "1in";
+    div.style.position = "absolute";
     div.style.top = "-100%";
     div.style.left = "-100%";
-    div.style.position = "absolute";
-  
     document.body.appendChild(div);
   
-    let result = div.offsetHeight;
-  
+    let measuredDPI = div.offsetHeight;
     document.body.removeChild(div);
   
-    return result;
-  
+    return measuredDPI > 0 ? measuredDPI : dpi;
   }
+
+
+//   function getDPI() {
+//     let div = document.createElement("div");
+//     div.style.height = "1in";
+//     div.style.width = "1in";
+//     div.style.top = "-100%";
+//     div.style.left = "-100%";
+//     div.style.position = "absolute";
+  
+//     document.body.appendChild(div);
+  
+//     let result = div.offsetHeight;
+  
+//     document.body.removeChild(div);
+  
+//     return result;
+  
+//   }
   
   
   function getRootFontSize() {

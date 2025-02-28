@@ -1,0 +1,72 @@
+// .document{
+//   // width: 210mm;
+//   .documentheader{
+//     background: orange;
+//   }
+  
+//   .body{
+//     background: peachpuff;
+//     padding-left: 10mm;
+//     padding-right: 20mm;
+//   }
+  
+//   .footer{
+//     background: blue;
+//     // display: none;
+//   }
+// }
+
+
+@page{
+  margin: 0;
+  counter-increment: page;
+  .footer{
+    background: blue;
+    // display: none;
+    &:after{
+      position: fixed;
+      top:0;
+      left:0;
+      content:"Page " counter(page);
+      z-index: 1000;
+    }
+  
+  }
+
+
+}
+
+
+
+.documentheader{
+  background: orange;
+}
+
+
+.footer{
+  background: blue;
+  // display: none;
+  &:after{
+    content:"Page " counter(page);
+    z-index: 1000;
+  }
+
+}
+
+
+.body{
+  background: peachpuff;
+  // padding-left: 10mm;
+  // padding-right: 20mm;
+}
+
+@media print {
+  .body{
+    tfoot {
+      display: table-row-group !important;  /* Chặn trình duyệt nhân bản */
+      page-break-inside: avoid;   /* Tránh bị chia tfoot giữa các trang */
+    }
+  }
+}
+
+

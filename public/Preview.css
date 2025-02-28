@@ -1,0 +1,73 @@
+@page {
+    size: A4 landscape;
+    margin: 20mm;
+    padding-top: 10mm;
+    padding-bottom: 10mm;
+    padding-left: 0mm;
+    padding-right: 0mm;
+    
+
+    @top-left-corner {
+        content: element(headerRunning);
+      }
+    
+
+    /* 🔥 Footer từ góc dưới trái đến phải */
+    @bottom-left-corner {
+      content: element(pageFooter);
+    }
+    @bottom-right {
+      content: "Trang " counter(page) " / " counter(pages);
+      z-index: 10;
+    }
+  }
+  
+  /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
+  .pagedjs_page {
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+    /* margin: 20px auto; Tạo khoảng cách giữa các trang */
+    /* margin-bottom: 100px; */
+    /* padding: 10mm;  */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Tạo khoảng cách giữa các trang */
+    justify-content: center;
+  }
+  
+  /* 📌 Header chạy xuyên suốt */
+  header {
+    position: running(headerRunning);
+    /* background: lightgray; */
+    box-sizing: border-box;
+    width: var(--pagedjs-pagebox-width);
+    /* position: fixed; */
+    text-align: center;
+    left: 0;
+    /* right: 0; */
+    top: 0;
+    height:  var(--pagedjs-margin-top); /* Chiều cao bằng phần margin-top */
+    z-index: 2; /* Giữ header luôn trên cùng */
+
+  }
+  
+  /* 📌 Footer chạy xuyên suốt */
+  footer {
+    position: running(pageFooter);
+    width: var(--pagedjs-pagebox-width);
+    text-align: center;
+    /* position: fixed; */
+    text-align: center;
+    left: 0;
+    bottom: 0px;
+    height:  var(--pagedjs-margin-bottom);
+    z-index: 2; 
+
+  }
+  
+  @media print {
+    .pagedjs_page {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+  }

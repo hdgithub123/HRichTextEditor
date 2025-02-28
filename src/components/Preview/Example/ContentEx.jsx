@@ -1,13 +1,12 @@
 import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import style from './ContentEx.module.scss'
-import Print from '../Print'
+import Preview from '../Preview';
+import { useReactToPrint } from 'react-to-print';
 
-
-const ContentPrintExaple = () => {
+const ContentEx = () => {
+  const contentRef = useRef(null);
   const [isPrint, setIsPrint] = useState(false);
-  const handlePrint = () => {
-    setIsPrint(true)
-  }
+
 
 
   const handleisPrinted = (e) => {
@@ -15,32 +14,79 @@ const ContentPrintExaple = () => {
   }
 
 
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+
+    documentTitle: 'Title',
+    contentRef: componentRef,
+    // onBeforePrint: async () => {
+    //     // Thực hiện thao tác bất đồng bộ trước khi in
+    //     await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
+    //     console.log('Before print');
+    // },
+
+
+  })
+
+
+
   return (
-    <div>
+
+    <div style={{ background: 'gray' }}>
       <button onClick={handlePrint}>Print1</button>
-  
-      <Print
-        width='210mm'
-        isPrint={isPrint}
-        pageHeight={297}
-        unit="mm"
-        positionPageNumber='top-right'
-        formatPageNumber=" Trang {page} / {total}"
-        stylePageNumber={{}}
-        isPrinted={handleisPrinted}
-      >
-        <A4Document />
-      </Print>
+      <div ref={contentRef} style={{ display: 'none', width: '200px', height:'1500px' }}>
+        <div>
+          <header id={'idDau'} style={{ background: 'red' }}>đầu</header>
+        </div>
+        <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+        {/* <Content number={1000}></Content>  */}
+        {/* <A4Document /> */}
+
+        {/* <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
+        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
+        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
+        */}
+        <Content number={100}></Content>
+
+{/*         
+        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
+        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
+       */}
+      </div>
+
+
+
+      <div ref={componentRef} style={{ background: 'white' }}>
+        <Preview childrenRef={contentRef} />
+      </div>
+
+
+
+
 
       {/* <A4Document /> */}
     </div>
   );
 };
 
-export default ContentPrintExaple;
+export default ContentEx;
 
 
 
+
+
+
+
+const Content = ({ number }) => {
+  const contentArray = Array.from({ length: number }, (_, index) => (
+    <div key={index}>
+      {index} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus delectus ducimus quidem doloremque recusandae magnam cupiditate ex sunt? Commodi quas doloribus, ab assumenda laudantium officia nulla aut ipsum necessitatibus illum.
+    </div>
+  ));
+
+  return <div>{contentArray}</div>;
+};
 
 
 
@@ -64,6 +110,18 @@ const A4Document = () => {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>B1</td>
+              <td>B2</td>
+              <td>B3</td>
+              <td>B4</td>
+            </tr>
+            <tr>
+              <td>B1</td>
+              <td>B2</td>
+              <td>B3</td>
+              <td>B4</td>
+            </tr>
             <tr>
               <td>B1</td>
               <td>B2</td>
@@ -523,10 +581,3 @@ const A4Document = () => {
     </div>
   )
 }
-
-
-
-
-
-
-

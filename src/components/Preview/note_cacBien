@@ -1,0 +1,53 @@
+--pagedjs-width
+--pagedjs-height
+--pagedjs-width-right
+--pagedjs-width-left
+--pagedjs-height-left
+
+--pagedjs-pagebox-width
+--pagedjs-pagebox-height
+--pagedjs-footnotes-height
+--pagedjs-margin-top
+--pagedjs-margin-right
+--pagedjs-margin-bottom
+--pagedjs-margin-left
+
+--pagedjs-padding-top
+--pagedjs-padding-right
+--pagedjs-padding-bottom
+--pagedjs-padding-left
+
+--pagedjs-border-top
+--pagedjs-border-right
+--pagedjs-border-bottom
+--pagedjs-border-left
+
+--pagedjs-bleed-top
+--pagedjs-bleed-right
+--pagedjs-bleed-bottom
+--pagedjs-bleed-left
+
+--pagedjs-bleed-right-top
+--pagedjs-bleed-right-right
+--pagedjs-bleed-right-bottom
+--pagedjs-bleed-right-left
+
+--pagedjs-crop-color
+--pagedjs-crop-shadow
+--pagedjs-crop-offset
+--pagedjs-crop-stroke
+--pagedjs-cross-size
+
+
+--pagedjs-mark-cross-display
+--pagedjs-mark-crop-display
+--pagedjs-page-count
+--pagedjs-page-counter-increment
+--pagedjs-footnotes-count
+
+--pagedjs-column-gap-offset
+
+ câu lệnh thay đổi các biến
+document.documentElement.style.setProperty("--pagedjs-pagebox-width", "100mm");
+document.documentElement.style.setProperty("--pagedjs-width-right", "100mm");
+document.documentElement.style.setProperty("--pagedjs-height-right", "100mm");

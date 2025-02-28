@@ -10,7 +10,8 @@ const Print = ({
     width,
     headerID = null,
     footerID = null,
-    unit = "mm",
+    // unit = "mm",
+    pageHeight = '297mm',
     positionPageNumber = "bottom-right",
     formatPageNumber = "Page {page} of {total}",
     stylePageNumber = null,
@@ -47,7 +48,7 @@ const Print = ({
         <div className={style.container} ref={componentRef} style={{ width: width }}>
             <ComponentPrintHeaderAndFooter>{children}</ComponentPrintHeaderAndFooter>
             <div className={style.pageNumbers}>
-                <PageNumbers contentRef={componentRef} unit={unit} position={positionPageNumber} format={formatPageNumber} style={stylePageNumber}></PageNumbers>
+                <PageNumbers contentRef={componentRef} pageHeight={pageHeight} position={positionPageNumber} format={formatPageNumber} style={stylePageNumber}></PageNumbers>
             </div>
 
         </div>

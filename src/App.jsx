@@ -2,7 +2,7 @@ import './App.css'
 import HRichTextEditor from '../src/components/HRichTextMain/Main/HRichTextEditor'
 import React, { useState } from 'react';
 import {contentStateObjectExample} from './components/_constant/exampleData'
-import ContentPrintExaple from  './components/Print/ExamplePrint/ContentEx'
+import ContentPrintExaple from  './components/Preview/Example/ContentEx'
 
 function App() {
   const [theme, setTheme] = useState('light');

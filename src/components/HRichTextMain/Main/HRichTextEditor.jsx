@@ -7,7 +7,7 @@ import style from './HRichTextEditor.module.css';
 import removeStyle from './removeStyleDefault.module.css';
 
 
-import Print from '../../Print/Print'
+
 import ToolbarsEditor from '../ToolBars/ToolbarsEditor';
 import customStyleMap from '../functionRender/customStyleMap';
 import blockStyleFn from '../functionRender/blockStyleFn';
@@ -279,16 +279,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
         </div>}
         <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none', }}>Preview</div>
 
-        <Print
-          width='210mm'
-          isPrint={isPrint}
-          pageHeight={297}
-          unit="mm"
-          positionPageNumber='top-right'
-          formatPageNumber=" Trang {page} / {total}"
-          stylePageNumber={{ zIndex: '10000' }}
-          isPrinted={handleisPrinted}
-        >
+
           <div
             ref={divEditorPrevewRef}
             className={style.editorPreview}
@@ -312,7 +303,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               />
             </div>
           </div>
-        </Print>
+ 
 
 
 

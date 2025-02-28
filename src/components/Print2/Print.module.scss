@@ -1,13 +1,8 @@
-.pageNumbers{
-  display: none;
-}
-
-
-
 @media print {
 
     @page {
       padding: 0;
+      counter-increment: page;
     }
   
   
@@ -16,6 +11,7 @@
         position: fixed;
         bottom: 0;
         // display: none;
+
         
       }
       header {
