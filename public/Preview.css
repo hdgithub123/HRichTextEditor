@@ -1,13 +1,14 @@
 @page {
-  size: A4;
+  size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height); 
   /* margin: 20mm;
   padding-top: 10mm;
   padding-bottom: 10mm;
   padding-left: 0mm;
   padding-right: 0mm; */
-  
-  padding-top: 10mm;
-  padding-bottom: 1mm;
+  /* margin-left: 0px;
+  margin-right: 0; */
+  /* padding-top: 1px;
+  padding-bottom: 1px; */
   
   @top-left-corner {
     content: element(headerRunning);
@@ -63,16 +64,16 @@
 
 /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
 .pagedjs_page {
-  background: white;
+  /* background: white; */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
   margin-bottom: 20px !important;
 }
 
 .pagedjs_left_page {
-  background-color: lightgray;
+  /* background-color: lightgray; */
 }
 .pagedjs_right_page {
-  background-color: white;
+  /* background-color: white; */
   
 }
 
@@ -100,31 +101,28 @@
   text-align: center;
   font-size: 12px;
   color: gray;
-  z-index: 1000000;
+  z-index: 10;
 }
 
 .pagedjs_margin-bottom-right-corner-holder::after{
   content: "Trang2 " counter(page) " / " counter(pages);
   text-align: center;
   font-size: 12px;
-  z-index: 1000000;
+  z-index: 10;
 }
 
 .pagedjs_margin-bottom-right::after{
   content: "Trang " counter(page) " / " counter(pages);
   text-align: center;
   font-size: 12px;
-  z-index: 1000000;
+  z-index: 10;
 }
 
 /* 📌 Header chạy xuyên suốt */
 header {
   position: running(headerRunning);
-  box-sizing: border-box;
   width: var(--pagedjs-pagebox-width);
   text-align: center;
-  /* left: 0;
-  top: 0; */
   height:  var(--pagedjs-margin-top);
   z-index: 2;
 
@@ -136,8 +134,6 @@ footer {
   position: running(footerRunning);
   width: var(--pagedjs-pagebox-width);
   text-align: center;
-  /* left: 0;
-  bottom: 0px; */
   height:  var(--pagedjs-margin-bottom);
   z-index: 2; 
 
@@ -146,9 +142,9 @@ footer {
 
 
 
-@media print {
+/* @media print {
   .pagedjs_page {
       margin-bottom: 0px;
       margin-top: 0px;
   }
-}
+} */

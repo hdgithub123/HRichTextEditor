@@ -39,35 +39,3 @@
 
 
 
-
-.body{
-  background: peachpuff;
-  // padding-left: 10mm;
-  // padding-right: 20mm;
-}
-
-@media print {
-  .body{
-
-
-
-    thead { 
-      display: table-header-group; /* Giữ thead trên mỗi trang */
-    }
-    
-    tfoot { 
-      display: table-footer-group; /* Hiển thị tfoot ở cuối trang */
-    }
-    
-    tr { 
-      break-inside: avoid; /* Tránh cắt dòng giữa các hàng */
-    }
-
-    // tfoot {
-    //   display: table-row-group !important;  /* Chặn trình duyệt nhân bản */
-    //   page-break-inside: avoid;   /* Tránh bị chia tfoot giữa các trang */
-    // }
-  }
-}
-
-
