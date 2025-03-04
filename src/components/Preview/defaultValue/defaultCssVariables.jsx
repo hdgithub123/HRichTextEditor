@@ -59,18 +59,18 @@ const defaultCssVariables = {
 
     '--pagedjs-margin-top': '30mm', // chiều cao header
     '--pagedjs-margin-bottom': '30mm',// chiều cao footer
-    '--pagedjs-margin-right': '10mm',
-    '--pagedjs-margin-left': '10mm',
+    '--pagedjs-margin-right': '10mm', // lề phải
+    '--pagedjs-margin-left': '10mm', // lề trái
 
     '--pagedjs-pagebox-width': '120mm',// width tong
     '--pagedjs-pagebox-height': '207mm',// hieght tong
 
 
-    '--pagedjs-padding-left': '0mm', // 
-    '--pagedjs-padding-right': '0mm',
+    '--pagedjs-padding-left': '0mm', // luon de = 0
+    '--pagedjs-padding-right': '0mm', // luon de = 0
 
-    '--pagedjs-padding-top': '5mm',
-    '--pagedjs-padding-bottom': '10mm',
+    '--pagedjs-padding-top': '5mm', // lề trên
+    '--pagedjs-padding-bottom': '10mm', // lề dưới
 };
 
 
