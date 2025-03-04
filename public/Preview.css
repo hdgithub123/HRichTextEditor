@@ -1,73 +1,162 @@
 @page {
-    size: A4 landscape;
-    margin: 20mm;
-    padding-top: 10mm;
-    padding-bottom: 10mm;
-    padding-left: 0mm;
-    padding-right: 0mm;
-    
-
-    @top-left-corner {
-        content: element(headerRunning);
-      }
-    
-
-    /* 🔥 Footer từ góc dưới trái đến phải */
-    @bottom-left-corner {
-      content: element(pageFooter);
-    }
-    @bottom-right {
-      content: "Trang " counter(page) " / " counter(pages);
-      z-index: 10;
-    }
-  }
+  size: A4;
+  /* margin: 20mm;
+  padding-top: 10mm;
+  padding-bottom: 10mm;
+  padding-left: 0mm;
+  padding-right: 0mm; */
+  padding-top: 10mm;
+  padding-bottom: 1mm;
   
-  /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
+  @top-left-corner {
+    content: element(headerRunning);
+  }
+  @top-left {
+  content:"";
+  }
+  @top-center {
+  content:"";
+  }
+  @top-right {
+  content:"";
+  }
+  @top-right-corner {
+  content:"";
+  }
+  @left-top {
+  content:"";
+  }
+  @left-middle {
+  content:"";
+  }
+  @left-bottom {
+  content:"";
+  }
+  @right-top {
+  content:"";
+  }
+  @right-middle {
+  content:"";
+  }
+  @right-bottom {
+  content:"";
+  }
+  @bottom-left-corner {
+    content: element(footerRunning);
+  }
+  @bottom-left {
+  content:"";
+  }
+  @bottom-center {
+    content:"";
+  }
+  @bottom-right {
+  content:"";
+  }
+  @bottom-right-corner {
+    /* content: "Trang " counter(page) " / " counter(pages);
+    z-index: 10; */
+  }
+
+}
+
+/* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
+.pagedjs_page {
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
+}
+
+.pagedjs_left_page {
+  background-color: lightgray;
+}
+.pagedjs_right_page {
+  background-color: white;
+  
+}
+
+.pagedjs_margin-bottom-left-corner-holder{
+  position: relative;
+}
+
+.pagedjs_margin-top-left-corner-holder{
+  position: relative;
+}
+
+
+.pagedjs_margin-bottom-left-corner-holder::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* Khớp với chiều rộng phần tử chính */
+  height: 100%; /* Khớp với chiều cao phần tử chính */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  content: "Trang2 " counter(page) " / " counter(pages);
+  text-align: center;
+  font-size: 12px;
+  color: gray;
+  z-index: 1000000;
+}
+
+.pagedjs_margin-bottom-right-corner-holder::after{
+  content: "Trang2 " counter(page) " / " counter(pages);
+  text-align: center;
+  font-size: 12px;
+  z-index: 1000000;
+}
+
+.pagedjs_margin-bottom-right::after{
+  content: "Trang " counter(page) " / " counter(pages);
+  text-align: center;
+  font-size: 12px;
+  z-index: 1000000;
+}
+
+/* 📌 Header chạy xuyên suốt */
+header {
+  position: running(headerRunning);
+  /* background: lightgray; */
+  box-sizing: border-box;
+  width: var(--pagedjs-pagebox-width);
+  /* position: fixed; */
+  text-align: center;
+  left: 0;
+  /* right: 0; */
+  top: 0;
+  height:  var(--pagedjs-margin-top); /* Chiều cao bằng phần margin-top */
+  z-index: 2; /* Giữ header luôn trên cùng */
+
+}
+
+/* 📌 Footer chạy xuyên suốt */
+footer {
+  position: running(footerRunning);
+  width: var(--pagedjs-pagebox-width);
+  text-align: center;
+  /* left: 0;
+  bottom: 0px; */
+  height:  var(--pagedjs-margin-bottom);
+  z-index: 2; 
+
+}
+
+
+
+
+@media print {
   .pagedjs_page {
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
-    /* margin: 20px auto; Tạo khoảng cách giữa các trang */
-    /* margin-bottom: 100px; */
-    /* padding: 10mm;  */
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Tạo khoảng cách giữa các trang */
-    justify-content: center;
+      margin-bottom: 0px;
+      margin-top: 0px;
   }
-  
-  /* 📌 Header chạy xuyên suốt */
-  header {
-    position: running(headerRunning);
-    /* background: lightgray; */
-    box-sizing: border-box;
-    width: var(--pagedjs-pagebox-width);
-    /* position: fixed; */
-    text-align: center;
-    left: 0;
-    /* right: 0; */
-    top: 0;
-    height:  var(--pagedjs-margin-top); /* Chiều cao bằng phần margin-top */
-    z-index: 2; /* Giữ header luôn trên cùng */
+}
 
-  }
-  
-  /* 📌 Footer chạy xuyên suốt */
-  footer {
-    position: running(pageFooter);
-    width: var(--pagedjs-pagebox-width);
-    text-align: center;
-    /* position: fixed; */
-    text-align: center;
-    left: 0;
-    bottom: 0px;
-    height:  var(--pagedjs-margin-bottom);
-    z-index: 2; 
 
-  }
-  
-  @media print {
-    .pagedjs_page {
-        margin-bottom: 0px;
-        margin-top: 0px;
-    }
-  }
+
+/* Ngăn bảng bị tách giữa các trang */
+table {
+  page-break-inside: auto;
+  break-inside: auto;
+  width: 100%;
+  border-collapse: collapse;
+}

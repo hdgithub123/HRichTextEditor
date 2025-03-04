@@ -35,11 +35,12 @@ const ContentEx = () => {
 
     <div style={{ background: 'gray' }}>
       <button onClick={handlePrint}>Print1</button>
-      <div ref={contentRef} style={{ display: 'none', width: '200px', height:'1500px' }}>
+      <div ref={contentRef} style={{ display: 'none', width: '200px', height: '1500px' }}>
         <div>
-          <header id={'idDau'} style={{ background: 'red' }}>đầu</header>
+          <header id={'idDau'} style={{ background: 'red', }}>đầu</header>
         </div>
         <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+
         {/* <Content number={1000}></Content>  */}
         {/* <A4Document /> */}
 
@@ -48,8 +49,11 @@ const ContentEx = () => {
         <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
         */}
         <Content number={100}></Content>
+                <TableComponent rows={200} cols={7}  ></TableComponent>
+        
 
-{/*         
+
+        {/*         
         <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
         <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
        */}
@@ -57,7 +61,7 @@ const ContentEx = () => {
 
 
 
-      <div ref={componentRef} style={{ background: 'white' }}>
+      <div className={style.body} ref={componentRef} style={{ background: 'white' }}>
         <Preview childrenRef={contentRef} />
       </div>
 
@@ -71,6 +75,76 @@ const ContentEx = () => {
 };
 
 export default ContentEx;
+
+
+
+
+
+
+// Thành phần TableComponent
+const TableComponent = ({ rows }) => {
+  const createHeader = () => (
+    <>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+        <th>Header 4</th>
+        <th>Header 5</th>
+      </tr>
+      <tr>
+        <th>Subheader 1</th>
+        <th>Subheader 2</th>
+        <th>Subheader 3</th>
+        <th>Subheader 4</th>
+        <th>Subheader 5</th>
+      </tr>
+    </>
+  );
+
+  const createFooter = () => (
+    <tr>
+      <td>Footer 1</td>
+      <td>Footer 2</td>
+      <td>Footer 3</td>
+      <td>Footer 4</td>
+      <td>Footer 5</td>
+    </tr>
+  );
+
+  const createBody = () => {
+    const bodyRows = [];
+    for (let i = 0; i < rows; i++) {
+      bodyRows.push(
+        <tr key={i}>
+          <td>Row {i + 1}, Col 1</td>
+          <td>Row {i + 1}, Col 2</td>
+          <td>Row {i + 1}, Col 3</td>
+          <td>Row {i + 1}, Col 4</td>
+          <td>Row {i + 1}, Col 5</td>
+        </tr>
+      );
+    }
+    return bodyRows;
+  };
+
+  return (
+    <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <thead>
+        {createHeader()}
+      </thead>
+      <tbody>
+        {createBody()}
+      </tbody>
+      <tfoot>
+        {createFooter()}
+      </tfoot>
+    </table>
+  );
+};
+
+
+
 
 
 
