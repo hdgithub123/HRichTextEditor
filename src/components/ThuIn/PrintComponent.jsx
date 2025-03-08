@@ -181,7 +181,7 @@ const PrintComponent = () => {
        mainDiv.style.setProperty("--background-color", "blue");
     }
 
-    updatePageSize("210mm", "297mm","0mm"); // Đặt khổ giấy A4 portrait
+    updatePageSize("210mm", "297mm"); // Đặt khổ giấy A4 portrait
   }
 
 
@@ -193,7 +193,7 @@ const PrintComponent = () => {
       mainDiv.style.setProperty("--new-margin", "20mm"); // Gán giá trị cho --new-margin 
       mainDiv.style.setProperty("--background-color", "red");
     }
-    updatePageSize("148mm", "210mm","20mm");
+    updatePageSize("148mm", "210mm");
   }
 
 
@@ -225,7 +225,7 @@ export default PrintComponent;
 
 
 
-function updatePageSize(width, height, margin) {
+function updatePageSize(width, height) {
   // Tìm hoặc tạo thẻ <style> trong <head>
   let styleTag = document.getElementById("dynamic-style");
   if (!styleTag) {
@@ -238,7 +238,6 @@ function updatePageSize(width, height, margin) {
   styleTag.innerHTML = `
     @page {
       size: ${width} ${height};
-      margin: ${margin};
     }
     
 

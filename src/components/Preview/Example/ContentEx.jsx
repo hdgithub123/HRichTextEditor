@@ -5,9 +5,11 @@ import { useReactToPrint } from 'react-to-print';
 import createCssVarriable from "../defaultValue/defaultCssVariables";
 import setCSSVariables from '../functions/setCSSVariables'
 import updatePageSize from '../functions/updatePageSize';
+import removePageStyle from '../functions/removePageSize';
+
 import customCss from '../customCss'
 import changePageStyles from '../functions/changePageStyles'
-import './ContentEx.css'
+
 
 
 
@@ -21,23 +23,15 @@ const ContentPreviewEx = () => {
     documentTitle: 'Title',
     contentRef: componentRef,
     onBeforePrint: async () => {
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
-      updatePageSize("148mm", "210mm","70mm");//a5
-
-    //   const mainDiv = document.getElementById("idPreview"); // Lấy phần tử có id="mainID"
-    // if (mainDiv) {
-    //    mainDiv.style.setProperty("--header-height", "60mm"); // Gán giá trị cho --new-margin
-    // }
-
-
-
-      // updatePageSize("210mm", "297mm");//a4
-      //updatePageSize("297mm", "420mm"); // a3
-      // changePageStyles(customCss)
-
-
+      // await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
+      await updatePageSize({width : "148mm" , height:"210mm"});//a5
       console.log(" dang chuan bi in")
     },
+
+    onAfterPrint: () =>{
+      removePageStyle();
+      console.log(" da in xong")
+    }
   })
 
 
@@ -100,7 +94,7 @@ const ContentPreviewEx = () => {
           </div>
           <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
           <Content number={100}></Content>
-          {/* <TableComponent rows={200} cols={7}  ></TableComponent> */}
+          <TableComponent rows={200} cols={7}  ></TableComponent>
         </div>
 
         <div className={style.body} ref={componentRef} style={{ background: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '148mm' }}>

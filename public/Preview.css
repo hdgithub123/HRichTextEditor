@@ -1,23 +1,5 @@
-
 @page {
   size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height);
-  /* size: A5; */
-  /* padding-top: var(--pagedjs-padding-top);
-  padding-bottom: 10mm;
-  padding-left: 10mm;
-  padding-right: 10mm; */
-
-
-  /* margin-top: var(--pagedjs-margin-top);
-  margin-bottom: var(--pagedjs-margin-bottom);
-  margin-left: var(--pagedjs-margin-left);
-  margin-right: var(--pagedjs-margin-right); */
-
-  /* padding-top: var(--pagedjs-padding-top);
-  padding-bottom: var(--pagedjs-padding-bottom);
-  padding-left: var(--pagedjs-padding-left);
-  padding-right: var(--pagedjs-padding-right); */
-
 
   @top-left-corner {
     content: element(headerRunning);
@@ -91,27 +73,29 @@
   /* background: white; */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   /* Đổ bóng */
-  margin-bottom: 20px !important;
+  margin-bottom: 20px;
   /* margin-bottom: 20px */
 }
 
-.pagedjs_left_page {
+/* .pagedjs_first_page{
+  background: blue;
+  margin-top: 0px;
+} */
+
+
+
+/* .pagedjs_left_page {
   /* background-color: lightgray; */
 }
 
 .pagedjs_right_page {
   /* background-color: white; */
 
-}
+} */
 
 .pagedjs_margin-bottom-left-corner-holder {
   position: relative;
 }
-
-
-
-
-
 
 .pagedjs_margin-bottom-left-corner-holder::after {
   position: absolute;
@@ -149,7 +133,6 @@
 header {
   position: running(headerRunning);
   width: var(--pagedjs-pagebox-width);
-  text-align: center;
   height: var(--pagedjs-margin-top);
   z-index: 2;
 
@@ -160,7 +143,6 @@ header {
 footer {
   position: running(footerRunning);
   width: var(--pagedjs-pagebox-width);
-  text-align: center;
   height: var(--pagedjs-margin-bottom);
   z-index: 2;
 
