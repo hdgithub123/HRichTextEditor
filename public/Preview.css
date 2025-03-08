@@ -6,43 +6,42 @@
   }
 
   @top-left {
-    content: "";
+    
   }
 
   @top-center {
-    content: "";
+    
   }
 
   @top-right {
-    content: "";
+    
   }
 
   @top-right-corner {
-    content: "";
+    
   }
 
   @left-top {
-    content: "";
+    
   }
 
   @left-middle {
-    content: "";
+    
   }
 
   @left-bottom {
-    content: "";
+    
   }
 
   @right-top {
-    content: "";
+    
   }
 
   @right-middle {
-    content: "";
+    
   }
 
   @right-bottom {
-    content: "";
   }
 
   @bottom-left-corner {
@@ -50,31 +49,23 @@
   }
 
   @bottom-left {
-    content: "";
   }
 
   @bottom-center {
-    content: "";
   }
 
   @bottom-right {
-    content: "";
   }
 
   @bottom-right-corner {
-    /* content: "Trang " counter(page) " / " counter(pages);
-    z-index: 10; */
   }
 
 }
 
 /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
 .pagedjs_page {
-  /* background: white; */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  /* Đổ bóng */
   margin-bottom: 20px;
-  /* margin-bottom: 20px */
 }
 
 /* .pagedjs_first_page{
@@ -84,49 +75,13 @@
 
 
 
-/* .pagedjs_left_page {
+.pagedjs_left_page {
   /* background-color: lightgray; */
 }
 
 .pagedjs_right_page {
   /* background-color: white; */
 
-} */
-
-.pagedjs_margin-bottom-left-corner-holder {
-  position: relative;
-}
-
-.pagedjs_margin-bottom-left-corner-holder::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* Khớp với chiều rộng phần tử chính */
-  height: 100%;
-  /* Khớp với chiều cao phần tử chính */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  content: "Trang2 " counter(page) " / " counter(pages);
-  text-align: center;
-  font-size: 12px;
-  color: gray;
-  z-index: 10;
-}
-
-.pagedjs_margin-bottom-right-corner-holder::after {
-  content: "Trang2 " counter(page) " / " counter(pages);
-  text-align: center;
-  font-size: 12px;
-  z-index: 10;
-}
-
-.pagedjs_margin-bottom-right::after {
-  content: "Trang " counter(page) " / " counter(pages);
-  text-align: center;
-  font-size: 12px;
-  z-index: 10;
 }
 
 /* 📌 Header chạy xuyên suốt */

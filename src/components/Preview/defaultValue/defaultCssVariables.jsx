@@ -105,7 +105,7 @@ const defaultCssVariables3 = {
 
 
 
-const createCssVarriable2 = ({width = '148mm', height= '210mm', headerHeight='50mm', footerHeight, marginRight, marginLeft, paddingTop, paddingBottom}) =>{
+const createCssVarriable = ({width = '148mm', height= '210mm', headerHeight='50mm', footerHeight, marginRight, marginLeft, paddingTop, paddingBottom}) =>{
     return {
         '--pagedjs-width': width? width :'210mm', // width tong
         '--pagedjs-height': height? height : '297mm',// height tong
@@ -126,5 +126,4 @@ const createCssVarriable2 = ({width = '148mm', height= '210mm', headerHeight='50
     };
 }
 
-const createCssVarriable =createCssVarriable2
 export default createCssVarriable

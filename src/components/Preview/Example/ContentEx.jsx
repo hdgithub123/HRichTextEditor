@@ -7,7 +7,7 @@ import setCSSVariables from '../functions/setCSSVariables'
 import updatePageSize from '../functions/updatePageSize';
 import removePageStyle from '../functions/removePageSize';
 
-import customCss from '../customCss'
+import customCss from '../defaultValue/PageNumberCss'
 import changePageStyles from '../functions/changePageStyles'
 
 
@@ -97,7 +97,7 @@ const ContentPreviewEx = () => {
           <TableComponent rows={200} cols={7}  ></TableComponent>
         </div>
 
-        <div className={style.body} ref={componentRef} style={{ background: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '148mm' }}>
+        <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
           <Preview childrenRef={contentRef}/>
         </div>
       </div>

@@ -1,18 +1,19 @@
 import React, { useLayoutEffect, useEffect, useRef, useState } from "react";
 import { Previewer } from "pagedjs";
-import customCss from './customCss'
+import customCss from './defaultValue/PageNumberCss'
 import useRepeatTableHeaders from './functions/useRepeatTableHeaders'
 import changePageStyles from './functions/changePageStyles'
 import setCSSVariables from './functions/setCSSVariables'
 import createCssVarriable from "./defaultValue/defaultCssVariables";
 import { useReactToPrint } from "react-to-print";
 import updatePageSize from "./functions/updatePageSize";
-// import './Preview.css'
+
+
 
 
 const newCssVarriable = createCssVarriable({})
 
-const Preview = ({ childrenRef, isRepeatThead = false, cssVariables = newCssVarriable, pageCss = customCss }) => {
+const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = newCssVarriable, pageCss = customCss }) => {
   const previewRef = useRef(null);
   if (isRepeatThead) {
     useRepeatTableHeaders();
@@ -28,7 +29,7 @@ const Preview = ({ childrenRef, isRepeatThead = false, cssVariables = newCssVarr
     previewer
       .preview(childrenRef.current.innerHTML, linkcss, previewRef.current)
       .then((flow) => {
-       
+        changePageStyles(pageCss)
         console.log("Preview rendered, total pages:", flow.total);
       });
 
@@ -41,7 +42,7 @@ const Preview = ({ childrenRef, isRepeatThead = false, cssVariables = newCssVarr
   }, [childrenRef]);
 
 
- return <div id="idPreview" ref={previewRef} style={{width: 'auto', background:'white', display:'inline-block'}}></div>;
+ return <div id="idPreview" ref={previewRef} style={{width: 'auto', display:'inline-block'}}></div>;
 
 };
 
