@@ -2,79 +2,117 @@ import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import style from './ContentEx.module.scss'
 import Preview from '../Preview';
 import { useReactToPrint } from 'react-to-print';
+import createCssVarriable from "../defaultValue/defaultCssVariables";
+import setCSSVariables from '../functions/setCSSVariables'
+import updatePageSize from '../functions/updatePageSize';
+import customCss from '../customCss'
+import changePageStyles from '../functions/changePageStyles'
+import './ContentEx.css'
 
-const ContentEx = () => {
+
+
+const ContentPreviewEx = () => {
   const contentRef = useRef(null);
-  const [isPrint, setIsPrint] = useState(false);
-
-
-
-  const handleisPrinted = (e) => {
-    setIsPrint(false)
-  }
-
-
   const componentRef = useRef();
 
-  const handlePrint = useReactToPrint({
+  
 
+  const handlePrint = useReactToPrint({
     documentTitle: 'Title',
     contentRef: componentRef,
-    // onBeforePrint: async () => {
-    //     // Thực hiện thao tác bất đồng bộ trước khi in
-    //     await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
-    //     console.log('Before print');
-    // },
+    onBeforePrint: async () => {
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
+      updatePageSize("148mm", "210mm","70mm");//a5
+
+    //   const mainDiv = document.getElementById("idPreview"); // Lấy phần tử có id="mainID"
+    // if (mainDiv) {
+    //    mainDiv.style.setProperty("--header-height", "60mm"); // Gán giá trị cho --new-margin
+    // }
 
 
+
+      // updatePageSize("210mm", "297mm");//a4
+      //updatePageSize("297mm", "420mm"); // a3
+      // changePageStyles(customCss)
+
+
+      console.log(" dang chuan bi in")
+    },
   })
 
 
 
+  // const handlePrint = () => {
+  //   if (!componentRef.current) return;
+  
+  //   const iframe = document.createElement("iframe");
+  //   document.body.appendChild(iframe);
+    
+  //   iframe.style.position = "absolute";
+  //   iframe.style.width = "0px";
+  //   iframe.style.height = "0px";
+  //   iframe.style.border = "none";
+  
+  //   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+  //   iframeDoc.open();
+  //   iframeDoc.write(`
+  //     <html>
+  //       <head>
+  //         <title>Title</title>
+  //         <style>
+  //         @page{
+  //           size: A5;
+  //           margin: 0;
+  //               padding: 0;
+  //           }
+  //           @media print {
+            
+  //             body {
+  //               margin: 0;
+  //               padding: 0;
+  //             }
+  //           }
+  //         </style>
+  //       </head>
+  //       <body>
+  //         ${componentRef.current.innerHTML}
+  //       </body>
+  //     </html>
+  //   `);
+  //   iframeDoc.close();
+  
+  //   setTimeout(() => {
+  //     iframe.contentWindow.focus();
+  //     iframe.contentWindow.print();
+  //     document.body.removeChild(iframe);
+  //   }, 500);
+  // };
+  
+
+
   return (
-
-    <div style={{ background: 'gray' }}>
-      <button onClick={handlePrint}>Print1</button>
-      <div ref={contentRef} style={{ display: 'none', width: '200px', height: '1500px' }}>
-        <div>
-          <header id={'idDau'} style={{ background: 'red', }}>đầu</header>
+    <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
+      <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems:'center' }}>
+        <div ref={contentRef} style={{ background: 'yellow', display: 'none' }}>
+          <div>
+            <header id={'idDau'} style={{ background: 'red', }}>đầu</header>
+          </div>
+          <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+          <Content number={100}></Content>
+          {/* <TableComponent rows={200} cols={7}  ></TableComponent> */}
         </div>
-        <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
 
-        {/* <Content number={1000}></Content>  */}
-        {/* <A4Document /> */}
-
-        {/* <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
-        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
-        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
-        */}
-        <Content number={100}></Content>
-                <TableComponent rows={200} cols={7}  ></TableComponent>
-        
-
-
-        {/*         
-        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
-        <img src="https://images2.thanhnien.vn/528068263637045248/2024/1/25/c3c8177f2e6142e8c4885dbff89eb92a-65a11aeea03da880-1706156293184503262817.jpg" alt="Description of Image" />
-       */}
+        <div className={style.body} ref={componentRef} style={{ background: 'gray', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '148mm' }}>
+          <Preview childrenRef={contentRef}/>
+        </div>
       </div>
 
-
-
-      <div className={style.body} ref={componentRef} style={{ background: 'white' }}>
-        <Preview childrenRef={contentRef} />
-      </div>
-
-
-
-
-
-      {/* <A4Document /> */}
     </div>
   );
 };
 
-export default ContentEx;
+export default ContentPreviewEx;
 
 
 

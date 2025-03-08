@@ -18,7 +18,7 @@ const ContentPrintExaple = () => {
   return (
     <div>
 
-    <div style={{width:'210mm', height: '297mm', background: 'red'}}> 
+    <div style={{width:'148mm', height: '210mm', background: 'red'}}> 
 
       </div>
       <button onClick={handlePrint}>Print1</button>

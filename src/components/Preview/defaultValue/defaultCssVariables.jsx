@@ -50,12 +50,38 @@ const defaultCssVariables2 = {
 };
 
 const defaultCssVariables = {
+    '--pagedjs-width': '210mm', // width tong
+    '--pagedjs-height': '297mm',// height tong
+    '--pagedjs-width-right': '210mm',// width tong
+    '--pagedjs-height-right': '297mm',// height tong
+    '--pagedjs-width-left': '210mm',// width tong
+    '--pagedjs-height-left': '297mm',// height tong
+
+    '--pagedjs-margin-top': '30mm', // chiều cao header
+    '--pagedjs-margin-bottom': '30mm',// chiều cao footer
+    '--pagedjs-margin-right': '10mm', // lề phải
+    '--pagedjs-margin-left': '10mm', // lề trái
+
+    '--pagedjs-pagebox-width': '210mm',// width tong
+    '--pagedjs-pagebox-height': '297mm',// height tong
+
+
+    '--pagedjs-padding-left': '0mm', // luôn để = 0
+    '--pagedjs-padding-right': '0mm', // luôn để = 0
+
+    '--pagedjs-padding-top': '10mm', // lề trên
+    '--pagedjs-padding-bottom': '10mm', // lề dưới
+};
+
+
+
+const defaultCssVariables3 = {
     '--pagedjs-width': '120mm', // width tong
-    '--pagedjs-height': '207mm',// hieght tong
+    '--pagedjs-height': '207mm',// height tong
     '--pagedjs-width-right': '120mm',// width tong
-    '--pagedjs-height-right': '207mm',// hieght tong
+    '--pagedjs-height-right': '207mm',// height tong
     '--pagedjs-width-left': '120mm',// width tong
-    '--pagedjs-height-left': '207mm',// hieght tong
+    '--pagedjs-height-left': '207mm',// height tong
 
     '--pagedjs-margin-top': '30mm', // chiều cao header
     '--pagedjs-margin-bottom': '30mm',// chiều cao footer
@@ -63,11 +89,11 @@ const defaultCssVariables = {
     '--pagedjs-margin-left': '10mm', // lề trái
 
     '--pagedjs-pagebox-width': '120mm',// width tong
-    '--pagedjs-pagebox-height': '207mm',// hieght tong
+    '--pagedjs-pagebox-height': '207mm',// height tong
 
 
-    '--pagedjs-padding-left': '0mm', // luon de = 0
-    '--pagedjs-padding-right': '0mm', // luon de = 0
+    '--pagedjs-padding-left': '0mm', // luôn để = 0
+    '--pagedjs-padding-right': '0mm', // luôn để = 0
 
     '--pagedjs-padding-top': '5mm', // lề trên
     '--pagedjs-padding-bottom': '10mm', // lề dưới
@@ -75,4 +101,30 @@ const defaultCssVariables = {
 
 
 
-export default defaultCssVariables 
+
+
+
+
+const createCssVarriable2 = ({width = '148mm', height= '210mm', headerHeight='50mm', footerHeight, marginRight, marginLeft, paddingTop, paddingBottom}) =>{
+    return {
+        '--pagedjs-width': width? width :'210mm', // width tong
+        '--pagedjs-height': height? height : '297mm',// height tong
+        '--pagedjs-width-right': width? width :'210mm',// width tong
+        '--pagedjs-height-right': height? height : '297mm',// height tong
+        '--pagedjs-width-left': width? width :'210mm',// width tong
+        '--pagedjs-height-left': height? height : '297mm',// height tong
+        '--pagedjs-pagebox-width': width? width :'210mm',// width tong
+        '--pagedjs-pagebox-height': height? height : '297mm',// height tong
+        '--pagedjs-padding-left': '0mm', // luôn để = 0
+        '--pagedjs-padding-right': '0mm', // luôn để = 0
+        '--pagedjs-margin-top':headerHeight? headerHeight: '30mm', // chiều cao header
+        '--pagedjs-margin-bottom':footerHeight? footerHeight: '30mm',// chiều cao footer
+        '--pagedjs-margin-right': marginRight? marginRight: '10mm', // lề phải
+        '--pagedjs-margin-left': marginLeft? marginLeft:'10mm', // lề trái
+        '--pagedjs-padding-top': paddingTop?paddingTop:'10mm', // lề trên
+        '--pagedjs-padding-bottom':paddingBottom? paddingBottom: '10mm', // lề dưới
+    };
+}
+
+const createCssVarriable =createCssVarriable2
+export default createCssVarriable

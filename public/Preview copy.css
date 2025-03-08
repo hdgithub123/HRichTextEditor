@@ -1,7 +1,7 @@
 
 @page {
-  size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height);
-  /* size: A5; */
+  /* size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height); */
+  size: A5;
   /* padding-top: var(--pagedjs-padding-top);
   padding-bottom: 10mm;
   padding-left: 10mm;

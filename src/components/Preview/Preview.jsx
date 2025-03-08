@@ -4,39 +4,45 @@ import customCss from './customCss'
 import useRepeatTableHeaders from './functions/useRepeatTableHeaders'
 import changePageStyles from './functions/changePageStyles'
 import setCSSVariables from './functions/setCSSVariables'
-import defaultCssVariables from "./defaultValue/defaultCssVariables";
+import createCssVarriable from "./defaultValue/defaultCssVariables";
+import { useReactToPrint } from "react-to-print";
+import updatePageSize from "./functions/updatePageSize";
+// import './Preview.css'
 
 
+const newCssVarriable = createCssVarriable({})
 
-
-
-const Preview = ({ childrenRef, isRepeatThead = false,cssVariables=defaultCssVariables, pageCss=customCss  }) => {
+const Preview = ({ childrenRef, isRepeatThead = false, cssVariables = newCssVarriable, pageCss = customCss }) => {
   const previewRef = useRef(null);
-  if(isRepeatThead){
+  if (isRepeatThead) {
     useRepeatTableHeaders();
   }
-  
+
+
   useEffect(() => {
     if (!childrenRef?.current) return;
-    
+
     const linkcss = ['./Preview.css',]
     const previewer = new Previewer();
-     setCSSVariables(cssVariables)
+    setCSSVariables(cssVariables)
     previewer
       .preview(childrenRef.current.innerHTML, linkcss, previewRef.current)
       .then((flow) => {
        
-        // changePageStyles(pageCss) 
         console.log("Preview rendered, total pages:", flow.total);
       });
 
+      
     return () => {
       document.head
         .querySelectorAll("[data-pagedjs-inserted-styles]")
         .forEach((e) => e.parentNode?.removeChild(e));
     };
   }, [childrenRef]);
-  return <div id="preview" ref={previewRef}></div>;
+
+
+ return <div id="idPreview" ref={previewRef} style={{width: 'auto', background:'white', display:'inline-block'}}></div>;
+
 };
 
 export default Preview;

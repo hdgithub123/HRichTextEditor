@@ -1,0 +1,44 @@
+// const updatePageSize = (width, height) => {
+//     // Tìm hoặc tạo thẻ <style> trong <head>
+//     let styleTag = document.getElementById("dynamic-style");
+//     if (!styleTag) {
+//       styleTag = document.createElement("style");
+//       styleTag.id = "dynamic-style";
+//       document.head.appendChild(styleTag);
+//     }
+  
+//     // Cập nhật hoặc thêm quy tắc @page với kích thước mới
+//     styleTag.innerHTML = `
+//       @page {
+//         size: ${width} ${height};
+  
+//       }
+//     `;
+  
+//     console.log(`@page size được cập nhật thành: ${width} x ${height}`);
+//   }
+
+
+// export default updatePageSize
+
+const updatePageSize = (width, height, padding) => {
+  // Tìm hoặc tạo thẻ <style> trong <head>
+  let styleTag = document.getElementById("dynamic-style");
+  if (!styleTag) {
+    styleTag = document.createElement("style");
+    styleTag.id = "dynamic-style";
+    document.head.appendChild(styleTag);
+  }
+
+  // Cập nhật hoặc thêm quy tắc @page với kích thước mới
+  styleTag.innerHTML = `
+    @page {
+      size: ${width} ${height};
+    }
+  `;
+
+  console.log(`@page size được cập nhật thành: ${width} x ${height}`);
+}
+
+
+export default updatePageSize

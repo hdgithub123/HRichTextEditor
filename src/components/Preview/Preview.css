@@ -1,7 +1,11 @@
-
 @page {
-  size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height);
-  /* size: A5; */
+  size: var(--pagedjs-pagebox-width) var(--pagedjs-pagebox-height); 
+/* size: A4; */
+
+
+
+
+
   /* padding-top: var(--pagedjs-padding-top);
   padding-bottom: 10mm;
   padding-left: 10mm;
@@ -18,67 +22,52 @@
   padding-left: var(--pagedjs-padding-left);
   padding-right: var(--pagedjs-padding-right); */
 
-
+  
   @top-left-corner {
     content: element(headerRunning);
   }
-
   @top-left {
-    content: "";
+  content:"";
   }
-
   @top-center {
-    content: "";
+  content:"";
   }
-
   @top-right {
-    content: "";
+  content:"";
   }
-
   @top-right-corner {
-    content: "";
+  content:"";
   }
-
   @left-top {
-    content: "";
+  content:"";
   }
-
   @left-middle {
-    content: "";
+  content:"";
   }
-
   @left-bottom {
-    content: "";
+  content:"";
   }
-
   @right-top {
-    content: "";
+  content:"";
   }
-
   @right-middle {
-    content: "";
+  content:"";
   }
-
   @right-bottom {
-    content: "";
+  content:"";
   }
-
   @bottom-left-corner {
     content: element(footerRunning);
   }
-
   @bottom-left {
-    content: "";
+  content:"";
   }
-
   @bottom-center {
-    content: "";
+    content:"";
   }
-
   @bottom-right {
-    content: "";
+  content:"";
   }
-
   @bottom-right-corner {
     /* content: "Trang " counter(page) " / " counter(pages);
     z-index: 10; */
@@ -89,26 +78,26 @@
 /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
 .pagedjs_page {
   /* background: white; */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  /* Đổ bóng */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Đổ bóng */
   margin-bottom: 20px !important;
-  /* margin-bottom: 20px */
 }
 
 .pagedjs_left_page {
   /* background-color: lightgray; */
 }
-
 .pagedjs_right_page {
   /* background-color: white; */
-
+  
 }
 
-.pagedjs_margin-bottom-left-corner-holder {
+.pagedjs_margin-bottom-left-corner-holder{
   position: relative;
 }
 
-
+.pagedjs_margin-top-left-corner-holder{
+  position: relative;
+  
+}
 
 
 
@@ -117,10 +106,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  /* Khớp với chiều rộng phần tử chính */
-  height: 100%;
-  /* Khớp với chiều cao phần tử chính */
+  width: 100%; /* Khớp với chiều rộng phần tử chính */
+  height: 100%; /* Khớp với chiều cao phần tử chính */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,14 +118,14 @@
   z-index: 10;
 }
 
-.pagedjs_margin-bottom-right-corner-holder::after {
+.pagedjs_margin-bottom-right-corner-holder::after{
   content: "Trang2 " counter(page) " / " counter(pages);
   text-align: center;
   font-size: 12px;
   z-index: 10;
 }
 
-.pagedjs_margin-bottom-right::after {
+.pagedjs_margin-bottom-right::after{
   content: "Trang " counter(page) " / " counter(pages);
   text-align: center;
   font-size: 12px;
@@ -150,7 +137,7 @@ header {
   position: running(headerRunning);
   width: var(--pagedjs-pagebox-width);
   text-align: center;
-  height: var(--pagedjs-margin-top);
+  height:  var(--pagedjs-margin-top);
   z-index: 2;
 
 }
@@ -161,11 +148,34 @@ footer {
   position: running(footerRunning);
   width: var(--pagedjs-pagebox-width);
   text-align: center;
-  height: var(--pagedjs-margin-bottom);
-  z-index: 2;
+  height:  var(--pagedjs-margin-bottom);
+  z-index: 2; 
 
 }
 
 
+
+
+@media print {
+
+  .pagedjs_page {
+      margin-bottom: 0px;
+      margin-top: 0px;
+      display: block;
+  }
+
+  .pagedjs_left_page{
+    margin-bottom: 0px;
+      margin-top: 0px;
+      display: block;
+  }
+
+  .pagedjs_right_page{
+    margin-bottom: 0px;
+    margin-top: 0px;
+    display: block;
+  }
+
+}
 
 
