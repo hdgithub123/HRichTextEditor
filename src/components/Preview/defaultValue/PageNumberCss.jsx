@@ -4,27 +4,26 @@ style (object) // style inline Css
 
 format (String)
   Defines the content displayed by the ::after pseudo-element.
-    Default value: 'Page: {page}'.
+    Default value: '{page}'.
   Example: 'Page {page} of total {pages}'
 
 */
 
+function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
+  const defaultBottomPageStyle = {
+    fontFamily: 'inherit',
+    paddingRight: '5mm',
+    paddingBottom: '5mm',
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  }
 
+  const applyStyle = {
+    ...defaultBottomPageStyle,
+    ...style,
+  }
 
-const defaultBottomPageStyle = {
-  fontFamily: 'inherit',
-  paddingRight: '5mm',
-  paddingBottom: '5mm',
-  justifyContent: "flex-end",
-  alignItems: "flex-end",
-}
-
-
-
-
-
-function generateBottomPageNumber({ style = defaultBottomPageStyle, format = 'Page: {page}' } = {}) {
-  const newStyle = styleObjectToString(style);
+  const newStyle = styleObjectToString(applyStyle);
   const newCotent = 'content:' + formatToCssContent(format)
   return `
 .pagedjs_margin-bottom-right-corner-holder {
@@ -41,6 +40,8 @@ function generateBottomPageNumber({ style = defaultBottomPageStyle, format = 'Pa
   display: flex;
   ${newCotent};
   z-index: 10;
+  background: none;
+  pointer-events: none; 
 }
 `;
 }
@@ -55,8 +56,22 @@ const defaultTopStyle = {
 }
 
 
-function generateTopPageNumber({ style = defaultTopStyle, format = 'Page: {page}' } = {}) {
-  const newStyle = styleObjectToString(style);
+function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
+
+  const defaultTopStyle = {
+    fontFamily: 'inherit',
+    paddingRight: '5mm',
+    paddingTop: '5mm',
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
+  }
+
+  const applyStyle = {
+    ...defaultTopStyle,
+    ...style,
+  }
+
+  const newStyle = styleObjectToString(applyStyle);
   const newCotent = 'content:' + formatToCssContent(format)
   return `
 .pagedjs_margin-top-right-corner-holder {
@@ -73,15 +88,29 @@ function generateTopPageNumber({ style = defaultTopStyle, format = 'Page: {page}
   display: flex;
   ${newCotent};
   z-index: 10;
+  background: none;
+  pointer-events: none; 
 }
 `;
 }
 
 
+export {
+  generateTopPageNumber,
+  generateBottomPageNumber,
+}
 
-const customCss = generateTopPageNumber() + generateBottomPageNumber()
 
-export default customCss
+
+const generatePageNumber = ({ style = {}, format = '{page}', isBottomPosition = true }) =>{
+  if(isBottomPosition) {
+    return generateBottomPageNumber({ style, format , isBottomPosition })
+  } else {
+    return generateTopPageNumber({ style, format , isBottomPosition })
+  }
+}
+
+export default generatePageNumber
 
 
 

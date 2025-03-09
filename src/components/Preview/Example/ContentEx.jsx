@@ -1,15 +1,7 @@
 import React, { forwardRef, useRef, useState, useEffect } from 'react';
-import style from './ContentEx.module.scss'
-import Preview from '../Preview';
-import { useReactToPrint } from 'react-to-print';
-import createCssVarriable from "../defaultValue/defaultCssVariables";
-import setCSSVariables from '../functions/setCSSVariables'
-import updatePageSize from '../functions/updatePageSize';
-import removePageStyle from '../functions/removePageSize';
-
-import customCss from '../defaultValue/PageNumberCss'
-import changePageStyles from '../functions/changePageStyles'
-
+import style from './ContentEx.module.scss';
+import CreatePreviewWithPrint from '../Component/CreatePreviewWithPrint';
+import generatePageNumber from '../defaultValue/PageNumberCss'
 
 
 
@@ -17,71 +9,18 @@ const ContentPreviewEx = () => {
   const contentRef = useRef(null);
   const componentRef = useRef();
 
-  
-
-  const handlePrint = useReactToPrint({
-    documentTitle: 'Title',
-    contentRef: componentRef,
-    onBeforePrint: async () => {
-      // await new Promise(resolve => setTimeout(resolve, 2000)); // Ví dụ: Chờ 2 giây
-      await updatePageSize({width : "148mm" , height:"210mm"});//a5
-      console.log(" dang chuan bi in")
-    },
-
-    onAfterPrint: () =>{
-      removePageStyle();
-      console.log(" da in xong")
-    }
-  })
+  const [isPrint, setIsPrint] = useState(false);
+  const handlePrint = () => {
+    setIsPrint(true)
+  }
 
 
+  const handleisPrinted = (e) => {
+    setIsPrint(!e)
+  }
 
-  // const handlePrint = () => {
-  //   if (!componentRef.current) return;
-  
-  //   const iframe = document.createElement("iframe");
-  //   document.body.appendChild(iframe);
-    
-  //   iframe.style.position = "absolute";
-  //   iframe.style.width = "0px";
-  //   iframe.style.height = "0px";
-  //   iframe.style.border = "none";
-  
-  //   const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-  //   iframeDoc.open();
-  //   iframeDoc.write(`
-  //     <html>
-  //       <head>
-  //         <title>Title</title>
-  //         <style>
-  //         @page{
-  //           size: A5;
-  //           margin: 0;
-  //               padding: 0;
-  //           }
-  //           @media print {
-            
-  //             body {
-  //               margin: 0;
-  //               padding: 0;
-  //             }
-  //           }
-  //         </style>
-  //       </head>
-  //       <body>
-  //         ${componentRef.current.innerHTML}
-  //       </body>
-  //     </html>
-  //   `);
-  //   iframeDoc.close();
-  
-  //   setTimeout(() => {
-  //     iframe.contentWindow.focus();
-  //     iframe.contentWindow.print();
-  //     document.body.removeChild(iframe);
-  //   }, 500);
-  // };
-  
+
+const pageNumber = generatePageNumber({ format:'Trang {page}/{pages}', isBottomPosition:false})
 
 
   return (
@@ -98,7 +37,7 @@ const ContentPreviewEx = () => {
         </div>
 
         <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
-          <Preview childrenRef={contentRef}/>
+          <CreatePreviewWithPrint childrenRef={contentRef} pageCss={pageNumber} isPrint={isPrint} isPrinted={handleisPrinted}/>
         </div>
       </div>
 

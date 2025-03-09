@@ -1,19 +1,15 @@
 import React, { useLayoutEffect, useEffect, useRef, useState } from "react";
 import { Previewer } from "pagedjs";
-import customCss from './defaultValue/PageNumberCss'
-import useRepeatTableHeaders from './functions/useRepeatTableHeaders'
-import changePageStyles from './functions/changePageStyles'
-import setCSSVariables from './functions/setCSSVariables'
-import createCssVarriable from "./defaultValue/defaultCssVariables";
-import { useReactToPrint } from "react-to-print";
-import updatePageSize from "./functions/updatePageSize";
+import useRepeatTableHeaders from '../functions/useRepeatTableHeaders'
+import changePageStyles from '../functions/changePageStyles'
+import setCSSVariables from '../functions/setCSSVariables'
+import createCssVarriable from "../defaultValue/createCssVarriable";
 
 
 
+const defaultCssVarriable = createCssVarriable({})
 
-const newCssVarriable = createCssVarriable({})
-
-const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = newCssVarriable, pageCss = customCss }) => {
+const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = defaultCssVarriable, pageCss = {} }) => {
   const previewRef = useRef(null);
   if (isRepeatThead) {
     useRepeatTableHeaders();

@@ -5,9 +5,8 @@ const removePageStyle= () => {
     // Nếu tồn tại, xóa nó khỏi DOM
     if (styleTag) {
       styleTag.parentNode.removeChild(styleTag);
-      console.log("Thẻ <style> với id 'dynamic-style' đã được xóa.");
     } else {
-      console.log("Không tìm thấy thẻ <style> với id 'dynamic-style'.");
+      console.log("Not have id 'dynamic-style'.");
     }
   }
 
