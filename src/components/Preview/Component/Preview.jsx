@@ -19,7 +19,7 @@ const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = defaultCssV
   useEffect(() => {
     if (!childrenRef?.current) return;
 
-    const linkcss = ['./Preview.css',]
+    const linkcss = ['./pagedjsCss/Preview.css',]
     const previewer = new Previewer();
     setCSSVariables(cssVariables)
     previewer

@@ -18,8 +18,8 @@ const ContentPreviewEx = () => {
   }
 
 
-  const pageCss = generatePageNumberCss({style : { color: 'orange'}, format: 'Trang {page}/{pages}', isBottomPosition: false })
-  const newCssVarriable = createCssVarriable({width : '148mm', height: '210mm',headerHeight:'30mm',footerHeight:'20mm',marginLeft:"15mm",marginRight:'20mm', paddingTop:'15mm',paddingBottom:'15mm'})
+  const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
+  const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
 
   return (
     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -27,15 +27,15 @@ const ContentPreviewEx = () => {
 
 
       <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
-        <CreatePreviewWithPrint 
-        pageCss={pageCss} 
-        isPrint={isPrint} 
-        isPrinted={handleisPrinted} 
-        isRepeatThead={true}
-        cssVariables = {newCssVarriable}
+        <CreatePreviewWithPrint
+          pageCss={pageCss}
+          isPrint={isPrint}
+          isPrinted={handleisPrinted}
+          isRepeatThead={true}
+          cssVariables={newCssVarriable}
         >
           <div>
-            <header id={'idDau'} style={{ background: 'red', justifyContent:'center', textAlign:'center'}}>đầu</header>
+            <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
           </div>
 
           <Content number={100}></Content>
