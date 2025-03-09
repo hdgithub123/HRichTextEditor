@@ -1,0 +1,59 @@
+Cách sử dụng hàm CreatePreviewWithPrint
+
+
+Component CreatePreviewWithPrint được sử dụng để tạo một bản xem trước (preview) của nội dung và hỗ trợ in ấn. Nó bao gồm các tính năng:
+
+Xem trước nội dung: Hiển thị nội dung với các tùy chỉnh CSS và định dạng trang.
+
+In ấn: Hỗ trợ in nội dung với các tùy chỉnh kích thước trang và CSS.
+
+Tích hợp FloatHeaderAndFooter: Đảm bảo header và footer được tải xong trước khi hiển thị bản xem trước.
+
+Props
+Tên Prop	        KiểucDữ Liệu	        Mặc Định	                Mô Tả
+children	        React Node	            Bắt buộc	                Nội dung chính cần hiển thị và in.
+isRepeatThead	    Boolean	                true	                    Xác định xem có lặp lại phần <thead> khi in bảng hay không.
+cssVariables	    Object	                defaultCssVarriable	        Các biến CSS tùy chỉnh để áp dụng cho bản xem trước và in ấn.
+pageCss	            String	                Bắt buộc	                CSS tùy chỉnh cho trang (ví dụ: số trang, định dạng trang).
+isPrint	            Boolean	                false	                    Kích hoạt chức năng in khi giá trị là true.
+isPrinted	        Function	            Bắt buộc	                Callback được gọi sau khi in xong.
+
+
+Chi Tiết Props
+children:
+
+    Đây là nội dung chính mà bạn muốn hiển thị và in.
+    Ví dụ: Các thành phần React như <div>, <table>, <header>, <footer>, v.v.
+
+isRepeatThead:
+
+    Nếu true, phần <thead> của bảng sẽ được lặp lại trên mỗi trang khi in.
+    Hữu ích khi in các bảng dài với nhiều trang.
+
+cssVariables:
+
+    Một object chứa các biến CSS tùy chỉnh.
+    dung cho điều chỉnh các thông số như width, height, margin, padding,...
+    sử dụng với hàm createCssVarriable để tạo trong đó có các tham số
+        createCssVarriable = ({width = '210mm', height= '297mm', headerHeight='30mm', footerHeight, marginRight, marginLeft, paddingTop, paddingBottom, othersVarriable = {}})
+        có thể tham khảo các tham số othersVarriable tại ./function/ createCssVarriable.jsx
+
+pageCss:
+
+    Chuỗi CSS tùy chỉnh để định dạng trang.
+    có thế thêm các css mà bạn cảm thấy phù hợp
+    * hiện tại kết hợp với hàm generatePageNumberCss để đưa ra số trang được đánh dấu trên header hay footer
+    hàm generatePageNumberCss có các tham số { style = {}, format = '{page}', isBottomPosition = true }
+    trong đó style nhận vào 1 object kiểu style inline giúp căn chỉnh số trang theo ý muốn. vd thay đổi kiểu chữ, cỡ chữ, vị trí , padding
+
+    * ngoài ra có thể thêm các css để căn chỉnh cho trang in qua các class của pagedJS như đổi màu sắc trang, ....
+
+
+isPrint:
+
+    Khi true, component sẽ kích hoạt chức năng in.
+    Thường được sử dụng kết hợp với một nút bấm để bắt đầu in.
+
+isPrinted:
+    Callback được gọi sau khi quá trình in hoàn tất.
+    Thường được sử dụng để cập nhật trạng thái sau khi in.

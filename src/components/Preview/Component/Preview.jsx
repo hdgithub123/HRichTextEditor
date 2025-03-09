@@ -3,7 +3,7 @@ import { Previewer } from "pagedjs";
 import useRepeatTableHeaders from '../functions/useRepeatTableHeaders'
 import changePageStyles from '../functions/changePageStyles'
 import setCSSVariables from '../functions/setCSSVariables'
-import createCssVarriable from "../defaultValue/createCssVarriable";
+import createCssVarriable from "../functions/createCssVarriable";
 
 
 

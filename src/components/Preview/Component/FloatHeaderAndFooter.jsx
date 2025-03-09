@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 
-const FloatHeaderAndFooter = ({ childrenRef, headerID = null, footerID = null }) => {
+const FloatHeaderAndFooter = ({ children, headerID = null, footerID = null , onLoad }) => {
     const bodyRef = useRef(null);
     const [headerContent, setHeaderContent] = useState(null);
     const [footerContent, setFooterContent] = useState(null);
@@ -32,14 +32,17 @@ const FloatHeaderAndFooter = ({ childrenRef, headerID = null, footerID = null })
             footerEl.remove(); // Xóa footer khỏi bodyRef
         }
 
+        if (onLoad) {
+            onLoad();
+        }
 
-    }, [childrenRef.current, headerID, footerID]);
+    }, [children, headerID, footerID]);
 
     return (
         <div>
              <div dangerouslySetInnerHTML={{ __html: headerContent }} />
              <div dangerouslySetInnerHTML={{ __html: footerContent }} />
-             <div ref={bodyRef}>{childrenRef?.current}</div>
+             <div ref={bodyRef}>{children}</div>
         </div>
 
     );

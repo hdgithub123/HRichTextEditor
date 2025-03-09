@@ -1,12 +1,10 @@
 import React, { forwardRef, useRef, useState, useEffect } from 'react';
 import style from './ContentEx.module.scss';
 import CreatePreviewWithPrint from '../Component/CreatePreviewWithPrint';
-import generatePageNumber from '../defaultValue/PageNumberCss'
-
-
+import generatePageNumberCss from '../functions/generatePageNumberCss'
+import createCssVarriable from '../functions/createCssVarriable'
 
 const ContentPreviewEx = () => {
-  const contentRef = useRef(null);
   const componentRef = useRef();
 
   const [isPrint, setIsPrint] = useState(false);
@@ -20,26 +18,32 @@ const ContentPreviewEx = () => {
   }
 
 
-const pageNumber = generatePageNumber({ format:'Trang {page}/{pages}', isBottomPosition:false})
-
+  const pageCss = generatePageNumberCss({style : { color: 'orange'}, format: 'Trang {page}/{pages}', isBottomPosition: false })
+  const newCssVarriable = createCssVarriable({width : '148mm', height: '210mm',headerHeight:'30mm',footerHeight:'20mm',marginLeft:"15mm",marginRight:'20mm', paddingTop:'15mm',paddingBottom:'15mm'})
 
   return (
     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
-      <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems:'center' }}>
-        <div ref={contentRef} style={{ background: 'yellow', display: 'none' }}>
+
+
+      <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
+        <CreatePreviewWithPrint 
+        pageCss={pageCss} 
+        isPrint={isPrint} 
+        isPrinted={handleisPrinted} 
+        isRepeatThead={true}
+        cssVariables = {newCssVarriable}
+        >
           <div>
-            <header id={'idDau'} style={{ background: 'red', }}>đầu</header>
+            <header id={'idDau'} style={{ background: 'red', justifyContent:'center', textAlign:'center'}}>đầu</header>
           </div>
-          <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+
           <Content number={100}></Content>
           <TableComponent rows={200} cols={7}  ></TableComponent>
-        </div>
-
-        <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
-          <CreatePreviewWithPrint childrenRef={contentRef} pageCss={pageNumber} isPrint={isPrint} isPrinted={handleisPrinted}/>
-        </div>
+          <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+        </CreatePreviewWithPrint>
       </div>
+
 
     </div>
   );

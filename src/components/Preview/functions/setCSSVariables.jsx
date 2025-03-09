@@ -1,8 +1,8 @@
 const setCSSVariables = (variables) => {
     for (const [key, value] of Object.entries(variables)) {
-        const mainDiv = document.getElementById("idPreview"); // Lấy phần tử có id="mainID"
+        const mainDiv = document.getElementById("idPreview"); 
         if (mainDiv) {
-            mainDiv.style.setProperty(key, value); // Gán giá trị cho --new-width
+            mainDiv.style.setProperty(key, value);
         }
     }
 }

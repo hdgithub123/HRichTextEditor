@@ -41,6 +41,7 @@ function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
   ${newCotent};
   z-index: 10;
   background: none;
+  border: none;
   pointer-events: none; 
 }
 `;
@@ -89,6 +90,7 @@ function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
   ${newCotent};
   z-index: 10;
   background: none;
+  border: none;
   pointer-events: none; 
 }
 `;
@@ -102,7 +104,7 @@ export {
 
 
 
-const generatePageNumber = ({ style = {}, format = '{page}', isBottomPosition = true }) =>{
+const generatePageNumberCss = ({ style = {}, format = '{page}', isBottomPosition = true }) =>{
   if(isBottomPosition) {
     return generateBottomPageNumber({ style, format , isBottomPosition })
   } else {
@@ -110,7 +112,7 @@ const generatePageNumber = ({ style = {}, format = '{page}', isBottomPosition = 
   }
 }
 
-export default generatePageNumber
+export default generatePageNumberCss
 
 
 
