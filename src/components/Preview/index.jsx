@@ -1,10 +1,17 @@
 import CreatePreviewWithPrint from "./Component/CreatePreviewWithPrint";
 import createCssVarriable from "./functions/createCssVarriable";
-import generatePageNumber from "./functions/generatePageNumberCss"
+import generatePageNumberCss from "./functions/generatePageNumberCss"
+import Preview from "./Component/Preview";
+import FloatHeaderAndFooter from "./Component/FloatHeaderAndFooter";
+import removePageStyle from "./functions/removePageSize";
+
 
 export default CreatePreviewWithPrint
 
 export {
     createCssVarriable,
-    generatePageNumber,
+    generatePageNumberCss,
+    Preview,
+    FloatHeaderAndFooter,
+    removePageStyle,
 }

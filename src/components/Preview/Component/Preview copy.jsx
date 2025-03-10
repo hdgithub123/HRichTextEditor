@@ -15,7 +15,7 @@ const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = defaultCssV
     useRepeatTableHeaders();
   }
 
-  console.log("child")
+
   useEffect(() => {
     console.log("childrenRef.current", childrenRef.current)
     if (!childrenRef?.current) return;
@@ -36,7 +36,7 @@ const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = defaultCssV
         .querySelectorAll("[data-pagedjs-inserted-styles]")
         .forEach((e) => e.parentNode?.removeChild(e));
     };
-  }, [childrenRef]);
+  }, [childrenRef,childrenRef.current]);
 
 
  return <div id="idPreview" ref={previewRef} style={{width: 'auto', display:'inline-block'}}></div>;

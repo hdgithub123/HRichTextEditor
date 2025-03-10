@@ -30,6 +30,9 @@ import { pxToUnit } from '../../utilities'
 
 
 
+import HPreview from '../../HPreview/HPreview';
+
+
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
@@ -209,18 +212,16 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }
 
   const [contentView, setContentView] = useState(initContentView);
+
   const [isPrint, setIsPrint] = useState(false);
-
-
   const handlePrint = () => {
     setIsPrint(true)
   }
 
 
   const handleisPrinted = (e) => {
-    setIsPrint(false)
+    setIsPrint(!e)
   }
-
 
 
 
@@ -279,13 +280,15 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
         </div>}
         <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none', }}>Preview</div>
 
+        <div
+          ref={divEditorPrevewRef}
+          className={style.editorPreview}
+          // readOnly= {true}
+          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
+        >
 
-          <div
-            ref={divEditorPrevewRef}
-            className={style.editorPreview}
-            // readOnly= {true}
-            style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
-          >
+          {/* <HPreview isPrint={isPrint} isPrinted={handleisPrinted} ref={editorPrevewRef}> */}
+
             <div
               className={removeStyle.editorRemove}
             >
@@ -302,9 +305,9 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
                 handleReturn={(e, editorState) => handleReturn(e, editorState)}
               />
             </div>
-          </div>
- 
 
+          {/* </HPreview> */}
+        </div>
 
 
         {contentView.rawContentView && <div className={style.rawContentView} style={{ ...mainBlockStyle }}>

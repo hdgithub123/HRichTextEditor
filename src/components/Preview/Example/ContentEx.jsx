@@ -3,9 +3,64 @@ import style from './ContentEx.module.scss';
 import CreatePreviewWithPrint from '../Component/CreatePreviewWithPrint';
 import generatePageNumberCss from '../functions/generatePageNumberCss'
 import createCssVarriable from '../functions/createCssVarriable'
+import Preview from '../Component/Preview';
+
+
+// const ContentPreviewEx = () => {
+//   const componentRef = useRef();
+//  const [childContent, setChildContent] = useState(null);
+
+//   const [isPrint, setIsPrint] = useState(false);
+//   const handlePrint = () => {
+//     setIsPrint(true)
+//   }
+
+
+//   const handleisPrinted = (e) => {
+//     setIsPrint(!e)
+//   }
+
+
+//   const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
+//   const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
+
+//   return (
+//     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+//       <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
+//       <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
+//         <CreatePreviewWithPrint
+//           pageCss={pageCss}
+//           isPrint={isPrint}
+//           isPrinted={handleisPrinted}
+//           isRepeatThead={true}
+//           cssVariables={newCssVarriable}
+//         >
+//           <div>
+//             <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
+//           </div>
+
+//           <Content number={10}></Content>
+//           <TableComponent rows={20} cols={7}  ></TableComponent>
+//           <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+//         </CreatePreviewWithPrint>
+//       </div>
+
+
+//     </div>
+//   );
+// };
+
+// export default ContentPreviewEx;
+
+
+
+
+
 
 const ContentPreviewEx = () => {
   const componentRef = useRef();
+  const [childContent, setChildContent] = useState(<MyContent></MyContent>);
+  const [isChangeContent, setIsChangeContent] = useState(false);
 
   const [isPrint, setIsPrint] = useState(false);
   const handlePrint = () => {
@@ -18,14 +73,24 @@ const ContentPreviewEx = () => {
   }
 
 
+  const handleChangeContent = (e) => {
+    if (isChangeContent) {
+      setIsChangeContent(false)
+      setChildContent(<MyContent2></MyContent2>)
+    } else {
+      setIsChangeContent(true)
+      setChildContent(<MyContent></MyContent>) 
+    }
+    
+  }
+
   const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
   const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
 
   return (
     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
-
-
+      <button style={{ background: 'red' }} onClick={handleChangeContent}>Change Content</button>
       <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
         <CreatePreviewWithPrint
           pageCss={pageCss}
@@ -34,23 +99,46 @@ const ContentPreviewEx = () => {
           isRepeatThead={true}
           cssVariables={newCssVarriable}
         >
-          <div>
-            <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
-          </div>
-
-          <Content number={100}></Content>
-          <TableComponent rows={200} cols={7}  ></TableComponent>
-          <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+          {childContent}
         </CreatePreviewWithPrint>
       </div>
-
-
     </div>
   );
 };
 
 export default ContentPreviewEx;
 
+
+
+
+const MyContent = () => {
+  return (
+    <div>
+      <div>
+        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
+      </div>
+
+      <Content number={10}></Content>
+      <TableComponent rows={20} cols={7}  ></TableComponent>
+      <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+    </div>
+  )
+}
+
+
+const MyContent2 = () => {
+  return (
+    <div>
+      <div>
+        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
+      </div>
+
+      <Content number={30}></Content>
+
+      <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+    </div>
+  )
+}
 
 
 
@@ -128,13 +216,27 @@ const TableComponent = ({ rows }) => {
 
 
 const Content = ({ number }) => {
+  const [newContent, setNewContent] = useState(false);
   const contentArray = Array.from({ length: number }, (_, index) => (
     <div key={index}>
       {index} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus delectus ducimus quidem doloremque recusandae magnam cupiditate ex sunt? Commodi quas doloribus, ab assumenda laudantium officia nulla aut ipsum necessitatibus illum.
     </div>
   ));
 
-  return <div>{contentArray}</div>;
+
+  return (
+    <div>
+      <button onClick={() => setNewContent(!newContent)}>New Content</button>
+      {newContent && <div>
+        <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod, mollitia ratione. Accusantium, ullam repellat! Ab laboriosam aliquam et qui ullam architecto quidem, sequi id magni inventore doloribus repellendus vitae rem.</div>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, voluptatum suscipit quaerat doloribus eaque delectus placeat harum cupiditate architecto dolorum eius dolor sed vero nihil quisquam temporibus nemo quae ex.</div>
+      </div>}
+      <div>{contentArray}</div>
+    </div>
+
+  )
+
+
 };
 
 
