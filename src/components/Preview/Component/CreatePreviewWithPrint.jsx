@@ -3,10 +3,12 @@ import Preview from './Preview';
 import { useReactToPrint } from 'react-to-print';
 import createCssVarriable from "../functions/createCssVarriable";
 import updatePageSize from '../functions/updatePageSize';
-import removePageStyle from '../functions/removePageSize';
+import removePagedStyles from '../functions/removePagedStyles';
+import removePageSize from '../functions/removePageSize';
 import FloatHeaderAndFooter from './FloatHeaderAndFooter';
 
 const defaultCssVarriable = createCssVarriable({})
+
 
 const CreatePreviewWithPrint = ({
     children,
@@ -31,13 +33,14 @@ const CreatePreviewWithPrint = ({
         },
         onAfterPrint: () => {
             isPrinted(true);
-            removePageStyle();
+            removePageSize();
             console.log("Printed!");
         }
     });
 
     // Cập nhật previewContent khi children thay đổi
     useEffect(() => {
+        removePagedStyles();
         setPreviewContent(
             <Preview 
                 key={Date.now()} // Đảm bảo React tạo component mới
@@ -47,7 +50,7 @@ const CreatePreviewWithPrint = ({
                 pageCss={pageCss} 
             />
         );
-    }, [children, cssVariables, pageCss, isRepeatThead]); // Theo dõi sự thay đổi của children và các props quan trọng
+    }, [children, isRepeatThead]); // Theo dõi sự thay đổi của children và các props quan trọng
 
     useEffect(() => {
         if (isPrint) {

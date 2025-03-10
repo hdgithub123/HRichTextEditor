@@ -3,57 +3,6 @@ import style from './ContentEx.module.scss';
 import CreatePreviewWithPrint from '../Component/CreatePreviewWithPrint';
 import generatePageNumberCss from '../functions/generatePageNumberCss'
 import createCssVarriable from '../functions/createCssVarriable'
-import Preview from '../Component/Preview';
-
-
-// const ContentPreviewEx = () => {
-//   const componentRef = useRef();
-//  const [childContent, setChildContent] = useState(null);
-
-//   const [isPrint, setIsPrint] = useState(false);
-//   const handlePrint = () => {
-//     setIsPrint(true)
-//   }
-
-
-//   const handleisPrinted = (e) => {
-//     setIsPrint(!e)
-//   }
-
-
-//   const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
-//   const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
-
-//   return (
-//     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-//       <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
-//       <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
-//         <CreatePreviewWithPrint
-//           pageCss={pageCss}
-//           isPrint={isPrint}
-//           isPrinted={handleisPrinted}
-//           isRepeatThead={true}
-//           cssVariables={newCssVarriable}
-//         >
-//           <div>
-//             <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
-//           </div>
-
-//           <Content number={10}></Content>
-//           <TableComponent rows={20} cols={7}  ></TableComponent>
-//           <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
-//         </CreatePreviewWithPrint>
-//       </div>
-
-
-//     </div>
-//   );
-// };
-
-// export default ContentPreviewEx;
-
-
-
 
 
 
@@ -117,9 +66,8 @@ const MyContent = () => {
       <div>
         <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
       </div>
-
-      <Content number={10}></Content>
       <TableComponent rows={20} cols={7}  ></TableComponent>
+      <Content number={10}></Content>
       <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
     </div>
   )
