@@ -287,7 +287,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
         >
 
-          {/* <HPreview isPrint={isPrint} isPrinted={handleisPrinted} ref={editorPrevewRef}> */}
+          <HPreview isPrint={isPrint} isPrinted={handleisPrinted} ref={editorPrevewRef}>
 
             <div
               className={removeStyle.editorRemove}
@@ -306,7 +306,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               />
             </div>
 
-          {/* </HPreview> */}
+          </HPreview>
         </div>
 
 

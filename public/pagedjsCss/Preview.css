@@ -87,8 +87,8 @@
 /* 📌 Header chạy xuyên suốt */
 header {
   position: running(headerRunning);
-  width: var(--pagedjs-pagebox-width);
-  height: var(--pagedjs-margin-top);
+  width: var(--pagedjs-pagebox-width) !important;
+  height: var(--pagedjs-margin-top) !important;
   z-index: 2;
 
 }
@@ -97,8 +97,8 @@ header {
 /* 📌 Footer chạy xuyên suốt */
 footer {
   position: running(footerRunning);
-  width: var(--pagedjs-pagebox-width);
-  height: var(--pagedjs-margin-bottom);
+  width: var(--pagedjs-pagebox-width) !important;
+  height: var(--pagedjs-margin-bottom) !important;
   z-index: 2;
 
 }
