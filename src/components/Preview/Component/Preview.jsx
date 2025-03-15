@@ -15,9 +15,7 @@ const Preview = ({ childrenRef, isRepeatThead = true, cssVariables = defaultCssV
     useRepeatTableHeaders();
   }
 
-  console.log("child")
   useEffect(() => {
-    console.log("childrenRef.current", childrenRef.current)
     if (!childrenRef?.current) return;
 
     const linkcss = ['./pagedjsCss/Preview.css',]

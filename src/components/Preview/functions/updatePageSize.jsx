@@ -39,7 +39,7 @@ const updatePageSize = ({ width, height }) => {
     // Thêm quy tắc mới xuống cuối thẻ <style>
     const newRule = `
     @page {
-      size: ${width} ${height};
+      size: ${width} ${height} !important;
     }
     `;
     styleTag.appendChild(document.createTextNode(newRule)); // Thêm rule vào cuối

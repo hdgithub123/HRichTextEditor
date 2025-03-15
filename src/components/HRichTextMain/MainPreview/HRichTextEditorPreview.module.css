@@ -1,0 +1,16 @@
+.editorPreview {
+  position: relative;
+  background: white;
+  user-select: all;
+  /* pointer-events:none;    */
+  padding: 0px;
+  height: auto;
+  display: block;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-radius: none;
+  [data-tagtype="resizeBlock"] {
+    pointer-events: none
+  }
+}

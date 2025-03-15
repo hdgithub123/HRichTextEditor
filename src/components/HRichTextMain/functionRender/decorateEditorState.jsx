@@ -4,7 +4,8 @@ import linkifyCreateDecorator from '../../Linkify/decorator/linkifyCreateDecorat
 
 const createDecorator = ({ editorState, functionList }) => {
   return new CompositeDecorator([
-    imageInlineDecorator({ editorState, onImagePropertiesChange: functionList.onImagePropertiesChange }),
+    imageInlineDecorator({ editorState, onImagePropertiesChange: functionList?.onImagePropertiesChange? functionList.onImagePropertiesChange : null }),
+    // imageInlineDecorator({ editorState }),
     linkifyCreateDecorator(),
   ]);
 };
@@ -12,7 +13,7 @@ const createDecorator = ({ editorState, functionList }) => {
 
 
 
-const decorateEditorState = ({ editorState, functionList }) => {
+const decorateEditorState = ({ editorState, functionList= null }) => {
   const decorator = createDecorator({ editorState, functionList });
   const newEditorState = EditorState.set(editorState, { decorator });
   return newEditorState;

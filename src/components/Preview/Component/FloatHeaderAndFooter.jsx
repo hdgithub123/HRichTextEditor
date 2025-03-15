@@ -8,35 +8,43 @@ const FloatHeaderAndFooter = ({ children, headerID = null, footerID = null , onL
 
     useEffect(() => {
         if (!bodyRef.current) return;
-
-        let headerEl = null;
-        let footerEl = null;
-        if (headerID && footerID) {
-            headerEl = bodyRef.current.querySelector(`#${headerID}`);
-            footerEl = bodyRef.current.querySelector(`#${footerID}`);
-        } else {
-            headerEl = bodyRef.current.querySelectorAll("header")[0];
-            footerEl = bodyRef.current.querySelectorAll("footer")[0];
-        }
-
-
-        if (headerEl) {
-            // setHeaderContent(headerEl.outerHTML);
-            setHeaderContent(wrapWithParentClasses(headerEl));
-            headerEl.remove(); // Xóa header khỏi bodyRef
-        }
-
-        if (footerEl) {
-            // setFooterContent(footerEl.outerHTML);
-            setFooterContent(wrapWithParentClasses(footerEl));
-            footerEl.remove(); // Xóa footer khỏi bodyRef
-        }
-
-        if (onLoad) {
-            onLoad();
-        }
-
+    
+        const observer = new MutationObserver(() => {
+            let headerEl = null;
+            let footerEl = null;
+    
+            if (headerID && footerID) {
+                headerEl = bodyRef.current.querySelector(`#${headerID}`);
+                footerEl = bodyRef.current.querySelector(`#${footerID}`);
+            } else {
+                headerEl = bodyRef.current.querySelectorAll("header")[0];
+                footerEl = bodyRef.current.querySelectorAll("footer")[0];
+            }
+    
+            if (headerEl) {
+                setHeaderContent(wrapWithParentClasses(headerEl));
+                headerEl.remove(); // Xóa header khỏi bodyRef
+            }
+    
+            if (footerEl) {
+                setFooterContent(wrapWithParentClasses(footerEl));
+                footerEl.remove(); // Xóa footer khỏi bodyRef
+            }
+    
+            if (headerEl || footerEl) {
+                observer.disconnect(); // Dừng quan sát sau khi xử lý xong
+                if (onLoad) onLoad();
+            }
+        });
+    
+        observer.observe(bodyRef.current, { childList: true, subtree: true });
+    
+        return () => {
+            observer.disconnect(); // Cleanup observer khi component unmount
+        };
     }, [children, headerID, footerID]);
+
+    
 
     return (
         <div>

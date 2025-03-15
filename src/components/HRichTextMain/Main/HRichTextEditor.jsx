@@ -31,7 +31,7 @@ import { pxToUnit } from '../../utilities'
 
 
 import HPreview from '../../HPreview/HPreview';
-
+import FloatHeaderAndFooter from '../../Preview/Component/FloatHeaderAndFooter';
 
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -69,7 +69,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
   const dynamicTablesChange = transformTablesChange(dynamicTables)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const updateState = async () => {
       let newEditorState;
       let newEditorStatePreview;
@@ -87,7 +87,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       } else {
         newEditorState = editorState;
         newEditorState = addAndUpdtaeMainBlockStyle({ editorState: newEditorState, style: defaultEditorStyle })
-        newEditorStatePreview = editorState;
+        newEditorStatePreview = newEditorState;
       }
 
       newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
@@ -106,8 +106,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
     };
 
     updateState();
-    setFirstView(false)
-  }, [firstview]); // Thêm dependencies nếu có thể thay đổi
+    // setFirstView(false)
+  }, []); // Thêm dependencies nếu có thể thay đổi
 
 
   useEffect(() => {
@@ -255,13 +255,13 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       </div>}
       <div className={style.allEditor}>
         {!viewOnly && <div
+          ref={divEditorRef}
           onBlur={handleBlur}
           onFocus={handleFocus}
           className={style.editorContainer}
           style={{ ...mainBlockStyle, display: contentView.rawContentView ? 'none' : contentView.previewContent ? 'none' : 'block' }}
         >
           <div
-            ref={divEditorRef}
             className={removeStyle.editorRemove}
           >
             <Editor
@@ -284,12 +284,19 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           ref={divEditorPrevewRef}
           className={style.editorPreview}
           // readOnly= {true}
+          // style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
           style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
         >
-
-          <HPreview isPrint={isPrint} isPrinted={handleisPrinted} ref={editorPrevewRef}>
-
+{/* 
+         <HPreview 
+         isPrint={isPrint} 
+         isPrinted={handleisPrinted} 
+         ref={editorPrevewRef} 
+         layoutSetup={{ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' }}
+         > */}
+          {/* <FloatHeaderAndFooter> */}
             <div
+         
               className={removeStyle.editorRemove}
             >
               <Editor
@@ -305,8 +312,9 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
                 handleReturn={(e, editorState) => handleReturn(e, editorState)}
               />
             </div>
+          {/* </FloatHeaderAndFooter> */}
 
-          </HPreview>
+          {/* </HPreview> */}
         </div>
 
 

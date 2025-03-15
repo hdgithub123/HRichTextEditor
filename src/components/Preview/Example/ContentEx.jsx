@@ -78,7 +78,11 @@ const MyContent2 = () => {
   return (
     <div>
       <div>
-        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
+        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>
+          đầu
+          <span>đây là header mới</span>
+          <div>đây là header mới</div>
+          </header>
       </div>
 
       <Content number={30}></Content>

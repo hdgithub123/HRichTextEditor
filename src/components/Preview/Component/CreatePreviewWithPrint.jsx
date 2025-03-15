@@ -39,18 +39,38 @@ const CreatePreviewWithPrint = ({
     });
 
     // Cập nhật previewContent khi children thay đổi
+    // useEffect(() => {
+    //     removePagedStyles();
+    //     setPreviewContent(
+    //         <Preview 
+    //             key={Date.now()} // Đảm bảo React tạo component mới
+    //             childrenRef={previewRef} 
+    //             isRepeatThead={isRepeatThead} 
+    //             cssVariables={cssVariables} 
+    //             pageCss={pageCss} 
+    //         />
+    //     );
+    // }, [children]); // Theo dõi sự thay đổi của children và các props quan trọng
+
+
     useEffect(() => {
         removePagedStyles();
-        setPreviewContent(
-            <Preview 
-                key={Date.now()} // Đảm bảo React tạo component mới
-                childrenRef={previewRef} 
-                isRepeatThead={isRepeatThead} 
-                cssVariables={cssVariables} 
-                pageCss={pageCss} 
-            />
-        );
-    }, [children, isRepeatThead]); // Theo dõi sự thay đổi của children và các props quan trọng
+        setPreviewContent(null); // Xóa bỏ Preview cũ
+        setTimeout(() => {
+            setPreviewContent(
+                <Preview 
+                    key={Date.now()} // Đảm bảo React tạo component mới
+                    childrenRef={previewRef} 
+                    isRepeatThead={isRepeatThead} 
+                    cssVariables={cssVariables} 
+                    pageCss={pageCss} 
+                />
+            );
+        }, 0); // Đảm bảo rằng Preview mới được tạo sau khi Preview cũ bị xóa
+    }, [children]); // Theo dõi sự thay đổi của children và các props quan trọng
+
+
+
 
     useEffect(() => {
         if (isPrint) {
