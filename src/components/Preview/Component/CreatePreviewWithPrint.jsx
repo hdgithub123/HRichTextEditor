@@ -17,6 +17,8 @@ const CreatePreviewWithPrint = ({
     pageCss,
     isPrint = false,
     isPrinted,
+    headerID = null,
+    footerID = null,
 }) => {
     const [previewContent, setPreviewContent] = useState(null); // State lưu nội dung đã cập nhật
     const componentRef = useRef();
@@ -81,7 +83,7 @@ const CreatePreviewWithPrint = ({
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <div ref={previewRef} style={{ display: 'none' }}>
-                <FloatHeaderAndFooter onLoad={() => setPreviewContent(previewContent)}>
+                <FloatHeaderAndFooter headerID={headerID} footerID={footerID} onLoad={() => setPreviewContent(previewContent)}>
                     {children}
                 </FloatHeaderAndFooter>
             </div>

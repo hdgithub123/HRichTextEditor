@@ -13,6 +13,10 @@ import customStyleMap from '../functionRender/customStyleMap';
 import blockStyleFn from '../functionRender/blockStyleFn';
 import extendedBlockRenderMap from '../functionRender/blockRenderMap';
 import getBlockRendererFn from '../functionRender/getBlockRendererFn';
+import getBlockRendererFnView from '../functionRender/getBlockRendererFnView';
+
+
+
 import decorateEditorState from '../functionRender/decorateEditorState';
 import updateImageInline from '../../Image/ImangeInline/function/updateImageInline';
 
@@ -27,7 +31,7 @@ import getHeaderBlockStyle from '../../HeaderBlock/function/getFooterBlockStyle'
 import getFooterBlockStyle from '../../FooterBlock/function/getHeaderBlockStyle'
 import addAndUpdtaeMainBlockStyle from '../../MainBlockStyle/addAndUpdateMainBlockStyle'
 import { pxToUnit } from '../../utilities'
-
+import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 
 
 import HPreview from '../../HPreview/HPreview';
@@ -36,6 +40,8 @@ import FloatHeaderAndFooter from '../../Preview/Component/FloatHeaderAndFooter';
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
+ 
+
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const editorRef = useRef(null);
@@ -152,8 +158,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
       setMainBlockStyle(newMainBlockStyle)
-      const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)
-      onEditorChange({ contentJSON: contentJSON })
+      const contentObject = convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent());
+      onEditorChange({ contentObject: contentObject })
     }
   }, [editorState])
 
@@ -298,10 +304,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
                 handleReturn={(e, editorState) => handleReturn(e, editorState)}
               />
             </div>
+
         </div>
         {contentView.rawContentView && <div className={style.rawContentView} style={{ ...mainBlockStyle }}>
           <pre>{JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)}</pre>
         </div>}
+
       </div>
 
     </div>
