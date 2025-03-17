@@ -32,12 +32,15 @@ import { pxToUnit } from '../../utilities'
 
 import HPreview from '../../HPreview/HPreview';
 import FloatHeaderAndFooter from '../../Preview/Component/FloatHeaderAndFooter';
+import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
+
 
 const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
+  const [contentStateObjectPreview, setContentStateObjectPreview] = useState(null);
   const editorRef = useRef(null);
   const editorPrevewRef = useRef(null);
 
@@ -152,8 +155,15 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
       setMainBlockStyle(newMainBlockStyle)
-      const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)
-      onEditorChange({ contentJSON: contentJSON })
+      // const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)
+      // onEditorChange({ contentJSON: contentJSON })
+
+      const contentObject = convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent());
+      onEditorChange({ contentObject: contentObject })
+
+
+
+
     }
   }, [editorState])
 
@@ -208,20 +218,30 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const initContentView = {
     rawContentView: false,
     previewContent: false,
-
+    printDocument: false,
+    printPreview: false,
   }
 
   const [contentView, setContentView] = useState(initContentView);
 
   const [isPrint, setIsPrint] = useState(false);
   const handlePrint = () => {
+    console.log("handlePrint",isPrint)
     setIsPrint(true)
   }
 
 
   const handleisPrinted = (e) => {
+    
     setIsPrint(!e)
+    console.log("handleisPrinted",isPrint)
   }
+
+  const handlePrintPreview = () => {
+    const contentObject = convertToRaw(editorState.getCurrentContent());
+    setContentStateObjectPreview(contentObject)
+  }
+
 
 
   return (
@@ -238,6 +258,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           contentView={contentView}
           setContentView={setContentView}
 
+          handlePrintPreview={handlePrintPreview}
+
           // setMainBlockStyle ={setMainBlockStyle}
 
           variable={variable}
@@ -253,7 +275,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           onBlur={handleBlur}
           onFocus={handleFocus}
           className={style.editorContainer}
-          style={{ ...mainBlockStyle, display: contentView.rawContentView ? 'none' : contentView.previewContent ? 'none' : 'block' }}
+          style={{ ...mainBlockStyle, display: contentView.rawContentView ? 'none' : contentView.previewContent ? 'none' : contentView.printPreview ? 'none' : 'block' }}
         >
           <div
             className={removeStyle.editorRemove}
@@ -278,27 +300,42 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           ref={divEditorPrevewRef}
           className={style.editorPreview}
           // readOnly= {true}
-          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none' }}
+          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.printPreview ? 'none' : contentView.previewContent ? 'block' : 'none' }}
         >
 
-            <div
-         
-              className={removeStyle.editorRemove}
-            >
-              <Editor
-                ref={editorPrevewRef}
-                editorState={editorStatePreview}
-                onChange={onChangePreview}
-                readOnly={true}
-                placeholder="Empty document..."
-                customStyleMap={customStyleMap}
-                blockStyleFn={blockStyleFn}
-                blockRenderMap={extendedBlockRenderMap}
-                blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable: false })}
-                handleReturn={(e, editorState) => handleReturn(e, editorState)}
-              />
-            </div>
+          <div
+
+            className={removeStyle.editorRemove}
+          >
+            <Editor
+              ref={editorPrevewRef}
+              editorState={editorStatePreview}
+              onChange={onChangePreview}
+              readOnly={true}
+              placeholder="Empty document..."
+              customStyleMap={customStyleMap}
+              blockStyleFn={blockStyleFn}
+              blockRenderMap={extendedBlockRenderMap}
+              blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable: false })}
+              handleReturn={(e, editorState) => handleReturn(e, editorState)}
+            />
+          </div>
+
         </div>
+        <div className={style.displayPreview} style={{ display:contentView.printPreview?'block':'none' }}>Print Preview</div>
+        {contentView.printPreview &&
+          <div >
+            <HRichTextEditorPreview
+              // contentStateObject={contentStateObjectPreview}
+              contentStateObject={newContent2}
+              layoutSetup={{ width: '148mm', height: '210mm', headerHeight: '50mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' }}
+              headerID='hrteHeaderID'
+              footerID='hrteFooterID'
+              isPrint={isPrint}
+              isPrinted={handleisPrinted}
+            />
+
+          </div>}
         {contentView.rawContentView && <div className={style.rawContentView} style={{ ...mainBlockStyle }}>
           <pre>{JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)}</pre>
         </div>}
@@ -309,3 +346,114 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 };
 
 export default HRichTextEditor;
+
+
+const newContent2 ={
+  "blocks": [
+    {
+      "key": "fe3p1",
+      "text": "ádasd",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "7tk16",
+      "text": "sad",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "dsl9",
+      "text": "a",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "ajhqk",
+      "text": "sd",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "28tf1",
+      "text": "á",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "a33vh",
+      "text": "d",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "mainBlock",
+      "text": "",
+      "type": "MAIN_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "width": "210mm",
+          "height": "auto",
+          "marginLeft": "0mm",
+          "marginTop": "0mm",
+          "marginRight": "0mm",
+          "marginBottom": "0mm",
+          "paddingLeft": "30mm",
+          "paddingTop": "20mm",
+          "paddingRight": "15mm",
+          "paddingBottom": "20mm"
+        }
+      }
+    },
+    {
+      "key": "headerBlock",
+      "text": " 1\n2\n3",
+      "type": "HEADER_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "height": "40mm",
+          "background": "red",
+        }
+      }
+    },
+    {
+      "key": "footerBlock",
+      "text": " ",
+      "type": "FOOTER_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "height": "20mm",
+          "background": "green"
+        }
+      }
+    }
+  ],
+  "entityMap": {}
+}

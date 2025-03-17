@@ -33,13 +33,14 @@ import OpenDocument from '../../Document/OpenDocument/OpenDocument'
 import MainBlock from '../../MainBlockStyle/MainBlock'
 import HeaderBlockToolBar from '../../HeaderBlock/ToolBar/HeaderBlockToolBar'
 import FooterBlockToolBar from '../../FooterBlock/ToolBar/FooterBlockToolBar'
-
+import {PrintDocument, PrintPreview} from '../../Print/index'
 
 const ToolbarsEditor = ({
     editorState,
     setEditorState,
     editorStatePreview,
     setEditorStatePreview,
+    handlePrintPreview,
     // setMainBlockStyle,
     contentView,
     setContentView,
@@ -103,8 +104,10 @@ const ToolbarsEditor = ({
             {allnonedisplay && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {allnonedisplay && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {allnonedisplay && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
-           <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>
-            <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>
+            {allnonedisplay && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
+            {allnonedisplay && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
+            <PrintPreview contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>
+                <PrintDocument contentView={contentView} setContentView={setContentView}></PrintDocument>
         </div>
     );
 }

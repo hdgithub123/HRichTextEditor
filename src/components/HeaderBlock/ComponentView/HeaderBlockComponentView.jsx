@@ -14,7 +14,7 @@ const HeaderBlockComponentView = props => {
     const blockStyle = blockData.get('blockStyle');
     return (
         // <header className={style.headerContainer} style={{...blockStyle,  position:'absolute',top:'0%',left:'0%', zIndex:2 }}>
-        <header id='hrteHeaderID' className={style.headerContainer} style={{ ...blockStyle ,}}>
+        <header id='hrteHeaderID' className={style.headerContainer} style={{whiteSpace: "pre-wrap", ...blockStyle ,}}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </header>
     )

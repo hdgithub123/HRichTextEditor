@@ -14,7 +14,7 @@ const FooterBlockComponent = props => {
     const blockStyle = blockData.get('blockStyle');
 
     return (
-        <footer id= 'hrteFooterID' title='Insert Footer' className={style.footerContainer} style={{...blockStyle }}>
+        <footer id= 'hrteFooterID' title='Insert Footer' className={style.footerContainer} style={{ whiteSpace: "pre-wrap",...blockStyle }}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </footer>
     )

@@ -3,7 +3,7 @@
   /* min-height: 300px; */
   /* background-color: #f9f9f9; */
   border: 1px solid black;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   display: flex;
   flex-direction: column;
   height: auto;
@@ -30,7 +30,7 @@
     height: auto;
     flex-shrink: 0;
     border: 1px solid black;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 
     /* position: relative; */
     .editorContainer {
