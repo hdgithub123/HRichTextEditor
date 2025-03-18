@@ -20,7 +20,7 @@ const HPreview = ({
 
 
     const pageCss = generatePageNumberCss(pageNumberStyle ? pageNumberStyle : { style: {}, format: 'Trang {page}/{pages}', isBottomPosition: false })
-    const newCssVarriable = createCssVarriable(layoutSetup ? layoutSetup : { width: '210mm', height: '297mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
+    const newCssVarriable = createCssVarriable(layoutSetup ? layoutSetup : { width: '210mm', height: '297mm', marginTop: '30mm', marginBottom: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
 
     return (
         <CreatePreviewWithPrint

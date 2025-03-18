@@ -40,20 +40,6 @@ const CreatePreviewWithPrint = ({
         }
     });
 
-    // Cập nhật previewContent khi children thay đổi
-    // useEffect(() => {
-    //     removePagedStyles();
-    //     setPreviewContent(
-    //         <Preview 
-    //             key={Date.now()} // Đảm bảo React tạo component mới
-    //             childrenRef={previewRef} 
-    //             isRepeatThead={isRepeatThead} 
-    //             cssVariables={cssVariables} 
-    //             pageCss={pageCss} 
-    //         />
-    //     );
-    // }, [children]); // Theo dõi sự thay đổi của children và các props quan trọng
-
 
     useEffect(() => {
         removePagedStyles();

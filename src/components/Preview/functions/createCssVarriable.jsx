@@ -83,7 +83,7 @@ const othersVarriable2 = {
 
 
 
-const createCssVarriable = ({width = '210mm', height= '297mm', headerHeight='30mm', footerHeight, marginRight, marginLeft, paddingTop, paddingBottom, othersVarriable = {}}) =>{
+const createCssVarriable = ({width = '210mm', height= '297mm', marginTop='30mm', marginBottom = '20mm', marginRight, marginLeft, paddingTop, paddingBottom, othersVarriable = {}}) =>{
 
     const baseCssVarriable = {
         '--pagedjs-width': width? width :'210mm', // width tong
@@ -96,8 +96,8 @@ const createCssVarriable = ({width = '210mm', height= '297mm', headerHeight='30m
         '--pagedjs-pagebox-height': height? height : '297mm',// height tong
         '--pagedjs-padding-left': '0mm', // luôn để = 0
         '--pagedjs-padding-right': '0mm', // luôn để = 0
-        '--pagedjs-margin-top':headerHeight? headerHeight: '30mm', // chiều cao header
-        '--pagedjs-margin-bottom':footerHeight? footerHeight: '30mm',// chiều cao footer
+        '--pagedjs-margin-top':marginTop? marginTop: '30mm', // chiều cao header
+        '--pagedjs-margin-bottom':marginBottom? marginBottom: '30mm',// chiều cao footer
         '--pagedjs-margin-right': marginRight? marginRight: '10mm', // lề phải
         '--pagedjs-margin-left': marginLeft? marginLeft:'10mm', // lề trái
         '--pagedjs-padding-top': paddingTop?paddingTop:'10mm', // lề trên

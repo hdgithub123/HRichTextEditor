@@ -13,6 +13,12 @@ import decorateEditorState from '../functionRender/decorateEditorState';
 import { exampleDataTable, exampleData } from '../../_constant/exampleData'
 import replaceDatasTables from '../../Table/replaceDatasTables/index'
 import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
+import getMainblockStyle from '../../MainBlockStyle/getMainblockStyle'
+import getHeaderBlockStyle from '../../HeaderBlock/function/getFooterBlockStyle'
+import getFooterBlockStyle from '../../FooterBlock/function/getHeaderBlockStyle'
+import { pxToUnit } from '../../utilities'
+
+
 import HPreview from '../../HPreview/HPreview';
 
 
@@ -23,7 +29,6 @@ const HRichTextEditorPreview = ({
   dynamicTexts = exampleData,
   isPrint,
   isPrinted,
-  layoutSetup,
   headerID,
   footerID,
 }) => {
@@ -32,6 +37,7 @@ const HRichTextEditorPreview = ({
   }
 
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
+  const [mainBlockStyle, setMainBlockStyle] = useState({});
   const editorPrevewRef = useRef(null);
   const divEditorPrevewRef = useRef(null);
 
@@ -76,6 +82,44 @@ const HRichTextEditorPreview = ({
     }
   }, [editorStatePreview]);
 
+  const getPxStyle = ({ blockStyle, child }) => {
+    let styleValue = 0;
+
+    if (blockStyle && blockStyle[child]) {
+      const padding = blockStyle[child];
+      const matches = padding.match(/(\d+)(\D+)/);
+      if (matches) {
+        styleValue = matches[1] / pxToUnit(1, matches[2]);
+      }
+    }
+
+    return styleValue;
+  }
+
+
+  useEffect(() => {
+    if (editorStatePreview) {
+      const mainBlockStyle = getMainblockStyle({ editorState:editorStatePreview })
+      const headerHeight = getHeaderBlockStyle({ editorState:editorStatePreview })
+      const footerHeight = getFooterBlockStyle({ editorState:editorStatePreview })
+      const pxHeaderHeight = getPxStyle({ blockStyle: headerHeight, child: 'height' })
+      const pxFooterHeight = getPxStyle({ blockStyle: footerHeight, child: 'height' })
+      const pxPaddingTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingTop' })
+      const pxBottomTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingBottom' })
+
+      const newMainBlockStyle = {
+        ...mainBlockStyle,
+        paddingTop: `${pxPaddingTopMainBlock + pxHeaderHeight}px`,
+        paddingBottom: `${pxBottomTopMainBlock + pxFooterHeight}px`,
+      };
+
+
+      setMainBlockStyle(newMainBlockStyle)
+    }
+
+  }, [editorStatePreview]);
+
+
 
 
   const handleisPrinted = () => {
@@ -91,7 +135,9 @@ const HRichTextEditorPreview = ({
       <HPreview
         isPrint={isPrint ? isPrint : false}
         isPrinted={handleisPrinted}
-        layoutSetup={layoutSetup ? layoutSetup : null}
+        // layoutSetup={layoutSetup ? layoutSetup : null}
+        layoutSetup={{ width: '148mm', height: '210mm', marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
+        
         headerID={headerID}
         footerID={footerID}
       >

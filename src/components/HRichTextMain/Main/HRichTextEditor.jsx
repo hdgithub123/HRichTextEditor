@@ -154,15 +154,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
       setMainBlockStyle(newMainBlockStyle)
-      // const contentJSON = JSON.stringify(convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent()), null, 2)
-      // onEditorChange({ contentJSON: contentJSON })
-
       const contentObject = convertToRaw(deleteTableEmpty({ editorState }).getCurrentContent());
       onEditorChange({ contentObject: contentObject })
-
-
-
-
     }
   }, [editorState])
 
@@ -328,7 +321,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
             <HRichTextEditorPreview
               contentStateObject={contentStateObjectPreview}
               // contentStateObject={newContent2}
-              layoutSetup={{ width: '148mm', height: '210mm', headerHeight: '50mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' }}
+              //so với Main Style marginTop = padding top, marginBottom = padding bottom, marginLeft = padding left, marginRight = padding right, paddingTop và paddingBottom là thu gọn thêm
+             // layoutSetup={{ width: '148mm', height: '210mm', marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
               headerID='hrteHeaderID'
               footerID='hrteFooterID'
               isPrint={isPrint}

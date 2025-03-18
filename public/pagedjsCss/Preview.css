@@ -107,8 +107,8 @@
 
 #hrteHeaderID{
   position: running(headerRunning);
-  width: var(--pagedjs-pagebox-width) !important;
-  height: var(--pagedjs-margin-top) !important;
+  /* width: var(--pagedjs-pagebox-width) !important; */
+  /* height: var(--pagedjs-margin-top) !important; */
   z-index: 2;
   white-space: pre-wrap;
 }
@@ -116,7 +116,7 @@
 #hrteFooterID {
   position: running(footerRunning);
   width: var(--pagedjs-pagebox-width) !important;
-  height: var(--pagedjs-margin-bottom) !important;
+  /* height: var(--pagedjs-margin-bottom) !important; */
   z-index: 2;
   white-space: pre-wrap;
 }
