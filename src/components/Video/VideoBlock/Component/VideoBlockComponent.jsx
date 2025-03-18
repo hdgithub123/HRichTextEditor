@@ -18,8 +18,12 @@ const VideoBlockComponent = props => {
     const unit = data.get('unit');
     const tag = data.get('videoTag');
     const style = data.get('styleVideo');
-    const blockStyle = data.get('blockStyle');
-
+    let blockStyle = data.get('blockStyle');
+    try {
+        blockStyle = blockStyle.toJS();
+    } catch (error) {
+        blockStyle = blockStyle;
+    }
     const [videoUrl, setImgUrl] = useState(url);
     const [videoWidth, setImgWidth] = useState(width);
     const [videoHeight, setImgHeight] = useState(height);
@@ -127,7 +131,7 @@ const VideoBlockComponent = props => {
                     src={videoUrl} controls autoPlay loop muted
                     width='100%'
                     height='100%'
-                    style={{ border: 'none',pointerEvents:'auto' }}
+                    style={{ border: 'none', pointerEvents: 'auto' }}
                 >
                     Trình duyệt của bạn không hỗ trợ thẻ video.
                 </video>}
@@ -137,7 +141,7 @@ const VideoBlockComponent = props => {
                     height='100%'
                     src={videoUrl}
                     title="Embedded Video"
-                    style={{ ...thisStyleVideo, border: 'none',pointerEvents:'auto' }}
+                    style={{ ...thisStyleVideo, border: 'none', pointerEvents: 'auto' }}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                 ></iframe>}

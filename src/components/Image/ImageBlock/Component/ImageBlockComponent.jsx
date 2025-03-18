@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { EditorState,SelectionState } from 'draft-js';
+import { EditorState, SelectionState } from 'draft-js';
 
 import styles from './ImageBlockComponent.module.scss'
 import pxToUnit from '../function/pxToUnit';
@@ -20,7 +20,12 @@ const ImageBlockComponent = props => {
     const height = data.get('height');
     const unit = data.get('unit');
     const styleImage = data.get('styleImage');
-    const blockStyle = data.get('blockStyle');
+    let blockStyle = data.get('blockStyle');
+    try {
+        blockStyle = blockStyle.toJS();
+    } catch (error) {
+        blockStyle = blockStyle;
+    }
 
     const [imgUrl, setImgUrl] = useState(url);
     const [imgWidth, setImgWidth] = useState(width);
@@ -111,7 +116,7 @@ const ImageBlockComponent = props => {
         const selection = SelectionState.createEmpty(block.getKey());
         const newEditorState = EditorState.forceSelection(getEditorState(), selection);
         onChange(newEditorState);
-      };
+    };
 
     return (
         <div data-tagtype="resizeBlock" style={blockStyle}>
