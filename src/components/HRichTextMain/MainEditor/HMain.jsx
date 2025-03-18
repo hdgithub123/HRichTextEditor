@@ -43,15 +43,15 @@ const HMain = () => {
         <div>
             <button onClick={handleView}>click</button>
             <button onClick={handlePrint}>print</button>
-          {view &&  <HRichTextEditor onEditorChange={handleChange} viewOnly={!view} ></HRichTextEditor>}
-            {!view && <HRichTextEditorPreview
+            <HRichTextEditor onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
+            {/* {!view && <HRichTextEditorPreview
                 contentStateObject={contentStateObjectPreview}
                 layoutSetup={layoutSetup}
                 headerID='hrteHeaderID'
                 footerID='hrteFooterID'
                 isPrint={isPrint}
                 isPrinted={handleisPrinted}
-            ></HRichTextEditorPreview>}
+            ></HRichTextEditorPreview>} */}
         </div>
     )
 }

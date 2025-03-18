@@ -54,14 +54,13 @@ const ToolbarsEditor = ({
 }) => {
 
     const { documentView, previewContent, printPreview, rawContentView } = contentView
-    const allnonedisplay = !previewContent && !rawContentView
 
     return (
         <div className={style.container}>
             {documentView && <UndoRedoToolBar editorState={editorState} setEditorState={setEditorState}></UndoRedoToolBar>}
-            {documentView && <OpenDocument setEditorState={setEditorState} functionList={functionList}></OpenDocument>}
+            {documentView && <OpenDocument onChange={onChange} functionList={functionList}></OpenDocument>}
             {documentView && <CreateEmptyEditor editorState={editorState} setEditorState={setEditorState}></CreateEmptyEditor>}
-            {documentView && <CreateExampleEditor setEditorState={setEditorState} functionList={functionList} ></CreateExampleEditor>}
+            {documentView && <CreateExampleEditor onChange={onChange} functionList={functionList} ></CreateExampleEditor>}
 
             {(documentView || previewContent)  && <InsertDynamic
                 editorState={editorState}

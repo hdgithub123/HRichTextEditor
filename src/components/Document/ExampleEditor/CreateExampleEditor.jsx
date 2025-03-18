@@ -5,13 +5,13 @@ import styles from './CreateExampleEditor.module.scss'
 import {contentStateObjectExample} from '../../_constant/exampleData'
 import decorateEditorState from '../../HRichTextMain/functionRender/decorateEditorState'
 
-const CreateExampleEditor = ({contentStateObject= contentStateObjectExample,setEditorState, functionList}) => {
+const CreateExampleEditor = ({contentStateObject= contentStateObjectExample,onChange, functionList}) => {
 
     const handleClick = () =>{
         const newContentState = convertFromRaw(contentStateObject);
         let newEditorState = EditorState.createWithContent(newContentState);
         newEditorState = decorateEditorState({ editorState: newEditorState, functionList:functionList });
-        setEditorState(newEditorState);
+        onChange(newEditorState);
     }
  
     return (

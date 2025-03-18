@@ -37,7 +37,7 @@ import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 import HPreview from '../../HPreview/HPreview';
 import FloatHeaderAndFooter from '../../Preview/Component/FloatHeaderAndFooter';
 
-const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
+const HRichTextEditor = ({ contentStateObject = newContent3, dynamicTables = exampleDataTable, dynamicTexts = exampleData, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
  
@@ -130,7 +130,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       const padding = blockStyle[child];
       const matches = padding.match(/(\d+)(\D+)/);
       if (matches) {
-        console.log("pxToUnit(1, matches[2])", pxToUnit(1, matches[2]))
         styleValue = matches[1] / pxToUnit(1, matches[2]);
       }
     }
@@ -211,10 +210,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   }
 
 
-  const initContentView = {
-    rawContentView: false,
-    previewContent: false,
 
+  const initContentView = {
+    documentView: true,
+    previewContent: false,
+    printPreview: false,
+    rawContentView: false,
   }
 
   const [contentView, setContentView] = useState(initContentView);
@@ -228,6 +229,9 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const handleisPrinted = (e) => {
     setIsPrint(!e)
   }
+
+
+
 
 
   return (
@@ -317,3 +321,327 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 };
 
 export default HRichTextEditor;
+
+
+const newContent3 = {
+  "blocks": [
+    {
+      "key": "hst8",
+      "text": " ",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "21sdh",
+      "text": " ",
+      "type": "tableStructure",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tablestyle": {
+          "borderCollapse": "collapse"
+        },
+        "cellStyle": {
+          "borderTopWidth": "1px",
+          "borderTopStyle": "solid",
+          "borderTopColor": "black",
+          "borderLeftWidth": "1px",
+          "borderLeftStyle": "solid",
+          "borderLeftColor": "black",
+          "borderRightWidth": "1px",
+          "borderRightStyle": "solid",
+          "borderRightColor": "black",
+          "borderBottomWidth": "1px",
+          "borderBottomStyle": "solid",
+          "borderBottomColor": "black",
+          "padding": "6px",
+          "textAlign": "center",
+          "wordWrap": "break-word",
+          "whiteSpace": "normal"
+        },
+        "maxHeaderRow": "1",
+        "tableShape": [
+          [
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            }
+          ],
+          [
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            }
+          ],
+          [
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            },
+            {
+              "columnspan": 1,
+              "rowspan": 1,
+              "individualStyle": {}
+            }
+          ]
+        ],
+        "blockStyle": {
+          "display": "flex",
+          "justifyContent": "center"
+        },
+        "tableColumnWidth": {}
+      }
+    },
+    {
+      "key": "6jpeg",
+      "text": " ",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "7tk16",
+      "text": "sad",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "dsl9",
+      "text": "a",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "ajhqk",
+      "text": "sd",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "28tf1",
+      "text": "á",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "a33vh",
+      "text": "d",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "mainBlock",
+      "text": "",
+      "type": "MAIN_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "paddingTop": "20mm",
+          "width": "210mm",
+          "marginTop": "0mm",
+          "height": "auto",
+          "paddingRight": "15mm",
+          "marginRight": "0mm",
+          "marginLeft": "0mm",
+          "paddingLeft": "30mm",
+          "marginBottom": "0mm",
+          "paddingBottom": "20mm"
+        }
+      }
+    },
+    {
+      "key": "headerBlock",
+      "text": " 1\n2\n3",
+      "type": "HEADER_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "height": "50mm",
+          "background": "red"
+        }
+      }
+    },
+    {
+      "key": "footerBlock",
+      "text": " ",
+      "type": "FOOTER_BLOCK",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "blockStyle": {
+          "height": "20mm",
+          "background": "green"
+        }
+      }
+    },
+    {
+      "key": "9a225",
+      "text": " huhu",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-0-0",
+        "blockStyle": {
+          "textAlign": "left"
+        }
+      }
+    },
+    {
+      "key": "b2r5g",
+      "text": " bbb",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-0-1",
+        "blockStyle": {
+          "textAlign": "right"
+        }
+      }
+    },
+    {
+      "key": "9e8m9",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-0-2"
+      }
+    },
+    {
+      "key": "al93p",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-1-0"
+      }
+    },
+    {
+      "key": "ajltp",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-1-1"
+      }
+    },
+    {
+      "key": "31foq",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-1-2"
+      }
+    },
+    {
+      "key": "1aqrt",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-2-0"
+      }
+    },
+    {
+      "key": "bdt7n",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-2-1"
+      }
+    },
+    {
+      "key": "93gr2",
+      "text": " ",
+      "type": "cellTable",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {
+        "tableKey": "21sdh",
+        "cellPosition": "21sdh-2-2"
+      }
+    }
+  ],
+  "entityMap": {}
+}

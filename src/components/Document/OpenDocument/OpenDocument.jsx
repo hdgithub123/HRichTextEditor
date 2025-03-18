@@ -4,7 +4,7 @@ import style from './OpenDocument.module.scss';
 import imageIcon from './openFolder.svg'
 import decorateEditorState from '../../HRichTextMain/functionRender/decorateEditorState';
 
-const OpenDocument = ({ setEditorState, functionList }) => {
+const OpenDocument = ({ onChange, functionList }) => {
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
@@ -15,7 +15,7 @@ const OpenDocument = ({ setEditorState, functionList }) => {
                 const newContentState = convertFromRaw(contentStateObject);
                 let newEditorState = EditorState.createWithContent(newContentState);
                 newEditorState = decorateEditorState({ editorState: newEditorState, functionList });
-                setEditorState(newEditorState);
+                onChange(newEditorState);
             } catch (error) {
                 console.error('Error parsing JSON:', error);
             }

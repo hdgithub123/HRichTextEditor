@@ -11,7 +11,12 @@ const FooterBlockComponent = props => {
     } = props;
     const blockData = block.getData();
     const text = block.getText().trim() === '' ? '\u00A0' : block.getText();
-    const blockStyle = blockData.get('blockStyle');
+    let blockStyle = blockData.get('blockStyle');
+    try {
+       blockStyle = blockStyle.toJS();
+   } catch (error) {
+       blockStyle = blockStyle;
+   }
 
     return (
         <footer title='Insert Footer' className={style.footerContainer} style={{...blockStyle }}>
