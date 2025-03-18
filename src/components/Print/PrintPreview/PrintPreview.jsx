@@ -2,15 +2,21 @@ import imageIcon from './printPreview.svg';
 import style from './PrintPreview.module.scss'
 
 
-const PrintPreview = ({contentView,setContentView, handlePrintPreview}) => {
+const PrintPreview = ({contentView,setContentView, handlePrintPreview, setIsPrint}) => {
   
     const handleClick = ()=>{
         const newcontentView = {
-            ...contentView,
-            printPreview : !contentView.printPreview
+            // ...contentView,
+            // printPreview : !contentView.printPreview
+            documentView: !contentView.documentView,
+            previewContent: false,
+            printPreview: !contentView.printPreview,
+            rawContentView: false,
+
         }
         setContentView(newcontentView)
         handlePrintPreview();
+        setIsPrint(false);
     }
 
         return (

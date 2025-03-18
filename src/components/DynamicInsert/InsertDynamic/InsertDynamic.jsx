@@ -36,8 +36,12 @@ const InsertDynamic = ({ editorState, setEditorState, contentView, setContentVie
         }
 
         const newcontentView = {
-            ...contentView,
-            previewContent : !contentView.previewContent
+            // ...contentView,
+            // previewContent : !contentView.previewContent
+            documentView: !contentView.documentView,
+            previewContent: !contentView.previewContent,
+            printPreview: false,
+            rawContentView: false,
         }
         setContentView(newcontentView)
 

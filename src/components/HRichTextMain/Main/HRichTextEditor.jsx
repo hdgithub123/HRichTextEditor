@@ -127,7 +127,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       const padding = blockStyle[child];
       const matches = padding.match(/(\d+)(\D+)/);
       if (matches) {
-        console.log("pxToUnit(1, matches[2])", pxToUnit(1, matches[2]))
         styleValue = matches[1] / pxToUnit(1, matches[2]);
       }
     }
@@ -216,10 +215,10 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
   const initContentView = {
-    rawContentView: false,
+    documentView: true,
     previewContent: false,
-    printDocument: false,
     printPreview: false,
+    rawContentView: false,
   }
 
   const [contentView, setContentView] = useState(initContentView);
@@ -233,7 +232,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
   const handleisPrinted = (e) => {
     
-    setIsPrint(!e)
+    // setIsPrint(!e)
+    setIsPrint(false)
     console.log("handleisPrinted",isPrint)
   }
 
@@ -259,6 +259,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           setContentView={setContentView}
 
           handlePrintPreview={handlePrintPreview}
+          setIsPrint={setIsPrint}
 
           // setMainBlockStyle ={setMainBlockStyle}
 
@@ -275,7 +276,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           onBlur={handleBlur}
           onFocus={handleFocus}
           className={style.editorContainer}
-          style={{ ...mainBlockStyle, display: contentView.rawContentView ? 'none' : contentView.previewContent ? 'none' : contentView.printPreview ? 'none' : 'block' }}
+          style={{ ...mainBlockStyle, display: contentView.documentView ? 'block' : 'none' }}
         >
           <div
             className={removeStyle.editorRemove}
@@ -294,13 +295,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
             />
           </div>
         </div>}
-        <div className={style.displayPreview} style={{ display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.previewContent ? 'block' : 'none', }}>Preview</div>
-
+        <div className={style.displayPreview} style={{ display: contentView.previewContent ? 'block' : 'none' }}>Preview</div>
         <div
           ref={divEditorPrevewRef}
           className={style.editorPreview}
           // readOnly= {true}
-          style={{ ...mainBlockStyle, display: viewOnly ? 'block' : contentView.rawContentView ? 'none' : contentView.printPreview ? 'none' : contentView.previewContent ? 'block' : 'none' }}
+          style={{ ...mainBlockStyle, display: contentView.previewContent ? 'block' : 'none' }}
         >
 
           <div
@@ -326,8 +326,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
         {contentView.printPreview &&
           <div >
             <HRichTextEditorPreview
-              // contentStateObject={contentStateObjectPreview}
-              contentStateObject={newContent2}
+              contentStateObject={contentStateObjectPreview}
+              // contentStateObject={newContent2}
               layoutSetup={{ width: '148mm', height: '210mm', headerHeight: '50mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' }}
               headerID='hrteHeaderID'
               footerID='hrteFooterID'
@@ -435,7 +435,7 @@ const newContent2 ={
       "entityRanges": [],
       "data": {
         "blockStyle": {
-          "height": "40mm",
+          "height": "50mm",
           "background": "red",
         }
       }

@@ -6,8 +6,14 @@ const RawContentView = ({contentView,setContentView}) => {
   
     const handleClick = ()=>{
         const newcontentView = {
-            ...contentView,
-            rawContentView : !contentView.rawContentView
+            // ...contentView,
+            // rawContentView : !contentView.rawContentView
+            documentView: !contentView.documentView,
+            previewContent: false,
+            printPreview: false,
+            rawContentView: !contentView.rawContentView,
+
+
         }
         setContentView(newcontentView)
     }

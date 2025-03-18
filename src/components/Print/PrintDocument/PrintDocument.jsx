@@ -2,14 +2,15 @@ import imageIcon from './printDocument.svg';
 import style from './PrintDocument.module.scss'
 
 
-const PrintDocument = ({contentView,setContentView}) => {
+const PrintDocument = ({setIsPrint}) => {
   
     const handleClick = ()=>{
-        const newcontentView = {
-            ...contentView,
-            rawContentView : !contentView.printDocument
-        }
-        setContentView(newcontentView)
+        // const newcontentView = {
+        //     ...contentView,
+        //     rawContentView : !contentView.printDocument
+        // }
+        // setContentView(newcontentView)
+        setIsPrint(true);
     }
 
         return (
