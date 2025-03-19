@@ -34,7 +34,9 @@ const ContentPreviewEx = () => {
   }
 
   const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
-  const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
+  // const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
+  const newCssVarriable = createCssVarriable({ width: '210mm', height: '297mm', marginTop: '30mm', marginBottom: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '1mm', paddingBottom: '1mm' })
+
 
   return (
     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -64,11 +66,12 @@ const MyContent = () => {
   return (
     <div>
       <div>
-        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
+        <header id={'hrteHeaderID'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
       </div>
+      <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
       <TableComponent rows={20} cols={7}  ></TableComponent>
       <Content number={10}></Content>
-      <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+     
     </div>
   )
 }
@@ -78,16 +81,16 @@ const MyContent2 = () => {
   return (
     <div>
       <div>
-        <header id={'idDau'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>
+        <header id={'hrteHeaderID'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>
           đầu
           <span>đây là header mới</span>
           <div>đây là header mới</div>
           </header>
       </div>
-
+      <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
       <Content number={30}></Content>
 
-      <footer id={'idCuoi'} style={{ background: 'yellow' }} >cuoi</footer>
+
     </div>
   )
 }

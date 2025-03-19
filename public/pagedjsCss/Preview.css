@@ -3,6 +3,7 @@
 
   @top-left-corner {
     content: element(headerRunning);
+    align-items: flex-start;
   }
 
   @top-left {
@@ -46,6 +47,7 @@
 
   @bottom-left-corner {
     content: element(footerRunning);
+    align-items: flex-end;
   }
 
   @bottom-left {
@@ -107,16 +109,16 @@
 
 #hrteHeaderID{
   position: running(headerRunning);
-  /* width: var(--pagedjs-pagebox-width) !important; */
-  /* height: var(--pagedjs-margin-top) !important; */
+  /* width: var(--pagedjs-pagebox-width) !important;
+  height: var(--pagedjs-margin-top) !important; */
   z-index: 2;
   white-space: pre-wrap;
 }
 
 #hrteFooterID {
   position: running(footerRunning);
-  width: var(--pagedjs-pagebox-width) !important;
-  /* height: var(--pagedjs-margin-bottom) !important; */
+  /* width: var(--pagedjs-pagebox-width) !important;
+  height: var(--pagedjs-margin-bottom) !important; */
   z-index: 2;
   white-space: pre-wrap;
 }
@@ -124,12 +126,17 @@
 
 
   table {
-      width: 100%;
-      border-collapse: collapse;
+      /* width: 100%; */
+      /* border-collapse: collapse; */
   }
+
   tr {
-      page-break-inside: avoid; /* Ngăn chia nhỏ hàng */
+      page-break-inside: avoid;
   }
+
+
+  
   td {
-      page-break-inside: avoid; /* Ngăn chia nhỏ ô */
+      page-break-inside: avoid;
   }
+  

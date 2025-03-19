@@ -10,15 +10,19 @@ import ContentPreviewEx from  './components/Preview/Example/ContentEx'
 
 function App() {
   const [theme, setTheme] = useState('light');
+  const [isPrint, setIsPrint] = useState(false);
   const handleChange = (editor) =>{
     // console.log("editor", editor.contentJSON);    
   }
   return (
     <>
         <div>hello</div>
+        <button onClick={()=> setIsPrint(!isPrint)}>Change Theme</button>
         <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
         {/* <HMain></HMain> */}
-        {/* <HRichTextEditorPreview></HRichTextEditorPreview> */}
+        {/* <HRichTextEditorPreview
+        isPrint={isPrint}
+        ></HRichTextEditorPreview> */}
         {/* <ContentPreviewEx></ContentPreviewEx> */}
     </>
   )
