@@ -22,10 +22,10 @@ import replaceDatasTables from '../../Table/replaceDatasTables/index'
 import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
 
 import { defaultEditorStyle } from '../../_constant/_constant'
-import getMainblockStyle from '../../MainBlockStyle/getMainblockStyle'
-import getHeaderBlockStyle from '../../HeaderBlock/function/getFooterBlockStyle'
-import getFooterBlockStyle from '../../FooterBlock/function/getHeaderBlockStyle'
-import addAndUpdtaeMainBlockStyle from '../../MainBlockStyle/addAndUpdateMainBlockStyle'
+import getMainblockStyle from '../../MainBlock/getMainblockStyle'
+import getHeaderBlockStyle from '../../HeaderBlock/function/getHeaderBlockStyle'
+import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle'
+import addAndUpdtaeMainBlockStyle from '../../MainBlock/addAndUpdateMainBlock'
 import { pxToUnit } from '../../utilities'
 
 
@@ -320,9 +320,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           <div >
             <HRichTextEditorPreview
               contentStateObject={contentStateObjectPreview}
-              // contentStateObject={newContent2}
-              //so với Main Style marginTop = padding top, marginBottom = padding bottom, marginLeft = padding left, marginRight = padding right, paddingTop và paddingBottom là thu gọn thêm
-             // layoutSetup={{ width: '148mm', height: '210mm', marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
+              dynamicTables={dynamicTables}
+              dynamicTexts={dynamicTexts}
               headerID='hrteHeaderID'
               footerID='hrteFooterID'
               isPrint={isPrint}

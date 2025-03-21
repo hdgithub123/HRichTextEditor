@@ -1,13 +1,3 @@
-// const changePageStyles = (css) => {
-//     const style = document.createElement("style");
-//     style.type = "text/css";
-//     style.appendChild(document.createTextNode(css));
-//     document.head.appendChild(style);
-//   };
-
-// export default changePageStyles
-
-
 const changePageStyles = (css) => {
   // Kiểm tra xem đã tồn tại thẻ style với id="dynamic-style" hay chưa
   let styleTag = document.getElementById("pagedjs-style");

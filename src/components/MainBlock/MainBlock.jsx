@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import addAndUpdateMainBlockStyle from './addAndUpdateMainBlockStyle';
+import addAndUpdateMainBlock from './addAndUpdateMainBlock';
 import { defaultEditorStyle, _UNIT } from '../_constant/_constant';
 import getMainblockStyle from './getMainblockStyle';
 import styles from './MainBlock.module.scss';
@@ -65,7 +65,7 @@ const MainBlock = ({ editorState, setEditorState }) => {
             acc[key] = /\d/.test(value) ? value + unit : value;
             return acc;
         }, {});
-        const newContentState = addAndUpdateMainBlockStyle({ editorState, style: newStyle });
+        const newContentState = addAndUpdateMainBlock({ editorState, style: newStyle });
         setEditorState(newContentState);
     };
 

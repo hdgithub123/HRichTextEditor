@@ -19,12 +19,12 @@ const HPreview = ({
     }
 
 
-    const pageCss = generatePageNumberCss(pageNumberStyle ? pageNumberStyle : { style: {}, format: 'Trang {page}/{pages}', isBottomPosition: false })
+    const pageCssDefault = generatePageNumberCss(pageNumberStyle ? pageNumberStyle : { style: {}, format: 'Trang {page}/{pages}', isBottomPosition: true })
     const newCssVarriable = createCssVarriable(layoutSetup ? layoutSetup : { width: '210mm', height: '297mm', marginTop: '30mm', marginBottom: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
 
     return (
         <CreatePreviewWithPrint
-            pageCss={pageCss}
+            pageCss={pageCssDefault}
             isPrint={isPrint ? isPrint : false}
             isPrinted={handleisPrinted}
             isRepeatThead={isRepeatThead ? isRepeatThead : true}

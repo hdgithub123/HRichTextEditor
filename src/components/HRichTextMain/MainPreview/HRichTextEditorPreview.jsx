@@ -10,12 +10,12 @@ import extendedBlockRenderMap from '../functionRender/blockRenderMap';
 import getBlockRendererFnView from '../functionRender/getBlockRendererFnView';
 import decorateEditorState from '../functionRender/decorateEditorState';
 
-import { exampleDataTable, exampleData } from '../../_constant/exampleData'
-import replaceDatasTables from '../../Table/replaceDatasTables/index'
-import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
-import getMainblockStyle from '../../MainBlockStyle/getMainblockStyle'
-import getHeaderBlockStyle from '../../HeaderBlock/function/getFooterBlockStyle'
-import getFooterBlockStyle from '../../FooterBlock/function/getHeaderBlockStyle'
+import { exampleDataTable, exampleData } from '../../_constant/exampleData';
+import replaceDatasTables from '../../Table/replaceDatasTables/index';
+import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText';
+import getMainblockStyle from '../../MainBlock/getMainblockStyle';
+import getHeaderBlockStyle from '../../HeaderBlock/function/getHeaderBlockStyle';
+import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle';
 import { pxToUnit } from '../../utilities'
 
 
@@ -136,8 +136,9 @@ const HRichTextEditorPreview = ({
         isPrint={isPrint ? isPrint : false}
         isPrinted={handleisPrinted}
         // layoutSetup={layoutSetup ? layoutSetup : null}
-        layoutSetup={{ width: '148mm', height: '210mm', marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
-        
+        layoutSetup={{ width: mainBlockStyle.width, height: '297mm', marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
+        pageNumberStyle={{ style: {color:'yellow',}, format: 'Trang {page}/{pages}', position: 'top-right' }}
+        isRepeatThead={true}
         headerID={headerID}
         footerID={footerID}
       >

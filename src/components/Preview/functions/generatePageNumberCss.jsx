@@ -9,8 +9,8 @@ format (String)
 
 */
 
-function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
-  const defaultBottomPageStyle = {
+function generateBottomRightPageNumber({ style = {}, format = '{page}' } = {}) {
+  const defaultStyle = {
     fontFamily: 'inherit',
     paddingRight: '5mm',
     paddingBottom: '5mm',
@@ -19,7 +19,7 @@ function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
   }
 
   const applyStyle = {
-    ...defaultBottomPageStyle,
+    ...defaultStyle,
     ...style,
   }
 
@@ -37,6 +37,7 @@ function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
   right: 0;
   width: var(--pagedjs-pagebox-width);
   height: 100%;
+  box-sizing: border-box;
   display: flex;
   ${newCotent};
   z-index: 10;
@@ -48,18 +49,88 @@ function generateBottomPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 
-const defaultTopStyle = {
-  fontFamily: 'inherit',
-  paddingRight: '5mm',
-  paddingTop: '5mm',
-  justifyContent: "flex-end",
-  alignItems: "flex-start",
+function generateBottomLeftPageNumber({ style = {}, format = '{page}' } = {}) {
+  const defaultStyle = {
+    fontFamily: 'inherit',
+    paddingLeft: '5mm',
+    paddingBottom: '5mm',
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+  }
+
+  const applyStyle = {
+    ...defaultStyle,
+    ...style,
+  }
+
+  const newStyle = styleObjectToString(applyStyle);
+  const newCotent = 'content:' + formatToCssContent(format)
+  return `
+.pagedjs_margin-bottom-right-corner-holder {
+  position: relative;
+}
+
+.pagedjs_margin-bottom-right-corner-holder::after {
+  ${newStyle}
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--pagedjs-pagebox-width);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  ${newCotent};
+  z-index: 10;
+  background: none;
+  border: none;
+  pointer-events: none; 
+}
+`;
+}
+
+function generateBottomCenterPageNumber({ style = {}, format = '{page}' } = {}) {
+  const defaultStyle = {
+    fontFamily: 'inherit',
+    paddingBottom: '5mm',
+    justifyContent: "center",
+    alignItems: "flex-end",
+  }
+
+  const applyStyle = {
+    ...defaultStyle,
+    ...style,
+  }
+
+  const newStyle = styleObjectToString(applyStyle);
+  const newCotent = 'content:' + formatToCssContent(format)
+  return `
+.pagedjs_margin-bottom-right-corner-holder {
+  position: relative;
+}
+
+.pagedjs_margin-bottom-right-corner-holder::after {
+  ${newStyle}
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--pagedjs-pagebox-width);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  ${newCotent};
+  z-index: 10;
+  background: none;
+  border: none;
+  pointer-events: none; 
+}
+`;
 }
 
 
-function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
 
-  const defaultTopStyle = {
+function generateTopRightPageNumber({ style = {}, format = '{page}' } = {}) {
+
+  const defaultStyle = {
     fontFamily: 'inherit',
     paddingRight: '5mm',
     paddingTop: '5mm',
@@ -68,7 +139,7 @@ function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
   }
 
   const applyStyle = {
-    ...defaultTopStyle,
+    ...defaultStyle,
     ...style,
   }
 
@@ -86,6 +157,85 @@ function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
   right: 0;
   width: var(--pagedjs-pagebox-width);
   height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  ${newCotent};
+  z-index: 10;
+  background: none;
+  border: none;
+  pointer-events: none; 
+}
+`;
+}
+function generateTopLeftPageNumber({ style = {}, format = '{page}' } = {}) {
+
+  const defaultStyle = {
+    fontFamily: 'inherit',
+    paddingLeft: '5mm',
+    paddingTop: '5mm',
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  }
+
+  const applyStyle = {
+    ...defaultStyle,
+    ...style,
+  }
+
+  const newStyle = styleObjectToString(applyStyle);
+  const newCotent = 'content:' + formatToCssContent(format)
+  return `
+.pagedjs_margin-top-right-corner-holder {
+  position: relative;
+}
+
+.pagedjs_margin-top-right-corner-holder::after {
+  ${newStyle}
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--pagedjs-pagebox-width);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  ${newCotent};
+  z-index: 10;
+  background: none;
+  border: none;
+  pointer-events: none; 
+}
+`;
+}
+
+function generateTopCenterPageNumber({ style = {}, format = '{page}' } = {}) {
+
+  const defaultStyle = {
+    fontFamily: 'inherit',
+    paddingTop: '5mm',
+    justifyContent: "center",
+    alignItems: "flex-start",
+  }
+
+  const applyStyle = {
+    ...defaultStyle,
+    ...style,
+  }
+
+  const newStyle = styleObjectToString(applyStyle);
+  const newCotent = 'content:' + formatToCssContent(format)
+  return `
+.pagedjs_margin-top-right-corner-holder {
+  position: relative;
+}
+
+.pagedjs_margin-top-right-corner-holder::after {
+  ${newStyle}
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--pagedjs-pagebox-width);
+  height: 100%;
+  box-sizing: border-box;
   display: flex;
   ${newCotent};
   z-index: 10;
@@ -98,17 +248,38 @@ function generateTopPageNumber({ style = {}, format = '{page}' } = {}) {
 
 
 export {
-  generateTopPageNumber,
-  generateBottomPageNumber,
+  generateTopRightPageNumber,
+  generateTopLeftPageNumber,
+  generateTopCenterPageNumber,
+  generateBottomRightPageNumber,
+  generateBottomLeftPageNumber,
+  generateBottomCenterPageNumber,
 }
 
 
 
-const generatePageNumberCss = ({ style = {}, format = '{page}', isBottomPosition = true }) =>{
-  if(isBottomPosition) {
-    return generateBottomPageNumber({ style, format , isBottomPosition })
+const generatePageNumberCss = ({ style = {}, format = '{page}', position = 'bottom-right' }) => {
+  if (position && position !== 'none') {
+    switch (position) {
+      case 'bottom-right':
+        return generateBottomRightPageNumber({ style, format, position })
+      case 'bottom-left':
+        return generateBottomLeftPageNumber({ style, format, position })
+      case 'bottom-center':
+        return generateBottomCenterPageNumber({ style, format, position })
+      case 'top-left':
+        return generateTopLeftPageNumber({ style, format, position })
+      case 'top-center':
+        return generateTopCenterPageNumber({ style, format, position })
+      case 'top-right':
+        return generateTopRightPageNumber({ style, format, position })
+      default:
+        return generateBottomRightPageNumber({ style, format, position })
+    }
+
+
   } else {
-    return generateTopPageNumber({ style, format , isBottomPosition })
+    return null
   }
 }
 
