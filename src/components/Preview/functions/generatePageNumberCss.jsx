@@ -31,6 +31,7 @@ function generateBottomRightPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 .pagedjs_margin-bottom-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   bottom: 0;
@@ -38,7 +39,7 @@ function generateBottomRightPageNumber({ style = {}, format = '{page}' } = {}) {
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+
   ${newCotent};
   z-index: 10;
   background: none;
@@ -71,6 +72,7 @@ function generateBottomLeftPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 .pagedjs_margin-bottom-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   bottom: 0;
@@ -78,7 +80,7 @@ function generateBottomLeftPageNumber({ style = {}, format = '{page}' } = {}) {
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+
   ${newCotent};
   z-index: 10;
   background: none;
@@ -109,6 +111,7 @@ function generateBottomCenterPageNumber({ style = {}, format = '{page}' } = {}) 
 }
 
 .pagedjs_margin-bottom-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   bottom: 0;
@@ -116,7 +119,7 @@ function generateBottomCenterPageNumber({ style = {}, format = '{page}' } = {}) 
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+
   ${newCotent};
   z-index: 10;
   background: none;
@@ -151,6 +154,7 @@ function generateTopRightPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 .pagedjs_margin-top-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   top: 0;
@@ -158,7 +162,7 @@ function generateTopRightPageNumber({ style = {}, format = '{page}' } = {}) {
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+
   ${newCotent};
   z-index: 10;
   background: none;
@@ -190,6 +194,7 @@ function generateTopLeftPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 .pagedjs_margin-top-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   top: 0;
@@ -197,7 +202,7 @@ function generateTopLeftPageNumber({ style = {}, format = '{page}' } = {}) {
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+  
   ${newCotent};
   z-index: 10;
   background: none;
@@ -229,6 +234,7 @@ function generateTopCenterPageNumber({ style = {}, format = '{page}' } = {}) {
 }
 
 .pagedjs_margin-top-right-corner-holder::after {
+  display: flex;
   ${newStyle}
   position: absolute;
   top: 0;
@@ -236,7 +242,7 @@ function generateTopCenterPageNumber({ style = {}, format = '{page}' } = {}) {
   width: var(--pagedjs-pagebox-width);
   height: 100%;
   box-sizing: border-box;
-  display: flex;
+ 
   ${newCotent};
   z-index: 10;
   background: none;

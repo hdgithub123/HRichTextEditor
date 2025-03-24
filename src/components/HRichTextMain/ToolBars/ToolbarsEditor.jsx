@@ -76,7 +76,7 @@ const ToolbarsEditor = ({
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
-            {documentView &&   <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
+            {documentView && <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
             {documentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             {(documentView || rawContentView) && <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>}
 

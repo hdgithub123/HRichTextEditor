@@ -248,15 +248,18 @@ const PageLayout = ({ editorState, setEditorState }) => {
     const [pageHeight, setPageHeight] = useState(''); // Đơn vị mặc định
     
     const [pageNumberStyle, setPageNumberStyle] = useState({
+        display: '',
         fontFamily: '',
         fontSize: '',
         color: '',
+       
     });
 
 
     const [show, setShow] = useState(false);
     const ref = useRef();
     const blockSetupRef = useRef();
+  
 
     // 🎯 Cập nhật pageSetup từ editorState
     useEffect(() => {
@@ -265,11 +268,12 @@ const PageLayout = ({ editorState, setEditorState }) => {
             setPageSetup(pageSetup);
             setPageHeight(removeUnit(pageSetup.pageHeight) || '');
             setUnit(findUnit(pageSetup.pageHeight) || 'px');
+            setPageNumberStyle(pageSetup.pageNumber.style)
         }
     }, [editorState]);
 
     // 🎯 Xử lý tất cả các thay đổi form
-    const handleChange = (e) => {
+    const handleTableHeaderRepeatChange = (e) => {
         const { name, value, checked, type } = e.target;
         setPageSetup((prev) => ({
             ...prev,
@@ -313,6 +317,17 @@ const PageLayout = ({ editorState, setEditorState }) => {
     };
 
     
+    
+    
+    const handleIsPageNumberDisplayChange = (e) => {
+        const { name, checked } = e.target;
+        setPageNumberStyle((prev) => ({
+            ...prev,
+            display: checked? ' ' : 'none'
+        }));
+    };
+
+
     const handleFontFamilyChange = (e) => {
         const { value } = e.target;
         setPageNumberStyle((prev) => ({
@@ -342,7 +357,6 @@ const PageLayout = ({ editorState, setEditorState }) => {
         e.preventDefault();
         const newPageSetup = {
             ...pageSetup,
-          //  pageHeight:pageHeight ==='100%'?pageHeight: /\d/.test(pageHeight) ? pageHeight + unit : pageHeight,
             pageNumber: {
                 ...pageSetup.pageNumber,
                 style: pageNumberStyle
@@ -358,7 +372,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
     return (
         <div ref={ref} className={styles.container}>
             <button className={styles.button} onMouseDown={() => setShow(true)}>
-                <img src={imageIcon} alt="Page Layout" className={`${styles.img} ${styles.active}`} />
+                <img src={imageIcon} alt="Print Setup" title='Print Setup' className={`${styles.img} ${styles.active}`} />
             </button>
 
             {show && (
@@ -397,14 +411,27 @@ const PageLayout = ({ editorState, setEditorState }) => {
                                         type="checkbox"
                                         name="isRepeatThead"
                                         checked={pageSetup.isRepeatThead}
-                                        onChange={handleChange}
+                                        onChange={handleTableHeaderRepeatChange}
                                     />
                                 </td>
                             </tr>
                             <tr>
-                                <td>Page Number Position:</td>
+                            <td style={{justifyContent:'center', textAlign:'center'}} colSpan={2}>
+                                <span>Page number</span> 
+                                <input
+                                        type="checkbox"
+                                        name="isPageNumber"
+                                        checked={pageNumberStyle.display !== 'none'}
+                                        onChange={handleIsPageNumberDisplayChange}
+                                    />
+
+                                </td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Position:</td>
                                 <td>
-                                    <select name="position" value={pageSetup.pageNumber.position} onChange={handlePageNumberChange}>
+                                    <select name="position" value={pageSetup.pageNumber.position} onChange={handlePageNumberChange} disabled={pageNumberStyle.display==='none'}>
                                         <option value="top-left">Top Left</option>
                                         <option value="top-center">Top Center</option>
                                         <option value="top-right">Top Right</option>
@@ -415,9 +442,9 @@ const PageLayout = ({ editorState, setEditorState }) => {
                                 </td>
                             </tr>
                             <tr>
-                                <td>Page Number Format:</td>
+                                <td>Format:</td>
                                 <td>
-                                    <input type="text" name="format" value={pageSetup.pageNumber.format} onChange={handlePageNumberChange} />
+                                    <input type="text" placeholder='Ex: Page: {page}/{Pages}' name="format" value={pageSetup.pageNumber.format} onChange={handlePageNumberChange} disabled={pageNumberStyle.display==='none'}/>
                                 </td>
                             </tr>
 
@@ -425,7 +452,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Font Family:</td>
                                 <td>
-                                    <select id="fontFamilySelect" value={pageNumberStyle.fontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: pageNumberStyle.fontFamily, borderRadius: '3px' }}>
+                                    <select id="fontFamilySelect" value={pageNumberStyle.fontFamily} onChange={handleFontFamilyChange} style={{ fontFamily: pageNumberStyle.fontFamily, borderRadius: '3px' }} disabled={pageNumberStyle.display==='none'}>
                                         {fontFamilyOptions.map((font, index) => (
                                             <option key={index} value={font} style={{ fontFamily: font }}>
                                                 {font}
@@ -437,7 +464,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Font Size: </td>
                                 <td>
-                                    <select id="fontSizeSelect" value={pageNumberStyle.fontSize} onChange={handleFontSizeChange} style={{ borderRadius: '3px' }}>
+                                    <select id="fontSizeSelect" value={pageNumberStyle.fontSize} onChange={handleFontSizeChange} style={{ borderRadius: '3px' }} disabled={pageNumberStyle.display==='none'}>
                                         {fontSizeOptions.map((size, index) => (
                                             <option key={index} value={size}>
                                                 {size}
@@ -459,6 +486,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                                             borderRadius: '3px',
                                             color: pageNumberStyle.color === 'black' ? 'white' : 'black'
                                         }}
+                                        disabled={pageNumberStyle.display==='none'}
                                     >
                                         {colorOptions.map((color, index) => (
                                             <option key={index} value={color} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'black' }}>
