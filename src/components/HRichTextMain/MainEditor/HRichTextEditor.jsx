@@ -26,10 +26,10 @@ import replaceDatasTables from '../../Table/replaceDatasTables/index'
 import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
 
 import { defaultEditorStyle } from '../../_constant/_constant'
-import getMainblockStyle from '../../MainBlock/getMainblockStyle'
+import getMainblockStyle from '../../MainBlock/function/getMainblockStyle'
 import getHeaderBlockStyle from '../../HeaderBlock/function/getHeaderBlockStyle'
 import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle'
-import addAndUpdtaeMainBlockStyle from '../../MainBlock/addAndUpdateMainBlock'
+import addAndUpdtaeMainBlockStyle from '../../MainBlock/function/addAndUpdateMainBlock'
 import { pxToUnit } from '../../utilities'
 import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 

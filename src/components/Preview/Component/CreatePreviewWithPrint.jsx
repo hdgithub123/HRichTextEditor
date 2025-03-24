@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import Preview from './Preview';
 import { useReactToPrint } from 'react-to-print';
 import createCssVarriable from "../functions/createCssVarriable";
@@ -8,7 +8,6 @@ import removePageSize from '../functions/removePageSize';
 import FloatHeaderAndFooter from './FloatHeaderAndFooter';
 
 const defaultCssVarriable = createCssVarriable({})
-
 
 const CreatePreviewWithPrint = ({
     children,
@@ -42,21 +41,19 @@ const CreatePreviewWithPrint = ({
 
 
     useEffect(() => {
-        removePagedStyles();
-        setPreviewContent(null); // Xóa bỏ Preview cũ
+        removePagedStyles();        
         setTimeout(() => {
             setPreviewContent(
-                <Preview 
+                <Preview
                     key={Date.now()} // Đảm bảo React tạo component mới
-                    childrenRef={previewRef} 
-                    isRepeatThead={isRepeatThead} 
-                    cssVariables={cssVariables} 
-                    pageCss={pageCss} 
+                    childrenRef={previewRef}
+                    isRepeatThead={isRepeatThead}
+                    cssVariables={cssVariables}
+                    pageCss={pageCss}
                 />
             );
-        }, 0); // Đảm bảo rằng Preview mới được tạo sau khi Preview cũ bị xóa
+        }, 0); // Đảm bảo rằng Preview mới được tạo sau khi Preview cũ bị xóa    
     }, [children]); // Theo dõi sự thay đổi của children và các props quan trọng
-
 
 
 
@@ -69,17 +66,13 @@ const CreatePreviewWithPrint = ({
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <div ref={previewRef} style={{ display: 'none' }}>
-                <FloatHeaderAndFooter headerID={headerID} footerID={footerID} onLoad={() => setPreviewContent(previewContent)}>
+                <FloatHeaderAndFooter headerID={headerID} footerID={footerID}>
                     {children}
                 </FloatHeaderAndFooter>
             </div>
-
-            {/* Khi previewContent có dữ liệu, render lại Preview */}
-            {previewContent && (
-                <div ref={componentRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    {previewContent}
-                </div>
-            )}
+            <div ref={componentRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                {previewContent}
+            </div>
         </div>
     );
 };

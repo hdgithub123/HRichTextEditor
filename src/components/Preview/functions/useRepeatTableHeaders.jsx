@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { registerHandlers, Handler } from "pagedjs";
-
+import removeRepeatedTableHeaders from "./removeRepeatedTableHeaders";
 const useRepeatTableHeaders = () => {
   useEffect(() => {
     class RepeatTableHeadersHandler extends Handler {
@@ -78,7 +78,7 @@ const useRepeatTableHeaders = () => {
       //     renderedTable.appendChild(clonedTFoot);
       //   }
       // }
-      
+
 
       findFirstAncestor(element, selector) {
         while (element.parentNode && element.parentNode.nodeType === 1) {
@@ -124,7 +124,7 @@ const useRepeatTableHeaders = () => {
       }
     }
 
-    registerHandlers(RepeatTableHeadersHandler);
+     registerHandlers(RepeatTableHeadersHandler);
   }, []);
 };
 

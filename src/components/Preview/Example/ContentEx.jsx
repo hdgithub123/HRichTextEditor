@@ -1,9 +1,9 @@
-import React, { forwardRef, useRef, useState, useEffect } from 'react';
+import React, { forwardRef, useRef, useState, useEffect,useLayoutEffect } from 'react';
 import style from './ContentEx.module.scss';
 import CreatePreviewWithPrint from '../Component/CreatePreviewWithPrint';
 import generatePageNumberCss from '../functions/generatePageNumberCss'
 import createCssVarriable from '../functions/createCssVarriable'
-
+import removeRepeatedTableHeaders from '../functions/removeRepeatedTableHeaders';
 
 
 const ContentPreviewEx = () => {
@@ -12,6 +12,8 @@ const ContentPreviewEx = () => {
   const [isChangeContent, setIsChangeContent] = useState(false);
 
   const [isPrint, setIsPrint] = useState(false);
+  const [isRepeatThead, setIsRepeatThead] = useState(true);
+
   const handlePrint = () => {
     setIsPrint(true)
   }
@@ -24,30 +26,50 @@ const ContentPreviewEx = () => {
 
   const handleChangeContent = (e) => {
     if (isChangeContent) {
-      setIsChangeContent(false)
-      setChildContent(<MyContent2></MyContent2>)
+        setIsChangeContent(false);
+        setChildContent(<MyContent></MyContent>);
     } else {
-      setIsChangeContent(true)
-      setChildContent(<MyContent></MyContent>) 
+        setIsChangeContent(true);
+        setChildContent(<MyContent2></MyContent2>);
     }
-    
-  }
+};
+
+
+
+
 
   const pageCss = generatePageNumberCss({ style: { color: 'orange' }, format: 'Trang {page}/{pages}', isBottomPosition: false })
   // const newCssVarriable = createCssVarriable({ width: '148mm', height: '210mm', headerHeight: '30mm', footerHeight: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '15mm', paddingBottom: '15mm' })
-  const newCssVarriable = createCssVarriable({ width: '210mm', height: '297mm', marginTop: '30mm', marginBottom: '20mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '1mm', paddingBottom: '1mm' })
+  const newCssVarriable = createCssVarriable({ width: '210mm', height: '120mm', marginTop: '10mm', marginBottom: '12mm', marginLeft: "15mm", marginRight: '20mm', paddingTop: '1mm', paddingBottom: '1mm' })
 
 
   return (
     <div style={{ background: 'gray', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
       <button style={{ background: 'blue' }} onClick={handlePrint}>Print1</button>
       <button style={{ background: 'red' }} onClick={handleChangeContent}>Change Content</button>
+      <button style={{ background: 'yellow' }}
+        onClick={() => {
+          setIsRepeatThead(!isRepeatThead)
+          console.log("isRepeatThead", isRepeatThead)
+
+        }}>change Theadr{isRepeatThead}</button>
+
+
+
+      <button style={{ background: 'yellow' }}
+        onClick={() => {
+          removeRepeatedTableHeaders()
+
+        }}>Remove table header</button>
+
+
+
       <div className={style.body} ref={componentRef} style={{ background: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
         <CreatePreviewWithPrint
           pageCss={pageCss}
           isPrint={isPrint}
           isPrinted={handleisPrinted}
-          isRepeatThead={true}
+          isRepeatThead={isRepeatThead}
           cssVariables={newCssVarriable}
         >
           {childContent}
@@ -71,7 +93,7 @@ const MyContent = () => {
       <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
       <TableComponent rows={20} cols={7}  ></TableComponent>
       <Content number={10}></Content>
-     
+
     </div>
   )
 }
@@ -85,7 +107,7 @@ const MyContent2 = () => {
           đầu
           <span>đây là header mới</span>
           <div>đây là header mới</div>
-          </header>
+        </header>
       </div>
       <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
       <Content number={30}></Content>

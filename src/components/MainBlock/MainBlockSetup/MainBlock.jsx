@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import addAndUpdateMainBlock from './addAndUpdateMainBlock';
-import { defaultEditorStyle, _UNIT } from '../_constant/_constant';
-import getMainblockStyle from './getMainblockStyle';
+import addAndUpdateMainBlock from '../function/addAndUpdateMainBlock';
+import { defaultEditorStyle, _UNIT } from '../../_constant/_constant';
+import getMainblockStyle from '../function/getMainblockStyle';
 import styles from './MainBlock.module.scss';
 import imageIcon from './pageSetup.svg';
 import applyIcon from './pageSetup.svg';
-import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../utilities';
+import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
 
 const units = _UNIT
 

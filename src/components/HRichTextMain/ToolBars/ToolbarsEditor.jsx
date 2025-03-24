@@ -30,9 +30,10 @@ import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
 import RawContentView from '../../RawContentView/RawContentView'
 import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
 import OpenDocument from '../../Document/OpenDocument/OpenDocument'
-import MainBlock from '../../MainBlock/MainBlock'
+import MainBlock from '../../MainBlock/MainBlockSetup/MainBlock'
 import HeaderBlockToolBar from '../../HeaderBlock/ToolBar/HeaderBlockToolBar'
 import FooterBlockToolBar from '../../FooterBlock/ToolBar/FooterBlockToolBar'
+import PageLayout from '../../MainBlock/PageLayout/PageLayout'
 import { PrintDocument, PrintPreview } from '../../Print/index'
 
 const ToolbarsEditor = ({
@@ -75,6 +76,7 @@ const ToolbarsEditor = ({
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
+            {documentView &&   <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
             {documentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             {(documentView || rawContentView) && <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>}
 
@@ -108,7 +110,6 @@ const ToolbarsEditor = ({
             {documentView && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
             {documentView && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
             {documentView && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
-
         </div>
     );
 }
