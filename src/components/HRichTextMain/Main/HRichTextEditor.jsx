@@ -217,12 +217,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const [contentView, setContentView] = useState(initContentView);
 
   const [isPrint, setIsPrint] = useState(false);
-  const handlePrint = () => {
-    console.log("handlePrint",isPrint)
-    setIsPrint(true)
-  }
-
-
   const handleisPrinted = (e) => {
     
     // setIsPrint(!e)
@@ -239,7 +233,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
   return (
     <div className={style.allContainer}>
-      <button onClick={handlePrint}>Print or Save as PDF</button>
       {!viewOnly && <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
         <ToolbarsEditor
           editorState={editorState}

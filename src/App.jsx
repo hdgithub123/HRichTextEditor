@@ -1,7 +1,5 @@
 import './App.css'
  import HRichTextEditor from '../src/components/HRichTextMain/Main/HRichTextEditor'
-//import HRichTextEditor from '../src/components/HRichTextMain/MainEditor/HRichTextEditor'
-//import HMain from '../src/components/HRichTextMain/MainEditor/HMain'
 //import HRichTextEditorPreview from '../src/components/HRichTextMain/MainPreview/HRichTextEditorPreview'
 
 import React, { useState } from 'react';
@@ -19,7 +17,6 @@ function App() {
         <div>hello</div>
         <button onClick={()=> setIsPrint(!isPrint)}>Change Theme</button>
         <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
-        {/* <HMain></HMain> */}
         {/* <HRichTextEditorPreview
         isPrint={isPrint}
         ></HRichTextEditorPreview> */}
