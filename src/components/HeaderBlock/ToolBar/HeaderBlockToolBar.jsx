@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { EditorState } from 'draft-js';
 import imageIcon from './documentHeader.svg'
-import addHeaderBlock from '../function/addHeaderBlock';
+import addAndUpdateHeaderBlock from '../function/addAndUpdateHeaderBlock';
 import styles from './HeaderBlockToolBar.module.scss';
 import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
 
@@ -13,12 +13,15 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
     const ref = useRef();
 
     const style = {
-        height: '10mm',
-        background: 'red',
-        // width: '20mm',
+        height: '20mm',
+        background: 'white',
+        borderBottom : '5px dashed blue',
+        borderTop : '5px dotted gray',
+        marginLeft: '10mm',
+      //  width: '190mm',
     }
     const handleAddHeaderBlock = () => {
-        const newEditorState = addHeaderBlock({ editorState, blockStyle: style });
+        const newEditorState = addAndUpdateHeaderBlock({ editorState, blockStyle: style });
         setEditorState(newEditorState);
     };
 
