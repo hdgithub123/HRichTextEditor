@@ -5,11 +5,6 @@ import style from './PrintDocument.module.scss'
 const PrintDocument = ({setIsPrint}) => {
   
     const handleClick = ()=>{
-        // const newcontentView = {
-        //     ...contentView,
-        //     rawContentView : !contentView.printDocument
-        // }
-        // setContentView(newcontentView)
         setIsPrint(true);
     }
 

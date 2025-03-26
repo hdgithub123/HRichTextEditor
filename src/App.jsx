@@ -17,6 +17,7 @@ function App() {
   return (
     <>
         <div>hello</div>
+           <ContentPreviewEx></ContentPreviewEx>
         <button onClick={()=> setIsPrint(!isPrint)}>Change Theme</button>
         <HRichTextEditor  onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
         {/* <HRichTextEditorPreview

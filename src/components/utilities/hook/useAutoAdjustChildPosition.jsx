@@ -16,21 +16,24 @@ const adjustAbsolutePosition = (ref) => {
 
     // Nếu child bị tràn xuống dưới màn hình
     if (childRect.bottom > windowHeight) {
-        newStyles.top = 'auto';
-        // newStyles.bottom = `${parentRect.height}px`; // Đẩy lên trên parent
-        newStyles.bottom = `100%`; // Đẩy lên trên parent
-    }
+        if (childRect.top < childRect.height) {
+            newStyles.top = '100%';
+            newStyles.bottom = 'auto';
+        } else {
+            newStyles.top = 'auto';
+            newStyles.bottom = `100%`; // Đẩy lên trên parent
+        }
 
-    // Nếu child bị tràn lên trên màn hình
-    if (childRect.top < 0) {
-        newStyles.top = '100%';
-        newStyles.bottom = 'auto';
     }
-
     // Nếu child bị tràn ra khỏi màn hình bên phải
     if (childRect.right > windowWidth) {
-        newStyles.left = 'auto';
-        newStyles.right = '0';
+        if (childRect.left < childRect.width) {
+            newStyles.left = '0';
+            newStyles.right = 'auto';
+        } else {
+            newStyles.left = 'auto';
+            newStyles.right = '0';
+        }
     }
 
     // Nếu child bị tràn ra khỏi màn hình bên trái
@@ -38,7 +41,6 @@ const adjustAbsolutePosition = (ref) => {
         newStyles.left = '0';
         newStyles.right = 'auto';
     }
-
     return newStyles;
 };
 
