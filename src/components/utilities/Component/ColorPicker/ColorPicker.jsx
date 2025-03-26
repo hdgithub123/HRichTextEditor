@@ -11,14 +11,14 @@ const ColorPicker = ({
   isUnlimitedColor = false,
   onChange = () => { },
 }) => {
-  const [selectedColor, setSelectedColor] = useState(curentColor);
+  const [selectedColor, setSelectedColor] = useState('');
   const [showColorPicker, setShowColorPicker] = useState(false);
   const pickerRef = useRef(null);
   const showpickerRef = useRef(null);
 
   useEffect(() => {
 
-    setSelectedColor(curentColor)
+    setSelectedColor(curentColor?curentColor: 'Select your color')
 
   }, [curentColor]);
 
@@ -41,7 +41,6 @@ const ColorPicker = ({
   const handlePresetColorClick = (color) => {
     setSelectedColor(color);
     onChange(color);
-    // setShowColorPicker(false); // Đóng picker sau khi chọn màu
   };
 
   const toggleColorPicker = () => {
@@ -81,7 +80,7 @@ const ColorPicker = ({
                   style={{ backgroundColor: color }}
                   onClick={() => handlePresetColorClick(color)}
                   title={`${name} (${color})`}
-                  data-selected={selectedColor.toUpperCase() === color.toUpperCase()}
+                  data-selected={curentColor.toUpperCase() === color.toUpperCase()}
                 />
               ))}
             </div>

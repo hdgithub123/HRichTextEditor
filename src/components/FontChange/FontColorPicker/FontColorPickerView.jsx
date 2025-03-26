@@ -7,7 +7,7 @@ const FontColorPickerView = ({ editorState, setEditorState }) => {
             const currentStyle = editorState.getCurrentInlineStyle();
             const colorStyles = Array.from(currentStyle).filter(style => style.startsWith('color.'));
             const lastColorStyle = colorStyles.length > 0 ? colorStyles[colorStyles.length - 1] : null;
-            return lastColorStyle ? lastColorStyle.split('.')[1] : 'black'; // Default to black if no color is selected
+            return lastColorStyle ? lastColorStyle.split('.')[1] : ''; // Default to black if no color is selected
         } catch (error) {
             return 'black'
         }

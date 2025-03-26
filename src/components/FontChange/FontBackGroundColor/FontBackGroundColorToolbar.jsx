@@ -8,7 +8,7 @@ const FontBackGroundColorToolbar = ({ editorState, setEditorState }) => {
             const currentStyle = editorState.getCurrentInlineStyle();
             const bgColorStyles = Array.from(currentStyle).filter(style => style.startsWith('backgroundColor.'));
             const lastBgColorStyle = bgColorStyles.length > 0 ? bgColorStyles[bgColorStyles.length - 1] : null;
-            return lastBgColorStyle ? lastBgColorStyle.split('.')[1] : 'white'; // Default to white if no background color is selected
+            return lastBgColorStyle ? lastBgColorStyle.split('.')[1] : ''; // Default to white if no background color is selected
         } catch (error) {
             return 'white';
         }
