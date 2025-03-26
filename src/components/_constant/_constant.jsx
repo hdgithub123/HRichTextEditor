@@ -19,29 +19,45 @@ const _FONTSIZES = [
 ];
 
 
+const _COMMONCOLOURS = {
+    white: "#FFFFFF",
+    black: "#000000",
+    red: "#FF0000",
+    crimson: "#DC143C",
+    coral: "#FF7F50",
+    orange: "#FFA500",
+    salmon: "#FA8072",
+    gold: "#FFD700",
+    yellow: "#FFFF00",
+    khaki: "#F0E68C",
+    green: "#00FF00",
+    mintGreen: "#98FF98",
+    lightGreen: "#90EE90",
+    darkGreen: "#006400",
+    teal: "#008080",
+    cyan: "#00FFFF",
+    lightBlue: "#ADD8E6",
+    blue: "#0000FF",
+    navy: "#000080",
+    darkBlue: "#00008B",
+    magenta: "#FF00FF",
+    pink: "#FFC0CB",
+    purple: "#800080",
+    plum: "#DDA0DD",
+    lavender: "#E6E6FA",
+    brown: "#A52A2A",
+    chocolate: "#D2691E",
+    gray: "#808080",
+    darkGray: "#A9A9A9",
+    lightGray: "#D3D3D3",
+    silver: "#C0C0C0",
+    beige: "#F5F5DC",
+    olive: "#808000",
+};
 
-const presetColors = [
-    '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF',
-    '#00FFFF', '#FFA500', '#A52A2A', '#800080', '#008000',
-    '#000080', '#808000', '#800000', '#008080', '#000000',
-    '#FFFFFF', '#C0C0C0', '#808080', '#FFD700', '#FFC0CB'
-  ]
 
-  
-const _COLORS = [
-    // 'none',
-    'white',
-    'red',
-    'blue',
-    'green',
-    'yellow',
-    'orange',
-    'purple',
-    'pink',
-    'brown',
-    'black',
-    ...presetColors,
-];
+
+
 
 
 
@@ -141,6 +157,18 @@ const defaultEditorStyle = {
 }
 
 
+const defaultPageSetup = {
+    pageHeight: '297mm',
+    isRepeatThead: true,
+    pageNumber: {
+        position: '',
+        format: '',
+        style: {},
+    },
+};
+
+
+
 const _UNIT = [
     'mm',
     'px',
@@ -156,10 +184,11 @@ const _UNIT = [
 export {
     _FONTFAMILY,
     _FONTSIZES,
-    _COLORS,
+    _COMMONCOLOURS,
     _LINEHEIGHT,
     _NOTCHANGEBLOCK,
     _MARGINS,
     _UNIT,
     defaultEditorStyle,
+    defaultPageSetup,
 }

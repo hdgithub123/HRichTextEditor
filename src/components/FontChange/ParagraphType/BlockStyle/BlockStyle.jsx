@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { EditorState, Modifier } from 'draft-js';
 import styles from './BlockStyle.module.scss';
-import { _FONTFAMILY, _FONTSIZES, _COLORS, _NOTCHANGEBLOCK,_MARGINS } from '../../../_constant/_constant';
+import { _FONTFAMILY, _FONTSIZES,_COMMONCOLOURS, _NOTCHANGEBLOCK, _MARGINS } from '../../../_constant/_constant';
 import getCurrentBlockType from './getCurrentBlock';
 import updateBlockStyle from '../../../utilities/updateBlockStyle'
 import updateBlockType from '../../../utilities/updateBlockType'
-
+import { ColorPicker } from '../../../utilities/index'
 
 const orderedListType2 = [
   { name: 'Decimal', symbol: '1.' },
@@ -66,7 +66,8 @@ const depthOptions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const marginOptions = _MARGINS;
 const fontFamilyOptions = _FONTFAMILY;
 const fontSizeOptions = _FONTSIZES;
-const colorOptions = ['none', ..._COLORS];
+const commonColours = Object.values(_COMMONCOLOURS);
+const colorOptions = ['none', ...commonColours];
 const notChangeBlock = _NOTCHANGEBLOCK
 
 const toggleListItem = ({ editorState, blockStyle, blockType }) => {
@@ -95,7 +96,7 @@ const BlockStyle = ({ editorState, setEditorState }) => {
   const blockType = block.getType();
   const blockStyle = block.getData().get('blockStyle')
   const [selectedBlockStyle, setSelectedBlockStyle] = useState(undefined);
-  
+
   useEffect(() => {
     let blockStyleJS = {};
     try {
@@ -154,34 +155,34 @@ const BlockStyleForm = ({ orderedListType, unorderedListType, currentStyle, curr
   }
 
 
-const checkAcvticeBlock = () => {
-  if (notChangeBlock.includes(currentBlockType)) {
-   return false;
-  } else {
-    return true;
-  }
-}
-
-
-
-const findBlockType = (listType) => {
-
-  if(selectedIsList === false){
-    return currentBlockType;
+  const checkAcvticeBlock = () => {
+    if (notChangeBlock.includes(currentBlockType)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
-  let blockType = 'unordered-list-item';
-  if (orderedListType.includes(listType)) {
-    blockType = 'ordered-list-item';
-  } 
-  else if (unorderedListType.includes(listType)) {
-    blockType = 'unordered-list-item';
-  } else {
-    // blockType = currentBlockType;
-  }
 
-  return blockType;
-};
+
+  const findBlockType = (listType) => {
+
+    if (selectedIsList === false) {
+      return currentBlockType;
+    }
+
+    let blockType = 'unordered-list-item';
+    if (orderedListType.includes(listType)) {
+      blockType = 'ordered-list-item';
+    }
+    else if (unorderedListType.includes(listType)) {
+      blockType = 'unordered-list-item';
+    } else {
+      // blockType = currentBlockType;
+    }
+
+    return blockType;
+  };
 
   const [selectedType, setSelectedType] = useState(initialStyle);
   const [selectedIsList, setSelectedIsList] = useState(isListBlock());
@@ -201,7 +202,7 @@ const findBlockType = (listType) => {
 
   useEffect(() => {
     setBlockType(findBlockType())
-  }, [findBlockType(),selectedIsList]);
+  }, [findBlockType(), selectedIsList]);
 
 
   const handleMarginLeftChange = (e) => {
@@ -227,7 +228,7 @@ const findBlockType = (listType) => {
     const blockType2 = findBlockType(e.target.value);
     onChange({ blockStyle, blockType: blockType2 });
     setSelectedType(blockStyle)
-  
+
   };
 
   const handleFontFamilyChange = (e) => {
@@ -254,25 +255,27 @@ const findBlockType = (listType) => {
     onChange({ blockStyle, blockType });
   };
 
-  const handleFontColorChange = (e) => {
+
+  const handleFontColorChange = (color) => {
     if (!blockType) {
       return;
     }
     const blockStyle = {
       ...selectedType,
-      color: e.target.value
+      color: color
     }
     setSelectedType(blockStyle)
     onChange({ blockStyle, blockType });
   };
 
-  const handleFontBackgroundColorChange = (e) => {
+
+  const handleFontBackgroundColorChange = (color) => {
     if (!blockType) {
       return;
     }
     const blockStyle = {
       ...selectedType,
-      backgroundColor: e.target.value
+      backgroundColor: color
     }
     setSelectedType(blockStyle)
     onChange({ blockStyle, blockType });
@@ -283,7 +286,7 @@ const findBlockType = (listType) => {
       return;
     }
 
-    
+
     if (e.target.checked) {
       const blockStyle = {
         ...selectedType,
@@ -292,7 +295,7 @@ const findBlockType = (listType) => {
       setSelectedType(blockStyle)
       onChange({ blockStyle, blockType });
     } else {
-    
+
     }
     setSelectedIsList(e.target.checked)
   }
@@ -305,7 +308,7 @@ const findBlockType = (listType) => {
             <td>Margin Left:</td>
             <td>
               <select id="marginLeftSelect" value={selectedType.marginLeft} onChange={handleMarginLeftChange} style={{ borderRadius: '3px' }}>
-                {marginOptions.map((margin,index) => (
+                {marginOptions.map((margin, index) => (
                   <option key={index} value={margin}>
                     {margin}
                   </option>
@@ -316,7 +319,7 @@ const findBlockType = (listType) => {
           <tr>
             <td>Item Type:</td>
             <td>
-              <select id="listTypeSelect" value={selectedListType} disabled={selectedIsList && checkAcvticeBlock()? !checkAcvticeBlock():true} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
+              <select id="listTypeSelect" value={selectedListType} disabled={selectedIsList && checkAcvticeBlock() ? !checkAcvticeBlock() : true} onChange={handleListTypeChange} style={{ borderRadius: '3px' }}>
                 {listType.map((type, index) => (
                   <option key={index} value={type.name} disabled={!selectedIsList}>
                     {type.symbol}
@@ -352,43 +355,27 @@ const findBlockType = (listType) => {
           <tr>
             <td>Font Color:</td>
             <td>
-              <select
-                id="fontColor"
-                value={selectedType.color}
-                onChange={handleFontColorChange}
-                style={{
-                  backgroundColor: selectedType.color !== 'none' ? selectedType.color : 'transparent',
-                  borderRadius: '3px',
-                  color: selectedType.color === 'black' ? 'white' : 'black'
-                }}
-              >
-                {colorOptions.map((color, index) => (
-                  <option key={index} value={color} className={styles.colorSwatch} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'black' }}>
-                    {color}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.colorPicker}>
+                <ColorPicker
+                  onChange={handleFontColorChange}
+                  curentColor={selectedType.color}
+                  isUnlimitedColor= {false}
+                >
+                </ColorPicker>
+              </div>
             </td>
           </tr>
           <tr>
             <td>Background:</td>
             <td>
-              <select
-                id="backgroundColor"
-                value={selectedType.backgroundColor}
-                onChange={handleFontBackgroundColorChange}
-                style={{
-                  backgroundColor: selectedType.backgroundColor !== 'none' ? selectedType.backgroundColor : 'transparent',
-                  borderRadius: '3px',
-                  color: selectedType.backgroundColor === 'black' ? 'white' : 'black'
-                }}
-              >
-                {colorOptions.map((color, index) => (
-                  <option key={index} value={color} className={styles.colorSwatch} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'inherit' }}>
-                    {color}
-                  </option>
-                ))}
-              </select>
+              <div className={styles.colorPicker}>
+                <ColorPicker
+                  onChange={handleFontBackgroundColorChange}
+                  curentColor={selectedType.backgroundColor}
+                  isUnlimitedColor= {false}
+                >
+                </ColorPicker>
+              </div>
             </td>
           </tr>
 
@@ -399,7 +386,7 @@ const findBlockType = (listType) => {
                 type="checkbox"
                 checked={selectedIsList}
                 onChange={handleIsListChange}
-                disabled={selectedIsList? selectedIsList: !checkAcvticeBlock()}
+                disabled={selectedIsList ? selectedIsList : !checkAcvticeBlock()}
               />
             </td>
           </tr>

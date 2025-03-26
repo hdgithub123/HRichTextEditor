@@ -1,95 +1,8 @@
-// // viết 1 Component để tạo 1 HeaderBlock mới// viết 1 Component để tạo 1 HeaderBlock mới
-// import React, { useState, useEffect, useRef } from 'react';
-// import { EditorState } from 'draft-js';
-// import imageIcon from './documentHeader.svg'
-// import addAndUpdateHeaderBlock from '../function/addAndUpdateHeaderBlock';
-// import styles from './HeaderBlockToolBar.module.scss';
-// import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
-
-
-// const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
-//     const [show, setShow] = useState(false);
-//     const [headerStyle, setHeaderStyle] = useState(false);
-//     const blockStyleRef = useRef();
-//     const ref = useRef();
-
-//     const style = {
-//         height: '20mm',
-//         width: '100%',
-//         background: 'white',
-
-//         // borderBottom: '',
-//         borderBottomWidth: "5px",
-//         borderBottomStyle: "dashed",
-//         borderBottomColor: "blue",
-
-
-
-//         // borderTop: '',
-//         borderTopWidth: '5px',
-//         borderTopStyle: 'dotted',
-//         borderTopColor: 'red',
-
-
-
-//         marginLeft: '10mm',
-//         marginRight: '10mm',
-//         paddingTop:'1mm',
-//         paddingBottom: '1mm',
-//     }
-//     const handleAddHeaderBlock = () => {
-//         const newEditorState = addAndUpdateHeaderBlock({ editorState, blockStyle: style });
-//         setEditorState(newEditorState);
-//     };
-
-//     const handleShow = () => {
-//         setShow(true);
-//     };
-
-
-//     useOnClickOutside(ref, () => {
-//         setShow(false);
-//     });
-
-//     useAutoAdjustAbsolutePosition(blockStyleRef, show);
-
-//     return (
-//         <div ref={ref} className={styles.container}>
-//             <button onMouseDown={handleShow}>
-//                 <img src={imageIcon} alt="Header" title="Header" className={`${styles.img} ${styles.active}`} />
-//             </button>
-//             {show && (
-//                 <div ref={blockStyleRef} className={styles.formContainer}>
-//                     <table>
-//                         <tbody>
-//                             <tr>
-//                                 <td>Padding Top: </td>
-//                                 <td>
-//                                     <input type="number" name="paddingTop" value={style.paddingTop} disabled={style.paddingTop === 'auto'} />
-//                                 </td>
-//                             </tr>
-//                         </tbody>
-//                     </table>
-//                     <div className={styles.applyButton}>
-//                         <button onMouseDown={handleAddHeaderBlock}>
-//                             <img src={imageIcon} alt="Header" title="Header" className={`${styles.img} ${styles.active}`} />
-//                             <span>Apply</span>
-//                         </button>
-
-//                     </div>
-//                 </div>)}
-//         </div>
-//     );
-// };
-
-// export default HeaderBlockToolBar;
-
-
 import React, { useState, useRef } from 'react';
 import imageIcon from './documentHeader.svg';
 import addAndUpdateHeaderBlock from '../function/addAndUpdateHeaderBlock';
 import styles from './HeaderBlockToolBar.module.scss';
-import { useOnClickOutside, useAutoAdjustAbsolutePosition, ColorPicker } from '../../utilities';
+import { useOnClickOutside, ColorPicker } from '../../utilities';
 
 
 const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
@@ -198,7 +111,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                     <div className={styles.colorPicker}>
                                         <ColorPicker
                                             onChange={handleBackgroundChange}
-                                            defaultColor={headerStyle.background}
+                                            curentColor={headerStyle.background}
                                         >
                                         </ColorPicker>
                                     </div>
@@ -236,7 +149,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                     <div className={styles.colorPicker}>
                                         <ColorPicker
                                             onChange={handleBorderBottomColorChange}
-                                            defaultColor={headerStyle.borderBottomColor}
+                                            curentColor={headerStyle.borderBottomColor}
                                         >
                                         </ColorPicker>
                                     </div>
@@ -274,7 +187,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                     <div className={styles.colorPicker}>
                                         <ColorPicker
                                             onChange={handleBorderTopColorChange}
-                                            defaultColor={headerStyle.borderTopColor}
+                                            curentColor={headerStyle.borderTopColor}
                                         >
                                         </ColorPicker>
                                     </div>

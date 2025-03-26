@@ -7,6 +7,11 @@ const deleteBlockStyle = ({editorState}) => {
     const blockKey = selectionState.getStartKey();
     const block = contentState.getBlockForKey(blockKey);
 
+
+    if (blockKey === 'mainBlock') {
+        return editorState;
+    }
+
     // kiểm tra xem có blockStyle không
     if (!block.getData().get('blockStyle')) {
         return editorState;

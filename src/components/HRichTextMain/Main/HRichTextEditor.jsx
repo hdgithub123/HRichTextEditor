@@ -23,15 +23,13 @@ import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText'
 
 import { defaultEditorStyle } from '../../_constant/_constant'
 import getMainblockStyle from '../../MainBlock/function/getMainblockStyle'
+
 import getHeaderBlockStyle from '../../HeaderBlock/function/getHeaderBlockStyle'
 import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle'
 import addAndUpdtaeMainBlockStyle from '../../MainBlock/function/addAndUpdateMainBlock'
 import { pxToUnit } from '../../utilities'
 
 
-
-import HPreview from '../../HPreview/HPreview';
-import FloatHeaderAndFooter from '../../Preview/Component/FloatHeaderAndFooter';
 import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 
 
@@ -41,6 +39,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const [contentStateObjectPreview, setContentStateObjectPreview] = useState(null);
+  const [colorList, setColorList] = useState([]);
   const editorRef = useRef(null);
   const editorPrevewRef = useRef(null);
 
@@ -59,7 +58,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
     editorPrevewRef: editorPrevewRef
   }
 
-  const [firstview, setFirstView] = useState(true);
 
   const transformTablesChange = (obj) => {
     return Object.keys(obj).map(key => {
@@ -145,7 +143,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       const pxFooterHeight = getPxStyle({ blockStyle: footerHeight, child: 'height' })
       const pxPaddingTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingTop' })
       const pxBottomTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingBottom' })
-
       const newMainBlockStyle = {
         ...mainBlockStyle,
         paddingTop: `${pxPaddingTopMainBlock + pxHeaderHeight}px`,
@@ -273,7 +270,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               onChange={onChange}
               readOnly={false}
               placeholder="Write something interesting here..."
-              customStyleMap={customStyleMap}
+              customStyleMap={customStyleMap({})}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
               blockRendererFn={getBlockRendererFn({ editorRef: editorRef.current, getEditorState: () => editorState, onChange: onChange, isEditable: true })}
@@ -299,7 +296,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               onChange={onChangePreview}
               readOnly={true}
               placeholder="Empty document..."
-              customStyleMap={customStyleMap}
+              customStyleMap={customStyleMap({colors:colorList})}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
               blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable: false })}

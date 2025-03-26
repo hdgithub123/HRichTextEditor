@@ -31,7 +31,8 @@ const FontColorPickerView = ({ editorState, setEditorState }) => {
         <div  title='Font color' className={styles.fontColorPicker}>
             <ColorPicker
                 onChange={handleSelectColor}
-                defaultColor={getCurrentColor()}
+                curentColor={getCurrentColor()}
+                isUnlimitedColor= {false}
             >
             </ColorPicker>
         </div>

@@ -6,7 +6,7 @@ import updateBlockType from "./updateBlockType";
 import updateBlockStyleFromBlockKey from "./updateBlockStyleFromBlockKey";
 import useAutoAdjustAbsolutePosition from "./hook/useAutoAdjustChildPosition"
 import pxToUnit from './pxToUnit'
-import ColorPicker from './Component/ColorPicker'
+import ColorPicker from './Component/ColorPicker/ColorPicker'
 import applyInlineStyle from './applyInlineStyle'
 
 export {

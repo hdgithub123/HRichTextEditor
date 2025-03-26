@@ -1,6 +1,6 @@
 import { Modifier, EditorState, RichUtils } from "draft-js";
 
-const applyInlineStyle = ({ editorState, inlineStyle, isRemove = false }) => {
+const applyInlineStyle =  ({ editorState, inlineStyle, isRemove = false }) => {
     const currentStyle = editorState.getCurrentInlineStyle(); // Get current styles
     const contentState = editorState.getCurrentContent(); // Get current content
     const selection = editorState.getSelection(); // Get selection range

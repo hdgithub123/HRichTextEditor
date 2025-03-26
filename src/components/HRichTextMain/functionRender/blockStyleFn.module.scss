@@ -242,7 +242,8 @@ $marginLeft: constants.$MARGINLEFT;
 $colors: constants.$COLORS;
 
 @each $color in $colors {
-  .font-color-#{$color} {
+  $class-name: str-replace($color, '#', ''); // Loại bỏ dấu #
+  .font-color-#{$class-name} {
     color: #{$color};
   }
 }
@@ -250,10 +251,13 @@ $colors: constants.$COLORS;
 // them background-color
 
 @each $color in $colors {
-  .background-color-#{$color} {
+  $class-name: str-replace($color, '#', ''); // Loại bỏ dấu #
+  .background-color-#{$class-name} {
     background-color: #{$color} !important;
   }
 }
+
+
 $font-sizes: constants.$FONTSIZES;
 
 // them font-size

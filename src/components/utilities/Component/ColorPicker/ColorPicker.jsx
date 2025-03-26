@@ -1,76 +1,95 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './ColorPicker.module.scss';
+import useAutoAdjustChildPosition from '../../hook/useAutoAdjustChildPosition'
+import useOnClickOutside from '../../useOnClickOutside'
+import { _COMMONCOLOURS } from '../../../_constant/_constant'
 
-const ColorPicker = ({ 
-  presetColors = [
-    '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', 
-    '#00FFFF', '#FFA500', '#A52A2A', '#800080', '#008000',
-    '#000080', '#808000', '#800000', '#008080', '#000000',
-    '#FFFFFF', '#C0C0C0', '#808080', '#FFD700', '#FFC0CB'
-  ],
-  defaultColor = '#FFFFFF',
-  onChange,
+
+const ColorPicker = ({
+  presetColors = _COMMONCOLOURS,
+  curentColor = '#FFFFFF',
+  isUnlimitedColor = false,
+  onChange = () => { },
 }) => {
+  const [selectedColor, setSelectedColor] = useState(curentColor);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const pickerRef = useRef(null);
+  const showpickerRef = useRef(null);
 
-  const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const [showPresets, setShowPresets] = useState(true);
+  useEffect(() => {
+
+    setSelectedColor(curentColor)
+
+  }, [curentColor]);
+
+
+  // Đóng color picker khi click bên ngoài
+
+  useOnClickOutside(pickerRef, () => {
+    setShowColorPicker(false)
+  })
+
+  useAutoAdjustChildPosition(showpickerRef, showColorPicker)
+
 
   const handleColorChange = (e) => {
-    setSelectedColor(e.target.value);
-    onChange(e.target.value)
+    const newColor = e.target.value;
+    setSelectedColor(newColor);
+    onChange(newColor);
   };
 
   const handlePresetColorClick = (color) => {
     setSelectedColor(color);
-    onChange(color)
+    onChange(color);
+    // setShowColorPicker(false); // Đóng picker sau khi chọn màu
   };
 
-  const togglePresets = () => {
-    setShowPresets(!showPresets);
+  const toggleColorPicker = () => {
+    setShowColorPicker(!showColorPicker);
   };
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>{selectedColor.toUpperCase()}</h1>
-      
-      <div className={styles.picker}>
-        {/* Color spectrum input */}
-        <div className={styles.spectrum}>
-          <input 
-            type="color" 
-            value={selectedColor} 
+    <div className={styles.colorPickerContainer} ref={pickerRef}>
+      {/* Nút trigger hiển thị màu đã chọn */}
+      <button
+        className={styles.colorTrigger}
+        style={{ backgroundColor: selectedColor }}
+        onClick={toggleColorPicker}
+      />
+
+      {/* Bảng chọn màu (ẩn/hiện) */}
+      {showColorPicker && (
+        <div ref={showpickerRef} className={styles.picker}>
+          {/* Color spectrum input */}
+          {isUnlimitedColor && <input
+            type="color"
+            title='Select a color by clicking here'
+            value={selectedColor}
             onChange={handleColorChange}
             className={styles.colorInput}
-          />
-        </div>
-                
-        {/* Preset colors section */}
-        <div className={styles.presets}>
-          <div className={styles.presetsHeader} onClick={togglePresets}>
-            <h3>Select Color</h3>
-            <span className={styles.toggleIcon}>
-              {showPresets ? '▼' : '▶'}
-            </span>
-          </div>
-          
-          {showPresets && (
+          />}
+          {/* Preset colors section */}
+          <div className={styles.presets}>
+            <div className={styles.presetsHeader}>
+              {selectedColor.toUpperCase()}
+            </div>
             <div className={styles.grid}>
-              {presetColors.map((color, index) => (
+              {Object.entries(presetColors).map(([name, color]) => (
                 <div
-                  key={index}
+                  key={name}
                   className={styles.presetColor}
                   style={{ backgroundColor: color }}
                   onClick={() => handlePresetColorClick(color)}
-                  title={color}
+                  title={`${name} (${color})`}
                   data-selected={selectedColor.toUpperCase() === color.toUpperCase()}
                 />
               ))}
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default ColorPicker
+export default ColorPicker;

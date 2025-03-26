@@ -231,10 +231,12 @@ import styles from './PageLayout.module.scss';
 import imageIcon from './printSetup.svg';
 import applyIcon from './printSetup.svg';
 import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../utilities';
-import { _UNIT, _COLORS, _FONTFAMILY, _FONTSIZES } from '../../_constant/_constant';
+import { _UNIT,_COMMONCOLOURS, _FONTFAMILY, _FONTSIZES } from '../../_constant/_constant';
 
 const units = _UNIT
-const colorOptions = ['not set', ..._COLORS];
+
+const commonColours = Object.values(_COMMONCOLOURS);
+const colorOptions = ['not set', ...commonColours];
 const fontFamilyOptions = ["not set",..._FONTFAMILY];
 const fontSizeOptions = ["not set",..._FONTSIZES.map(size => `${size}pt`)];
 

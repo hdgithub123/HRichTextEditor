@@ -1,3 +1,4 @@
+import React, { useState, useRef, useEffect } from 'react';
 import { ColorPicker, applyInlineStyle } from '../../utilities';
 import styles from './FontBackGroundColorToolbar.module.scss';
 
@@ -13,10 +14,10 @@ const FontBackGroundColorToolbar = ({ editorState, setEditorState }) => {
         }
     };
 
-    const handleSelectBackGroundColor = (color) => {
+    const handleSelectBackGroundColor =  (color) => {
         if(color !== getCurrentBackGroundColor()){
             const inlineStyle = `backgroundColor.${color}`
-            const newEditorState = applyInlineStyle({editorState, inlineStyle,isRemove:false});
+            let newEditorState =  applyInlineStyle({editorState, inlineStyle,isRemove:false});            
             setEditorState(newEditorState);
         } else {
             const inlineStyle = `backgroundColor.${color}`
@@ -30,7 +31,8 @@ const FontBackGroundColorToolbar = ({ editorState, setEditorState }) => {
         <div title='Font background color' className={styles.fontColorPicker}>
             <ColorPicker
                 onChange={handleSelectBackGroundColor}
-                defaultColor={getCurrentBackGroundColor()}
+                curentColor={getCurrentBackGroundColor()}
+                isUnlimitedColor= {false}
             >
             </ColorPicker>
         </div>
@@ -38,7 +40,6 @@ const FontBackGroundColorToolbar = ({ editorState, setEditorState }) => {
 }
 
 export default FontBackGroundColorToolbar;
-//     const contentState = editorState.getCurrentContent(); // Get current content
 //     const selection = editorState.getSelection(); // Get selection range
   
 //     // Filter all styles that match the prefix of the inline style (e.g., `backgroundColor.`)

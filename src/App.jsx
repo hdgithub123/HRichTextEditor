@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 // import {contentStateObjectExample} from './components/_constant/exampleData'
 import ContentPreviewEx from  './components/Preview/Example/ContentEx'
 
-import ColorPicker from './components/utilities/Component/ColorPicker'
+import ColorPicker from './components/utilities/Component/ColorPicker/ColorPicker'
 
 function App() {
   const [theme, setTheme] = useState('light');

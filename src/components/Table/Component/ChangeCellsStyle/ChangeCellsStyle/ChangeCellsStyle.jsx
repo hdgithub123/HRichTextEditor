@@ -5,12 +5,11 @@ import borderTopIcon from './borderTop.svg'
 import borderBottomIcon from './borderBottom.svg'
 import borderLeftIcon from './borderLeft.svg'
 import borderRightIcon from './borderRight.svg'
-import { _COLORS } from '../../../../_constant/_constant'
+import { _COMMONCOLOURS } from '../../../../_constant/_constant'
 
 
 
-
-const colorOptions = _COLORS;
+const colorOptions = Object.values(_COMMONCOLOURS);
 const ChangeCellsStyle = ({ onChange }) => {
     const [positions, setPositions] = useState(['top', 'left', 'right', 'bottom']);
     const [color, setColor] = useState('black');

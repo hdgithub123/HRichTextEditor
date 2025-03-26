@@ -36,11 +36,13 @@ const blockStyleFn = (contentBlock) => {
     }
 
     if (fontColor) {
-        className += ` ${styles[`font-color-${fontColor}`]}`;
+        const sanitizedFontColor = fontColor.replace('#', ''); // Loại bỏ dấu #
+        className += ` ${styles[`font-color-${sanitizedFontColor}`]}`;
     }
-
+    
     if (backgroundColor) {
-        className += ` ${styles[`background-color-${backgroundColor}`]}`;
+        const sanitizedBackgroundColor = backgroundColor.replace('#', ''); // Loại bỏ dấu #
+        className += ` ${styles[`background-color-${sanitizedBackgroundColor}`]}`;
     }
 
     switch (type) {

@@ -101,7 +101,7 @@ const HRichTextEditorPreview = ({
   }
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (editorStatePreview) {
       const mainBlockStyle = getMainblockStyle({ editorState:editorStatePreview })
       const headerHeight = getHeaderBlockStyle({ editorState:editorStatePreview })
@@ -110,7 +110,6 @@ const HRichTextEditorPreview = ({
       const pxFooterHeight = getPxStyle({ blockStyle: footerHeight, child: 'height' })
       const pxPaddingTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingTop' })
       const pxBottomTopMainBlock = getPxStyle({ blockStyle: mainBlockStyle, child: 'paddingBottom' })
-
       const newMainBlockStyle = {
         ...mainBlockStyle,
         paddingTop: `${pxPaddingTopMainBlock + pxHeaderHeight}px`,
@@ -159,7 +158,7 @@ const HRichTextEditorPreview = ({
             onChange={onChangePreview}
             readOnly={true}
             placeholder="Empty document..."
-            customStyleMap={customStyleMap}
+            customStyleMap={customStyleMap({})}
             blockStyleFn={blockStyleFn}
             blockRenderMap={extendedBlockRenderMap}
             blockRendererFn={getBlockRendererFnView({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, isEditable: false })}

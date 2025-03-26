@@ -1,18 +1,9 @@
 import { EditorState, ContentBlock, genKey } from 'draft-js';
 import { Map } from 'immutable';
-import { defaultEditorStyle } from '../../_constant/_constant';
+import { defaultEditorStyle, defaultPageSetup } from '../../_constant/_constant';
 
-const defaultPageSetup = {
-  pageHeight: '297mm',
-  isRepeatThead: true,
-  pageNumber: {
-    position: '',
-    format: '',
-    style: {},
-  },
-};
-
-const addAndUpdateMainBlock = ({ editorState, style, pageSetup }) => {
+const defaultColorList = []
+const addAndUpdateMainBlock =  ({ editorState, style, pageSetup, colorList }) => {
   const contentState = editorState.getCurrentContent();
   const blockMap = contentState.getBlockMap();
 
