@@ -9,7 +9,7 @@ import {
     FontFamilyPickerView,
     FontSizePickerView,
     FontColorPickerView,
-    FontBackGroundColorView,
+    FontBackGroundColorToolbar,
     FontType,
     TextAlign,
     VerticalAlign,
@@ -84,7 +84,7 @@ const ToolbarsEditor = ({
             {documentView && <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>}
             {documentView && <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>}
             {documentView && <FontColorPickerView editorState={editorState} setEditorState={setEditorState} ></FontColorPickerView>}
-            {documentView && <FontBackGroundColorView editorState={editorState} setEditorState={setEditorState} ></FontBackGroundColorView>}
+            {documentView && <FontBackGroundColorToolbar editorState={editorState} setEditorState={setEditorState} ></FontBackGroundColorToolbar>}
             {/* Bold, Italic, Underline, StrikeThought, Supercrip, Subscript */}
             {documentView && <FontType editorState={editorState} setEditorState={setEditorState} ></FontType>}
             {/* TextAlign */}

@@ -1,7 +1,7 @@
 import FontFamilyPickerView from './FontFamilyPicker/FontFamilyPickerView';
 import FontSizePickerView from './FontSizePicker/FontSizePickerView';
 import FontColorPickerView from './FontColorPicker/FontColorPickerView';
-import FontBackGroundColorView from './FontBackGroundColor/FontBackGroundColorView';
+import FontBackGroundColorToolbar from './FontBackGroundColor/FontBackGroundColorToolbar';
 import FontType from './FontType/FontType'
 import TextAlign from './ParagraphType/TextAlign/TextAlign';
 import VerticalAlign from './ParagraphType/VerticalAlign/VerticalAlign';
@@ -21,7 +21,7 @@ export {
     FontFamilyPickerView,
     FontSizePickerView,
     FontColorPickerView,
-    FontBackGroundColorView,
+    FontBackGroundColorToolbar,
     FontType,
     TextAlign,
     VerticalAlign,

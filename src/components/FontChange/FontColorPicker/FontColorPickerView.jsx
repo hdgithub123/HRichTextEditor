@@ -1,8 +1,6 @@
-import { RichUtils } from 'draft-js';
-import FontColorPicker from './FontColorPicker';
-import { _COLORS } from '../../_constant/_constant'
+import { ColorPicker, applyInlineStyle } from '../../utilities';
+import styles from './FontColorPickerView.module.scss';
 
-const COLORS = _COLORS
 const FontColorPickerView = ({ editorState, setEditorState }) => {
     const getCurrentColor = () => {
         try {
@@ -16,15 +14,28 @@ const FontColorPickerView = ({ editorState, setEditorState }) => {
     };
 
     const handleSelectColor = (color) => {
-        const newEditorState = RichUtils.toggleInlineStyle(editorState, `color.${color}`);
-        setEditorState(newEditorState);
+        if(color !== getCurrentColor()){
+            const inlineStyle = `color.${color}`
+            const newEditorState = applyInlineStyle({editorState, inlineStyle,isRemove:false});
+            setEditorState(newEditorState);
+        } else {
+            const inlineStyle = `color.${color}`
+            const newEditorState = applyInlineStyle({editorState, inlineStyle,isRemove:true});
+            setEditorState(newEditorState);
+        }
+
     };
 
 
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <FontColorPicker colors={COLORS} currentColor={getCurrentColor()} onSelectColor={handleSelectColor} />
+        <div  title='Font color' className={styles.fontColorPicker}>
+            <ColorPicker
+                onChange={handleSelectColor}
+                defaultColor={getCurrentColor()}
+            >
+            </ColorPicker>
         </div>
+        
     )
 }
 

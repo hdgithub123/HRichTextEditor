@@ -6,6 +6,8 @@ import updateBlockType from "./updateBlockType";
 import updateBlockStyleFromBlockKey from "./updateBlockStyleFromBlockKey";
 import useAutoAdjustAbsolutePosition from "./hook/useAutoAdjustChildPosition"
 import pxToUnit from './pxToUnit'
+import ColorPicker from './Component/ColorPicker'
+import applyInlineStyle from './applyInlineStyle'
 
 export {
     useOnClickOutside,
@@ -16,4 +18,6 @@ export {
     useAutoAdjustAbsolutePosition,
     updateBlockStyleFromBlockKey,
     pxToUnit,
+    ColorPicker,
+    applyInlineStyle,
 }
