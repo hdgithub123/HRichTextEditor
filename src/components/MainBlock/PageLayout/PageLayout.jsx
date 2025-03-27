@@ -206,7 +206,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Position:</td>
                                 <td>
-                                    <select name="position" value={pageSetup.pageNumber.position} onChange={handlePageNumberChange} disabled={pageNumberStyle.display === 'none'}>
+                                    <select name="position" value={pageSetup.pageNumber.position || "bottom-right"} onChange={handlePageNumberChange} disabled={pageNumberStyle.display === 'none'}>
                                         <option value="top-left">Top Left</option>
                                         <option value="top-center">Top Center</option>
                                         <option value="top-right">Top Right</option>

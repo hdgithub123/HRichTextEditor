@@ -39,7 +39,6 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const [contentStateObjectPreview, setContentStateObjectPreview] = useState(null);
-  const [colorList, setColorList] = useState([]);
   const editorRef = useRef(null);
   const editorPrevewRef = useRef(null);
 
@@ -228,6 +227,22 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
 
 
+  // const handleKeyCommand = (command, editorState) => {
+  //   if (command === 'backspace' || command === 'delete') {
+  //     const selection = editorState.getSelection();
+  //     const content = editorState.getCurrentContent();
+  //     // Kiểm tra xem trong selection có block nào có blockkey = mainBlock không. nếu có thì return 'handled';
+
+  //     const block = content.getBlockForKey(selection.getStartKey());
+  //     console.log("block",block.getType())
+
+  //     if (block.getType() === 'MAIN_BLOCK') {
+  //       return 'handled'; // Ngăn Draft.js xử lý xóa
+  //     }
+  //   }
+  //   return 'not-handled';
+  // };
+
   return (
     <div className={style.allContainer}>
       {!viewOnly && <div className={style.toolBar} style={{ border: '2px black solid', borderRadius: '5px', padding: '5px', zIndex: '20' }}>
@@ -240,12 +255,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
           contentView={contentView}
           setContentView={setContentView}
-
           handlePrintPreview={handlePrintPreview}
           setIsPrint={setIsPrint}
-
-          // setMainBlockStyle ={setMainBlockStyle}
-
           variable={variable}
           onChange={onChange}
           data={{ dynamicTables, dynamicTexts }}
@@ -269,7 +280,8 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               editorState={editorState}
               onChange={onChange}
               readOnly={false}
-              placeholder="Write something interesting here..."
+              // handleKeyCommand={handleKeyCommand}
+              placeholder="Please click to open your new document..."
               customStyleMap={customStyleMap({})}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
@@ -296,7 +308,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               onChange={onChangePreview}
               readOnly={true}
               placeholder="Empty document..."
-              customStyleMap={customStyleMap({colors:colorList})}
+              customStyleMap={customStyleMap({})}
               blockStyleFn={blockStyleFn}
               blockRenderMap={extendedBlockRenderMap}
               blockRendererFn={getBlockRendererFn({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, onChange: onChangePreview, isEditable: false })}
