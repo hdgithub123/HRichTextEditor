@@ -91,6 +91,13 @@
             border: 1px solid black;
             border-radius: 3px;
         }
+        .detailContent{
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+        }
     }
     .applyButton {
         display: flex;

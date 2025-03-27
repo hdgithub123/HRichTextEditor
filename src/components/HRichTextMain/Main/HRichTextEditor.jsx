@@ -214,10 +214,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
 
   const [isPrint, setIsPrint] = useState(false);
   const handleisPrinted = (e) => {
-    
-    // setIsPrint(!e)
     setIsPrint(false)
-    console.log("handleisPrinted",isPrint)
   }
 
   const handlePrintPreview = () => {

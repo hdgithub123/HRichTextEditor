@@ -3,43 +3,44 @@ import imageIcon from './documentFooter.svg';
 import deleteIcon from './delete.svg';
 import applyIcon from './apply.svg';
 import getFooterBlockStyle from '../function/getFooterBlockStyle'
+import getUnit from '../../MainBlock/function/getUnit';
 import addAndUpdateFooterBlock from '../function/addAndUpdateFooterBlock';
 import deleteFooterBlock from '../function/deleteFooterBlock';
 import styles from './FooterBlockToolBar.module.scss';
 import { useOnClickOutside, ColorPicker, useAutoAdjustAbsolutePosition } from '../../utilities';
-import { _UNIT } from '../../_constant/_constant';
-
-const units = _UNIT
 
 const FooterBlockToolBar = ({ editorState, setEditorState }) => {
     const [show, setShow] = useState(false);
     const [moreInfo, setMoreInfo] = useState(false);
     const [footerStyle, setFooterStyle] = useState({});
     const [footerStyleInput, setFooterStyleInput] = useState({});
+       const [unit, setUnit] = useState(false);
     const blockStyleRef = useRef();
     const ref = useRef();
 
     useEffect(() => {
         const updatedFooterStyleInput = footerStyle ? {
             height:footerStyle.height !== 0 && footerStyle.height !== ''? `${footerStyle.height}${footerStyle.unit}`:'auto',
-            width:footerStyle.width !==0? `${footerStyle.width}${footerStyle.unit}`:'',
+            width:footerStyle.width !==0? `${footerStyle.width}${unit}`:'',
             background: `${footerStyle.background}`,
-            borderBottomWidth: `${footerStyle.borderBottomWidth}${footerStyle.unit}`,
+            borderBottomWidth: `${footerStyle.borderBottomWidth}${unit}`,
             borderBottomStyle: `${footerStyle.borderBottomStyle}`,
             borderBottomColor: `${footerStyle.borderBottomColor}`,
-            borderTopWidth: `${footerStyle.borderTopWidth}${footerStyle.unit}`,
+            borderTopWidth: `${footerStyle.borderTopWidth}${unit}`,
             borderTopStyle: `${footerStyle.borderTopStyle}`,
             borderTopColor: `${footerStyle.borderTopColor}`,
-            marginLeft: `${footerStyle.marginLeft}${footerStyle.unit}`,
-            marginRight: `${footerStyle.marginRight}${footerStyle.unit}`,
-            paddingTop: `${footerStyle.paddingTop}${footerStyle.unit}`,
-            paddingBottom: `${footerStyle.paddingBottom}${footerStyle.unit}`,
+            marginLeft: `${footerStyle.marginLeft}${unit}`,
+            marginRight: `${footerStyle.marginRight}${unit}`,
+            paddingTop: `${footerStyle.paddingTop}${unit}`,
+            paddingBottom: `${footerStyle.paddingBottom}${unit}`,
         } : null;
         setFooterStyleInput(updatedFooterStyleInput);
     }, [footerStyle]);
 
     useEffect(() => {
         const footerBlockStyle = getFooterBlockStyle({ editorState })
+        const currentUnit = getUnit({ editorState })
+        setUnit(currentUnit? currentUnit : 'mm')
         let newFooterStyle
         if (footerBlockStyle) {
             newFooterStyle = {
@@ -56,11 +57,6 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                 marginRight: footerBlockStyle.marginRight ? splitValueUnit(footerBlockStyle.marginRight).value : '',
                 paddingTop: footerBlockStyle.paddingTop ? splitValueUnit(footerBlockStyle.paddingTop).value : '',
                 paddingBottom: footerBlockStyle.paddingBottom ? splitValueUnit(footerBlockStyle.paddingBottom).value : '',
-                unit:
-                    footerBlockStyle.height &&
-                        splitValueUnit(footerBlockStyle.height).unit
-                        ? splitValueUnit(footerBlockStyle.height).unit
-                        : 'mm', // Default to 'mm' if no unit is found
 
             }
         } else {
@@ -78,7 +74,6 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                 marginRight:'',
                 paddingTop:'',
                 paddingBottom:'',
-                unit: 'mm'
             };
         }
         setFooterStyle(newFooterStyle)
@@ -104,13 +99,6 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
         }));
     };
 
-    const handleUnitChange = (e) => {
-        const newUnit = e.target.value;
-        setFooterStyle((prev) => ({
-            ...prev,
-            unit: newUnit,
-        }));
-    };
 
     const handleBorderBottomColorChange = (color) => {
         if (color !== footerStyle.borderBottomColor) {
@@ -203,7 +191,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                             {moreInfo && <tr>
                                 <td>Border Top:</td>
                                 <td>
-                                    <hr style={{ borderTopStyle: footerStyle.borderTopStyle, borderTopColor: footerStyle.borderTopColor, borderTopWidth: `${footerStyle.borderTopWidth}${footerStyle.unit}` }}></hr>
+                                    <hr style={{ borderTopStyle: footerStyle.borderTopStyle, borderTopColor: footerStyle.borderTopColor, borderTopWidth: `${footerStyle.borderTopWidth}${unit}` }}></hr>
                                 </td>
                             </tr>}
                             {moreInfo && <tr>
@@ -254,7 +242,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                             {moreInfo && <tr>
                                 <td>Border Bottom:</td>
                                 <td>
-                                    <hr style={{ borderTopStyle: footerStyle.borderBottomStyle, borderTopColor: footerStyle.borderBottomColor, borderTopWidth: `${footerStyle.borderBottomWidth}${footerStyle.unit}` }}></hr>
+                                    <hr style={{ borderTopStyle: footerStyle.borderBottomStyle, borderTopColor: footerStyle.borderBottomColor, borderTopWidth: `${footerStyle.borderBottomWidth}${unit}` }}></hr>
                                 </td>
                             </tr>}
                             {moreInfo && <tr>
@@ -347,14 +335,15 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                             </tr>}
                             <tr>
                                 <td>Unit</td>
-                                <td colSpan={2}>
-                                    <select value={footerStyle.unit || ''} onChange={handleUnitChange}>
-                                        {units.map((unit) => (
-                                            <option key={unit} value={unit}>
-                                                {unit}
-                                            </option>
-                                        ))}
-                                    </select>
+                                <td>
+                                    <input
+                                        type="value"
+                                        name="unit"
+                                        value={unit || ''}
+                                        style={{ width: '30px' }}
+                                        disabled={true}
+                                    />
+
                                 </td>
                             </tr>
                         </tbody>
@@ -369,7 +358,6 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                             <span>Delete</span>
                         </button>
                         <button title='Show' onClick={() => setMoreInfo(!moreInfo)}>
-                            {/* <img src={applyIcon} alt="More" className={`${styles.img} ${styles.active}`} /> */}
                             <span> {moreInfo ? '⯅' : '⯆'} </span>
                             <span>{moreInfo ? 'Less' : 'More'}</span>
                         </button>

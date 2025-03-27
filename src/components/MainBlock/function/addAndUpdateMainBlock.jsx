@@ -2,8 +2,7 @@ import { EditorState, ContentBlock, genKey } from 'draft-js';
 import { Map } from 'immutable';
 import { defaultEditorStyle, defaultPageSetup } from '../../_constant/_constant';
 
-const defaultColorList = []
-const addAndUpdateMainBlock =  ({ editorState, style, pageSetup, colorList }) => {
+const addAndUpdateMainBlock =  ({ editorState, style, pageSetup, unit}) => {
   const contentState = editorState.getCurrentContent();
   const blockMap = contentState.getBlockMap();
 
@@ -18,6 +17,7 @@ const addAndUpdateMainBlock =  ({ editorState, style, pageSetup, colorList }) =>
     const updatedData = existingData.mergeDeep({
       blockStyle: style !== undefined ? style : existingData.get('blockStyle', defaultEditorStyle),
       pageSetup: pageSetup !== undefined ? pageSetup : existingData.get('pageSetup', defaultPageSetup),
+      unit: unit !== undefined ? unit : existingData.get('unit', 'mm'),
     });
 
     const updatedBlock = existingBlock.merge({ data: updatedData });
@@ -31,6 +31,7 @@ const addAndUpdateMainBlock =  ({ editorState, style, pageSetup, colorList }) =>
       data: Map({
         blockStyle: style || defaultEditorStyle,
         pageSetup: pageSetup || defaultPageSetup,
+        unit: unit || 'mm'
       }),
     });
 

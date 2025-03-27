@@ -3,64 +3,50 @@ import imageIcon from './documentHeader.svg';
 import deleteIcon from './delete.svg';
 import applyIcon from './apply.svg';
 import getHeaderBlockStyle from '../function/getHeaderBlockStyle'
+import getUnit from '../../MainBlock/function/getUnit';
 import addAndUpdateHeaderBlock from '../function/addAndUpdateHeaderBlock';
 import deleteHeaderBlock from '../function/deleteHeaderBlock';
 import styles from './HeaderBlockToolBar.module.scss';
 import { useOnClickOutside, ColorPicker, useAutoAdjustAbsolutePosition } from '../../utilities';
-import { _UNIT } from '../../_constant/_constant';
 
-const units = _UNIT
-const defaultHeaderBlock = {
-    height: '20',
-    width: '200',
-    background: 'white',
-    borderBottomWidth: '1',
-    borderBottomStyle: 'dashed',
-    borderBottomColor: '1',
-    borderTopWidth: '0.5',
-    borderTopStyle: 'dotted',
-    borderTopColor: '0.2',
-    marginLeft: '1',
-    marginRight: '1',
-    paddingTop: '1',
-    paddingBottom: '1',
-    unit: 'mm',
-}
 
 const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
     const [show, setShow] = useState(false);
     const [moreInfo, setMoreInfo] = useState(false);
     const [headerStyle, setHeaderStyle] = useState({});
     const [headerStyleInput, setHeaderStyleInput] = useState({});
+    const [unit, setUnit] = useState(false);
     const blockStyleRef = useRef();
     const ref = useRef();
 
     useEffect(() => {
         const updatedHeaderStyleInput = headerStyle ? {
-            height:headerStyle.height !== 0 && headerStyle.height !== ''? `${headerStyle.height}${headerStyle.unit}`:'auto',
-            width:headerStyle.width !==0? `${headerStyle.width}${headerStyle.unit}`:'',
+            height: headerStyle.height !== 0 && headerStyle.height !== '' ? `${headerStyle.height}${unit}` : 'auto',
+            width: headerStyle.width !== 0 ? `${headerStyle.width}${unit}` : '',
             background: `${headerStyle.background}`,
-            borderBottomWidth: `${headerStyle.borderBottomWidth}${headerStyle.unit}`,
+            borderBottomWidth: `${headerStyle.borderBottomWidth}${unit}`,
             borderBottomStyle: `${headerStyle.borderBottomStyle}`,
             borderBottomColor: `${headerStyle.borderBottomColor}`,
-            borderTopWidth: `${headerStyle.borderTopWidth}${headerStyle.unit}`,
+            borderTopWidth: `${headerStyle.borderTopWidth}${unit}`,
             borderTopStyle: `${headerStyle.borderTopStyle}`,
             borderTopColor: `${headerStyle.borderTopColor}`,
-            marginLeft: `${headerStyle.marginLeft}${headerStyle.unit}`,
-            marginRight: `${headerStyle.marginRight}${headerStyle.unit}`,
-            paddingTop: `${headerStyle.paddingTop}${headerStyle.unit}`,
-            paddingBottom: `${headerStyle.paddingBottom}${headerStyle.unit}`,
+            marginLeft: `${headerStyle.marginLeft}${unit}`,
+            marginRight: `${headerStyle.marginRight}${unit}`,
+            paddingTop: `${headerStyle.paddingTop}${unit}`,
+            paddingBottom: `${headerStyle.paddingBottom}${unit}`,
         } : null;
         setHeaderStyleInput(updatedHeaderStyleInput);
     }, [headerStyle]);
 
     useEffect(() => {
         const headerBlockStyle = getHeaderBlockStyle({ editorState })
+        const currentUnit = getUnit({ editorState })
+        setUnit(currentUnit? currentUnit : 'mm')
         let newHeaderStyle
         if (headerBlockStyle) {
             newHeaderStyle = {
                 height: headerBlockStyle.height ? splitValueUnit(headerBlockStyle.height).value : '',
-                width: headerBlockStyle.width? splitValueUnit(headerBlockStyle.width).value : '',
+                width: headerBlockStyle.width ? splitValueUnit(headerBlockStyle.width).value : '',
                 background: headerBlockStyle.background ? headerBlockStyle.background : 'none',
                 borderBottomWidth: headerBlockStyle.borderBottomWidth ? splitValueUnit(headerBlockStyle.borderBottomWidth).value : '0',
                 borderBottomStyle: headerBlockStyle.borderBottomStyle ? headerBlockStyle.borderBottomStyle : '',
@@ -72,17 +58,11 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                 marginRight: headerBlockStyle.marginRight ? splitValueUnit(headerBlockStyle.marginRight).value : '',
                 paddingTop: headerBlockStyle.paddingTop ? splitValueUnit(headerBlockStyle.paddingTop).value : '',
                 paddingBottom: headerBlockStyle.paddingBottom ? splitValueUnit(headerBlockStyle.paddingBottom).value : '',
-                unit:
-                    headerBlockStyle.height &&
-                        splitValueUnit(headerBlockStyle.height).unit
-                        ? splitValueUnit(headerBlockStyle.height).unit
-                        : 'mm', // Default to 'mm' if no unit is found
-
             }
         } else {
             newHeaderStyle = {
                 height: '',
-                width:'',
+                width: '',
                 background: 'none',
                 borderBottomWidth: '',
                 borderBottomStyle: '',
@@ -90,11 +70,10 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                 borderTopWidth: '',
                 borderTopStyle: '',
                 borderTopColor: '',
-                marginLeft:'',
-                marginRight:'',
-                paddingTop:'',
-                paddingBottom:'',
-                unit: 'mm'
+                marginLeft: '',
+                marginRight: '',
+                paddingTop: '',
+                paddingBottom: '',
             };
         }
         setHeaderStyle(newHeaderStyle)
@@ -120,13 +99,6 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
         }));
     };
 
-    const handleUnitChange = (e) => {
-        const newUnit = e.target.value;
-        setHeaderStyle((prev) => ({
-            ...prev,
-            unit: newUnit,
-        }));
-    };
 
     const handleBorderBottomColorChange = (color) => {
         if (color !== headerStyle.borderBottomColor) {
@@ -218,7 +190,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                             {moreInfo && <tr>
                                 <td>Border Bottom:</td>
                                 <td>
-                                    <hr style={{ borderTopStyle: headerStyle.borderBottomStyle, borderTopColor: headerStyle.borderBottomColor, borderTopWidth: `${headerStyle.borderBottomWidth}${headerStyle.unit}` }}></hr>
+                                    <hr style={{ borderTopStyle: headerStyle.borderBottomStyle, borderTopColor: headerStyle.borderBottomColor, borderTopWidth: `${headerStyle.borderBottomWidth}${unit}` }}></hr>
                                 </td>
                             </tr>}
                             {moreInfo && <tr>
@@ -268,7 +240,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                             {moreInfo && <tr>
                                 <td>Border Top:</td>
                                 <td>
-                                    <hr style={{ borderTopStyle: headerStyle.borderTopStyle, borderTopColor: headerStyle.borderTopColor, borderTopWidth: `${headerStyle.borderTopWidth}${headerStyle.unit}` }}></hr>
+                                    <hr style={{ borderTopStyle: headerStyle.borderTopStyle, borderTopColor: headerStyle.borderTopColor, borderTopWidth: `${headerStyle.borderTopWidth}${unit}` }}></hr>
                                 </td>
                             </tr>}
                             {moreInfo && <tr>
@@ -362,14 +334,15 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                             </tr>}
                             <tr>
                                 <td>Unit</td>
-                                <td colSpan={2}>
-                                    <select value={headerStyle.unit || ''} onChange={handleUnitChange}>
-                                        {units.map((unit) => (
-                                            <option key={unit} value={unit}>
-                                                {unit}
-                                            </option>
-                                        ))}
-                                    </select>
+                                <td>
+                                    <input
+                                        type="value"
+                                        name="unit"
+                                        value={unit || ''}
+                                        style={{ width: '30px' }}
+                                        disabled={true}
+                                    />
+
                                 </td>
                             </tr>
                         </tbody>
@@ -384,7 +357,6 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                             <span>Delete</span>
                         </button>
                         <button title='Show' onClick={() => setMoreInfo(!moreInfo)}>
-                            {/* <img src={applyIcon} alt="More" className={`${styles.img} ${styles.active}`} /> */}
                             <span> {moreInfo ? '⯅' : '⯆'} </span>
                             <span>{moreInfo ? 'Less' : 'More'}</span>
                         </button>

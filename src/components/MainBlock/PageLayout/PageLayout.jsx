@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import addAndUpdateMainBlock from '../function/addAndUpdateMainBlock';
 import getPageSetup from '../function/getPageSetup';
+import getUnit from '../function/getUnit';
 import styles from './PageLayout.module.scss';
 import imageIcon from './printSetup.svg';
 import applyIcon from './printSetup.svg';
-import { useOnClickOutside, useAutoAdjustAbsolutePosition,ColorPicker } from '../../utilities';
+import { useOnClickOutside, useAutoAdjustAbsolutePosition, ColorPicker } from '../../utilities';
 import { _UNIT, _COMMONCOLOURS, _FONTFAMILY, _FONTSIZES } from '../../_constant/_constant';
 
 const units = _UNIT
@@ -20,7 +21,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
         isRepeatThead: false,
         pageNumber: { position: '', format: '', style: '' }
     });
-    const [unit, setUnit] = useState('px'); // Đơn vị mặc định
+    const [unit, setUnit] = useState(getUnit({ editorState }) || 'mm'); // Đơn vị mặc định
     const [pageHeight, setPageHeight] = useState(''); // Đơn vị mặc định
 
     const [pageNumberStyle, setPageNumberStyle] = useState({
@@ -43,7 +44,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
         if (pageSetup) {
             setPageSetup(pageSetup);
             setPageHeight(removeUnit(pageSetup.pageHeight) || '');
-            setUnit(findUnit(pageSetup.pageHeight) || 'px');
+            setUnit(getUnit({ editorState }) || 'mm');
             setPageNumberStyle(pageSetup.pageNumber.style)
         }
     }, [editorState]);
@@ -157,26 +158,29 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Page Height:</td>
                                 <td>
-                                    <input
-                                        type="number"
-                                        name="pageHeight"
-                                        value={pageHeight}
-                                        onChange={handlePageHeightChange}
-                                        disabled={pageSetup.pageHeight === '100%'}
-                                    />
-                                    <select name="unit" value={unit} onChange={(e) => setUnit(e.target.value)} disabled={pageSetup.pageHeight === '100%'}>
-                                        {_UNIT.map((u) => (
-                                            <option key={u} value={u}>
-                                                {u}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <input
-                                        type="checkbox"
-                                        name="pageHeight"
-                                        checked={pageSetup.pageHeight === '100%'}
-                                        onChange={handlePageHeightCheckboxChange}
-                                    />
+                                    <div className={styles.detailContent}>
+                                        <input
+                                            type="number"
+                                            name="pageHeight"
+                                            value={isNaN(pageHeight) || pageHeight === null || pageHeight === undefined ? "" : pageHeight}
+                                            onChange={handlePageHeightChange}
+                                            disabled={pageSetup.pageHeight === '100%'}
+                                        />
+                                        <input
+                                            type="value"
+                                            name="unit"
+                                            value={unit || ''}
+                                            style={{ width: '30px' }}
+                                            disabled={true}
+                                        />
+
+                                        <input
+                                            type="checkbox"
+                                            name="pageHeight"
+                                            checked={pageSetup.pageHeight === '100%'}
+                                            onChange={handlePageHeightCheckboxChange}
+                                        />
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -192,14 +196,15 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             </tr>
                             <tr>
                                 <td style={{ justifyContent: 'center', textAlign: 'center' }} colSpan={2}>
-                                    <span>Page number</span>
-                                    <input
-                                        type="checkbox"
-                                        name="isPageNumber"
-                                        checked={pageNumberStyle.display !== 'none'}
-                                        onChange={handleIsPageNumberDisplayChange}
-                                    />
-
+                                    <div className={styles.detailContent}>
+                                        <span>Page number</span>
+                                        <input
+                                            type="checkbox"
+                                            name="isPageNumber"
+                                            checked={pageNumberStyle.display !== 'none'}
+                                            onChange={handleIsPageNumberDisplayChange}
+                                        />
+                                    </div>
                                 </td>
 
                             </tr>

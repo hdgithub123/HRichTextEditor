@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import addAndUpdateMainBlock from '../function/addAndUpdateMainBlock';
 import { defaultEditorStyle, _UNIT } from '../../_constant/_constant';
 import getMainblockStyle from '../function/getMainblockStyle';
+import getUnit from '../function/getUnit';
 import styles from './MainBlock.module.scss';
 import imageIcon from './pageSetup.svg';
 import applyIcon from './pageSetup.svg';
@@ -11,7 +12,7 @@ const units = _UNIT
 
 const MainBlock = ({ editorState, setEditorState }) => {
     const [style, setStyle] = useState(defaultEditorStyle);
-    const [unit, setUnit] = useState('px'); // Đơn vị tính duy nhất
+    const [unit, setUnit] = useState(getUnit({ editorState }) || 'mm'); // Đơn vị tính duy nhất
     const [show, setShow] = useState(false);
     const [marginShow, setMarginShow] = useState(false);
     const ref = useRef();
@@ -39,21 +40,20 @@ const MainBlock = ({ editorState, setEditorState }) => {
 
     useEffect(() => {
         const blockStyle = getMainblockStyle({ editorState });
+        const newUnit = getUnit({ editorState });
+        if (newUnit) {
+            setUnit(newUnit)
+        }
+
         if (blockStyle) {
-            let foundUnit = null;
-            const newBlockStyle = Object.keys(blockStyle).reduce((acc, key) => {
-                const value = blockStyle[key];
-                const unit = findUnit(value);
-                if (!foundUnit && unit) {
-                    foundUnit = unit;
-                }
-                acc[key] = removeUnit(value);
+            // dựa vào blockStyle và hàm splitValueUnit lấy ra từ blockStyle phần key = value đã loại bỏ unit để gán vào setStyle
+            const updatedStyle = Object.keys(blockStyle).reduce((acc, key) => {
+                const { value } = splitValueUnit(blockStyle[key]); // Lấy giá trị đã loại bỏ đơn vị
+                acc[key] = value; // Gán giá trị vào object mới
                 return acc;
             }, {});
-            setStyle(newBlockStyle);
-            if (foundUnit) {
-                setUnit(foundUnit);
-            }
+
+            setStyle(updatedStyle);
         }
     }, [editorState]);
 
@@ -65,7 +65,7 @@ const MainBlock = ({ editorState, setEditorState }) => {
             acc[key] = /\d/.test(value) ? value + unit : value;
             return acc;
         }, {});
-        const newContentState = addAndUpdateMainBlock({ editorState, style: newStyle });
+        const newContentState = addAndUpdateMainBlock({ editorState, style: newStyle, unit:unit });
         setEditorState(newContentState);
     };
 
@@ -211,20 +211,23 @@ const MainBlock = ({ editorState, setEditorState }) => {
 
 export default MainBlock;
 
-const removeUnit = (value) => {
-    for (let unit of units) {
-        if (value.endsWith(unit)) {
-            return value.slice(0, -unit.length);
-        }
-    }
-    return value;
-};
 
-const findUnit = (value) => {
-    for (let unit of units) {
-        if (value.endsWith(unit)) {
-            return unit;
-        }
+function splitValueUnit(input) {
+    if (!input) {
+        return {
+            value: '',
+            unit: null,
+        };
     }
-    return null;
-};
+    const match = input.match(/^(\d+)([a-zA-Z%]+)$/); // Regex to match number and unit
+    if (match) {
+        return {
+            value: parseFloat(match[1]), // Extract numeric value
+            unit: match[2]              // Extract unit
+        };
+    }
+    return {
+        value: '',
+        unit: null,
+    };
+}
