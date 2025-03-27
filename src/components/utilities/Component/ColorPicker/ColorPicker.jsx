@@ -17,9 +17,7 @@ const ColorPicker = ({
   const showpickerRef = useRef(null);
 
   useEffect(() => {
-
-    setSelectedColor(curentColor?curentColor: 'Select your color')
-
+    setSelectedColor(curentColor?curentColor: 'transparent')
   }, [curentColor]);
 
 
@@ -54,7 +52,8 @@ const ColorPicker = ({
         className={styles.colorTrigger}
         style={{ backgroundColor: selectedColor }}
         onClick={toggleColorPicker}
-      />
+      >
+      </button>
 
       {/* Bảng chọn màu (ẩn/hiện) */}
       {showColorPicker && (
@@ -70,7 +69,7 @@ const ColorPicker = ({
           {/* Preset colors section */}
           <div className={styles.presets}>
             <div className={styles.presetsHeader}>
-              {selectedColor.toUpperCase()}
+              {selectedColor !== 'transparent'? selectedColor.toUpperCase():'SELECT YOUR COLOR'}
             </div>
             <div className={styles.grid}>
               {Object.entries(presetColors).map(([name, color]) => (

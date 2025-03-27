@@ -5,11 +5,9 @@ import borderTopIcon from './borderTop.svg'
 import borderBottomIcon from './borderBottom.svg'
 import borderLeftIcon from './borderLeft.svg'
 import borderRightIcon from './borderRight.svg'
-import { _COMMONCOLOURS } from '../../../../_constant/_constant'
+import { ColorPicker } from '../../../../utilities';
 
 
-
-const colorOptions = Object.values(_COMMONCOLOURS);
 const ChangeCellsStyle = ({ onChange }) => {
     const [positions, setPositions] = useState(['top', 'left', 'right', 'bottom']);
     const [color, setColor] = useState('black');
@@ -106,19 +104,25 @@ const ChangeCellsStyle = ({ onChange }) => {
                         <tr>
                             <td>Color:</td>
                             <td>
-                                <select value={color} onChange={(e) => setColor(e.target.value)} style={{ background: color ? color : 'none' ,color: color === 'black' ? 'white' : 'black'}}>
-                                    {colorOptions.map((color, index) => (
-                                        <option key={index} value={color} className={styles.colorSwatch} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'black' }}>
-                                            {color}
-                                        </option>
-                                    ))}
-                                </select>
+                                <div className={styles.colorPicker}>
+                                    <ColorPicker
+                                        onChange={(color) => setColor(color)}
+                                        curentColor={color}
+                                    >
+                                    </ColorPicker>
+                                </div>
                             </td>
                         </tr>
+
                         <tr>
                             <td>Line: </td>
                             <td>
-                                <hr style={{borderTopStyle: style, borderTopColor:color, borderTopWidth:width}}></hr>
+                                <hr style={{ borderTopStyle: style, borderTopColor: color, borderTopWidth: width }}></hr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Type: </td>
+                            <td>
                                 <select value={style} onChange={(e) => setStyle(e.target.value)}>
                                     <option value="solid">Solid</option>
                                     <option value="dotted">Dotted</option>

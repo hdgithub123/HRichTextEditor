@@ -20,7 +20,7 @@ const HeaderBlockComponent = props => {
     
     return (
         // <header className={style.headerContainer} style={{...blockStyle,  position:'absolute',top:'0%',left:'0%', zIndex:2 }}>
-        <header className={style.headerContainer} style={{ ...blockStyle ,}}>
+        <header title='Header' className={style.headerContainer} style={{ ...blockStyle ,}}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </header>
     )
