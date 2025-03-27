@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { EditorBlock } from 'draft-js';
-import { createPortal } from 'react-dom';
 import style from './HeaderBlockComponent.module.scss'
 
 
@@ -19,7 +18,6 @@ const HeaderBlockComponent = props => {
     }
     
     return (
-        // <header className={style.headerContainer} style={{...blockStyle,  position:'absolute',top:'0%',left:'0%', zIndex:2 }}>
         <header title='Header' className={style.headerContainer} style={{ ...blockStyle ,}}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </header>

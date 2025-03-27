@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { EditorBlock } from 'draft-js';
-import { createPortal } from 'react-dom';
 import style from './FooterBlockComponent.module.scss'
 
 
@@ -19,7 +18,7 @@ const FooterBlockComponent = props => {
    }
 
     return (
-        <footer title='Insert Footer' className={style.footerContainer} style={{...blockStyle }}>
+        <footer title='Footer' className={style.footerContainer} style={{...blockStyle }}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </footer>
     )

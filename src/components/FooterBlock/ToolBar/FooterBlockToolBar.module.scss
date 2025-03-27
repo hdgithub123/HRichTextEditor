@@ -1,30 +1,154 @@
-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5px;
+.container {
+    position: relative;
+    // border: 1px solid #351111;
+    border-radius: 5px;
+    padding: 2px;
     display: flex;
+    width: 25px;
+    height: 25px;
     align-items: center;
+    justify-content: center;
 
-    .img {
-        width: 20px;
-        height: 20px;
-        border: 0.5px black solid;
-        border-radius: 4px;
-        padding: 2px;
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5px;
+        display: flex;
+        align-items: center;
+
+        .img {
+            width: 20px;
+            height: 20px;
+            border: 0.5px black solid;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .active {
+            background: white;
+        }
+
+        .unactive {
+            background: white;
+            opacity: 30%;
+        }
+
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}
+
+
+.formContainer {
+    position: absolute;
+    top: 100%; // Đặt dưới nút bấm
+    left: 0;
+    width: 300px;
+    z-index: 1000; // Đảm bảo nó nằm trên các phần tử khác
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    // padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    label {
+        display: flex;
+        flex-direction: row;
     }
 
-    .active {
+    input[type="number"] {
+        width: 50px;
+    }
+
+    table {
         background: white;
+        width: 100%;
+        border-collapse: collapse;
     }
 
-    .unactive {
-        background: white;
-        opacity: 30%;
+    td {
+        padding: 5px;
+        text-align: center;
+        border: 2px solid black;
+        font-size: 16px;
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
+        &:first-child {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: left;
+        }
+        .colorPicker{
+            width: 100%; 
+            height: 20px; 
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+
     }
+    .applyButton {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+        gap: 10px;
+        width: 100%;
+        button {
+            // transform: none;
+            // display: flex;
+            // flex-direction: row;
+            // align-items:center;
 
 
-    &:hover{
-        transform: scale(1.2);
+            background: none;
+            cursor: pointer;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 4px;
+            gap: 5px;
+            width: 100%;
+
+            .img {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                padding: 2px;
+                border: none;
+            }
+
+            .active {
+                background: white;
+            }
+
+            .unactive {
+                background: white;
+                opacity: 30%;
+            }
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                font-weight: bold;
+            }
+
+            &:hover {
+                border: 3px solid black;
+                transform: none;
+            }
+        }
+
+
     }
 }

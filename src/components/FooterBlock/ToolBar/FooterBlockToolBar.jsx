@@ -1,29 +1,404 @@
-// viết 1 Component để tạo 1 HeaderBlock mới// viết 1 Component để tạo 1 HeaderBlock mới
-import React from 'react';
-import { EditorState } from 'draft-js';
-import imageIcon from './documentFooter.svg'
-import addFooterBlock from '../function/addFooterBlock';
+import React, { useState, useRef, useEffect } from 'react';
+import imageIcon from './documentFooter.svg';
+import deleteIcon from './delete.svg';
+import applyIcon from './apply.svg';
+import getFooterBlockStyle from '../function/getFooterBlockStyle'
+import addAndUpdateFooterBlock from '../function/addAndUpdateFooterBlock';
+import deleteFooterBlock from '../function/deleteFooterBlock';
 import styles from './FooterBlockToolBar.module.scss';
+import { useOnClickOutside, ColorPicker, useAutoAdjustAbsolutePosition } from '../../utilities';
+import { _UNIT } from '../../_constant/_constant';
+
+const units = _UNIT
 
 const FooterBlockToolBar = ({ editorState, setEditorState }) => {
-   
-    const style = {
-        height: '20mm',
-        background: 'red',
-    }
-   
+    const [show, setShow] = useState(false);
+    const [moreInfo, setMoreInfo] = useState(false);
+    const [footerStyle, setFooterStyle] = useState({});
+    const [footerStyleInput, setFooterStyleInput] = useState({});
+    const blockStyleRef = useRef();
+    const ref = useRef();
+
+    useEffect(() => {
+        const updatedFooterStyleInput = footerStyle ? {
+            height:footerStyle.height !== 0 && footerStyle.height !== ''? `${footerStyle.height}${footerStyle.unit}`:'auto',
+            width:footerStyle.width !==0? `${footerStyle.width}${footerStyle.unit}`:'',
+            background: `${footerStyle.background}`,
+            borderBottomWidth: `${footerStyle.borderBottomWidth}${footerStyle.unit}`,
+            borderBottomStyle: `${footerStyle.borderBottomStyle}`,
+            borderBottomColor: `${footerStyle.borderBottomColor}`,
+            borderTopWidth: `${footerStyle.borderTopWidth}${footerStyle.unit}`,
+            borderTopStyle: `${footerStyle.borderTopStyle}`,
+            borderTopColor: `${footerStyle.borderTopColor}`,
+            marginLeft: `${footerStyle.marginLeft}${footerStyle.unit}`,
+            marginRight: `${footerStyle.marginRight}${footerStyle.unit}`,
+            paddingTop: `${footerStyle.paddingTop}${footerStyle.unit}`,
+            paddingBottom: `${footerStyle.paddingBottom}${footerStyle.unit}`,
+        } : null;
+        setFooterStyleInput(updatedFooterStyleInput);
+    }, [footerStyle]);
+
+    useEffect(() => {
+        const footerBlockStyle = getFooterBlockStyle({ editorState })
+        let newFooterStyle
+        if (footerBlockStyle) {
+            newFooterStyle = {
+                height: footerBlockStyle.height ? splitValueUnit(footerBlockStyle.height).value : '',
+                width: footerBlockStyle.width? splitValueUnit(footerBlockStyle.width).value : '',
+                background: footerBlockStyle.background ? footerBlockStyle.background : 'none',
+                borderBottomWidth: footerBlockStyle.borderBottomWidth ? splitValueUnit(footerBlockStyle.borderBottomWidth).value : '0',
+                borderBottomStyle: footerBlockStyle.borderBottomStyle ? footerBlockStyle.borderBottomStyle : '',
+                borderBottomColor: footerBlockStyle.borderBottomColor ? footerBlockStyle.borderBottomColor : '',
+                borderTopWidth: footerBlockStyle.borderTopWidth ? splitValueUnit(footerBlockStyle.borderTopWidth).value : '0',
+                borderTopStyle: footerBlockStyle.borderTopStyle ? footerBlockStyle.borderTopStyle : '',
+                borderTopColor: footerBlockStyle.borderTopColor ? footerBlockStyle.borderTopColor : '',
+                marginLeft: footerBlockStyle.marginLeft ? splitValueUnit(footerBlockStyle.marginLeft).value : '',
+                marginRight: footerBlockStyle.marginRight ? splitValueUnit(footerBlockStyle.marginRight).value : '',
+                paddingTop: footerBlockStyle.paddingTop ? splitValueUnit(footerBlockStyle.paddingTop).value : '',
+                paddingBottom: footerBlockStyle.paddingBottom ? splitValueUnit(footerBlockStyle.paddingBottom).value : '',
+                unit:
+                    footerBlockStyle.height &&
+                        splitValueUnit(footerBlockStyle.height).unit
+                        ? splitValueUnit(footerBlockStyle.height).unit
+                        : 'mm', // Default to 'mm' if no unit is found
+
+            }
+        } else {
+            newFooterStyle = {
+                height: '',
+                width:'',
+                background: 'none',
+                borderBottomWidth: '',
+                borderBottomStyle: '',
+                borderBottomColor: '',
+                borderTopWidth: '',
+                borderTopStyle: '',
+                borderTopColor: '',
+                marginLeft:'',
+                marginRight:'',
+                paddingTop:'',
+                paddingBottom:'',
+                unit: 'mm'
+            };
+        }
+        setFooterStyle(newFooterStyle)
+    }, [editorState]);
+
+
+
+
     const handleAddFooterBlock = () => {
-        const newEditorState = addFooterBlock({ editorState, blockStyle :style  });
+        const newEditorState = addAndUpdateFooterBlock({ editorState, blockStyle: footerStyleInput });
         setEditorState(newEditorState);
     };
 
+    const handleShow = () => {
+        setShow(true);
+    };
+
+    const handleStyleChange = (e) => {
+        const { name, value } = e.target;
+        setFooterStyle((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleUnitChange = (e) => {
+        const newUnit = e.target.value;
+        setFooterStyle((prev) => ({
+            ...prev,
+            unit: newUnit,
+        }));
+    };
+
+    const handleBorderBottomColorChange = (color) => {
+        if (color !== footerStyle.borderBottomColor) {
+            setFooterStyle((prev) => ({
+                ...prev,
+                borderBottomColor: color,
+            }));
+        } else {
+            setFooterStyle((prev) => ({
+                ...prev,
+                borderBottomColor: '',
+            }));
+        }
+
+    };
+
+    const handleBackgroundChange = (color) => {
+        setFooterStyle((prev) => ({
+            ...prev,
+            background: color,
+        }));
+    };
+
+    const handleBorderTopColorChange = (color) => {
+        setFooterStyle((prev) => ({
+            ...prev,
+            borderTopColor: color,
+        }));
+    };
+
+
+
+
+    const handleDeleteFooterBlock = () => {
+        const newEditorState = deleteFooterBlock({ editorState })
+        setEditorState(newEditorState)
+    };
+
+
+    useOnClickOutside(ref, () => {
+        setShow(false);
+    });
+
+    useAutoAdjustAbsolutePosition(blockStyleRef, show);
+
     return (
-        <div className={styles.toolbar}>
-            <button onMouseDown={handleAddFooterBlock}>
+        <div ref={ref} className={styles.container}>
+            <button onMouseDown={handleShow}>
                 <img src={imageIcon} alt="Footer" title="Footer" className={`${styles.img} ${styles.active}`} />
             </button>
+            {show && (
+                <div ref={blockStyleRef} className={styles.formContainer}>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Height:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="height"
+                                        value={footerStyle.height || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Width:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="width"
+                                        value={footerStyle.width || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>
+                            {moreInfo && <tr>
+                                <td>Background:</td>
+                                <td>
+                                    <div className={styles.colorPicker}>
+                                        <ColorPicker
+                                            onChange={handleBackgroundChange}
+                                            curentColor={footerStyle.background}
+                                        >
+                                        </ColorPicker>
+                                    </div>
+                                </td>
+                            </tr>}
+                            
+                            {moreInfo && <tr>
+                                <td>Border Top:</td>
+                                <td>
+                                    <hr style={{ borderTopStyle: footerStyle.borderTopStyle, borderTopColor: footerStyle.borderTopColor, borderTopWidth: `${footerStyle.borderTopWidth}${footerStyle.unit}` }}></hr>
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Top Width:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="borderTopWidth"
+                                        value={footerStyle.borderTopWidth || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Top Style:</td>
+                                <td>
+                                    <select
+                                        name="borderTopStyle"
+                                        value={footerStyle.borderTopStyle || 'none'}
+                                        onChange={handleStyleChange}
+                                    >
+                                        <option value="solid">Solid</option>
+                                        <option value="dotted">Dotted</option>
+                                        <option value="dashed">Dashed</option>
+                                        <option value="double">Double</option>
+                                        <option value="groove">Groove</option>
+                                        <option value="ridge">Ridge</option>
+                                        <option value="inset">Inset</option>
+                                        <option value="outset">Outset</option>
+                                        <option value="none">None</option>
+                                        <option value="hidden">Hidden</option>
+                                    </select>
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Top Color:</td>
+                                <td>
+                                    <div className={styles.colorPicker}>
+                                        <ColorPicker
+                                            onChange={handleBorderTopColorChange}
+                                            curentColor={footerStyle.borderTopColor}
+                                        >
+                                        </ColorPicker>
+                                    </div>
+
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Bottom:</td>
+                                <td>
+                                    <hr style={{ borderTopStyle: footerStyle.borderBottomStyle, borderTopColor: footerStyle.borderBottomColor, borderTopWidth: `${footerStyle.borderBottomWidth}${footerStyle.unit}` }}></hr>
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Bottom Width:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="borderBottomWidth"
+                                        value={footerStyle.borderBottomWidth || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Bottom Style:</td>
+                                <td>
+                                    <select
+                                        name="borderBottomStyle"
+                                        value={footerStyle.borderBottomStyle || 'none'}
+                                        onChange={handleStyleChange}
+                                    >
+                                        <option value="solid">Solid</option>
+                                        <option value="dotted">Dotted</option>
+                                        <option value="dashed">Dashed</option>
+                                        <option value="double">Double</option>
+                                        <option value="groove">Groove</option>
+                                        <option value="ridge">Ridge</option>
+                                        <option value="inset">Inset</option>
+                                        <option value="outset">Outset</option>
+                                        <option value="none">None</option>
+                                        <option value="hidden">Hidden</option>
+                                    </select>
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Border Bottom Color:</td>
+                                <td>
+                                    <div className={styles.colorPicker}>
+                                        <ColorPicker
+                                            onChange={handleBorderBottomColorChange}
+                                            curentColor={footerStyle.borderBottomColor}
+                                        >
+                                        </ColorPicker>
+                                    </div>
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Margin Left:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="marginLeft"
+                                        value={footerStyle.marginLeft || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Margin Right:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="marginRight"
+                                        value={footerStyle.marginRight || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Padding Top:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="paddingTop"
+                                        value={footerStyle.paddingTop || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            {moreInfo && <tr>
+                                <td>Padding Bottom:</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        name="paddingBottom"
+                                        value={footerStyle.paddingBottom || ''}
+                                        onChange={handleStyleChange}
+                                    />
+                                </td>
+                            </tr>}
+                            <tr>
+                                <td>Unit</td>
+                                <td colSpan={2}>
+                                    <select value={footerStyle.unit || ''} onChange={handleUnitChange}>
+                                        {units.map((unit) => (
+                                            <option key={unit} value={unit}>
+                                                {unit}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className={styles.applyButton}>
+                        <button onMouseDown={handleAddFooterBlock}>
+                            <img src={applyIcon} alt="Footer" title="Footer" className={`${styles.img} ${styles.active}`} />
+                            <span>Apply</span>
+                        </button>
+                        <button onMouseDown={handleDeleteFooterBlock}>
+                            <img src={deleteIcon} alt="Footer" title="Footer" className={`${styles.img} ${styles.active}`} />
+                            <span>Delete</span>
+                        </button>
+                        <button title='Show' onClick={() => setMoreInfo(!moreInfo)}>
+                            {/* <img src={applyIcon} alt="More" className={`${styles.img} ${styles.active}`} /> */}
+                            <span> {moreInfo ? '⯅' : '⯆'} </span>
+                            <span>{moreInfo ? 'Less' : 'More'}</span>
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default FooterBlockToolBar;
+
+
+function splitValueUnit(input) {
+    if (!input) {
+        return {
+            value: '',
+            unit: null,
+        };
+    }
+    const match = input.match(/^(\d+)([a-zA-Z%]+)$/); // Regex to match number and unit
+    if (match) {
+        return {
+            value: parseFloat(match[1]), // Extract numeric value
+            unit: match[2]              // Extract unit
+        };
+    }
+    return {
+        value: '',
+        unit: null,
+    };
+}

@@ -1,27 +1,13 @@
-// .headerContainer{
-//     position:absolute;
-//     top: 0;
-//     left: 0;
-// }
-
-// ,  position:'absolute',top:'0%',left:'0%', zIndex:2
-
-
 .headerContainer{
     position: absolute;
     top:0%;
     left:0%;
     z-index: 2;
-    // margin-left: 30mm;
     width: 100%;
     overflow: hidden; /* Ẩn phần văn bản vượt quá chiều cao */
     white-space: prewrap;
-    // height: 50px;
     border-radius: 0px;
     text-align: left;
     display: block;
     box-sizing: border-box;
-    // &:hover{
-    //     border: 1px solid black;
-    // }
 }
