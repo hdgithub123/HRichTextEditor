@@ -4,9 +4,14 @@ import ImageBlockComponent from '../../Image/ImageBlock/Component/ImageBlockComp
 import VideoBlockComponent from '../../Video/VideoBlock/Component/VideoBlockComponent'
 import HeaderBlockComponent from '../../HeaderBlock/Component/HeaderBlockComponent'
 import FooterBlockComponent from '../../FooterBlock/Component/FooterBlockComponent'
+import MainBlockComponet from '../../MainBlock/MainBlockComponent/MainBlockComponet';
 const getBlockRendererFn = ({ editorRef, getEditorState, onChange, isEditable }) => block => {
     const type = block.getType();
     switch (type) {
+        case 'MAIN_BLOCK':
+            return {
+                component: MainBlockComponet,
+            };
         case 'tableStructure':
             return {
                 component: TableStructureComponent,

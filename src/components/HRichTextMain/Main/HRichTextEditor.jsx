@@ -228,17 +228,32 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   //   if (command === 'backspace' || command === 'delete') {
   //     const selection = editorState.getSelection();
   //     const content = editorState.getCurrentContent();
-  //     // Kiểm tra xem trong selection có block nào có blockkey = mainBlock không. nếu có thì return 'handled';
 
   //     const block = content.getBlockForKey(selection.getStartKey());
-  //     console.log("block",block.getType())
 
   //     if (block.getType() === 'MAIN_BLOCK') {
-  //       return 'handled'; // Ngăn Draft.js xử lý xóa
+  //       return 'handled';
   //     }
   //   }
   //   return 'not-handled';
   // };
+
+
+  const handleKeyCommand = (command, editorState) => {
+    if (command === 'backspace' || command === 'delete') {
+      const selection = editorState.getSelection();
+      const content = editorState.getCurrentContent();
+      const block = content.getBlockForKey(selection.getStartKey());
+  
+      // Prevent deletion if block type is 'MAIN_BLOCK'
+      if (block.getType() === 'MAIN_BLOCK') {
+        return 'handled';
+      }
+    }
+    return 'not-handled';
+  };
+  
+
 
   return (
     <div className={style.allContainer}>
@@ -277,7 +292,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
               editorState={editorState}
               onChange={onChange}
               readOnly={false}
-              // handleKeyCommand={handleKeyCommand}
+              handleKeyCommand={handleKeyCommand}
               placeholder="Please click to open your new document..."
               customStyleMap={customStyleMap({})}
               blockStyleFn={blockStyleFn}
