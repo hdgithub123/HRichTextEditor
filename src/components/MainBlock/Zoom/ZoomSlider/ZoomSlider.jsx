@@ -3,7 +3,7 @@ import styles from './ZoomSlider.module.scss';
 
 const ZoomSlider = ({
   initialZoom = 100,
-  minZoom = 50,
+  minZoom = 20,
   maxZoom = 200,
   step = 5,
   onChange = () => { }
