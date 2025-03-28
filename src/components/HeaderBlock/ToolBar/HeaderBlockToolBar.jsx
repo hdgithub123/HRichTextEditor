@@ -4,6 +4,7 @@ import deleteIcon from './delete.svg';
 import applyIcon from './apply.svg';
 import getHeaderBlockStyle from '../function/getHeaderBlockStyle'
 import getUnit from '../../MainBlock/function/getUnit';
+import getMainBlockStyle from '../../MainBlock/function/getMainblockStyle';
 import addAndUpdateHeaderBlock from '../function/addAndUpdateHeaderBlock';
 import deleteHeaderBlock from '../function/deleteHeaderBlock';
 import styles from './HeaderBlockToolBar.module.scss';
@@ -20,9 +21,13 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
     const ref = useRef();
 
     useEffect(() => {
+        const mainBlockStyle = getMainBlockStyle({ editorState })
+        const currentPageWidth = mainBlockStyle?.width ? mainBlockStyle.width : '0mm';
+        const currentAutoWidth = `${splitValueUnit(currentPageWidth).value - headerStyle.marginLeft}${unit}`
+
         const updatedHeaderStyleInput = headerStyle ? {
-            height: headerStyle.height !== 0 && headerStyle.height !== '' ? `${headerStyle.height}${unit}` : 'auto',
-            width: headerStyle.width !== 0 ? `${headerStyle.width}${unit}` : '',
+            height: headerStyle.height !== 0 && headerStyle.height !== 'auto' ? `${headerStyle.height}${unit}` : 'auto',
+            width: headerStyle.width !== 0 && headerStyle.width !== 'auto' ? `${headerStyle.width}${unit}` : currentAutoWidth,
             background: `${headerStyle.background}`,
             borderBottomWidth: `${headerStyle.borderBottomWidth}${unit}`,
             borderBottomStyle: `${headerStyle.borderBottomStyle}`,
@@ -41,12 +46,12 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
     useEffect(() => {
         const headerBlockStyle = getHeaderBlockStyle({ editorState })
         const currentUnit = getUnit({ editorState })
-        setUnit(currentUnit? currentUnit : 'mm')
+        setUnit(currentUnit ? currentUnit : 'mm')
         let newHeaderStyle
         if (headerBlockStyle) {
             newHeaderStyle = {
-                height: headerBlockStyle.height ? splitValueUnit(headerBlockStyle.height).value : '',
-                width: headerBlockStyle.width ? splitValueUnit(headerBlockStyle.width).value : '',
+                height: headerBlockStyle?.height ? headerBlockStyle.height === 'auto' ? 'auto' : splitValueUnit(headerBlockStyle.height).value : '',
+                width: headerBlockStyle.width ? splitValueUnit(headerBlockStyle.width).value : 'auto',
                 background: headerBlockStyle.background ? headerBlockStyle.background : 'none',
                 borderBottomWidth: headerBlockStyle.borderBottomWidth ? splitValueUnit(headerBlockStyle.borderBottomWidth).value : '0',
                 borderBottomStyle: headerBlockStyle.borderBottomStyle ? headerBlockStyle.borderBottomStyle : '',
@@ -130,6 +135,24 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
     };
 
 
+    const handleAutoHeightChange = (e) => {
+        const { name, checked } = e.target;
+        setHeaderStyle((prevStyle) => ({
+            ...prevStyle,
+            [name]: checked ? 'auto' : '',
+        }));
+    }
+
+
+    const caculateAutoWidth = () => {
+        const mainBlockStyle = getMainBlockStyle({ editorState })
+        const currentPageWidth = mainBlockStyle?.width ? mainBlockStyle.width : '0mm';
+        const currentAutoWidth = splitValueUnit(currentPageWidth).value - headerStyle.marginLeft
+        setHeaderStyle((prevStyle) => ({
+            ...prevStyle,
+            width: currentAutoWidth ? currentAutoWidth:'auto',
+        }));
+    }
 
 
     const handleDeleteHeaderBlock = () => {
@@ -156,23 +179,48 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Height:</td>
                                 <td>
-                                    <input
-                                        type="number"
-                                        name="height"
-                                        value={headerStyle.height || ''}
-                                        onChange={handleStyleChange}
-                                    />
+                                    <div className={styles.detailContent}>
+                                        <input
+                                            type="number"
+                                            name="height"
+                                            value={headerStyle.height || ''}
+                                            onChange={handleStyleChange}
+                                            disabled={headerStyle.height === 'auto'}
+                                            min= {0}
+                                        />
+                                        <input type="checkbox" title={headerStyle.height === 'auto' ? 'manual' : 'auto'} name="height" checked={headerStyle.height === 'auto'} onChange={handleAutoHeightChange} />
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Width:</td>
                                 <td>
-                                    <input
-                                        type="number"
-                                        name="width"
-                                        value={headerStyle.width || ''}
-                                        onChange={handleStyleChange}
-                                    />
+                                    <div className={styles.detailContent}>
+                                        <input
+                                            type="number"
+                                            name="width"
+                                            value={headerStyle.width || ''}
+                                            onChange={handleStyleChange}
+                                            disabled={headerStyle.width === 'auto'}
+                                            min= {0}
+                                        />
+                                        <button
+                                        onClick={caculateAutoWidth}
+                                        title='Auto Caculate Width'
+                                        >
+                                            <div 
+                                            style={{
+                                                width:'12px', 
+                                                height: '12px', 
+                                                border:'1px solid gray', 
+                                                borderRadius:'2px', 
+                                                boxSizing:'border-box', 
+                                                boxShadow:'0 2px 2px rgba(0, 0, 0, 0.2) '
+                                                }}>
+
+                                            </div>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             {moreInfo && <tr>
@@ -201,6 +249,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="borderBottomWidth"
                                         value={headerStyle.borderBottomWidth || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -251,6 +300,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="borderTopWidth"
                                         value={headerStyle.borderTopWidth || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -296,6 +346,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="marginLeft"
                                         value={headerStyle.marginLeft || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -307,6 +358,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="marginRight"
                                         value={headerStyle.marginRight || ''}
                                         onChange={handleStyleChange}
+                                        min={0}
                                     />
                                 </td>
                             </tr>}
@@ -318,6 +370,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="paddingTop"
                                         value={headerStyle.paddingTop || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -329,6 +382,7 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="paddingBottom"
                                         value={headerStyle.paddingBottom || ''}
                                         onChange={handleStyleChange}
+                                        min={0}
                                     />
                                 </td>
                             </tr>}

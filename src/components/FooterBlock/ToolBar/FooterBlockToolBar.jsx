@@ -4,6 +4,7 @@ import deleteIcon from './delete.svg';
 import applyIcon from './apply.svg';
 import getFooterBlockStyle from '../function/getFooterBlockStyle'
 import getUnit from '../../MainBlock/function/getUnit';
+import getMainBlockStyle from '../../MainBlock/function/getMainblockStyle';
 import addAndUpdateFooterBlock from '../function/addAndUpdateFooterBlock';
 import deleteFooterBlock from '../function/deleteFooterBlock';
 import styles from './FooterBlockToolBar.module.scss';
@@ -14,14 +15,19 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
     const [moreInfo, setMoreInfo] = useState(false);
     const [footerStyle, setFooterStyle] = useState({});
     const [footerStyleInput, setFooterStyleInput] = useState({});
-       const [unit, setUnit] = useState(false);
+    const [unit, setUnit] = useState(false);
     const blockStyleRef = useRef();
     const ref = useRef();
 
     useEffect(() => {
+        const mainBlockStyle = getMainBlockStyle({ editorState })
+        const currentPageWidth = mainBlockStyle?.width ? mainBlockStyle.width : '0mm';
+        const currentAutoWidth = `${splitValueUnit(currentPageWidth).value - footerStyle.marginLeft}${unit}`
+
+
         const updatedFooterStyleInput = footerStyle ? {
-            height:footerStyle.height !== 0 && footerStyle.height !== ''? `${footerStyle.height}${footerStyle.unit}`:'auto',
-            width:footerStyle.width !==0? `${footerStyle.width}${unit}`:'',
+            height: footerStyle.height !== 0 && footerStyle.height !== '' ? `${footerStyle.height}${footerStyle.unit}` : 'auto',
+            width: footerStyle.width !== 0 && footerStyle.width !== 'auto' ? `${footerStyle.width}${unit}` : currentAutoWidth,
             background: `${footerStyle.background}`,
             borderBottomWidth: `${footerStyle.borderBottomWidth}${unit}`,
             borderBottomStyle: `${footerStyle.borderBottomStyle}`,
@@ -40,12 +46,12 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
     useEffect(() => {
         const footerBlockStyle = getFooterBlockStyle({ editorState })
         const currentUnit = getUnit({ editorState })
-        setUnit(currentUnit? currentUnit : 'mm')
+        setUnit(currentUnit ? currentUnit : 'mm')
         let newFooterStyle
         if (footerBlockStyle) {
             newFooterStyle = {
-                height: footerBlockStyle.height ? splitValueUnit(footerBlockStyle.height).value : '',
-                width: footerBlockStyle.width? splitValueUnit(footerBlockStyle.width).value : '',
+                height: footerBlockStyle?.height ? footerBlockStyle.height === 'auto' ? 'auto' : splitValueUnit(footerBlockStyle.height).value : '',
+                width: footerBlockStyle.width ? splitValueUnit(footerBlockStyle.width).value : 'auto',
                 background: footerBlockStyle.background ? footerBlockStyle.background : 'none',
                 borderBottomWidth: footerBlockStyle.borderBottomWidth ? splitValueUnit(footerBlockStyle.borderBottomWidth).value : '0',
                 borderBottomStyle: footerBlockStyle.borderBottomStyle ? footerBlockStyle.borderBottomStyle : '',
@@ -57,12 +63,11 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                 marginRight: footerBlockStyle.marginRight ? splitValueUnit(footerBlockStyle.marginRight).value : '',
                 paddingTop: footerBlockStyle.paddingTop ? splitValueUnit(footerBlockStyle.paddingTop).value : '',
                 paddingBottom: footerBlockStyle.paddingBottom ? splitValueUnit(footerBlockStyle.paddingBottom).value : '',
-
             }
         } else {
             newFooterStyle = {
                 height: '',
-                width:'',
+                width: '',
                 background: 'none',
                 borderBottomWidth: '',
                 borderBottomStyle: '',
@@ -70,10 +75,10 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                 borderTopWidth: '',
                 borderTopStyle: '',
                 borderTopColor: '',
-                marginLeft:'',
-                marginRight:'',
-                paddingTop:'',
-                paddingBottom:'',
+                marginLeft: '',
+                marginRight: '',
+                paddingTop: '',
+                paddingBottom: '',
             };
         }
         setFooterStyle(newFooterStyle)
@@ -130,6 +135,24 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
     };
 
 
+    const handleAutoHeightChange = (e) => {
+        const { name, checked } = e.target;
+        setFooterStyle((prevStyle) => ({
+            ...prevStyle,
+            [name]: checked ? 'auto' : '',
+        }));
+    }
+
+
+    const caculateAutoWidth = () => {
+        const mainBlockStyle = getMainBlockStyle({ editorState })
+        const currentPageWidth = mainBlockStyle?.width ? mainBlockStyle.width : '0mm';
+        const currentAutoWidth = splitValueUnit(currentPageWidth).value - footerStyle.marginLeft
+        setFooterStyle((prevStyle) => ({
+            ...prevStyle,
+            width: currentAutoWidth ? currentAutoWidth : 'auto',
+        }));
+    }
 
 
     const handleDeleteFooterBlock = () => {
@@ -156,23 +179,44 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Height:</td>
                                 <td>
-                                    <input
-                                        type="number"
-                                        name="height"
-                                        value={footerStyle.height || ''}
-                                        onChange={handleStyleChange}
-                                    />
+                                    <div className={styles.detailContent}>
+                                        <input
+                                            type="number"
+                                            name="height"
+                                            value={footerStyle.height || ''}
+                                            onChange={handleStyleChange}
+                                        />
+                                        <input type="checkbox" title={footerStyle.height === 'auto' ? 'manual' : 'auto'} name="height" checked={footerStyle.height === 'auto'} onChange={handleAutoHeightChange} />
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Width:</td>
                                 <td>
-                                    <input
-                                        type="number"
-                                        name="width"
-                                        value={footerStyle.width || ''}
-                                        onChange={handleStyleChange}
-                                    />
+                                    <div className={styles.detailContent}>
+                                        <input
+                                            type="number"
+                                            name="width"
+                                            value={footerStyle.width || ''}
+                                            onChange={handleStyleChange}
+                                        />
+                                        <button
+                                            onClick={caculateAutoWidth}
+                                            title='Auto Caculate Width'
+                                        >
+                                            <div
+                                                style={{
+                                                    width: '12px',
+                                                    height: '12px',
+                                                    border: '1px solid gray',
+                                                    borderRadius: '2px',
+                                                    boxSizing: 'border-box',
+                                                    boxShadow: '0 2px 2px rgba(0, 0, 0, 0.2) '
+                                                }}>
+                                            </div>
+                                        </button>
+                                    </div>
+
                                 </td>
                             </tr>
                             {moreInfo && <tr>
@@ -187,7 +231,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                     </div>
                                 </td>
                             </tr>}
-                            
+
                             {moreInfo && <tr>
                                 <td>Border Top:</td>
                                 <td>
