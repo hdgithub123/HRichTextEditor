@@ -35,6 +35,8 @@ import HeaderBlockToolBar from '../../HeaderBlock/ToolBar/HeaderBlockToolBar'
 import FooterBlockToolBar from '../../FooterBlock/ToolBar/FooterBlockToolBar'
 import PageLayout from '../../MainBlock/PageLayout/PageLayout'
 import { PrintDocument, PrintPreview } from '../../Print/index'
+import PaperSizePickerToolBar from '../../MainBlock/PaperSizePicker/PaperSizePickerToolBar'
+import ZoomEditorToolbar from '../../MainBlock/Zoom/ZoomEditorToolbar/ZoomEditorToolbar'
 
 const ToolbarsEditor = ({
     editorState,
@@ -75,11 +77,12 @@ const ToolbarsEditor = ({
             ></InsertDynamic>}
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
+            {documentView && <ZoomEditorToolbar editorState={editorState} setEditorState={setEditorState}/>}
+            {documentView && <PaperSizePickerToolBar editorState={editorState} setEditorState={setEditorState}></PaperSizePickerToolBar>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
             {documentView && <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
             {documentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             {(documentView || rawContentView) && <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>}
-
 
             {documentView && <FontFamilyPickerView editorState={editorState} setEditorState={setEditorState}></FontFamilyPickerView>}
             {documentView && <FontSizePickerView editorState={editorState} setEditorState={setEditorState}></FontSizePickerView>}
@@ -110,6 +113,9 @@ const ToolbarsEditor = ({
             {documentView && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
             {documentView && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
             {documentView && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
+                
+            
+       
         </div>
     );
 }

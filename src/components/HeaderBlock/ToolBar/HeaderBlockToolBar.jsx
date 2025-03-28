@@ -66,8 +66,8 @@ const HeaderBlockToolBar = ({ editorState, setEditorState }) => {
             }
         } else {
             newHeaderStyle = {
-                height: '',
-                width: '',
+                height: 'auto',
+                width: 'auto',
                 background: 'none',
                 borderBottomWidth: '',
                 borderBottomStyle: '',

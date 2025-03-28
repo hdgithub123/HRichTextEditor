@@ -26,7 +26,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
 
 
         const updatedFooterStyleInput = footerStyle ? {
-            height: footerStyle.height !== 0 && footerStyle.height !== '' ? `${footerStyle.height}${footerStyle.unit}` : 'auto',
+            height: footerStyle.height !== 0 && footerStyle.height !== 'auto' ? `${footerStyle.height}${footerStyle.unit}` : 'auto',
             width: footerStyle.width !== 0 && footerStyle.width !== 'auto' ? `${footerStyle.width}${unit}` : currentAutoWidth,
             background: `${footerStyle.background}`,
             borderBottomWidth: `${footerStyle.borderBottomWidth}${unit}`,
@@ -66,8 +66,8 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
             }
         } else {
             newFooterStyle = {
-                height: '',
-                width: '',
+                height: 'auto',
+                width: 'auto',
                 background: 'none',
                 borderBottomWidth: '',
                 borderBottomStyle: '',
@@ -185,6 +185,8 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                             name="height"
                                             value={footerStyle.height || ''}
                                             onChange={handleStyleChange}
+                                            disabled={footerStyle.height === 'auto'}
+                                            min= {0}
                                         />
                                         <input type="checkbox" title={footerStyle.height === 'auto' ? 'manual' : 'auto'} name="height" checked={footerStyle.height === 'auto'} onChange={handleAutoHeightChange} />
                                     </div>
@@ -199,6 +201,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                             name="width"
                                             value={footerStyle.width || ''}
                                             onChange={handleStyleChange}
+                                            min= {0}
                                         />
                                         <button
                                             onClick={caculateAutoWidth}
@@ -246,6 +249,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="borderTopWidth"
                                         value={footerStyle.borderTopWidth || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -297,6 +301,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="borderBottomWidth"
                                         value={footerStyle.borderBottomWidth || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -341,6 +346,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="marginLeft"
                                         value={footerStyle.marginLeft || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -352,6 +358,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="marginRight"
                                         value={footerStyle.marginRight || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -363,6 +370,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="paddingTop"
                                         value={footerStyle.paddingTop || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}
@@ -374,6 +382,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
                                         name="paddingBottom"
                                         value={footerStyle.paddingBottom || ''}
                                         onChange={handleStyleChange}
+                                        min= {0}
                                     />
                                 </td>
                             </tr>}

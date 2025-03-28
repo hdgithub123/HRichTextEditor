@@ -1,0 +1,75 @@
+.zoomSliderContainer {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  // .zoomControls {
+  //   display: flex;
+  //   align-items: center;
+  //   gap: 10px;
+  // }
+  
+  .sliderContainer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .zoomSlider {
+    flex: 1;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ddd;
+    border-radius: 3px;
+    outline: none;
+    
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #4a6bff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s;
+      
+      &:hover {
+        transform: scale(1.1);
+        background: #3a5bef;
+      }
+    }
+  }
+  
+  .zoomValue {
+    min-width: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #3a5bef;
+  }
+  
+ .resetButton {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a6bff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    
+    &:hover {
+      // background-color: #3a5bef;
+      transform: scale(1.2);
+    }
+    
+  }
+  

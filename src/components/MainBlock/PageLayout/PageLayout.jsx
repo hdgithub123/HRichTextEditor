@@ -4,14 +4,12 @@ import getPageSetup from '../function/getPageSetup';
 import getUnit from '../function/getUnit';
 import styles from './PageLayout.module.scss';
 import imageIcon from './printSetup.svg';
-import applyIcon from './printSetup.svg';
+import applyIcon from './apply.svg';
 import { useOnClickOutside, useAutoAdjustAbsolutePosition, ColorPicker } from '../../utilities';
 import { _UNIT, _COMMONCOLOURS, _FONTFAMILY, _FONTSIZES } from '../../_constant/_constant';
 
 const units = _UNIT
 
-const commonColours = Object.values(_COMMONCOLOURS);
-const colorOptions = ['not set', ...commonColours];
 const fontFamilyOptions = ["not set", ..._FONTFAMILY];
 const fontSizeOptions = ["not set", ..._FONTSIZES.map(size => `${size}pt`)];
 
@@ -257,23 +255,6 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Font Color:</td>
                                 <td>
-                                    {/* <select
-                                        id="fontColor"
-                                        value={pageNumberStyle.color}
-                                        onChange={handleFontColorChange}
-                                        style={{
-                                            backgroundColor: pageNumberStyle.color !== 'none' ? pageNumberStyle.color : 'transparent',
-                                            borderRadius: '3px',
-                                            color: pageNumberStyle.color === 'black' ? 'white' : 'black'
-                                        }}
-                                        disabled={pageNumberStyle.display==='none'}
-                                    >
-                                        {colorOptions.map((color, index) => (
-                                            <option key={index} value={color} style={{ backgroundColor: color, color: color === 'black' ? 'white' : 'black' }}>
-                                                {color}
-                                            </option>
-                                        ))} 
-                                    </select> */}
                                     <div className={styles.colorPicker}>
                                         <ColorPicker
                                             onChange={handleFontColorChange}
@@ -284,9 +265,6 @@ const PageLayout = ({ editorState, setEditorState }) => {
 
                                 </td>
                             </tr>
-
-
-
                         </tbody>
                     </table>
                     <div className={styles.applyButton}>

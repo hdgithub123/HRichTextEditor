@@ -3,6 +3,7 @@ import addAndUpdateMainBlock from '../function/addAndUpdateMainBlock';
 import { defaultEditorStyle, _UNIT } from '../../_constant/_constant';
 import getMainblockStyle from '../function/getMainblockStyle';
 import getUnit from '../function/getUnit';
+import PaperSizePickerToolBar from '../PaperSizePicker/PaperSizePickerToolBar';
 import styles from './MainBlock.module.scss';
 import imageIcon from './pageSetup.svg';
 import applyIcon from './pageSetup.svg';
@@ -14,7 +15,6 @@ const MainBlock = ({ editorState, setEditorState }) => {
     const [style, setStyle] = useState(defaultEditorStyle);
     const [unit, setUnit] = useState(getUnit({ editorState }) || 'mm'); // Đơn vị tính duy nhất
     const [show, setShow] = useState(false);
-    const [marginShow, setMarginShow] = useState(false);
     const ref = useRef();
     const blockStyleRef = useRef();
 
@@ -87,42 +87,6 @@ const MainBlock = ({ editorState, setEditorState }) => {
                 <div ref={blockStyleRef} className={styles.formContainer}>
                     <table>
                         <tbody>
-                            {marginShow && <tr>
-                                <td>Margin Left: </td>
-                                <td>
-                                    <input type="number" name="marginLeft" value={style.marginLeft} onChange={handleChange} disabled={style.marginLeft === 'auto'} />
-                                </td>
-                                <td>
-                                    <input type="checkbox" title={style.marginLeft === 'auto' ? 'manual' : 'auto'} name="marginLeft" checked={style.marginLeft === 'auto'} onChange={handleAutoChange} />
-                                </td>
-                            </tr>}
-                            {marginShow && <tr>
-                                <td>Margin Top: </td>
-                                <td>
-                                    <input type="number" name="marginTop" value={style.marginTop} onChange={handleChange} disabled={style.marginTop === 'auto'} />
-                                </td>
-                                <td>
-                                    <input type="checkbox" title={style.marginTop === 'auto' ? 'manual' : 'auto'} name="marginTop" checked={style.marginTop === 'auto'} onChange={handleAutoChange} />
-                                </td>
-                            </tr>}
-                            {marginShow && <tr>
-                                <td>Margin Right: </td>
-                                <td>
-                                    <input type="number" name="marginRight" value={style.marginRight} onChange={handleChange} disabled={style.marginRight === 'auto'} />
-                                </td>
-                                <td>
-                                    <input type="checkbox" title={style.marginRight === 'auto' ? 'manual' : 'auto'} name="marginRight" checked={style.marginRight === 'auto'} onChange={handleAutoChange} />
-                                </td>
-                            </tr>}
-                            {marginShow && <tr>
-                                <td>Margin Bottom: </td>
-                                <td>
-                                    <input type="number" name="marginBottom" value={style.marginBottom} onChange={handleChange} disabled={style.marginBottom === 'auto'} />
-                                </td>
-                                <td>
-                                    <input type="checkbox" title={style.marginBottom === 'auto' ? 'manual' : 'auto'} name="marginBottom" checked={style.marginBottom === 'auto'} onChange={handleAutoChange} />
-                                </td>
-                            </tr>}
                             <tr>
                                 <td>Width: </td>
                                 <td>
@@ -196,11 +160,6 @@ const MainBlock = ({ editorState, setEditorState }) => {
                         <button title='Apply' onClick={handleSubmit}>
                             <img src={applyIcon} alt="Apply" className={`${styles.img} ${styles.active}`} />
                             <span>Apply</span>
-                        </button>
-                        <button title='Show' onClick={() => setMarginShow(!marginShow)}>
-                            {/* <img src={applyIcon} alt="More" className={`${styles.img} ${styles.active}`} /> */}
-                            <span> {marginShow ? '⯅' : '⯆'} </span>
-                            <span>{marginShow ? 'Less' : 'More'}</span>
                         </button>
                     </div>
                 </div>
