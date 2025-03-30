@@ -177,6 +177,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                                             name="pageHeight"
                                             checked={pageSetup.pageHeight === '100%'}
                                             onChange={handlePageHeightCheckboxChange}
+                                            title='∞'
                                         />
                                     </div>
                                 </td>

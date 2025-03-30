@@ -27,7 +27,6 @@ const PaperSizePickerToolBar = ({ editorState, setEditorState }) => {
         const newStyle = {
             width: size.width,
             height: 'auto',
-            // transform: 'scale(0.3)',
         }
 
         const newPageSetup = {

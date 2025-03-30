@@ -53,7 +53,10 @@ const ToolbarsEditor = ({
     data,
     functionList,
     listRef,
-    onChange
+    onChange,
+
+    zoomRate,
+    setZoomRate,
 }) => {
 
     const { documentView, previewContent, printPreview, rawContentView } = contentView
@@ -77,7 +80,7 @@ const ToolbarsEditor = ({
             ></InsertDynamic>}
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
-            {documentView && <ZoomEditorToolbar editorState={editorState} setEditorState={setEditorState}/>}
+            {(documentView || previewContent) && <ZoomEditorToolbar zoomRate={zoomRate} setZoomRate={setZoomRate}/>}
             {documentView && <PaperSizePickerToolBar editorState={editorState} setEditorState={setEditorState}></PaperSizePickerToolBar>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
             {documentView && <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}

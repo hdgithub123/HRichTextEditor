@@ -163,7 +163,9 @@ const defaultPageSetup = {
     pageNumber: {
         position: '',
         format: '',
-        style: {},
+        style: {
+            display: 'none',
+        },
     },
 };
 

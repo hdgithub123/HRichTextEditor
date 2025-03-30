@@ -39,6 +39,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
   const [infoImageInline, setInfoImageInline] = useState({ entityKey: null, properties: null });
   const [contentStateObjectPreview, setContentStateObjectPreview] = useState(null);
+  const [zoomRate, setZoomRate] = useState(1);
   const editorRef = useRef(null);
   const editorPrevewRef = useRef(null);
 
@@ -244,7 +245,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       const selection = editorState.getSelection();
       const content = editorState.getCurrentContent();
       const block = content.getBlockForKey(selection.getStartKey());
-  
+
       // Prevent deletion if block type is 'MAIN_BLOCK'
       if (block.getType() === 'MAIN_BLOCK') {
         return 'handled';
@@ -252,7 +253,9 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
     }
     return 'not-handled';
   };
-  
+
+
+
 
 
   return (
@@ -273,16 +276,20 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           onChange={onChange}
           data={{ dynamicTables, dynamicTexts }}
           functionList={functionList}
-          listRef={listRef}>
+          listRef={listRef}
+          zoomRate={zoomRate}
+          setZoomRate={setZoomRate}
+          
+          >
         </ToolbarsEditor>
       </div>}
-      <div className={style.allEditor}>
+      <div className={style.allEditor} >
         {!viewOnly && <div
           ref={divEditorRef}
           onBlur={handleBlur}
           onFocus={handleFocus}
           className={style.editorContainer}
-          style={{ ...mainBlockStyle, display: contentView.documentView ? 'block' : 'none' }}
+          style={{ ...mainBlockStyle, display: contentView.documentView ? 'block' : 'none',transform: `scale(${zoomRate})`,transformOrigin: 'top center', }}
         >
           <div
             className={removeStyle.editorRemove}
@@ -307,7 +314,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           ref={divEditorPrevewRef}
           className={style.editorPreview}
           // readOnly= {true}
-          style={{ ...mainBlockStyle, display: contentView.previewContent ? 'block' : 'none' }}
+          style={{ ...mainBlockStyle, display: contentView.previewContent ? 'block' : 'none',transform: `scale(${zoomRate})`,transformOrigin: 'top center', }}
         >
 
           <div
@@ -329,7 +336,7 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
           </div>
 
         </div>
-        <div className={style.displayPreview} style={{ display:contentView.printPreview?'block':'none' }}>Print Preview</div>
+        <div className={style.displayPreview} style={{ display: contentView.printPreview ? 'block' : 'none' }}>Print Preview</div>
         {contentView.printPreview &&
           <div >
             <HRichTextEditorPreview
