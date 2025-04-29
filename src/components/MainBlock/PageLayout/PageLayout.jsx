@@ -223,7 +223,7 @@ const PageLayout = ({ editorState, setEditorState }) => {
                             <tr>
                                 <td>Format:</td>
                                 <td>
-                                    <input type="text" placeholder='Ex: Page: {page}/{Pages}' name="format" value={pageSetup.pageNumber.format} onChange={handlePageNumberChange} disabled={pageNumberStyle.display === 'none'} />
+                                    <input type="text" placeholder='Ex: Page: {page}/{pages}' name="format" value={pageSetup.pageNumber.format} onChange={handlePageNumberChange} disabled={pageNumberStyle.display === 'none'} />
                                 </td>
                             </tr>
 
