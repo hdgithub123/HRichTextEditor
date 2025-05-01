@@ -1,6 +1,6 @@
 import './App.css'
 import HRichTextEditor from '../src/components/HRichTextMain/Main/HRichTextEditor'
-//import HRichTextEditorPreview from '../src/components/HRichTextMain/MainPreview/HRichTextEditorPreview'
+import HRichTextEditorPreview from '../src/components/HRichTextMain/MainPreview/HRichTextEditorPreview'
 
 import React, { useState } from 'react';
 // import {contentStateObjectExample} from './components/_constant/exampleData'
@@ -16,12 +16,12 @@ function App() {
   return (
     <>
       <div>hello</div>
-      <button onClick={() => setIsPrint(!isPrint)}>Change Theme</button>
+      <button onClick={() => setIsPrint(!isPrint)}>Change print</button>
       <HRichTextEditor onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
       {/* <HRichTextEditorPreview
         isPrint={isPrint}
-        ></HRichTextEditorPreview> */}
-      {/* <ContentPreviewEx></ContentPreviewEx> */}
+        ></HRichTextEditorPreview>
+      <ContentPreviewEx></ContentPreviewEx> */}
     </>
   )
 }

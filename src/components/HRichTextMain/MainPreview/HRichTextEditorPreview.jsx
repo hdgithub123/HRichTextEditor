@@ -15,17 +15,17 @@ import replaceDatasTables from '../../Table/replaceDatasTables/index';
 import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText';
 import getMainblockStyle from '../../MainBlock/function/getMainblockStyle';
 import getPageSetup from '../../MainBlock/function/getPageSetup';
+import getBackgroundStyle from '../../MainBlock/function/getBackgroundStyle';
 import getHeaderBlockStyle from '../../HeaderBlock/function/getHeaderBlockStyle';
 import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle';
 import { pxToUnit } from '../../utilities'
-
 
 import HPreview from '../../HPreview/HPreview';
 
 
 
 const HRichTextEditorPreview = ({
-  contentStateObject = conEx,
+  contentStateObject,
   dynamicTables = exampleDataTable,
   dynamicTexts = exampleData,
   isPrint,
@@ -40,6 +40,8 @@ const HRichTextEditorPreview = ({
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
   const [mainBlockStyle, setMainBlockStyle] = useState({});
   const [pageSetup, setPageSetup] = useState({});
+  const [backgroundImageCss, setBackgroundImageCss] = useState({});
+
   const [isRepeatThead, setIsRepeatThead] = useState(true); 
 
   const editorPrevewRef = useRef(null);
@@ -121,6 +123,8 @@ const HRichTextEditorPreview = ({
       setPageSetup(newPageSetup)
       setIsRepeatThead(newPageSetup?.isRepeatThead? newPageSetup.isRepeatThead: false)
     }
+    const newBackgroundStyle = getBackgroundStyle({ editorState: editorStatePreview }) 
+    setBackgroundImageCss(newBackgroundStyle)
 
   }, [editorStatePreview]);
 
@@ -142,6 +146,8 @@ const HRichTextEditorPreview = ({
         // layoutSetup={layoutSetup ? layoutSetup : null}
         layoutSetup={{ width: mainBlockStyle.width, height: pageSetup?.pageHeight? pageSetup.pageHeight: null, marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
         pageNumberStyle={pageSetup?.pageNumber?.style? pageSetup.pageNumber.style : null}
+        // backgroundImageCss
+        backgroundImageCss= {backgroundImageCss? backgroundImageCss: {}}
         formatPageNumber={pageSetup?.pageNumber?.format? pageSetup.pageNumber.format: null}
         positionPageNumber={pageSetup?.pageNumber?.position? pageSetup.pageNumber.position: null}
         // isRepeatThead={pageSetup?.isRepeatThead? pageSetup.isRepeatThead: true}

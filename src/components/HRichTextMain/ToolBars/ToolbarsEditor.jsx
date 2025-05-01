@@ -37,6 +37,8 @@ import PageLayout from '../../MainBlock/PageLayout/PageLayout'
 import { PrintDocument, PrintPreview } from '../../Print/index'
 import PaperSizePickerToolBar from '../../MainBlock/PaperSizePicker/PaperSizePickerToolBar'
 import ZoomEditorToolbar from '../../MainBlock/Zoom/ZoomEditorToolbar/ZoomEditorToolbar'
+import Background from '../../MainBlock/Background/Background';
+
 
 const ToolbarsEditor = ({
     editorState,
@@ -116,7 +118,7 @@ const ToolbarsEditor = ({
             {documentView && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
             {documentView && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
             {documentView && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
-                
+            <Background editorState={editorState} setEditorState={setEditorState}></Background>
             
        
         </div>

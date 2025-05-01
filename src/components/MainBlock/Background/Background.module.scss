@@ -1,0 +1,190 @@
+/* File: ImageBlockToolBar.module.scss */
+.container {
+    position: relative;
+   // border: 1px solid #351111;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    button {
+        // background:none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        background: none;
+        /* Đặt width auto để button vừa với nội dung */
+        padding: 0.5px;
+        display: inline-flex;
+        align-items: center;
+
+        .img {
+            width: 20px;
+            height: 20px;
+            border: 0.5px black solid;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .active {
+            background: white;
+        }
+
+        .unactive {
+            background: white;
+            opacity: 30%;
+        }
+        &:hover{
+            transform: scale(1.2);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+    }
+
+    .option {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        border: 1px solid black;
+        padding: 6px;
+        border-radius: 5px;
+        background: white;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+
+        table {
+            border-collapse: collapse;
+
+            td {
+                border: 1px solid black;
+                padding: 2px;
+                white-space: nowrap;
+
+                &:first-child {
+                    /* CSS cho cột đầu tiên */
+                    background-color: #f0f0f0;
+                    /* Ví dụ: thay đổi màu nền */
+                    font-weight: bold;
+                    /* Ví dụ: in đậm chữ */
+                    // width: 50%;
+                }
+
+                input {
+                    max-width: 100%;
+                    border: 0.5px solid black;
+                    border-radius: 2px;
+                }
+            }
+
+        }
+
+        .buttonFunction {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 10px;
+
+            button {
+                background: none;
+                cursor: pointer;
+                padding: 2px;
+                display: flex;
+                align-items: center;
+                border: 1px solid black;
+                border-radius: 4px;
+                gap: 5px;
+
+                .img {
+                    width: 20px;
+                    height: 20px;
+                    //   border: 0.5px black solid;
+                    border-radius: 4px;
+                    padding: 2px;
+                    border: none;
+
+                }
+
+                .active {
+                    background: white;
+                }
+
+                .unactive {
+                    background: white;
+                    opacity: 30%;
+                }
+
+                span {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    width: 100%;
+                    font-weight: bold;
+                }
+
+                &:hover {
+                    border: 3px solid black;
+                    transform: none;
+                }
+
+            }
+
+
+        }
+
+        .uploadButton {
+            display: flex;
+            padding: 2px;
+            border: 1px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            background-color: #f0f0f0;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            background: none;
+
+            .img {
+                width: 20px;
+                height: 20px;
+                //   border: 0.5px black solid;
+                border-radius: 4px;
+                padding: 2px;
+                border: none;
+
+            }
+
+            .active {
+                background: white;
+            }
+
+            .unactive {
+                background: white;
+                opacity: 30%;
+            }
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                font-weight: bold;
+            }
+
+            &:hover {
+                border: 3px solid black;
+            }
+        }
+
+    }
+}
