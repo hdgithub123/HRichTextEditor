@@ -86,6 +86,7 @@ const ToolbarsEditor = ({
             {documentView && <PaperSizePickerToolBar editorState={editorState} setEditorState={setEditorState}></PaperSizePickerToolBar>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
             {documentView && <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
+            {documentView &&<Background editorState={editorState} setEditorState={setEditorState}></Background>}
             {documentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             {(documentView || rawContentView) && <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>}
 
@@ -118,7 +119,7 @@ const ToolbarsEditor = ({
             {documentView && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
             {documentView && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
             {documentView && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
-            <Background editorState={editorState} setEditorState={setEditorState}></Background>
+            
             
        
         </div>

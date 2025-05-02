@@ -26,7 +26,7 @@ const FooterBlockToolBar = ({ editorState, setEditorState }) => {
 
 
         const updatedFooterStyleInput = footerStyle ? {
-            height: footerStyle.height !== 0 && footerStyle.height !== 'auto' ? `${footerStyle.height}${footerStyle.unit}` : 'auto',
+            height: footerStyle.height !== 0 && footerStyle.height !== 'auto' ? `${footerStyle.height}${unit}` : 'auto',
             width: footerStyle.width !== 0 && footerStyle.width !== 'auto' ? `${footerStyle.width}${unit}` : currentAutoWidth,
             background: `${footerStyle.background}`,
             borderBottomWidth: `${footerStyle.borderBottomWidth}${unit}`,

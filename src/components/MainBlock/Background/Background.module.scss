@@ -19,7 +19,7 @@
         padding: 0.5px;
         display: inline-flex;
         align-items: center;
-
+        font-family: inherit;
         .img {
             width: 20px;
             height: 20px;
@@ -84,14 +84,21 @@
             }
 
         }
+        .buttonArea{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 5px;
+            margin-top: 10px;
 
+        }
         .buttonFunction {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            margin-top: 10px;
-            gap: 10px;
-
+            // margin-top: 10px;
+            // gap: 10px;
+            flex: 1;
             button {
                 background: none;
                 cursor: pointer;
@@ -101,7 +108,8 @@
                 border: 1px solid black;
                 border-radius: 4px;
                 gap: 5px;
-
+                font-family: inherit;
+                font-size: inherit;
                 .img {
                     width: 20px;
                     height: 20px;
@@ -146,13 +154,13 @@
             border: 1px solid black;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            // margin-top: 10px;
             background-color: #f0f0f0;
             text-align: center;
             align-items: center;
             justify-content: center;
             background: none;
-
+            flex: 1;
             .img {
                 width: 20px;
                 height: 20px;
