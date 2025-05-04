@@ -43,7 +43,7 @@
 
 /* 🌟 Tạo khoảng cách giữa các trang và đổ bóng */
 .pagedjs_page {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
 }
 

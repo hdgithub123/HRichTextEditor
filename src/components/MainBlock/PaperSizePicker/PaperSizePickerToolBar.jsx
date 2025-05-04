@@ -43,7 +43,7 @@ const PaperSizePickerToolBar = ({ editorState, setEditorState }) => {
     return (
         <div ref={ref} className={styles.container}>
             <button className={styles.button} onMouseDown={() => setShow(true)}>
-                <img src={imageIcon} alt="Papper Size" title='Papper Size' className={`${styles.img} ${styles.active}`} />
+                <img src={imageIcon} alt="Paper Size" title='Paper Size' className={`${styles.img} ${styles.active}`} />
             </button>
             {show &&
                 <div ref={blockSetupRef} className={styles.formContainer}>

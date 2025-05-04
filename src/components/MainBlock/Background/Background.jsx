@@ -7,7 +7,7 @@ import getBackgroundStyle from '../function/getBackgroundStyle';
 import getUnit from '../function/getUnit';
 import backgroundIcon from './background.svg';
 import uploadIcon from './upload.svg';
-import insertIcon from './background.svg';
+import insertIcon from './update.svg';
 
 const units = ['px', 'mm', 'cm', '%', 'vw', 'vh'];
 const verticalPositions = ['top', 'center', 'bottom'];
@@ -80,6 +80,24 @@ const Background = ({ editorState, setEditorState }) => {
     const unit = getUnit({ editorState }) || 'px';
     setUnit(unit);
   }, [editorState]);
+
+
+  useEffect(() => {
+    if (backgroundImage) {
+      const img = new Image();
+      img.onload = () => {
+        const ratio = img.width / img.height; // Tính tỷ lệ gốc
+        setAspectRatio(ratio); // Lưu tỷ lệ gốc vào state
+        const convertedWidth = pxToUnit(img.width, unit); // Chuyển đổi width từ px sang unit
+        const convertedHeight = pxToUnit(img.height, unit); // Chuyển đổi height từ px sang unit
+  
+        // setWidth(convertedWidth);
+        // setHeight(convertedHeight);
+      };
+      img.src = backgroundImage; // Load ảnh từ URL
+    }
+  }, [backgroundImage, unit]); // Chạy lại khi backgroundImage hoặc unit thay đổi
+
 
 
 
@@ -234,13 +252,11 @@ const Background = ({ editorState, setEditorState }) => {
                 </td>
               </tr>
               {backgroundSize === 'set' && (<tr>
-                <td>Keep Ratio:</td>
+                <td>Keep Origin Ratio:</td>
                 <td>
                   <input type="checkbox" checked={keepRatio} onChange={handleKeepRatioChange} />
                 </td>
               </tr>)}
-
-
               <tr>
                 <td>Margin Top:</td>
                 <td>
