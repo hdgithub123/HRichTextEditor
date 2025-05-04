@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import style from './Background.module.scss';
 import addAndUpdateMainBlock from '../function/addAndUpdateMainBlock';
-import { useOnClickOutside, useAutoAdjustAbsolutePosition, pxToUnit } from '../../utilities';
+import { ColorPicker, useOnClickOutside, useAutoAdjustAbsolutePosition, pxToUnit } from '../../utilities';
 import handleUpload from '../../Image/utilities/handleUpload';
 import getBackgroundStyle from '../function/getBackgroundStyle';
 import getUnit from '../function/getUnit';
@@ -19,6 +19,7 @@ const Background = ({ editorState, setEditorState }) => {
   const [show, setShow] = useState(false);
 
   // State cho các thuộc tính background
+  const [backgroundColor, setBackgroundColor] = useState('transparent');
   const [backgroundImage, setBackgroundImage] = useState('');
   const [backgroundSize, setBackgroundSize] = useState('set');
   const [backgroundRepeat, setBackgroundRepeat] = useState('no-repeat');
@@ -28,34 +29,52 @@ const Background = ({ editorState, setEditorState }) => {
   const [unit, setUnit] = useState('px');
   const [aspectRatio, setAspectRatio] = useState(null); // Tỷ lệ gốc của ảnh
   const [keepRatio, setKeepRatio] = useState(true); // Giữ tỷ lệ gốc
+
   const [verticalPosition, setVerticalPosition] = useState('center');
   const [horizontalPosition, setHorizontalPosition] = useState('center');
-  // State cho margin
-  const [marginTop, setMarginTop] = useState('0');
-  const [marginLeft, setMarginLeft] = useState('0');
-  const [marginRight, setMarginRight] = useState('0');
-  const [marginBottom, setMarginBottom] = useState('0');
+  const [horizontalOffset, setHorizontalOffset] = useState(''); // Lưu giá trị số khi chọn "set"
+  const [verticalOffset, setVerticalOffset] = useState('');
 
   // viết 1 useEffect để lấy dữ liệu background từ editorState và điền vào các state
   useEffect(() => {
     const backgroundCss = getBackgroundStyle({ editorState }) || {};
 
     // Điền dữ liệu vào các state
-    const newUrl = backgroundCss.backgroundImage?.replace('url(', '').replace(')', '') || '';
-    setBackgroundImage(newUrl);
-    //setBackgroundImage(backgroundCss.backgroundImage?.replace('url(', '').replace(')', '') || '');
-    setBackgroundRepeat(backgroundCss.backgroundRepeat || 'no-repeat');
-    setOpacity(backgroundCss.opacity || 1);
+    setBackgroundColor(backgroundCss.backgroundColor || 'transparent');
+    // Xử lý backgroundImage
+    const backgroundImage = backgroundCss.backgroundImage || '';
+    const gradientMatch = backgroundImage.match(/rgba\(255,255,255,([\d.]+)\)/); // Lấy giá trị opacity từ gradient
+    const urlMatch = backgroundImage.match(/url\((.*?)\)/); // Lấy URL từ backgroundImage
 
-    const [marginTop, marginRight, marginBottom, marginLeft] = (backgroundCss.margin || '0 0 0 0').split(' ');
-    setMarginTop(marginTop.replace(/[^\d.]/g, '')); // Chỉ giữ lại phần số (bao gồm cả số thập phân)
-    setMarginRight(marginRight.replace(/[^\d.]/g, ''));
-    setMarginBottom(marginBottom.replace(/[^\d.]/g, ''));
-    setMarginLeft(marginLeft.replace(/[^\d.]/g, ''));
+    if (gradientMatch) {
+      const extractedOpacity = 1 - parseFloat(gradientMatch[1]); // Tính lại opacity
+      setOpacity(extractedOpacity);
+    }
+
+    if (urlMatch) {
+      const extractedUrl = urlMatch[1]; // Lấy URL từ chuỗi
+      setBackgroundImage(extractedUrl);
+    }
+
+    setBackgroundRepeat(backgroundCss.backgroundRepeat || 'no-repeat');
 
     const [vertical, horizontal] = (backgroundCss.backgroundPosition || 'center center').split(' ');
-    setVerticalPosition(vertical);
-    setHorizontalPosition(horizontal);
+    // kiểm tra nếu vertical có giá trị thuộc verticalPositions thì setVerticalPosition = vertical và VerticalOffset = '0mm', nếu không thì setVerticalPosition = 'set' và VerticalOffset = vertical
+    if (verticalPositions.includes(vertical)) {
+      setVerticalPosition(vertical);
+      setVerticalOffset('0');
+    } else {
+      setVerticalPosition('set');
+      setVerticalOffset(vertical.replace(/[^\d.]/g, '')); // Chỉ giữ lại phần số (bao gồm cả số thập phân)
+    };
+    // kiểm tra nếu horizontal có giá trị thuộc horizontalPositions thì setHorizontalPosition = horizontal và HorizontalOffset = '0mm', nếu không thì setHorizontalPosition = 'set' và HorizontalOffset = horizontal    
+    if (horizontalPositions.includes(horizontal)) {
+      setHorizontalPosition(horizontal);
+      setHorizontalOffset('0');
+    } else {
+      setHorizontalPosition('set');
+      setHorizontalOffset(horizontal.replace(/[^\d.]/g, '')); // Chỉ giữ lại phần số (bao gồm cả số thập phân)
+    }
 
     if (backgroundCss.backgroundSize?.includes(' ')) {
       const [width, height] = backgroundCss.backgroundSize.split(' ');
@@ -74,7 +93,7 @@ const Background = ({ editorState, setEditorState }) => {
         setHeight(convertedHeight);
         setAspectRatio(img.width / img.height); // Tính và lưu tỷ lệ gốc
       };
-      img.src = newUrl; // Load ảnh từ URL
+      img.src = urlMatch; // Load ảnh từ URL
     }
 
     const unit = getUnit({ editorState }) || 'px';
@@ -88,17 +107,10 @@ const Background = ({ editorState, setEditorState }) => {
       img.onload = () => {
         const ratio = img.width / img.height; // Tính tỷ lệ gốc
         setAspectRatio(ratio); // Lưu tỷ lệ gốc vào state
-        const convertedWidth = pxToUnit(img.width, unit); // Chuyển đổi width từ px sang unit
-        const convertedHeight = pxToUnit(img.height, unit); // Chuyển đổi height từ px sang unit
-  
-        // setWidth(convertedWidth);
-        // setHeight(convertedHeight);
       };
       img.src = backgroundImage; // Load ảnh từ URL
     }
   }, [backgroundImage, unit]); // Chạy lại khi backgroundImage hoặc unit thay đổi
-
-
 
 
   // Hàm xử lý cập nhật backgroundCss
@@ -109,12 +121,16 @@ const Background = ({ editorState, setEditorState }) => {
         : backgroundSize;
 
     const backgroundCss = {
-      backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+      // backgroundImage: backgroundImage ? `url(${backgroundImage})` : 'none',
+      backgroundImage: backgroundImage
+        ? `linear-gradient(rgba(255,255,255,${1 - opacity}), rgba(255,255,255,${1 - opacity})), url(${backgroundImage})`
+        : 'none',
       backgroundSize: computedBackgroundSize,
-      backgroundPosition: `${verticalPosition} ${horizontalPosition}`,
+      backgroundPosition: `${verticalPosition === 'set' ? `${verticalOffset}${unit}` : verticalPosition} ${horizontalPosition === 'set' ? `${horizontalOffset}${unit}` : horizontalPosition}`,
       backgroundRepeat,
-      opacity,
-      margin: `${marginTop}${unit} ${marginRight}${unit} ${marginBottom}${unit} ${marginLeft}${unit}`,
+      // opacity,
+      backgroundColor,
+      // margin: `${marginTop}${unit} ${marginRight}${unit} ${marginBottom}${unit} ${marginLeft}${unit}`,
     };
 
     const newContentState = addAndUpdateMainBlock({ editorState, backgroundCss });
@@ -197,6 +213,34 @@ const Background = ({ editorState, setEditorState }) => {
     });
   };
 
+  const handleHorizontalPositionChange = (e) => {
+    const value = e.target.value;
+    setHorizontalPosition(value);
+  };
+
+  const handleHorizontalOffsetChange = (e) => {
+    const value = e.target.value;
+    if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+      setHorizontalOffset(value); // Cập nhật giá trị nhập
+    }
+  };
+
+
+  const handleVerticalPositionChange = (e) => {
+    const value = e.target.value;
+    setVerticalPosition(value);
+  };
+
+  const handleVerticalOffsetChange = (e) => {
+    const value = e.target.value;
+    if (value === '' || (Number(value) >= 0 && !isNaN(value))) {
+      setVerticalOffset(value); // Cập nhật giá trị nhập
+    }
+  };
+
+
+
+
   useAutoAdjustAbsolutePosition(tableRef, show);
 
   return (
@@ -209,9 +253,22 @@ const Background = ({ editorState, setEditorState }) => {
           <table>
             <tbody>
               <tr>
+                <td>Background Color:</td>
+                <td>
+                  <div title='Background color' className={style.colorPicker}>
+                    <ColorPicker
+                      onChange={(color) => setBackgroundColor(color)}
+                      curentColor={backgroundColor}
+                      isUnlimitedColor={true}
+                    >
+                    </ColorPicker>
+                  </div>
+                </td>
+              </tr>
+              <tr>
                 <td>Background Image:</td>
                 <td>
-                  <input type="text" value={backgroundImage} onChange={handleUrlChange} />
+                  <input type="text" placeholder='enter url' value={backgroundImage} onChange={handleUrlChange} />
                 </td>
               </tr>
               <tr>
@@ -257,81 +314,65 @@ const Background = ({ editorState, setEditorState }) => {
                   <input type="checkbox" checked={keepRatio} onChange={handleKeepRatioChange} />
                 </td>
               </tr>)}
-              <tr>
-                <td>Margin Top:</td>
-                <td>
-                  <input
-                    type="number"
-                    value={marginTop}
-                    onChange={(e) => setMarginTop(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Margin Left:</td>
-                <td>
-                  <input
-                    type="number"
-                    value={marginLeft}
-                    onChange={(e) => setMarginLeft(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Margin Right:</td>
-                <td>
-                  <input
-                    type="number"
-                    value={marginRight}
-                    onChange={(e) => setMarginRight(e.target.value)}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>Margin Bottom:</td>
-                <td>
-                  <input
-                    type="number"
-                    value={marginBottom}
-                    onChange={(e) => setMarginBottom(e.target.value)}
-                  />
-                </td>
-              </tr>
-
 
               <tr>
                 <td>Vertical Position:</td>
                 <td>
-                  {verticalPositions.map((position) => (
-                    <label key={position}>
+                  <div className={style.position}>
+                    <select
+                      value={verticalPosition}
+                      onChange={handleVerticalPositionChange}
+                    >
+                      {verticalPositions.map((position) => (
+                        <option key={position} value={position}>
+                          {position}
+                        </option>
+                      ))}
+                      <option value="set">Set</option> {/* Thêm tùy chọn "set" */}
+                    </select>
+                    {verticalPosition === 'set' && (
                       <input
-                        type="radio"
-                        name="verticalPosition"
-                        value={position}
-                        checked={verticalPosition === position}
-                        onChange={(e) => setVerticalPosition(e.target.value)}
+                        type="number"
+                        min="0"
+                        style={{ width: '100px' ,paddingLeft:'5px'}}
+                        value={verticalOffset}
+                        onChange={handleVerticalOffsetChange}
+                        placeholder="Enter offset"
                       />
-                      {position}
-                    </label>
-                  ))}
+                    )}
+                  </div>
                 </td>
+
               </tr>
               <tr>
                 <td>Horizontal Position:</td>
                 <td>
-                  {horizontalPositions.map((position) => (
-                    <label key={position}>
+                  <div className={style.position}>
+                    <select
+                      value={horizontalPosition}
+                      onChange={handleHorizontalPositionChange}
+                    >
+                      {horizontalPositions.map((position) => (
+                        <option key={position} value={position}>
+                          {position}
+                        </option>
+                      ))}
+                      <option value="set">Set</option> {/* Thêm tùy chọn "set" */}
+                    </select>
+                    {horizontalPosition === 'set' && (
                       <input
-                        type="radio"
-                        name="horizontalPosition"
-                        value={position}
-                        checked={horizontalPosition === position}
-                        onChange={(e) => setHorizontalPosition(e.target.value)}
+                        type="number"
+                        min="0"
+                        style={{ width: '100px' ,paddingLeft:'5px'}}
+                        value={horizontalOffset}
+                        onChange={handleHorizontalOffsetChange}
+                        placeholder="Enter offset"
                       />
-                      {position}
-                    </label>
-                  ))}
+                    )}
+                  </div>
                 </td>
+
+
               </tr>
               <tr>
                 <td>Background Repeat:</td>
@@ -348,7 +389,7 @@ const Background = ({ editorState, setEditorState }) => {
                 </td>
               </tr>
               <tr>
-                <td>Opacity:</td>
+                <td>Image Opacity:</td>
                 <td>
                   <input
                     type="range"

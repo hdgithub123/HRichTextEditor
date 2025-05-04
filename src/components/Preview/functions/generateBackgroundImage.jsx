@@ -17,7 +17,7 @@ function generateBackgroundImage(css = {
   backgroundImage: 'none',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-
+  backgroundColor: 'none',
 }) {
   const toKebabCase = (str) =>
     str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();

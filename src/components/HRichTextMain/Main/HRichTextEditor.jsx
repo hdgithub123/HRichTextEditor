@@ -29,6 +29,8 @@ import getFooterBlockStyle from '../../FooterBlock/function/getFooterBlockStyle'
 import addAndUpdtaeMainBlockStyle from '../../MainBlock/function/addAndUpdateMainBlock'
 import { pxToUnit } from '../../utilities'
 import getBackgroundStyle from '../../MainBlock/function/getBackgroundStyle';
+import getPageSetup from '../../MainBlock/function/getPageSetup';
+
 
 import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 
@@ -150,13 +152,12 @@ const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable,
       };
 
       const backgroundStyle = getBackgroundStyle({ editorState })
+      const pageSetup = getPageSetup({ editorState })
       if (backgroundStyle) {
         newMainBlockStyle = {
           ...newMainBlockStyle,
           ...backgroundStyle,
-          opacity: 1,
-          minHeight: '297mm',
-          backgroundImage: `linear-gradient(rgba(255,255,255,${backgroundStyle.opacity}), rgba(255,255,255,${backgroundStyle.opacity})), ${backgroundStyle.backgroundImage}`,
+          minHeight: `${pageSetup?.pageHeight?pageSetup.pageHeight: '0mm' }`,
       };
     }
 

@@ -66,7 +66,10 @@
                 border: 1px solid black;
                 padding: 2px;
                 white-space: nowrap;
-
+                text-align: center;
+                vertical-align: middle;
+                justify-content: center;
+                height: 20px;
                 &:first-child {
                     /* CSS cho cột đầu tiên */
                     background-color: #f0f0f0;
@@ -80,6 +83,24 @@
                     max-width: 100%;
                     border: 0.5px solid black;
                     border-radius: 2px;
+                }
+                .colorPicker {
+                    border: 1px solid black;
+                    border-radius: 3px;
+                    padding: 2px;
+                    width: auto; 
+                    height: 20px; 
+                    align-items: center;
+                    justify-content: center;
+                    vertical-align: middle;
+                }
+                .position{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    vertical-align: middle;
+                    gap: 5px;
                 }
             }
 
