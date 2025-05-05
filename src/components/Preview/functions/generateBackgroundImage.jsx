@@ -1,18 +1,3 @@
-// function generateBackgroundImage({ url = 'none', size = 'cover', repeat = 'no-repeat' }) {
-//     return `
-//   .pagedjs_page {
-//     background-image: url("${url}");
-//     background-size: ${size};
-//     background-repeat: ${repeat};
-//     -webkit-print-color-adjust: exact;
-//     print-color-adjust: exact;
-//   }
-//   `;
-//   }
-  
-//   export default generateBackgroundImage;
-
-
 function generateBackgroundImage(css = {
   backgroundImage: 'none',
   backgroundSize: 'cover',
@@ -29,19 +14,11 @@ function generateBackgroundImage(css = {
 
   return `
   .pagedjs_page {
-  position: relative;
-  }
-  .pagedjs_page::before {
-  content: "";
-    ${cssString}
-    position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-    -webkit-print-color-adjust: exact;
+   ${cssString}
+  -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+
   `;
 }
 

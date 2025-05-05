@@ -30,7 +30,7 @@ const HPreview = ({
 
     return (
         <CreatePreviewWithPrint
-            pageCss={cssDefault}
+            // pageCss={cssDefault}
             isPrint={isPrint ? isPrint : false}
             isPrinted={handleisPrinted}
             isRepeatThead={isRepeatThead ===false? isRepeatThead : true}
