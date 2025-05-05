@@ -20,8 +20,8 @@ function App() {
       <HRichTextEditor onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
       {/* <HRichTextEditorPreview
         isPrint={isPrint}
-        ></HRichTextEditorPreview>
-      <ContentPreviewEx></ContentPreviewEx> */}
+        ></HRichTextEditorPreview> */}
+      {/* <ContentPreviewEx></ContentPreviewEx> */}
     </>
   )
 }

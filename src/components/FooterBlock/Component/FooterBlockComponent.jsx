@@ -18,7 +18,7 @@ const FooterBlockComponent = props => {
    }
 
     return (
-        <footer title='Footer' className={style.footerContainer} style={{...blockStyle }}>
+        <footer id={'hrteFooterID'} title='Footer' className={style.footerContainer} style={{...blockStyle }}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </footer>
     )

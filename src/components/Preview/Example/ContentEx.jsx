@@ -90,10 +90,10 @@ const MyContent = () => {
       <div>
         <header id={'hrteHeaderID'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>đầu</header>
       </div>
-      <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
+      
       <TableComponent rows={20} cols={7}  ></TableComponent>
       <Content number={10}></Content>
-
+      <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
     </div>
   )
 }

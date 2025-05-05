@@ -18,7 +18,7 @@ const HeaderBlockComponent = props => {
     }
     
     return (
-        <header title='Header' className={style.headerContainer} style={{ ...blockStyle ,}}>
+        <header id={'hrteHeaderID'}  title='Header' className={style.headerContainer} style={{ ...blockStyle ,}}>
             <EditorBlock {...props} block={block.set('text', text)} />
         </header>
     )

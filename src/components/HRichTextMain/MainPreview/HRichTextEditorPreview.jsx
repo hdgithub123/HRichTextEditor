@@ -25,7 +25,7 @@ import HPreview from '../../HPreview/HPreview';
 
 
 const HRichTextEditorPreview = ({
-  contentStateObject,
+  contentStateObject =conEx,
   dynamicTables = exampleDataTable,
   dynamicTexts = exampleData,
   isPrint,
@@ -143,14 +143,11 @@ const HRichTextEditorPreview = ({
       <HPreview
         isPrint={isPrint ? isPrint : false}
         isPrinted={handleisPrinted}
-        // layoutSetup={layoutSetup ? layoutSetup : null}
         layoutSetup={{ width: mainBlockStyle.width, height: pageSetup?.pageHeight? pageSetup.pageHeight: null, marginTop:mainBlockStyle.paddingTop, marginBottom: mainBlockStyle.paddingBottom, marginLeft: mainBlockStyle.paddingLeft, marginRight: mainBlockStyle.paddingRight, paddingTop: '0mm', paddingBottom: '0mm' }}
-        pageNumberStyle={pageSetup?.pageNumber?.style? pageSetup.pageNumber.style : null}
-        // backgroundImageCss
+        pageNumberStyle={pageSetup?.pageNumber?.style? pageSetup.pageNumber.style : null}ss
         backgroundImageCss= {backgroundImageCss? backgroundImageCss: {}}
         formatPageNumber={pageSetup?.pageNumber?.format? pageSetup.pageNumber.format: null}
         positionPageNumber={pageSetup?.pageNumber?.position? pageSetup.pageNumber.position: null}
-        // isRepeatThead={pageSetup?.isRepeatThead? pageSetup.isRepeatThead: true}
         isRepeatThead={isRepeatThead}
         headerID={headerID? headerID: null}
         footerID={footerID? footerID: null}
@@ -170,6 +167,8 @@ const HRichTextEditorPreview = ({
             blockRendererFn={getBlockRendererFnView({ editorRef: editorPrevewRef.current, getEditorState: () => editorStatePreview, isEditable: false })}
           // handleReturn={(e, editorState) => handleReturn(e, editorState)}
           />
+
+       
         </div>
       </HPreview>
     </div>
@@ -5252,3 +5251,47 @@ const conEx = {
   ],
   "entityMap": {}
 }
+
+
+const MyContent2 = () => {
+  return (
+    <div>
+      <div>
+        <header id={'hrteHeaderID'} style={{ background: 'red', justifyContent: 'center', textAlign: 'center' }}>
+          đầu
+          <span>đây là header mới</span>
+          <div>đây là header mới</div>
+        </header>
+      </div>
+      <footer id={'hrteFooterID'} style={{ background: 'yellow' }} >cuoi</footer>
+      <Content number={300}></Content>
+
+
+    </div>
+  )
+}
+
+
+const Content = ({ number }) => {
+  const [newContent, setNewContent] = useState(false);
+  const contentArray = Array.from({ length: number }, (_, index) => (
+    <div key={index}>
+      {index} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus delectus ducimus quidem doloremque recusandae magnam cupiditate ex sunt? Commodi quas doloribus, ab assumenda laudantium officia nulla aut ipsum necessitatibus illum.
+    </div>
+  ));
+
+
+  return (
+    <div>
+      <button onClick={() => setNewContent(!newContent)}>New Content</button>
+      {newContent && <div>
+        <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod, mollitia ratione. Accusantium, ullam repellat! Ab laboriosam aliquam et qui ullam architecto quidem, sequi id magni inventore doloribus repellendus vitae rem.</div>
+        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, voluptatum suscipit quaerat doloribus eaque delectus placeat harum cupiditate architecto dolorum eius dolor sed vero nihil quisquam temporibus nemo quae ex.</div>
+      </div>}
+      <div>{contentArray}</div>
+    </div>
+
+  )
+
+
+};
