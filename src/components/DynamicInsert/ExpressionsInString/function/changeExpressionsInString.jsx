@@ -30,7 +30,7 @@ const changeExpressionsInString = ({ editorState }) => {
             const { expression, start, end } = matches[i];
 
             // Đánh giá biểu thức bằng hàm evaluateExpressionsInString
-            const replacementText = evaluateExpressionsInString(expression);
+            const replacementText = evaluateExpressionsInString({str: expression});
 
             // Lấy style của ký tự đầu tiên trong chuỗi [{*}]
             const firstCharStyle = characterList.get(start)?.getStyle() || new Set();
