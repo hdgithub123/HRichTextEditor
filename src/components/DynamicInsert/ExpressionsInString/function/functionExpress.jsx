@@ -15,23 +15,19 @@ function VnReadNumber(number) {
 
     // Validate number
     if (isNaN(num) || !isFinite(num)) return null;
-    // Check if number exceeds safe integer limits
-    if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
-        return null;
-    }
-    // nếu chuỗi n có độ dài lớn hơn 15 thì không thể chuyển đổi thành số nguyên an toàn
-    if (number.length > 16) {
+
+    // nếu chuỗi n có độ dài lớn hơn 31 thì không thể chuyển đổi thành số nguyên an toàn
+    if (number.length > 31) {
         return null;
     }
     if (num === 0) return "Không";
 
     // Handle negative numbers
     const isNegative = num < 0;
-    const absoluteNum = Math.abs(num);
 
     // Split integer and decimal parts
-    const parts = absoluteNum.toString().split('.');
-    const integerPart = parseInt(parts[0], 10);
+    const parts = number.toString().split('.');
+    const integerPart = parts[0]
     const decimalPart = parts[1] || '';
 
     // Read integer part
@@ -54,17 +50,17 @@ function VnReadNumber(number) {
     function readInteger(n) {
         if (n === 0) return "không";
 
-        const units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+        const units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ", "tỷ tỷ", "nghìn tỷ tỷ", "triệu tỷ tỷ", "tỷ tỷ tỷ"];
         const numbers = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
         let result = "";
-        let unitIndex = 0;
         let chunks = [];
 
-        // Split number into chunks of 1000
-        while (n > 0) {
-            chunks.push(n % 1000);
-            n = Math.floor(n / 1000);
-            unitIndex++;
+
+        // Chuyển n thành chuỗi
+        const nStr = n.toString();
+        for (let i = nStr.length; i > 0; i -= 3) {
+            const start = Math.max(0, i - 3); // Đảm bảo không vượt quá đầu chuỗi
+            chunks.push(nStr.substring(start, i));
         }
 
         // Process chunks from highest to lowest
@@ -134,9 +130,6 @@ function VnReadNumber(number) {
         return result.trim();
     }
 }
-
-
-
 
 
 
@@ -253,10 +246,20 @@ function EnReadNumber(number) {
 function USD(number) {
     // Check input type and format
     if (typeof number === 'string' && number.includes(",")) return null;
-    
+
     // Convert to number
     const num = typeof number === 'string' ? parseFloat(number) : number;
-    
+
+    // Check if number exceeds safe integer limits
+    if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
+        return null;
+    }
+    // nếu chuỗi n có độ dài lớn hơn 15 thì không thể chuyển đổi thành số nguyên an toàn
+    if (number.length > 15) {
+        return null;
+    }
+
+
     // Validate input
     if (isNaN(num)) return "Invalid amount";
     if (num === 0) return "Zero dollars";
@@ -302,18 +305,18 @@ function USD(number) {
     // Helper function to read any number (dollars or cents)
     function readNumber(n) {
         if (n === 0) return "zero";
-        
+
         const scales = ["", "thousand", "million", "billion", "trillion"];
-        const ones = ["", "one", "two", "three", "four", "five", 
-                     "six", "seven", "eight", "nine"];
-        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", 
-                      "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", 
-                     "sixty", "seventy", "eighty", "ninety"];
-        
+        const ones = ["", "one", "two", "three", "four", "five",
+            "six", "seven", "eight", "nine"];
+        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen",
+            "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty",
+            "sixty", "seventy", "eighty", "ninety"];
+
         let result = "";
         let scaleIndex = 0;
-        
+
         while (n > 0) {
             const chunk = n % 1000;
             if (chunk > 0) {
@@ -321,12 +324,12 @@ function USD(number) {
                 const hundred = Math.floor(chunk / 100);
                 const ten = Math.floor((chunk % 100) / 10);
                 const unit = chunk % 10;
-                
+
                 // Hundreds place
                 if (hundred > 0) {
                     chunkText += ones[hundred] + " hundred ";
                 }
-                
+
                 // Tens and units place
                 if (ten > 1) {
                     chunkText += tens[ten];
@@ -338,18 +341,18 @@ function USD(number) {
                 } else if (unit > 0) {
                     chunkText += ones[unit];
                 }
-                
+
                 // Add scale if needed
                 if (scaleIndex > 0) {
                     chunkText += " " + scales[scaleIndex];
                 }
-                
+
                 result = chunkText + " " + result;
             }
             n = Math.floor(n / 1000);
             scaleIndex++;
         }
-        
+
         return result.trim();
     }
 }
