@@ -249,38 +249,49 @@ function EnReadNumber(number) {
 }
 
 
-function USD(number) {
-    // Check for comma as decimal separator
-    if (typeof number === 'string' && number.includes(",")) return null;
 
+function USD(number) {
+    // Check input type and format
+    if (typeof number === 'string' && number.includes(",")) return null;
+    
     // Convert to number
     const num = typeof number === 'string' ? parseFloat(number) : number;
-
+    
     // Validate input
     if (isNaN(num)) return "Invalid amount";
     if (num === 0) return "Zero dollars";
 
-    // Handle negative amounts
+    // Handle negative numbers
     const isNegative = num < 0;
     const absoluteNum = Math.abs(num);
 
-    // Split into dollars and cents
+    // Split into dollars and cents (always 2 decimal places)
     const parts = absoluteNum.toFixed(2).split('.');
     const dollars = parseInt(parts[0]);
     const cents = parseInt(parts[1]);
 
-    // Read dollar amount
-    let result = readDollars(dollars);
+    // Build the result
+    let result = "";
 
-    // Read cents if exists
-    if (cents > 0) {
-        result += " and " + readCents(cents);
+    // 1. Read dollar amount
+    if (dollars > 0) {
+        result += readNumber(dollars) + (dollars === 1 ? " dollar" : " dollars");
     }
 
-    // Add currency units
-    result += getCurrencyUnit(dollars, cents);
+    // 2. Read cents amount
+    if (cents > 0) {
+        if (dollars > 0) {
+            result += " and ";
+        }
+        result += readNumber(cents) + (cents === 1 ? " cent" : " cents");
+    }
 
-    // Add negative prefix
+    // Handle zero case (should be caught above)
+    if (result === "") {
+        result = "Zero dollars";
+    }
+
+    // Add negative prefix if needed
     if (isNegative) {
         result = "Negative " + result;
     }
@@ -288,96 +299,59 @@ function USD(number) {
     // Capitalize first letter
     return result.charAt(0).toUpperCase() + result.slice(1);
 
-    // Helper function to read dollar amount
-    function readDollars(n) {
+    // Helper function to read any number (dollars or cents)
+    function readNumber(n) {
         if (n === 0) return "zero";
-
-        const scales = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
-        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-            "sixteen", "seventeen", "eighteen", "nineteen"];
-        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty",
-            "sixty", "seventy", "eighty", "ninety"];
-
+        
+        const scales = ["", "thousand", "million", "billion", "trillion"];
+        const ones = ["", "one", "two", "three", "four", "five", 
+                     "six", "seven", "eight", "nine"];
+        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", 
+                      "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", 
+                     "sixty", "seventy", "eighty", "ninety"];
+        
         let result = "";
         let scaleIndex = 0;
-
+        
         while (n > 0) {
             const chunk = n % 1000;
             if (chunk > 0) {
-                let chunkText = convertThreeDigits(chunk);
+                let chunkText = "";
+                const hundred = Math.floor(chunk / 100);
+                const ten = Math.floor((chunk % 100) / 10);
+                const unit = chunk % 10;
+                
+                // Hundreds place
+                if (hundred > 0) {
+                    chunkText += ones[hundred] + " hundred ";
+                }
+                
+                // Tens and units place
+                if (ten > 1) {
+                    chunkText += tens[ten];
+                    if (unit > 0) {
+                        chunkText += "-" + ones[unit];
+                    }
+                } else if (ten === 1) {
+                    chunkText += teens[unit];
+                } else if (unit > 0) {
+                    chunkText += ones[unit];
+                }
+                
+                // Add scale if needed
                 if (scaleIndex > 0) {
                     chunkText += " " + scales[scaleIndex];
                 }
+                
                 result = chunkText + " " + result;
             }
             n = Math.floor(n / 1000);
             scaleIndex++;
         }
-
+        
         return result.trim();
-
-        function convertThreeDigits(num) {
-            const hundred = Math.floor(num / 100);
-            const ten = Math.floor((num % 100) / 10);
-            const unit = num % 10;
-
-            let text = "";
-
-            // Hundreds place
-            if (hundred > 0) {
-                text += ones[hundred] + " hundred ";
-            }
-
-            // Tens and units place
-            if (ten > 1) {
-                text += tens[ten];
-                if (unit > 0) {
-                    text += "-" + ones[unit];
-                }
-            } else if (ten === 1) {
-                text += teens[unit];
-            } else if (unit > 0) {
-                text += ones[unit];
-            }
-
-            return text.trim();
-        }
-    }
-
-    // Helper function to read cents
-    function readCents(cents) {
-        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-            "sixteen", "seventeen", "eighteen", "nineteen"];
-        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty",
-            "sixty", "seventy", "eighty", "ninety"];
-
-        if (cents < 10) {
-            return ones[cents];
-        } else if (cents < 20) {
-            return teens[cents - 10];
-        } else {
-            const ten = Math.floor(cents / 10);
-            const unit = cents % 10;
-            return tens[ten] + (unit > 0 ? "-" + ones[unit] : "");
-        }
-    }
-
-
-    function getCurrencyUnit(dollars, cents) {
-        const dollarUnit = dollars === 1 ? " dollar" : " dollars";
-        const centUnit = cents === 1 ? " cent" : " cents";
-
-        if (dollars > 0 && cents > 0) {
-            return dollarUnit + " and " + readCents(cents) + centUnit;
-        } else if (dollars > 0) {
-            return dollarUnit;
-        } else {
-            return readCents(cents) + centUnit;
-        }
     }
 }
-
 
 export { VND, USD, EnReadNumber, VnReadNumber };
