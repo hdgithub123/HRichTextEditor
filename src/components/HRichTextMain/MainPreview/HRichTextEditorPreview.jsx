@@ -13,6 +13,7 @@ import decorateEditorState from '../functionRender/decorateEditorState';
 import { exampleDataTable, exampleData } from '../../_constant/exampleData';
 import replaceDatasTables from '../../Table/replaceDatasTables/index';
 import changeDynmaticText from '../../DynamicInsert/function/changeDynmaticText';
+import changeExpressionsInString from '../../DynamicInsert/ExpressionsInString/function/changeExpressionsInString';
 import getMainblockStyle from '../../MainBlock/function/getMainblockStyle';
 import getPageSetup from '../../MainBlock/function/getPageSetup';
 import getBackgroundStyle from '../../MainBlock/function/getBackgroundStyle';
@@ -28,10 +29,12 @@ const HRichTextEditorPreview = ({
   contentStateObject,
   dynamicTables = exampleDataTable,
   dynamicTexts = exampleData,
+  functionArray = null,
   isPrint,
   isPrinted,
   headerID,
   footerID,
+  functionExpressArray = null,
 }) => {
   if (!contentStateObject) {
     return null;
@@ -67,7 +70,7 @@ const HRichTextEditorPreview = ({
         newEditorStatePreview = EditorState.createWithContent(newContentStatePreview);
         newEditorStatePreview = decorateEditorState({ editorState: newEditorStatePreview });
         newEditorStatePreview = changeDynmaticText({ editorState: newEditorStatePreview, dataDynamicText: dynamicTexts })
-
+        newEditorStatePreview = changeExpressionsInString({ editorState: newEditorStatePreview, functionExpressArray: functionExpressArray });
         setEditorStatePreview(newEditorStatePreview)
       } else {
       }

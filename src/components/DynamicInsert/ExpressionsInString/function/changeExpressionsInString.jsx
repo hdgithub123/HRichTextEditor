@@ -1,7 +1,9 @@
 import { EditorState, Modifier, SelectionState } from 'draft-js';
 import evaluateExpressionsInString from './evaluateExpressionsInString';
+import { VND, USD,EnReadNumber,VnReadNumber } from './functionExpress'; // Import hàm VND từ file functionExpress
 
-const changeExpressionsInString = ({ editorState }) => {
+const changeExpressionsInString = ({ editorState,functionExpressArray=[VND,USD,EnReadNumber,VnReadNumber] }) => {
+    const moreFunctions = functionExpressArray? [VND,USD,EnReadNumber,VnReadNumber,...functionExpressArray]: [VND,USD,EnReadNumber,VnReadNumber];
     const contentState = editorState.getCurrentContent();
     const blockMap = contentState.getBlockMap();
     let newContentState = contentState;
@@ -30,7 +32,7 @@ const changeExpressionsInString = ({ editorState }) => {
             const { expression, start, end } = matches[i];
 
             // Đánh giá biểu thức bằng hàm evaluateExpressionsInString
-            const replacementText = evaluateExpressionsInString({str: expression});
+            const replacementText = evaluateExpressionsInString({str: expression, functionExpressArray:moreFunctions });
 
             // Lấy style của ký tự đầu tiên trong chuỗi [{*}]
             const firstCharStyle = characterList.get(start)?.getStyle() || new Set();

@@ -1,82 +1,383 @@
-function VND(number) {
-    if (number === 0) return "Không đồng";
+function VND(numberSring) {
+    return VnReadNumber(numberSring) ? VnReadNumber(numberSring) + " đồng" : null;
+}
 
-    const units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
-    const numbers = [
-        "không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"
-    ];
 
-    function convertThreeDigit(num) {
+function VnReadNumber(number) {
+    // Handle invalid input
+    if (number === null || number === undefined || number === '') return null;
+
+    // Check for comma (invalid in Vietnamese number format)
+    if (typeof number === 'string' && number.includes(',')) return null;
+
+    // Convert input to number, accepting decimal points
+    const num = typeof number === 'string' ? parseFloat(number.replace(/\s/g, '')) : number;
+
+    // Validate number
+    if (isNaN(num) || !isFinite(num)) return null;
+    // Check if number exceeds safe integer limits
+    if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
+        return null;
+    }
+    if (num === 0) return "Không";
+
+    // Handle negative numbers
+    const isNegative = num < 0;
+    const absoluteNum = Math.abs(num);
+
+    // Split integer and decimal parts
+    const parts = absoluteNum.toString().split('.');
+    const integerPart = parseInt(parts[0], 10);
+    const decimalPart = parts[1] || '';
+
+    // Read integer part
+    let result = readInteger(integerPart);
+
+    // Read decimal part if present
+    if (decimalPart) {
+        result += " phẩy " + readDecimal(decimalPart);
+    }
+
+    // Add negative prefix if needed
+    if (isNegative) {
+        result = "Âm " + result;
+    }
+
+    // Capitalize first letter
+    return result.charAt(0).toUpperCase() + result.slice(1);
+
+    // Function to read integer part
+    function readInteger(n) {
+        if (n === 0) return "không";
+
+        const units = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+        const numbers = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
         let result = "";
-        const hundred = Math.floor(num / 100);
-        const ten = Math.floor((num % 100) / 10);
-        const unit = num % 10;
+        let unitIndex = 0;
+        let chunks = [];
 
-        if (hundred > 0) {
-            result += numbers[hundred] + " trăm ";
-            if (ten === 0 && unit > 0) {
-                result += "lẻ ";
+        // Split number into chunks of 1000
+        while (n > 0) {
+            chunks.push(n % 1000);
+            n = Math.floor(n / 1000);
+            unitIndex++;
+        }
+
+        console.log(chunks, "chunks")
+        console.log(chunks.length, "chunks.length")
+        // Process chunks from highest to lowest
+        for (let i = chunks.length - 1; i >= 0; i--) {
+            if (chunks[i] > 0) {
+                const chunkText = convertThreeDigits(chunks[i]);
+                console.log(chunkText, "chunkText")
+                result += chunkText + (i > 0 ? " " + units[i] : "") + (result ? " " : " ");
+                console.log(result, "result")
             }
         }
 
-        if (ten > 1) {
-            result += numbers[ten] + " mươi ";
-            if (unit === 1) {
-                result += "mốt ";
-            } else if (unit > 0) {
-                result += numbers[unit] + " ";
+        return result.trim();
+
+        // Convert a three-digit number to words
+
+        function convertThreeDigits(num) {
+            const hundred = Math.floor(num / 100);
+            const ten = Math.floor((num % 100) / 10);
+            const unit = num % 10;
+            let text = "";
+
+            // Hàng trăm
+            if (hundred > 0) {
+                text += numbers[hundred] + " trăm";
             }
-        } else if (ten === 1) {
-            result += "mười ";
-            if (unit > 0) {
-                result += numbers[unit] + " ";
+
+            // Hàng chục và đơn vị
+            if (ten > 0 || unit > 0) {
+                if (hundred > 0) text += " ";
+
+                if (ten === 0) {
+                    // Trường hợp hàng đơn vị đứng riêng
+                    if (hundred > 0 && unit > 0) {
+                        text += "lẻ " + (unit === 1 ? "một" : numbers[unit]);
+                    } else {
+                        text += (unit === 1 ? "một" : numbers[unit]);
+                    }
+                } else if (ten === 1) {
+                    text += "mười";
+                    if (unit > 0) {
+                        text += " " + (unit === 1 ? "một" : numbers[unit]);
+                    }
+                } else {
+                    text += numbers[ten] + " mươi";
+                    if (unit > 0) {
+                        // Chỉ dùng "mốt" khi có hàng chục > 1
+                        text += " " + (unit === 1 ? "mốt" : unit === 5 ? "lăm" : numbers[unit]);
+                    }
+                }
             }
-        } else if (unit > 0) {
-            result += numbers[unit] + " ";
+
+            return text.trim();
+        }
+    }
+
+    // Function to read decimal part (digit by digit)
+    function readDecimal(decimalStr) {
+        const numbers = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+        let result = "";
+
+        for (let i = 0; i < decimalStr.length; i++) {
+            const digit = parseInt(decimalStr[i], 10);
+            if (!isNaN(digit)) {
+                result += numbers[digit] + " ";
+            }
         }
 
         return result.trim();
     }
+}
 
-    let result = "";
-    let unitIndex = 0;
 
-    while (number > 0) {
-        const threeDigits = number % 1000;
-        if (threeDigits > 0) {
-            let part = convertThreeDigit(threeDigits);
-            if (unitIndex > 0) {
-                part += " " + units[unitIndex];
-            }
-            result = part + " " + result;
-        }
-        number = Math.floor(number / 1000);
-        unitIndex++;
+
+
+
+
+
+function EnReadNumber(number) {
+    // Check for comma as decimal separator
+    if (typeof number === 'string' && number.includes(",")) return null;
+
+    // Convert to number
+    const num = typeof number === 'string' ? parseFloat(number) : number;
+
+    // Validate
+    if (isNaN(num)) return null;
+    if (num === 0) return "Zero";
+
+    // Handle negative numbers
+    const isNegative = num < 0;
+    const absoluteNum = Math.abs(num);
+
+    // Split into integer and decimal parts
+    const parts = absoluteNum.toString().split('.');
+    const integerPart = parseInt(parts[0]);
+    const decimalPart = parts[1] || '';
+
+    // Read integer part
+    let result = readInteger(integerPart);
+
+    // Read decimal part if exists
+    if (decimalPart) {
+        result += " point " + readDecimal(decimalPart);
     }
 
-    // Viết hoa chữ cái đầu tiên
-    result = result.trim() + " đồng";
+    // Add negative prefix
+    if (isNegative) {
+        result = "Negative " + result;
+    }
+
+    // Capitalize first letter
     return result.charAt(0).toUpperCase() + result.slice(1);
+
+    // Helper function to read integer part
+    function readInteger(n) {
+        if (n === 0) return "zero";
+
+        const scales = ["", "thousand", "million", "billion", "trillion", "quadrillion"];
+        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+        let result = "";
+        let scaleIndex = 0;
+
+        while (n > 0) {
+            const chunk = n % 1000;
+            if (chunk > 0) {
+                let chunkText = convertThreeDigits(chunk);
+                if (scaleIndex > 0) {
+                    chunkText += " " + scales[scaleIndex];
+                }
+                result = chunkText + " " + result;
+            }
+            n = Math.floor(n / 1000);
+            scaleIndex++;
+        }
+
+        return result.trim();
+
+        function convertThreeDigits(num) {
+            const hundred = Math.floor(num / 100);
+            const ten = Math.floor((num % 100) / 10);
+            const unit = num % 10;
+
+            let text = "";
+
+            // Hundreds place
+            if (hundred > 0) {
+                text += ones[hundred] + " hundred ";
+            }
+
+            // Tens and units place
+            if (ten > 1) {
+                text += tens[ten];
+                if (unit > 0) {
+                    text += "-" + ones[unit];
+                }
+            } else if (ten === 1) {
+                text += teens[unit];
+            } else if (unit > 0) {
+                text += ones[unit];
+            }
+
+            return text.trim();
+        }
+    }
+
+    // Helper function to read decimal digits
+    function readDecimal(decimalStr) {
+        const digitNames = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+        let result = "";
+
+        for (let i = 0; i < decimalStr.length; i++) {
+            const digit = parseInt(decimalStr[i]);
+            if (!isNaN(digit)) {
+                result += digitNames[digit] + " ";
+            }
+        }
+
+        return result.trim();
+    }
 }
 
 
-// Ví dụ hàm USD (giả định)
 function USD(number) {
-    // Chuyển đổi số thành chữ tiếng Anh
-    const units = ["", "thousand", "million", "billion"];
-    const numbers = [
-        "zero", "one", "two", "three", "four", "five", 
-        "six", "seven", "eight", "nine"
-    ];
-    
-    // ... (triển khai logic tương tự hàm VND nhưng bằng tiếng Anh)
-    return convertNumberToWords(number, units, numbers) + " dollars";
+    // Check for comma as decimal separator
+    if (typeof number === 'string' && number.includes(",")) return null;
+
+    // Convert to number
+    const num = typeof number === 'string' ? parseFloat(number) : number;
+
+    // Validate input
+    if (isNaN(num)) return "Invalid amount";
+    if (num === 0) return "Zero dollars";
+
+    // Handle negative amounts
+    const isNegative = num < 0;
+    const absoluteNum = Math.abs(num);
+
+    // Split into dollars and cents
+    const parts = absoluteNum.toFixed(2).split('.');
+    const dollars = parseInt(parts[0]);
+    const cents = parseInt(parts[1]);
+
+    // Read dollar amount
+    let result = readDollars(dollars);
+
+    // Read cents if exists
+    if (cents > 0) {
+        result += " and " + readCents(cents);
+    }
+
+    // Add currency units
+    result += getCurrencyUnit(dollars, cents);
+
+    // Add negative prefix
+    if (isNegative) {
+        result = "Negative " + result;
+    }
+
+    // Capitalize first letter
+    return result.charAt(0).toUpperCase() + result.slice(1);
+
+    // Helper function to read dollar amount
+    function readDollars(n) {
+        if (n === 0) return "zero";
+
+        const scales = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
+        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+            "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty",
+            "sixty", "seventy", "eighty", "ninety"];
+
+        let result = "";
+        let scaleIndex = 0;
+
+        while (n > 0) {
+            const chunk = n % 1000;
+            if (chunk > 0) {
+                let chunkText = convertThreeDigits(chunk);
+                if (scaleIndex > 0) {
+                    chunkText += " " + scales[scaleIndex];
+                }
+                result = chunkText + " " + result;
+            }
+            n = Math.floor(n / 1000);
+            scaleIndex++;
+        }
+
+        return result.trim();
+
+        function convertThreeDigits(num) {
+            const hundred = Math.floor(num / 100);
+            const ten = Math.floor((num % 100) / 10);
+            const unit = num % 10;
+
+            let text = "";
+
+            // Hundreds place
+            if (hundred > 0) {
+                text += ones[hundred] + " hundred ";
+            }
+
+            // Tens and units place
+            if (ten > 1) {
+                text += tens[ten];
+                if (unit > 0) {
+                    text += "-" + ones[unit];
+                }
+            } else if (ten === 1) {
+                text += teens[unit];
+            } else if (unit > 0) {
+                text += ones[unit];
+            }
+
+            return text.trim();
+        }
+    }
+
+    // Helper function to read cents
+    function readCents(cents) {
+        const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+        const teens = ["ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+            "sixteen", "seventeen", "eighteen", "nineteen"];
+        const tens = ["", "ten", "twenty", "thirty", "forty", "fifty",
+            "sixty", "seventy", "eighty", "ninety"];
+
+        if (cents < 10) {
+            return ones[cents];
+        } else if (cents < 20) {
+            return teens[cents - 10];
+        } else {
+            const ten = Math.floor(cents / 10);
+            const unit = cents % 10;
+            return tens[ten] + (unit > 0 ? "-" + ones[unit] : "");
+        }
+    }
+
+
+    function getCurrencyUnit(dollars, cents) {
+        const dollarUnit = dollars === 1 ? " dollar" : " dollars";
+        const centUnit = cents === 1 ? " cent" : " cents";
+
+        if (dollars > 0 && cents > 0) {
+            return dollarUnit + " and " + readCents(cents) + centUnit;
+        } else if (dollars > 0) {
+            return dollarUnit;
+        } else {
+            return readCents(cents) + centUnit;
+        }
+    }
 }
 
-// Hàm chuyển số thành chữ (có thể dùng chung cho cả VND và USD)
-function convertNumberToWords(number, units, numberWords) {
-    // ... triển khai logic chuyển đổi
-    return "one million two hundred thirty-four thousand five hundred sixty-seven";
-}
 
-export { VND, USD };
+export { VND, USD, EnReadNumber, VnReadNumber };

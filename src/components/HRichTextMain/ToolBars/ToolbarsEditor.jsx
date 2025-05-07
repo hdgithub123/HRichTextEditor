@@ -59,6 +59,7 @@ const ToolbarsEditor = ({
 
     zoomRate,
     setZoomRate,
+    functionExpressArray,
 }) => {
 
     const { documentView, previewContent, printPreview, rawContentView } = contentView
@@ -79,6 +80,7 @@ const ToolbarsEditor = ({
                 dynamicTables={data.dynamicTables}
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
+                functionExpressArray={functionExpressArray}
             ></InsertDynamic>}
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
