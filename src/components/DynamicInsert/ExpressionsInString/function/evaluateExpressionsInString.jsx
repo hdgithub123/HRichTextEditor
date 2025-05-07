@@ -12,7 +12,6 @@ function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNu
         }
     });
 
-console.log("VND", VND('101102103104105106'))
 
    // Bước 1.5: Xử lý các hàm định dạng số
     if (functionFomatNumberArray && functionFomatNumberArray.length > 0) {

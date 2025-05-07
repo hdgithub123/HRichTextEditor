@@ -19,6 +19,10 @@ function VnReadNumber(number) {
     if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
         return null;
     }
+    // nếu chuỗi n có độ dài lớn hơn 15 thì không thể chuyển đổi thành số nguyên an toàn
+    if (number.length > 16) {
+        return null;
+    }
     if (num === 0) return "Không";
 
     // Handle negative numbers
@@ -63,15 +67,11 @@ function VnReadNumber(number) {
             unitIndex++;
         }
 
-        console.log(chunks, "chunks")
-        console.log(chunks.length, "chunks.length")
         // Process chunks from highest to lowest
         for (let i = chunks.length - 1; i >= 0; i--) {
             if (chunks[i] > 0) {
                 const chunkText = convertThreeDigits(chunks[i]);
-                console.log(chunkText, "chunkText")
                 result += chunkText + (i > 0 ? " " + units[i] : "") + (result ? " " : " ");
-                console.log(result, "result")
             }
         }
 
