@@ -35,7 +35,7 @@ import getPageSetup from '../../MainBlock/function/getPageSetup';
 import HRichTextEditorPreview from '../MainPreview/HRichTextEditorPreview';
 
 
-const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData,functionExpressArray, onEditorChange, viewOnly = false }) => {
+const HRichTextEditor = ({ contentStateObject, dynamicTables = exampleDataTable, dynamicTexts = exampleData,dynamicFunctions, dynamicFormats, onEditorChange, viewOnly = false }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [editorStatePreview, setEditorStatePreview] = useState(EditorState.createEmpty());
   const [mainBlockStyle, setMainBlockStyle] = useState(defaultEditorStyle ? defaultEditorStyle : {});
@@ -285,12 +285,11 @@ return (
         setIsPrint={setIsPrint}
         variable={variable}
         onChange={onChange}
-        data={{ dynamicTables, dynamicTexts }}
+        data={{ dynamicTables, dynamicTexts,dynamicFunctions,dynamicFormats }}
         functionList={functionList}
         listRef={listRef}
         zoomRate={zoomRate}
         setZoomRate={setZoomRate}
-        functionExpressArray={functionExpressArray}
       >
       </ToolbarsEditor>
     </div>}
@@ -358,7 +357,7 @@ return (
             footerID='hrteFooterID'
             isPrint={isPrint}
             isPrinted={handleisPrinted}
-            functionExpressArray={functionExpressArray}
+            dynamicFunctions={dynamicFunctions}
           />
 
         </div>}

@@ -1,8 +1,8 @@
 import { evaluate } from "mathjs"; // Import mathjs để tính toán đúng
-import { formatNumber, formatVnNumber, formatUsNumber } from "./fomatcell";
+import { formatNumber, formatVnNumber, formatUsNumber,roundNumber } from "./fomatNumber";
 import { VND, USD } from "./functionExpress"; // Import hàm VND từ file functionExpress
 
-function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNumber, formatVnNumber, formatUsNumber], functionExpressArray = [VND] }) {
+function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNumber, formatVnNumber, formatUsNumber,roundNumber], functionExpressArray = [VND] }) {
     // Bước 1: Xử lý các biểu thức toán học trong []
     let processedString = str.replace(/\[([^\[\]]+)\]/g, (match, expression) => {
         try {

@@ -26,7 +26,7 @@ import CreateEmptyEditor from '../../Document/CreateEmptyEditor/CreateEmptyEdito
 import CreateExampleEditor from '../../Document/ExampleEditor/CreateExampleEditor'
 
 
-import { DynamicText, DynamicTable, InsertDynamic } from '../../DynamicInsert'
+import { DynamicText, DynamicTable, InsertDynamic, FuncionExpressions, FormatExpressions, CaculateExpressions } from '../../DynamicInsert'
 import RawContentView from '../../RawContentView/RawContentView'
 import DownloadDocument from '../../Document/DownloadDocument/DownloadDocument'
 import OpenDocument from '../../Document/OpenDocument/OpenDocument'
@@ -59,7 +59,6 @@ const ToolbarsEditor = ({
 
     zoomRate,
     setZoomRate,
-    functionExpressArray,
 }) => {
 
     const { documentView, previewContent, printPreview, rawContentView } = contentView
@@ -71,7 +70,7 @@ const ToolbarsEditor = ({
             {documentView && <CreateEmptyEditor editorState={editorState} setEditorState={setEditorState}></CreateEmptyEditor>}
             {documentView && <CreateExampleEditor onChange={onChange} functionList={functionList} ></CreateExampleEditor>}
 
-            {(documentView || previewContent)  && <InsertDynamic
+            {(documentView || previewContent) && <InsertDynamic
                 editorState={editorState}
                 setEditorState={setEditorStatePreview}
                 contentView={contentView}
@@ -80,15 +79,15 @@ const ToolbarsEditor = ({
                 dynamicTables={data.dynamicTables}
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
-                functionExpressArray={functionExpressArray}
+                functionExpressArray={data.dynamicFunctions}
             ></InsertDynamic>}
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}
-            {(documentView || previewContent) && <ZoomEditorToolbar zoomRate={zoomRate} setZoomRate={setZoomRate}/>}
+            {(documentView || previewContent) && <ZoomEditorToolbar zoomRate={zoomRate} setZoomRate={setZoomRate} />}
             {documentView && <PaperSizePickerToolBar editorState={editorState} setEditorState={setEditorState}></PaperSizePickerToolBar>}
             {documentView && <MainBlock editorState={editorState} setEditorState={setEditorState}></MainBlock>}
             {documentView && <PageLayout editorState={editorState} setEditorState={setEditorState}></PageLayout>}
-            {documentView &&<Background editorState={editorState} setEditorState={setEditorState}></Background>}
+            {documentView && <Background editorState={editorState} setEditorState={setEditorState}></Background>}
             {documentView && <DownloadDocument editorState={editorState} setEditorState={setEditorState}></DownloadDocument>}
             {(documentView || rawContentView) && <RawContentView contentView={contentView} setContentView={setContentView}></RawContentView>}
 
@@ -119,11 +118,15 @@ const ToolbarsEditor = ({
             {documentView && <VideoBlockToolBar editorState={editorState} setEditorState={setEditorState}></VideoBlockToolBar>}
             {documentView && <DynamicText editorState={editorState} setEditorState={setEditorState} dynamicTexts={data.dynamicTexts}></DynamicText>}
             {documentView && <DynamicTable editorState={editorState} setEditorState={setEditorState} dynamicTables={data.dynamicTables}></DynamicTable>}
+            {documentView && <FuncionExpressions editorState={editorState} setEditorState={setEditorState} dynamicFunctions={data.dynamicFunctions}></FuncionExpressions>}
+            {documentView && <FormatExpressions editorState={editorState} setEditorState={setEditorState} dynamicFormats={data.dynamicFormats}></FormatExpressions>}
+            {documentView && <CaculateExpressions editorState={editorState} setEditorState={setEditorState}></CaculateExpressions>}
+            
             {documentView && <HeaderBlockToolBar editorState={editorState} setEditorState={setEditorState}></HeaderBlockToolBar>}
             {documentView && <FooterBlockToolBar editorState={editorState} setEditorState={setEditorState}></FooterBlockToolBar>}
-            
-            
-       
+
+
+
         </div>
     );
 }

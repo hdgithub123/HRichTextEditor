@@ -1,0 +1,140 @@
+.container {
+    position: relative;
+    // border: 1px solid #351111;
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    
+
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5px;
+        display: flex;
+        align-items: center;
+
+        .img {
+            width: 20px;
+            height: 20px;
+            border: 0.5px black solid;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .active {
+            background: white;
+        }
+
+        .unactive {
+            background: white;
+            opacity: 30%;
+        }
+
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+
+    .controlTable {
+        // position: absolute;
+        // top: 100%;
+        // left: 0;
+        // background-color: #f0f0f0;
+        // border: 1px solid #ddd;
+        // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        // z-index: 1000;
+        // width: 200px;
+        // max-height: 150px;
+        // overflow-y: auto;
+        // padding: 1px;
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        // justify-content: center;
+        // gap: 3px;
+
+        // background-color: red;
+
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        width: 200px;
+        max-height: 150px;
+        overflow-y: auto; /* Đảm bảo nội dung có thể cuộn */
+        padding: 5px; /* Giảm padding để không bị mất nội dung */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Không ép nội dung vào giữa */
+        justify-content: flex-start; /* Căn nội dung từ trên xuống */
+        gap: 3px;
+
+
+
+
+        button {
+            background: white;
+            border:  1px solid black;
+            border-radius: 5px;
+            width: 100%;
+            cursor: pointer;
+            padding: 0.5px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+
+
+            
+
+
+            .img {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                padding: 2px;
+                border: none;
+            }
+    
+
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+            }
+
+            .active {
+                background: white;
+            }
+    
+            .unactive {
+                background: white;
+                opacity: 30%;
+            }
+    
+            &:hover {
+                border: 3px solid black;
+                border-radius: 5px;
+                transform: none;
+            }
+        }
+
+    }
+
+
+    &:hover {
+        // border: 1px solid #351111;
+    }
+}
