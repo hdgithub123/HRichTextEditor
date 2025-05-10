@@ -27,7 +27,7 @@ function VnReadNumber(number) {
 
     // Split integer and decimal parts
     const parts = number.toString().split('.');
-    const integerPart = parts[0]
+    const integerPart = parts[0].replace(/^[-+]/, "");
     const decimalPart = parts[1] || '';
 
     // Read integer part

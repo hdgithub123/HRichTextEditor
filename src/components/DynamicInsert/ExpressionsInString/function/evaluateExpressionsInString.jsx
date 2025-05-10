@@ -18,7 +18,7 @@ function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNu
         functionFomatNumberArray.forEach(formatFunc => {
             const funcName = formatFunc.name;
             // Regex cho pattern như formatNumber(number,1) hoặc formatNumber(number)
-            const regex = new RegExp(`${funcName}\\(([\\d]+[\\.,]?[\\d]*)(?:,s*([\\d]+))?\\)`, 'g');
+            const regex = new RegExp(`${funcName}\\((-?[\\d]+[\\.,]?[\\d]*)(?:,\\s*(-?[\\d]+))?\\)`, 'g');
             processedString = processedString.replace(regex, (match, number, decimalPlaces) => {
                 try {
                     const num = parseFloat(number);
