@@ -6,8 +6,13 @@ import style from './FormatExpressions.module.scss'
 import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../../../utilities';
 
 
-const FormatExpressions = ({ editorState, setEditorState, dynamicFormats=[] }) => {
-    const dynamicFormat = ["formatNumber","formatVnNumber","formatUsNumber","roundNumber",...dynamicFormats]
+const FormatExpressions = ({ editorState, setEditorState, dynamicFormats = [] }) => {
+    const defaultFormatNames = ["formatNumber", "formatVnNumber", "formatUsNumber", "roundNumber"];
+    const filteredDynamicFormats = dynamicFormats
+        .map(fn => typeof fn === "function" ? fn.name : fn)
+        .filter(name => !defaultFormatNames.includes(name));
+
+    const dynamicFormat = [...defaultFormatNames, ...filteredDynamicFormats];
     const [show, setShow] = useState(false);
     const ref = useRef();
     const buttonListRef = useRef();

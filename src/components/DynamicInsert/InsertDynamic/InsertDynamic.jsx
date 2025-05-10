@@ -8,7 +8,7 @@ import { convertToRaw, EditorState } from "draft-js";
 import decorateEditorState from '../../HRichTextMain/functionRender/decorateEditorState'
 import changeExpressionsInString from '../ExpressionsInString/function/changeExpressionsInString';
 
-const InsertDynamic = ({ editorState, setEditorState, contentView, setContentView,  dynamicTexts, dynamicTables,functionExpressArray=null, editorRef, functionList }) => {
+const InsertDynamic = ({ editorState, setEditorState, contentView, setContentView,  dynamicTexts, dynamicTables,dynamicFunctions=null,dynamicFormats=null, editorRef, functionList }) => {
     const contentState = editorState.getCurrentContent();
     const contentStateObjectJS = convertToRaw(contentState)
 
@@ -28,7 +28,7 @@ const InsertDynamic = ({ editorState, setEditorState, contentView, setContentVie
         let newEditorState = EditorState.createWithContent(content);
         newEditorState = decorateEditorState({ editorState: newEditorState, functionList:functionList });
         newEditorState = changeDynmaticText({editorState: newEditorState, dataDynamicText:dynamicTexts})
-        newEditorState = changeExpressionsInString({ editorState: newEditorState, functionExpressArray:functionExpressArray });
+        newEditorState = changeExpressionsInString({ editorState: newEditorState, dynamicFunctions:dynamicFunctions, dynamicFormats:dynamicFormats });
         setEditorState(newEditorState);
 
         await new Promise(resolve => setTimeout(resolve, 0)); // Đảm bảo setEditorState hoàn thành trước khi focus

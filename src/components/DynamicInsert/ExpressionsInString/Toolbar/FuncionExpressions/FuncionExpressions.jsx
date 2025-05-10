@@ -7,7 +7,15 @@ import { useOnClickOutside, useAutoAdjustAbsolutePosition } from '../../../../ut
 
 
 const FuncionExpressions = ({ editorState, setEditorState, dynamicFunctions = [] }) => {
-    const dynamicFunction = ["", "VND", "USD", "VnReadNumber", "EnReadNumber", ...dynamicFunctions]
+    const defaultFunctionNames = ["", "VND", "USD", "VnReadNumber", "EnReadNumber"];
+    const dynamicFunctionNames = dynamicFunctions.map(fn => typeof fn === "function" ? fn.name : fn);
+
+    // Loại bỏ tên trùng
+    const dynamicFunction = [
+        ...defaultFunctionNames,
+        ...dynamicFunctionNames.filter(name => !defaultFunctionNames.includes(name))
+    ];
+
     const [show, setShow] = useState(false);
     const ref = useRef();
     const buttonListRef = useRef();
@@ -40,7 +48,7 @@ const FuncionExpressions = ({ editorState, setEditorState, dynamicFunctions = []
                 {dynamicFunction.map((text, index) => (
                     <button title='Function Express' key={index} onClick={() => handleInsertText(text)}>
                         <img src={text !== "" ? insertIcon : imageIcon} alt="Apply" className={`${style.img} ${style.active}`} />
-                        <span>{text !== "" ? `${text}(*)`:"[{*}]"}</span>
+                        <span>{text !== "" ? `${text}(*)` : "[{*}]"}</span>
                     </button>
                 ))}
             </div>

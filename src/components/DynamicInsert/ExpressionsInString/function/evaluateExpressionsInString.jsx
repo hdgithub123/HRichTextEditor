@@ -1,8 +1,8 @@
 import { evaluate } from "mathjs"; // Import mathjs để tính toán đúng
-import { formatNumber, formatVnNumber, formatUsNumber,roundNumber } from "./fomatNumber";
+import { formatNumber, formatVnNumber, formatUsNumber, roundNumber } from "./fomatNumber";
 import { VND, USD } from "./functionExpress"; // Import hàm VND từ file functionExpress
 
-function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNumber, formatVnNumber, formatUsNumber,roundNumber], functionExpressArray = [VND] }) {
+function evaluateExpressionsInString({ str, dynamicFormats = [], dynamicFunctions = [VND] }) {
     // Bước 1: Xử lý các biểu thức toán học trong []
     let processedString = str.replace(/\[([^\[\]]+)\]/g, (match, expression) => {
         try {
@@ -12,8 +12,18 @@ function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNu
         }
     });
 
+    // const functionFomatNumberArray = [formatNumber, formatVnNumber, formatUsNumber,roundNumber,...dynamicFormats];
+    const defaultFormatFuncs = [formatNumber, formatVnNumber, formatUsNumber, roundNumber];
+    const defaultFormatNames = defaultFormatFuncs.map(fn => fn.name);
 
-   // Bước 1.5: Xử lý các hàm định dạng số
+    // Lọc dynamicFormats để loại bỏ các hàm trùng tên
+   const filteredDynamicFormats = Array.isArray(dynamicFormats) && dynamicFormats.some(fn => typeof fn === "function")
+    ? dynamicFormats.filter(fn => typeof fn === "function" && !defaultFormatNames.includes(fn.name))
+    : [];
+
+    const functionFomatNumberArray = [...defaultFormatFuncs, ...filteredDynamicFormats];
+
+    // Bước 1.5: Xử lý các hàm định dạng số
     if (functionFomatNumberArray && functionFomatNumberArray.length > 0) {
         functionFomatNumberArray.forEach(formatFunc => {
             const funcName = formatFunc.name;
@@ -36,10 +46,10 @@ function evaluateExpressionsInString({ str, functionFomatNumberArray = [formatNu
 
     // Bước 2: Xử lý các hàm tùy chỉnh trong functionArray
     // kiểm tra nếu functionArray không có giá trị thì trả về processedString
-    if (!functionExpressArray || functionExpressArray.length === 0) {
+    if (!dynamicFunctions || dynamicFunctions.length === 0) {
         return processedString;
     }
-    functionExpressArray.forEach(func => {
+    dynamicFunctions.forEach(func => {
         // Tạo regex động dựa trên tên hàm, ví dụ: VND(123) -> /VND\((\d+)\)/g
         const funcName = func.name;
         const regex = new RegExp(`${funcName}\\((.*?)\\)`, 'g');

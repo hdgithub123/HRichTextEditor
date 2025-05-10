@@ -79,7 +79,8 @@ const ToolbarsEditor = ({
                 dynamicTables={data.dynamicTables}
                 editorRef={listRef.editorPrevewRef}
                 functionList={functionList}
-                functionExpressArray={data.dynamicFunctions}
+                dynamicFunctions={data.dynamicFunctions}
+                dynamicFormats={data.dynamicFormats}
             ></InsertDynamic>}
             {(documentView || printPreview) && <PrintPreview setIsPrint={setIsPrint} contentView={contentView} setContentView={setContentView} handlePrintPreview={handlePrintPreview}></PrintPreview>}
             {printPreview && <PrintDocument setIsPrint={setIsPrint} handleisPrinted={handleisPrinted}></PrintDocument>}

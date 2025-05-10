@@ -5,6 +5,7 @@ import HRichTextEditorPreview from '../src/components/HRichTextMain/MainPreview/
 import React, { useState } from 'react';
 // import {contentStateObjectExample} from './components/_constant/exampleData'
 import ContentPreviewEx from './components/Preview/Example/ContentEx'
+import { re } from 'mathjs';
 
 
 function App() {
@@ -17,7 +18,12 @@ function App() {
     <>
       <div>hello</div>
       <button onClick={() => setIsPrint(!isPrint)}>Change print</button>
-      <HRichTextEditor onEditorChange={handleChange} viewOnly={false} ></HRichTextEditor>
+      <HRichTextEditor 
+      onEditorChange={handleChange} 
+      viewOnly={false} 
+      // dynamicFunctions={[ToString, VND]}
+      // dynamicFormats={[ToNumberFormat,formatNumber]}
+      ></HRichTextEditor>
       {/* <HRichTextEditorPreview
         isPrint={isPrint}
         ></HRichTextEditorPreview> */}

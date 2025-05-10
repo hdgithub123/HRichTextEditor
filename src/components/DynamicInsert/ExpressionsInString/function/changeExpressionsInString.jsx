@@ -1,9 +1,17 @@
 import { EditorState, Modifier, SelectionState } from 'draft-js';
 import evaluateExpressionsInString from './evaluateExpressionsInString';
-import { VND, USD,EnReadNumber,VnReadNumber } from './functionExpress'; // Import hàm VND từ file functionExpress
+import { VND, USD, EnReadNumber, VnReadNumber } from './functionExpress'; // Import hàm VND từ file functionExpress
 
-const changeExpressionsInString = ({ editorState,functionExpressArray=[VND,USD,EnReadNumber,VnReadNumber] }) => {
-    const moreFunctions = functionExpressArray? [VND,USD,EnReadNumber,VnReadNumber,...functionExpressArray]: [VND,USD,EnReadNumber,VnReadNumber];
+const changeExpressionsInString = ({ editorState, dynamicFunctions = [], dynamicFormats = [] }) => {
+    //const moreFunctions = dynamicFunctions? [VND,USD,EnReadNumber,VnReadNumber,...dynamicFunctions]: [VND,USD,EnReadNumber,VnReadNumber];
+    const defaultFunctions = [VND, USD, EnReadNumber, VnReadNumber];
+    const defaultFunctionNames = defaultFunctions.map(fn => fn.name);
+
+    const filteredDynamicFunctions = (dynamicFunctions || []).filter(
+        fn => typeof fn === "function" && !defaultFunctionNames.includes(fn.name)
+    );
+
+    const moreFunctions = [...defaultFunctions, ...filteredDynamicFunctions];
     const contentState = editorState.getCurrentContent();
     const blockMap = contentState.getBlockMap();
     let newContentState = contentState;
@@ -32,7 +40,7 @@ const changeExpressionsInString = ({ editorState,functionExpressArray=[VND,USD,E
             const { expression, start, end } = matches[i];
 
             // Đánh giá biểu thức bằng hàm evaluateExpressionsInString
-            const replacementText = evaluateExpressionsInString({str: expression, functionExpressArray:moreFunctions });
+            const replacementText = evaluateExpressionsInString({ str: expression, dynamicFunctions: moreFunctions, dynamicFormats: dynamicFormats });
 
             // Lấy style của ký tự đầu tiên trong chuỗi [{*}]
             const firstCharStyle = characterList.get(start)?.getStyle() || new Set();

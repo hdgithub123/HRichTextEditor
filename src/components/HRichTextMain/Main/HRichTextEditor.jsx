@@ -358,6 +358,7 @@ return (
             isPrint={isPrint}
             isPrinted={handleisPrinted}
             dynamicFunctions={dynamicFunctions}
+            dynamicFormats={dynamicFormats}
           />
 
         </div>}

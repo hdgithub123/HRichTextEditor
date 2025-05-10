@@ -34,7 +34,8 @@ const HRichTextEditorPreview = ({
   isPrinted,
   headerID,
   footerID,
-  dynamicFunctions = null,
+  dynamicFunctions = [],
+  dynamicFormats = [],
 }) => {
   if (!contentStateObject) {
     return null;
@@ -70,7 +71,7 @@ const HRichTextEditorPreview = ({
         newEditorStatePreview = EditorState.createWithContent(newContentStatePreview);
         newEditorStatePreview = decorateEditorState({ editorState: newEditorStatePreview });
         newEditorStatePreview = changeDynmaticText({ editorState: newEditorStatePreview, dataDynamicText: dynamicTexts })
-        newEditorStatePreview = changeExpressionsInString({ editorState: newEditorStatePreview, dynamicFunctions: dynamicFunctions });
+        newEditorStatePreview = changeExpressionsInString({ editorState: newEditorStatePreview, dynamicFunctions: dynamicFunctions, dynamicFormats: dynamicFormats });
         setEditorStatePreview(newEditorStatePreview)
       } else {
       }
