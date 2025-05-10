@@ -33,7 +33,7 @@ const formatVnNumber = (number, maxFractionDigits = 2) => {
   if (number == null || number === "") {
     return '';
   }
-
+console.log("maxFractionDigits", maxFractionDigits);
   const locale = 'vi-VN';
   const options = {
     minimumFractionDigits: 0,
@@ -45,18 +45,8 @@ const formatVnNumber = (number, maxFractionDigits = 2) => {
 };
 
 
-// function roundNumber(number, numberround) {
-//   console.log("number", number);
-//   if (numberround >= 0) {
-//     return parseFloat(number.toFixed(numberround));
-//   } else {
-//     let factor = Math.pow(10, Math.abs(numberround)); // Tạo hệ số làm tròn
-//     return Math.round(number / factor) * factor; // Làm tròn theo hệ số đó
-//   }
-// }
 
-
-function roundNumber(number, numberround) {
+function roundNumber(number, numberround=2) {
   if (numberround >= 0) {
     return parseFloat(number.toFixed(numberround));
   } else {
@@ -64,6 +54,8 @@ function roundNumber(number, numberround) {
     return Math.round(number / factor) * factor;
   }
 }
+
+
 
 export {
   formatNumber,
